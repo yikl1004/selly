@@ -3,15 +3,6 @@
     "editor.codeActionsOnSave": {
         "source.fixAll.eslint": true
     },
-    "eslint.alwaysShowStatus": true,
-    "eslint.workingDirectories": [
-        {"mode": "auto"}
-    ],
-    "eslint.validate": [
-        "javascript",
-        "typescript",
-        "vue"
-    ],
     "js/ts.implicitProjectConfig.experimentalDecorators": true,
     "workbench.colorCustomizations": {
         "titleBar.activeForeground": "#000",
@@ -23,8 +14,24 @@
             "titleBar.activeForeground": "#ffffff"
         }
     },
+
+    // eslint
+    "eslint.format.enable": true,
+    "eslint.run": "onSave",
+    "eslint.alwaysShowStatus": true,
+    "eslint.workingDirectories": [
+        {"mode": "auto"}
+    ],
+    "eslint.validate": [
+        "javascript",
+        "typescript",
+        "vue"
+    ],
+
+    // Vetur
+    "vetur.experimental.templateInterpolationService": true,
+
+    // prettier
     "prettier.tabWidth": 4,
     "prettier.useTabs": true,
-    "eslint.format.enable": true,
-    "eslint.run": "onSave"
 }

@@ -133,7 +133,7 @@ module.exports = {
             },
         ],
 
-        //   'vue/html-self-closing': ['off'],
+        'vue/html-self-closing': ['off'],
 
         // https://eslint.vuejs.org/rules/attributes-order.html
         // TODO: 팀 내 기준으로 재조정 필요

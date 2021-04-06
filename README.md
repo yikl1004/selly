@@ -72,5 +72,9 @@ npm run serve
 
 
 ### 가이드 외에 추가된 모듈 목록
+dependency
+> lodash
+
+
 devDependency
-> tsconfig-paths-webpack-plugin   
+> tsconfig-paths-webpack-plugin

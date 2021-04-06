@@ -14,7 +14,7 @@ if (!projectRoot) {
 process.stdin.resume()
 
 const restoreTsconfig = () => {
-    child.execSync('git restore tsconfig.json', { cwd: projectRoot })
+    // child.execSync('git restore tsconfig.json', { cwd: projectRoot })
 }
 
 const exitHandler = () => {
@@ -41,7 +41,10 @@ try {
         const tsconfig = ts.readConfigFile('tsconfig.json', ts.sys.readFile)
         tsconfig.config.include = stagedFiled
 
-        fs.writeFileSync('tsconfig.json', JSON.stringify(tsconfig.config, null, 4))
+        /**
+         * 다음 과정인 vue-staged에서 순간 typescript 에러로 주석처리
+         */
+        // fs.writeFileSync('tsconfig.json', JSON.stringify(tsconfig.config, null, 4))
         child.execSync('npx tsc --noEmit --project .', {
             cwd: projectRoot,
             encoding: 'utf-8',

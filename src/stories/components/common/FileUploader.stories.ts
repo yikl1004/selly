@@ -1,8 +1,8 @@
 import { Meta, Story } from '@storybook/vue'
 import FileUploader from '@components/common/FileUploader.vue'
-import registerPlugins from '@/utils/registerPlugins'
+import { initialize } from '@/utils/index'
 
-registerPlugins()
+initialize()
 
 export default {
     title: 'Components/common/FileUploader',

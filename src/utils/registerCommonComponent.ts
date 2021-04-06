@@ -1,7 +1,7 @@
 import Vue from 'vue'
-import SellyLink from '@components/common/SellyLink.vue'
 
 // components
+import SellyLink from '@components/common/SellyLink.vue'
 import FileUploader from '@components/common/FileUploader.vue'
 
 const registerCommonComponent = (): void => {
