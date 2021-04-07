@@ -2,9 +2,8 @@ import Vue, { VueConstructor } from 'vue'
 import _ from 'lodash'
 
 // components
-import { Link, DevMenu, FileUploader } from '@components/common/index'
+import componentList from '@components/common'
 
-const componentList: { [key: string]: VueConstructor }[] = [{ Link }, { DevMenu }, { FileUploader }]
 const registerCommonComponent = (): void => {
     componentList.forEach(componentInfo => {
         // 배열 원소가 1개 뿐이므로 index는 0

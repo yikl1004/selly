@@ -1,5 +1,12 @@
-import DevMenu from '@components/common/DevMenu.vue'
-import FileUploader from '@/components/form/FileUploader.vue'
-import Link from '@components/common/Link.vue'
+import { VueConstructor } from 'vue'
 
-export { DevMenu, FileUploader, Link }
+import DevMenu from '@components/common/DevMenu.vue'
+import Link from '@components/common/Link.vue'
+import Header from '@components/common/Header.vue'
+import FileUploader from '@components/form/FileUploader.vue'
+import TextField from '@components/form/TextField.vue'
+
+const componentList: { [key: string]: VueConstructor }[] = [{ Link }, { DevMenu }, { FileUploader }, { Header }, { TextField }]
+
+export { DevMenu, FileUploader, Link, Header, TextField }
+export default componentList

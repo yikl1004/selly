@@ -2,14 +2,14 @@
     <div>
         <ul>
             <li>
-                <selly-link href="/">
+                <Link href="/">
                     main
-                </selly-link>
+                </Link>
             </li>
             <li>
-                <selly-link external href="/example">
+                <Link external href="/example">
                     example
-                </selly-link>
+                </Link>
             </li>
         </ul>
         <component :is="layout">
