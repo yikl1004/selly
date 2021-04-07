@@ -1,6 +1,5 @@
 <template>
     <div>
-        <p>아무것도 없는 레이아웃</p>
         <slot />
     </div>
 </template>

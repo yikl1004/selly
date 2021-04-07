@@ -1,12 +1,10 @@
 <template>
-    <fragment>
-        <router-link v-if="!external" :to="href">
-            <slot />
-        </router-link>
-        <a v-else-if="external" :href="href">
-            <slot />
-        </a>
-    </fragment>
+    <router-link v-if="!external" :to="href">
+        <slot />
+    </router-link>
+    <a v-else-if="external" :href="href">
+        <slot />
+    </a>
 </template>
 
 <script lang="ts">

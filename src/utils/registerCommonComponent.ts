@@ -1,13 +1,17 @@
-import Vue from 'vue'
+import Vue, { VueConstructor } from 'vue'
+import _ from 'lodash'
 
 // components
-import SellyLink from '@components/common/SellyLink.vue'
-import FileUploader from '@components/common/FileUploader.vue'
+import { Link, DevMenu, FileUploader } from '@components/common/index'
 
+const componentList: { [key: string]: VueConstructor }[] = [{ Link }, { DevMenu }, { FileUploader }]
 const registerCommonComponent = (): void => {
-    Vue.component('selly-link', SellyLink)
-    Vue.component('file-uploader', FileUploader)
-
+    componentList.forEach(componentInfo => {
+        // 배열 원소가 1개 뿐이므로 index는 0
+        const params = Object.entries(componentInfo)[0]
+        console.log('regist component', ...params)
+        Vue.component(...params)
+    })
     console.log('common components registered...')
 }
 

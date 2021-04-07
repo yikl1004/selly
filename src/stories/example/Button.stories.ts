@@ -6,7 +6,10 @@ export default {
     component: MyButton,
     argTypes: {
         backgroundColor: { control: 'color' },
-        size: { control: { type: 'select', options: ['small', 'medium', 'large'] } },
+        size: {
+            control: { type: 'select' },
+            options: ['small', 'medium', 'large'],
+        },
     },
 } as Meta<ArgTypes>
 

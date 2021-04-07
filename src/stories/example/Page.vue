@@ -69,6 +69,11 @@ export default {
 
     methods: {
         onLogin() {
+            /**
+             * 로그인 할 때
+             * @event onLogin
+             * @property {object}
+             */
             this.$emit('onLogin')
         },
         onLogout() {

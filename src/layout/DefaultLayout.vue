@@ -1,7 +1,8 @@
 <template>
     <div id="layout">
-        <main><router-view /></main>
-        <slot />
+        <main>
+            <slot />
+        </main>
         <footer>footer</footer>
     </div>
 </template>
