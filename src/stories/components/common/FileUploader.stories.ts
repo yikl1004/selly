@@ -1,8 +1,9 @@
+import Vue from 'vue'
 import { Meta, Story } from '@storybook/vue'
 import FileUploader from '@components/form/FileUploader.vue'
-import { initialize } from '@utils/index'
+import ImageUploader from 'vue-image-upload-resize'
 
-initialize()
+Vue.use(ImageUploader)
 
 export default {
     title: 'Components/common/form/File Uploader',

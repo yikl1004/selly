@@ -1,21 +1,7 @@
 <template>
-    <div>
-        <ul>
-            <li>
-                <Link href="/">
-                    main
-                </Link>
-            </li>
-            <li>
-                <Link external href="/example">
-                    example
-                </Link>
-            </li>
-        </ul>
-        <component :is="layout">
-            <router-view />
-        </component>
-    </div>
+    <component :is="layout">
+        <router-view />
+    </component>
 </template>
 
 <script lang="ts">
