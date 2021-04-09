@@ -3,6 +3,7 @@ import VueRouter, { RouteConfig } from 'vue-router'
 
 import Main from '@pages/index.vue'
 import Example from '@pages/example/index.vue'
+import Sales from '@pages/sales/index.vue'
 
 Vue.use(VueRouter)
 
@@ -25,6 +26,14 @@ const routes: Array<RouteConfig> = [
         component: Example,
         meta: {
             layout: 'none',
+        },
+    },
+    {
+        path: '/sales',
+        name: 'Sales',
+        component: Sales,
+        meta: {
+            layout: 'default',
         },
     },
 ]

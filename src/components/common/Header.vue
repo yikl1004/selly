@@ -2,20 +2,31 @@
     <header class="layout-header">
         <MenuButton :opened="toggle" @toggle="onToggle" />
         <SideMenu :open="toggle" @close="onClose" />
-        <h1>Selly</h1>
+        <h1>
+            <Link href="/">
+                Selly
+            </Link>
+        </h1>
     </header>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Vue, Watch } from 'vue-property-decorator'
 import MenuButton from '@components/common/MenuButton.vue'
-import SideMenu from '@components/common/SideMenu.vue'
 
 @Component({
-    components: { MenuButton, SideMenu },
+    components: {
+        MenuButton,
+        SideMenu: () => import('@components/common/SideMenu.vue'),
+    },
 })
 export default class Header extends Vue {
     private toggle: boolean = false
+
+    @Watch('$route')
+    changeRoute() {
+        this.toggle = false
+    }
 
     onToggle() {
         this.toggle = !this.toggle
@@ -31,10 +42,14 @@ export default class Header extends Vue {
 .layout-header {
     height: 50px;
     background-color: #000;
-    color: #fff;
     display: flex;
     justify-content: center;
     align-items: center;
     position: relative;
+
+    h1 {
+        color: #fff;
+        margin: 0;
+    }
 }
 </style>
