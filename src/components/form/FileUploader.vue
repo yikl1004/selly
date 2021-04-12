@@ -41,9 +41,7 @@ declare global {
     }
 }
 
-@Component({
-    name: 'FileUploader',
-})
+@Component
 export default class FileUploader extends Vue {
     /** form 요소에 사용될 id */
     @Prop({ type: String, default: 'file-input', required: true })
