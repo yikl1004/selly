@@ -1,0 +1,32 @@
+import Vue from 'vue'
+import { Meta, Story, Props, Canvas, Wrapper, ArgsTable } from '@storybook/addon-docs/blocks';
+import TextField from '@components/form/TextField.vue';
+
+<Meta
+    title="Components/common/form/TextFiled"
+    component={TextField}
+    argTypes={{
+        onChange: { 
+            category: 'events',
+            action: 'onChanged'
+        }
+    }}
+/>
+
+# Text Field
+
+이미지를 업로드할때 이미지 사이즈를 조절 할 수 있는 Component.
+
+export const Template = (args, { argTypes }) => ({
+    props: Object.keys(argTypes),
+    components:{ TextField },
+    template: '<TextField v-bind="$props" @onChange="onChange" />',
+})
+
+<Canvas>
+    <Story name='Primary' height='100px' args={{ id: 'my-text', label: 'this is label' }}>
+        {Template.bind({})}
+    </Story>
+</Canvas>
+
+<ArgsTable of={ TextField } />
