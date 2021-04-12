@@ -10,10 +10,12 @@
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
 
-@Component({
-    components: {},
-})
+@Component
 export default class DefaultLayout extends Vue {}
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+#layout {
+    background-color: #fff;
+}
+</style>

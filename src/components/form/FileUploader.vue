@@ -87,9 +87,11 @@ export default class FileUploader extends Vue {
         this.checkSize()
 
         /**
-         * 이미지 세팅 완료 callback (args: Blob)
+         * 이미지로드 완료 callback
+         * @event onChanged
+         * @type {Blob}
          */
-        this.$emit('onChanged', file)
+        this.$emit('onChanged', this.file)
     }
 
     onComplete() {}

@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="container">
         <h1>메인</h1>
         <TextField id="test-field" label="입력" @onChange="onChange" />
     </div>

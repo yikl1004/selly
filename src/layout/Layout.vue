@@ -1,6 +1,6 @@
 <template>
     <component :is="layout">
-        <transition :name="transitionName" mode="out-in" @beforeLeave="beforeLeave" @enter="enter">
+        <transition :name="transitionName" mode="in-out" @beforeLeave="beforeLeave" @enter="enter">
             <router-view />
         </transition>
     </component>
@@ -52,11 +52,10 @@ export default class Layout extends Vue {
 
 <style lang="scss">
 .slide-left-enter-active {
-    transition-duration: 1s;
-    transition-property: left;
-    transition-timing-function: cubic-bezier(0.55, 0, 0.1, 1);
+    transition: left cubic-bezier(0.55, 0, 0.1, 1) 0.4s;
     overflow: hidden;
     position: absolute;
+    top: 50px;
     left: 0;
 }
 

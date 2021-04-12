@@ -171,10 +171,16 @@
 .body_fixed { overflow: hidden !important; }
 
 
-    .ir {
-        width: 1px;
-        height: 1px;
-        display: block;
-        overflow: hidden;
-        color: transparent;
-    }
+.ir {
+    width: 1px;
+    height: 1px;
+    display: block;
+    overflow: hidden;
+    color: transparent;
+}
+
+.container {
+    background-color: #fff;
+    width: 100%;
+    min-height: 100%;
+}
