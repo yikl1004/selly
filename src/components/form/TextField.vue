@@ -19,9 +19,14 @@
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 
+export interface OnChangeParameters {
+    value: string
+    maxLength?: number
+    index?: number
+}
+
 @Component
 export default class TextField extends Vue {
-
     /** type 속성 */
     @Prop({ type: String, default: 'text', required: false })
     readonly type!: 'text' | 'number'
@@ -65,12 +70,13 @@ export default class TextField extends Vue {
         /**
          * value가 변경 될때 마다 호출되는 callback(value: string)
          */
-        this.$emit('change', newValue, this.name)
+        this.$emit('change', {
+            value: newValue,
+            name: this.name,
+        })
     }
 
-    onInput() {
-        
-    }
+    onInput() {}
 
     onKeyup(event: KeyboardEvent) {
         const value = (event.target as HTMLInputElement).value

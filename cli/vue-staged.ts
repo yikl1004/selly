@@ -6,6 +6,7 @@ import shell from 'shelljs'
 const projectRoot = path.join(process.cwd())
 
 shell.echo(chalk.green('vuejs type check start!! :)'))
+shell.echo(chalk.yellow(process.cwd()))
 
 try {
     child.execSync(`npx vtc --workspace ${projectRoot} --srcDir ${path.join(projectRoot, 'src')}`, {
