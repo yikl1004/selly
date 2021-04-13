@@ -29,7 +29,6 @@ export default class Layout extends Vue {
     }
 
     mounted(): void {
-        console.log(this)
     }
 
     beforeLeave() {}
