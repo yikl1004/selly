@@ -19,18 +19,20 @@ import _ from 'lodash'
 
 
 export interface OnChangeParameters {
-
+    value: string
+    maxLength?: number
+    index?: number
 }
 
 @Component
 export default class TextField extends Vue {
+    /** type 속성 */
+    @Prop({ type: String, default: 'text', required: false })
+    readonly type!: 'text' | 'number'
 
     /** form에 사용될 id */
     @Prop({ type: String, default: 'textField', required: true })
     readonly id!: string
-
-    @Prop({ type: String, default: 'text', required: false })
-    readonly type?: 'number' | 'text'
 
     /** label태그에 들어갈 텍스트 */
     @Prop({ type: String, default: '', required: true })

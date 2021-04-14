@@ -27,11 +27,12 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import _ from 'lodash'
+import { OnChangeParameters } from '@components/form/TextField.vue'
 
 interface InputElement {
-    id: string;
-    name: string;
-    label: string;
+    id: string
+    name: string
+    label: string
     hiddenLabel?: boolean
     maxLength?: number
     type?: 'text' | 'number'
@@ -43,7 +44,7 @@ export default class Main extends Vue {
         { id: 'cardNumber1', name: 'cardNumber1', label: '첫번째 4자리', hiddenLabel: true, maxLength: 4, type: 'number' },
         { id: 'cardNumber2', name: 'cardNumber2', label: '두번째 4자리', hiddenLabel: true, maxLength: 4, type: 'number' },
         { id: 'cardNumber3', name: 'cardNumber3', label: '세번째 4자리', hiddenLabel: true, maxLength: 4, type: 'number' },
-        { id: 'cardNumber4', name: 'cardNumber4', label: '네번째 4자리', hiddenLabel: true, maxLength: 4, type: 'number' }
+        { id: 'cardNumber4', name: 'cardNumber4', label: '네번째 4자리', hiddenLabel: true, maxLength: 4, type: 'number' },
     ]
     private inputs: HTMLInputElement[] = []
 
