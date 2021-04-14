@@ -4,35 +4,33 @@
         <input
             ref="input"
             :value="value"
-            type="text"
             autocomplete="new-password"
-            :name="name"
-            :required="required"
-            :maxlength="maxLength"
-            :disabled="disabled"
+            :pattern="pattern"
+            v-bind="$attrs"
             @input="onInput"
-            @keyup="onKeyup"
+            @keydown="onKeydown"
         />
     </div>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
+import _ from 'lodash'
+
+
+export interface OnChangeParameters {
+
+}
 
 @Component
 export default class TextField extends Vue {
-
-    /** type 속성 */
-    @Prop({ type: String, default: 'text', required: false })
-    readonly type!: 'text' | 'number'
 
     /** form에 사용될 id */
     @Prop({ type: String, default: 'textField', required: true })
     readonly id!: string
 
-    /** form에 사용될 name */
-    @Prop({ type: String, default: '', required: true })
-    readonly name!: string
+    @Prop({ type: String, default: 'text', required: false })
+    readonly type?: 'number' | 'text'
 
     /** label태그에 들어갈 텍스트 */
     @Prop({ type: String, default: '', required: true })
@@ -42,38 +40,40 @@ export default class TextField extends Vue {
     @Prop({ type: Boolean, default: false, required: false })
     readonly hiddenLabel!: boolean
 
-    /** 필수 입력 여부 */
-    @Prop({ type: Boolean, default: false, required: false })
-    readonly required!: boolean
-
-    /** 최대 입력 글자수 */
-    @Prop({ type: Number, default: undefined, required: false })
-    readonly maxLength!: number | undefined
-
-    /** 비활성화 여부 */
-    @Prop({ type: Boolean, default: false, required: false })
-    readonly disabled!: boolean
-
     private value: string = ''
 
-    get max(): number | undefined {
-        return this.type === 'number' ? this.maxLength : undefined
+    get pattern(): string {
+        // const 
+        return '\\d*'
+    }
+
+    get maxLength(): number {
+        return _.toNumber(this.$attrs['max-length'])
+    }
+
+    get index(): number {
+        return _.toNumber(this.$attrs['data-index'])
     }
 
     @Watch('value')
     changeValue(newValue: string) {
         /**
-         * value가 변경 될때 마다 호출되는 callback(value: string)
+         * value가 변경 될때 마다 호출되는 callback(value: string, index: number, maxLength: number)
          */
-        this.$emit('change', newValue, this.name)
+        this.$emit('change', newValue, this.index, this.maxLength)
     }
 
-    onInput() {
-        
+    onInput(event: InputEvent) {
+        const target = event.target as HTMLInputElement
+        if ( this.type === 'number' && this.value.length >= this.maxLength ) {
+            this.value = this.value
+        } else {
+            this.value = target.value
+        }
     }
 
-    onKeyup(event: KeyboardEvent) {
-        const value = (event.target as HTMLInputElement).value
+    onKeydown(event: KeyboardEvent) {
+        this.$emit('keydown', event)
     }
 
     mounted() {

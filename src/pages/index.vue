@@ -12,8 +12,10 @@
                 :label="input.label"
                 :hidden-label="input.hiddenLabel"
                 :max-length="input.maxLength"
-                @change="(value) => onChange(value, index, input.maxLength)"
+                :data-index="index"
+                @change="onChange"
                 @mounted="mountedInput"
+                @keydown="onKeydown"
             />
             <button type="submit">
                 submit 11
@@ -46,19 +48,56 @@ export default class Main extends Vue {
     private inputs: HTMLInputElement[] = []
 
     onChange(value: string, index: number, maxLength?: number) {
-        console.log('onChange', )
-        const nextTarget = this.inputs[index + 1]
-        if ( value.length === maxLength && nextTarget ) {
-            nextTarget.focus()
-        }
+        this.focusNextInput(index)
     }
 
     onSubmit(a: any) {
         console.log('@@@', a)
     }
 
+    applyMaxLength(event: KeyboardEvent) {
+        const { shiftKey, ctrlKey, metaKey, altKey } = event
+        const target = event.target as HTMLInputElement
+        const { maxLength, type } = target
+        const value = target.value
+        const isBackspace = event.key.toLowerCase() === 'backspace'
+
+        console.log({
+            shiftKey ,ctrlKey ,metaKey ,altKey ,maxLength ,type ,value ,isBackspace
+        })
+
+        const conditions = [
+            type === 'number',
+            value.length >= maxLength,
+            !(shiftKey || ctrlKey || metaKey || altKey || isBackspace)
+        ]
+
+        conditions.every(condition => condition) && 
+            event.preventDefault()
+    }
+
+    focusPreviousInput(event: KeyboardEvent) {
+
+    }
+
+    focusNextInput(currentIndex: number) {
+        const currentTarget = this.inputs[currentIndex]
+        const nextTarget = this.inputs[currentIndex + 1]
+        const conditions = [
+            currentTarget.value.length === currentTarget.maxLength,
+            nextTarget
+        ]
+
+        conditions.every(condition => !!condition) &&
+            nextTarget.focus()
+    }
+
+    onKeydown(event: KeyboardEvent) {
+        this.applyMaxLength(event)
+        this.focusPreviousInput(event)
+    }
+
     mountedInput(el: HTMLInputElement) {
-        console.log('mountedInput', el)
         this.inputs.push(el)
     }
 
