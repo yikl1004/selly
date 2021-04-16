@@ -92,3 +92,11 @@ devDependency
 "@fortawesome/free-solid-svg-icons": "^5.15.3",
 "@fortawesome/vue-fontawesome": "^2.0.2",
 "vue-fragment": "^1.5.2",
+
+
+### common module
+vue-portal
+toast (include animation, bottom to top)
+tooltip
+custom select
+tab(each other case)
