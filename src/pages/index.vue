@@ -11,14 +11,15 @@
                 :name="input.name"
                 :label="input.label"
                 :hidden-label="input.hiddenLabel"
-                :max-length="input.maxLength"
+                :maxlength="input.maxLength"
                 :data-index="index"
                 @change="onChange"
                 @mounted="mountedInput"
                 @keydown="onKeydown"
+                @focus="onFocus"
             />
             <button type="submit">
-                submit 11
+                submit
             </button>
         </form>
     </div>
@@ -47,43 +48,38 @@ export default class Main extends Vue {
         { id: 'cardNumber4', name: 'cardNumber4', label: '네번째 4자리', hiddenLabel: true, maxLength: 4, type: 'number' },
     ]
     private inputs: HTMLInputElement[] = []
+    private currentIndex: number = -1
 
-    onChange(value: string, index: number, maxLength?: number) {
-        this.focusNextInput(index)
+
+    onFocus(index: number) {
+        console.log('onFocus', index)
+        this.currentIndex = index
+    }
+
+    onChange(value: string) {
+        this.focusNextInput(value)
     }
 
     onSubmit(a: any) {
-        console.log('@@@', a)
-    }
-
-    applyMaxLength(event: KeyboardEvent) {
-        const { shiftKey, ctrlKey, metaKey, altKey } = event
-        const target = event.target as HTMLInputElement
-        const { maxLength, type } = target
-        const value = target.value
-        const isBackspace = event.key.toLowerCase() === 'backspace'
-
-        console.log({
-            shiftKey ,ctrlKey ,metaKey ,altKey ,maxLength ,type ,value ,isBackspace
-        })
-
-        const conditions = [
-            type === 'number',
-            value.length >= maxLength,
-            !(shiftKey || ctrlKey || metaKey || altKey || isBackspace)
-        ]
-
-        conditions.every(condition => condition) && 
-            event.preventDefault()
+        console.log('submit data...', a)
     }
 
     focusPreviousInput(event: KeyboardEvent) {
-
+        const currentTarget = this.inputs[this.currentIndex]
+        const prevTarget = this.inputs[this.currentIndex - 1]
+        const conditions = [
+            currentTarget.value.length === 0,
+            prevTarget,
+            event.key.toLowerCase() === 'backspace'
+        ]
+        
+        conditions.every(condition => !!condition) &&
+            prevTarget.focus()
     }
 
-    focusNextInput(currentIndex: number) {
-        const currentTarget = this.inputs[currentIndex]
-        const nextTarget = this.inputs[currentIndex + 1]
+    focusNextInput(value: string) {
+        const currentTarget = this.inputs[this.currentIndex]
+        const nextTarget = this.inputs[this.currentIndex + 1]
         const conditions = [
             currentTarget.value.length === currentTarget.maxLength,
             nextTarget
@@ -94,11 +90,13 @@ export default class Main extends Vue {
     }
 
     onKeydown(event: KeyboardEvent) {
-        this.applyMaxLength(event)
         this.focusPreviousInput(event)
     }
 
     mountedInput(el: HTMLInputElement) {
+        if ( this.inputs.length === this.list.length ) {
+            this.inputs = []
+        }
         this.inputs.push(el)
     }
 

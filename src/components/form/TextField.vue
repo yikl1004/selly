@@ -7,8 +7,10 @@
             autocomplete="new-password"
             :pattern="pattern"
             v-bind="$attrs"
+            :maxlength="maxlength"
             @input="onInput"
             @keydown="onKeydown"
+            @focus="onFocus"
         />
     </div>
 </template>
@@ -42,15 +44,20 @@ export default class TextField extends Vue {
     @Prop({ type: Boolean, default: false, required: false })
     readonly hiddenLabel!: boolean
 
+    /** name 속성 지정 */
+    @Prop({ type: String , default: '', required: true })
+    readonly name!: string
+
+    /** 최대 자릿수 지정 */
+    @Prop({ type: Number , default: Infinity, required: false })
+    readonly maxlength!: number
+
+    /** 타이핑한 값 */
     private value: string = ''
 
     get pattern(): string {
         // const 
         return '\\d*'
-    }
-
-    get maxLength(): number {
-        return _.toNumber(this.$attrs['max-length'])
     }
 
     get index(): number {
@@ -62,20 +69,37 @@ export default class TextField extends Vue {
         /**
          * value가 변경 될때 마다 호출되는 callback(value: string, index: number, maxLength: number)
          */
-        this.$emit('change', newValue, this.index, this.maxLength)
+        this.$emit('change', newValue, this.index, this.maxlength)
+    }
+
+    applyMaxLength(event: KeyboardEvent) {
+        const { shiftKey, ctrlKey, metaKey, altKey } = event
+        const target = event.target as HTMLInputElement
+        const value = target.value
+        const isBackspace = event.key.toLowerCase() === 'backspace'
+
+        const conditions = [
+            this.type === 'number',
+            value.length >= this.maxlength,
+            !(shiftKey || ctrlKey || metaKey || altKey || isBackspace)
+        ]
+
+        conditions.every(condition => condition) && 
+            event.preventDefault()
     }
 
     onInput(event: InputEvent) {
         const target = event.target as HTMLInputElement
-        if ( this.type === 'number' && this.value.length >= this.maxLength ) {
-            this.value = this.value
-        } else {
-            this.value = target.value
-        }
+        this.value = target.value
     }
 
     onKeydown(event: KeyboardEvent) {
+        this.applyMaxLength(event)
         this.$emit('keydown', event)
+    }
+
+    onFocus() {
+        this.$emit('focus', this.index)
     }
 
     mounted() {

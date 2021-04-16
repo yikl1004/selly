@@ -11,7 +11,7 @@
         "tsc-staged": "ts-node --project ./tsconfig.base.json ./cli/tsc-staged.ts $PWD",
         "vue-staged": "ts-node --project ./tsconfig.base.json ./cli/vue-staged.ts",
         "postinstall": "husky install",
-        "story": "start-storybook -p 6006",
+        "story": "start-storybook -p 6006 -c .storybook watch-css -s ./src",
         "build-storybook": "build-storybook"
     },
     "dependencies": {
@@ -36,10 +36,10 @@
     "devDependencies": {
         "@babel/core": "^7.13.14",
         "@egoist/vue-to-react": "^1.1.0",
-        "@storybook/addon-actions": "^6.2.1",
-        "@storybook/addon-essentials": "^6.2.1",
-        "@storybook/addon-links": "^6.2.1",
-        "@storybook/vue": "^6.2.1",
+        "@storybook/addon-actions": "^6.2.8",
+        "@storybook/addon-essentials": "^6.2.8",
+        "@storybook/addon-links": "^6.2.8",
+        "@storybook/vue": "^6.2.8",
         "@types/json-server": "^0.14.3",
         "@types/shelljs": "^0.8.8",
         "@typescript-eslint/eslint-plugin": "^4.20.0",

@@ -1,0 +1,38 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Introduce/Typeface/Contents" parameters={{ docsOnly: true }} />
+
+<style>{`
+@import url("styles/font.scss");
+.container.typeface-contents {
+    padding-left: 0;
+    padding-right: 0;
+    margin-top: 40px;
+    font-family: 'Spoqa Han Sans';
+}
+.container.typeface-contents .title {
+    font-size: 20px;
+    line-height: 3;
+    border-bottom: 1px solid #000;
+}
+.container.typeface-contents .section {
+    display: flex;
+}
+.container.typeface-contents .section .type {
+}
+.container.typeface-contents .section .contents {
+}
+`}</style>
+
+# Typeface
+지정된 폰트는 롯데카드만의 디자인 구조와 스타일을 형성하기 위해 선정된 것입니다.
+이 가이드에 지정된 서체사용을  권장하며,  특성과 내용에 따라 제한적으로 다른 서체사용이 가능합니다.
+
+사용되는 모든 서체는 효과적인 정보 전달 및 가독성을 고려하여 균형있는 자간과 행간을 유지해야 합니다.
+
+텍스트의 컬러는 배경색과 너무 유사할 경우 가독성이 떨어집니다.
+최소 4.5:1의 대비(장애인차별금지법)를 가져야 하며, 가독성이 가장 좋은 비율은 7:1이 적당합니다.
+
+<div className="container typeface-contents">
+    <p className="title bold">Headline</p>
+</div>
