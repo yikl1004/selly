@@ -3,12 +3,10 @@ import { Meta } from '@storybook/addon-docs/blocks';
 <Meta title="Introduce/Typeface/Contents" parameters={{ docsOnly: true }} />
 
 <style>{`
-@import url("styles/font.scss");
 .container.typeface-contents {
     padding-left: 0;
     padding-right: 0;
     margin-top: 40px;
-    font-family: 'Spoqa Han Sans';
 }
 .container.typeface-contents .title {
     font-size: 20px;
@@ -17,10 +15,63 @@ import { Meta } from '@storybook/addon-docs/blocks';
 }
 .container.typeface-contents .section {
     display: flex;
+    margin-top: 40px;
 }
 .container.typeface-contents .section .type {
+    width: 90px;
+    flex-shrink: 0;
+    font-size: 30px;
+    letter-spacing: -0.5px;
+    color: #222;
 }
 .container.typeface-contents .section .contents {
+    display: inherit;
+    width: 100%;
+    flex-direction: column;
+}
+.container.typeface-contents .section .contents .values {
+    display: inherit;
+    flex-direction: row;
+}
+.container.typeface-contents .section .contents .values .item {
+    display: inherit;
+    flex-direction: column;
+}
+.container.typeface-contents .section .contents .values .item + .item {
+    margin-left: 26px;
+}
+.container.typeface-contents .section .contents .values .item .sup {
+    font-size: 12px;
+    color: #999;
+    opacity: 0.4;
+    letter-spacing: -0.2px;
+}
+.container.typeface-contents .section .contents .values .item .value {
+    font-size: 20px;
+}
+.container.typeface-contents .section .contents .values .item .value.red {
+    color: #ff3b30;
+}
+.container.typeface-contents .section .contents .paragraph {
+    display: inherit;
+    flex-direction: column;
+    margin-top: 20px;
+}
+.container.typeface-contents .section .contents .paragraph .col {
+    display: inherit;
+    flex-direction: row;
+}
+.container.typeface-contents .section .contents .paragraph .col + .col {
+    margin-top: 35px;
+}
+.container.typeface-contents .section .contents .paragraph .item {
+    font-size: 20px;
+    color: #222;
+    letter-spacing: -0.5px;
+    line-height: 1.4;
+}
+.container.typeface-contents .section .contents .paragraph .item + .item {
+    margin-left: 40px;
 }
 `}</style>
 
@@ -35,4 +86,76 @@ import { Meta } from '@storybook/addon-docs/blocks';
 
 <div className="container typeface-contents">
     <p className="title bold">Headline</p>
+    <div className="section">
+        <div className="type bold">H2</div>
+        <div className="contents">
+            <div className="values">
+                <div className="item">
+                    <span className="sup bold">size</span>
+                    <span className="value red medium">20px</span>
+                </div>
+                <div className="item">
+                    <span className="sup bold">spacing</span>
+                    <span className="value medium">-0.5px</span>
+                </div>
+                <div className="item">
+                    <span className="sup bold">line height</span>
+                    <span className="value medium">28px</span>
+                </div>
+            </div>
+            <div className="paragraph">
+                <div className="col">
+                    <p className="item bold">
+                        고객 삶의 여정을 <br/>
+                        잘 이해하는 <br/>
+                        Lifetime Value Creator, LOCA
+                    </p>
+                    <p className="item bold" style={{ color: '#666' }}>
+                        고객 삶의 여정을 <br/>
+                        잘 이해하는 <br/>
+                        Lifetime Value Creator, LOCA
+                    </p>
+                    <p className="item bold" style={{ color: '#999' }}>
+                        고객 삶의 여정을 <br/>
+                        잘 이해하는 <br/>
+                        Lifetime Value Creator, LOCA
+                    </p>
+                </div>
+                <div className="col">
+                    <p className="item medium">
+                        고객 삶의 여정을 <br/>
+                        잘 이해하는 <br/>
+                        Lifetime Value Creator, LOCA
+                    </p>
+                    <p className="item medium" style={{ color: '#666' }}>
+                        고객 삶의 여정을 <br/>
+                        잘 이해하는 <br/>
+                        Lifetime Value Creator, LOCA
+                    </p>
+                    <p className="item medium" style={{ color: '#999' }}>
+                        고객 삶의 여정을 <br/>
+                        잘 이해하는 <br/>
+                        Lifetime Value Creator, LOCA
+                    </p>
+                </div>
+                <div className="col">
+                    <p className="item regular">
+                        고객 삶의 여정을 <br/>
+                        잘 이해하는 <br/>
+                        Lifetime Value Creator, LOCA
+                    </p>
+                    <p className="item regular" style={{ color: '#666' }}>
+                        고객 삶의 여정을 <br/>
+                        잘 이해하는 <br/>
+                        Lifetime Value Creator, LOCA
+                    </p>
+                    <p className="item regular" style={{ color: '#999' }}>
+                        고객 삶의 여정을 <br/>
+                        잘 이해하는 <br/>
+                        Lifetime Value Creator, LOCA
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

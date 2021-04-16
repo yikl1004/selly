@@ -6,7 +6,7 @@ addons.setConfig({
     theme: create({
         base: 'light',
         // Typography
-        fontBase: '"Spoqa Han Sans", "Open Sans", sans-serif',
+        fontBase: '"Spoqa Han Sans Neo", "Open Sans", sans-serif',
         fontCode: 'monospace',
     })
 })
