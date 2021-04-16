@@ -4,11 +4,11 @@ import router from '@/router'
 import store from '@/stores'
 import { initialize } from '@/utils/index'
 
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { faUserSecret } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-library.add(faUserSecret)
-Vue.component('FAIcon', FontAwesomeIcon)
+// import { library } from '@fortawesome/fontawesome-svg-core'
+// import { faUserSecret } from '@fortawesome/free-solid-svg-icons'
+// import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+// library.add(faUserSecret)
+// Vue.component('FAIcon', FontAwesomeIcon)
 
 Vue.config.productionTip = false
 
