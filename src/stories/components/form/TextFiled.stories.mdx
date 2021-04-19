@@ -30,3 +30,7 @@ export const Template = (args, { argTypes }) => ({
 </Canvas>
 
 <ArgsTable of={ TextField } />
+
+<Story name="No Label" args={{ id: 'my-text', hiddenLabel: true }}>
+    {Template.bind({})}
+</Story>
