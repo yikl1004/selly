@@ -1,0 +1,48 @@
+import { Meta, Story, Props, Canvas, Wrapper, ArgsTable, Preview } from '@storybook/addon-docs/blocks';
+import BasicButton from '@components/common/BasicButton.vue';
+
+<Meta
+    title="Components/Button"
+    component={BasicButton}
+    argTypes={{
+        onClick: { 
+            category: 'events',
+            action: 'onClick'
+        }
+    }}
+/>
+
+# Basic Button
+
+사용자 행동을 유도하는 용도로 쓰이는 라운드 형태를 접목한 사각형 형태의 버튼  
+버튼의 사용처에 따라 크기(Large/Medium/Small과 Tiny)로 사용  
+너비는 배치 상황과 환경에 따라 가변적으로 사용  
+의미와 우선 순위에 따라 색상(Primary Color의 변형 / Gray)으로 구분  
+
+export const Template = (args, { argTypes }) => ({
+    props: Object.keys(argTypes),
+    components:{ BasicButton },
+    template: `<BasicButton v-bind="$props" @click="onClick">확인</BasicButton>`,
+})
+
+<Canvas>
+    <Story name="Large" args={{ size: 'large' }}>
+        {Template.bind({})}
+    </Story>
+</Canvas>
+
+<ArgsTable of={ BasicButton } />
+
+## Medium
+<Preview>
+    <Story name="Medium Size" args={{ size: 'medium' }}>
+        {Template.bind({})}
+    </Story>
+</Preview>
+
+## Small
+<Preview>
+    <Story name="Small" args={{ size: 'small' }}>
+        {Template.bind({})}
+    </Story>
+</Preview>

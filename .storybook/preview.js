@@ -1,9 +1,16 @@
+import { addParameters } from '@storybook/vue'
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport'
-// import React from 'react'
-// import { render } from 'react-dom'
-// import toReact from '@egoist/vue-to-react'
+import Vue from 'vue'
+import Vuex from 'vuex'
+import { registerCommonComponent, registerPlugins } from '@utils/index'
+import '../src/styles/index.scss'
+import '../src/styles/storybook.md.scss'
 
-export const parameters = {
+Vue.use(Vuex)
+registerPlugins()
+registerCommonComponent()
+
+addParameters({
     // docs: {
     //     prepareForInline: (storyFn, { args }) => {
     //         const Story = toReact(storyFn())
@@ -21,4 +28,4 @@ export const parameters = {
         viewports: INITIAL_VIEWPORTS,
         defaultViewport: 'iphone12',
     },
-}
+})

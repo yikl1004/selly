@@ -1,11 +1,9 @@
 import Vue from 'vue'
-import { Meta, Story, Props, Canvas, Wrapper, ArgsTable } from '@storybook/addon-docs/blocks';
+import { Meta, Story, Canvas, Wrapper, ArgsTable } from '@storybook/addon-docs/blocks';
 import FileUploader from '@components/form/FileUploader.vue';
-import ImageUploader from 'vue-image-upload-resize'
-Vue.use(ImageUploader)
 
 <Meta
-    title="Components/common/form/File Uploader"
+    title="Components/form/File Uploader"
     component={FileUploader}
     argTypes={{
         onChanged: {

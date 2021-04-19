@@ -38,7 +38,7 @@ export default class Header extends Vue {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .layout-header {
     height: 50px;
     background-color: #000;

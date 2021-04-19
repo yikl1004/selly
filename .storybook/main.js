@@ -10,21 +10,9 @@ module.exports = {
     },
     webpackFinal: async config => {
         config.resolve.plugins.push(new TsconfigPathsPlugin({}))
-        // config.module.rules.push({
-        //     test: /\.scss$/,
-        //     use: ['style-loader', 'css-loader', 'sass-loader'],
-        // })
         config.module.rules.push({
-            test: /\.(woff|woff2|eot|ttf|svg)$/,
-            use: [
-                {
-                    loader: 'file-loader',
-                    query: {
-                        name: '[name].[ext]'
-                    }
-                }
-            ],
-            include: path.resolve(__dirname, '../')
+            test: /\.scss$/,
+            use: ['style-loader', 'css-loader', 'sass-loader'],
         })
         return config
     },
