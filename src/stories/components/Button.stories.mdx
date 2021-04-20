@@ -1,4 +1,4 @@
-import { Meta, Story, Props, Canvas, Wrapper, ArgsTable, Preview } from '@storybook/addon-docs/blocks';
+import { Meta, Story, Props, Canvas, Wrapper, ArgsTable, Preview, Source } from '@storybook/addon-docs/blocks';
 import BasicButton from '@components/common/BasicButton.vue';
 
 <Meta
@@ -21,7 +21,6 @@ import BasicButton from '@components/common/BasicButton.vue';
 
 export const Template = (args, { argTypes }) => ({
     props: Object.keys(argTypes),
-    components:{ BasicButton },
     template: `<BasicButton v-bind="$props" @click="onClick">확인</BasicButton>`,
 })
 

@@ -11,12 +11,6 @@ registerPlugins()
 registerCommonComponent()
 
 addParameters({
-    // docs: {
-    //     prepareForInline: (storyFn, { args }) => {
-    //         const Story = toReact(storyFn())
-    //         return <Story {...args} />
-    //     },
-    // },
     actions: { argTypesRegex: '^on[A-Z].*' },
     controls: {
         matchers: {

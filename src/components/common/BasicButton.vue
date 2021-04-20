@@ -1,7 +1,7 @@
 <template>
     <button :type="type" class="basic" :class="[$attrs.class, size]" :disabled="disabled" @click="onClick">
         <span class="text">
-            <!-- @slot 버튼 텍스트-->
+            <!-- @slot 버튼 텍스트 -->
             <slot />
         </span>
     </button>
