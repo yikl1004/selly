@@ -1,7 +1,6 @@
 <template>
     <button :type="type" class="basic" :class="[$attrs.class, size]" :disabled="disabled" @click="onClick">
         <span class="text">
-            <!-- @slot 버튼 텍스트 -->
             <slot />
         </span>
     </button>
@@ -27,9 +26,8 @@ export default class BasicButton extends Vue {
     onClick(event: PointerEvent) {
         /**
          * click 이벤트
-         * @event click
          */
-        this.$emit('click', event)
+        this.$emit('onClick', event)
     }
 }
 </script>
