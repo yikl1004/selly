@@ -1,0 +1,65 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Introduce/test" parameters={{ docsOnly: true }} />
+
+<style>{`
+.container {
+    padding-left: 0;
+    padding-right: 0;
+    margin-top: 40px;
+    font-family: 'Spoqa Han Sans';
+}
+.container.typeface {}
+.container.typeface .description {
+    margin-bottom: 140px;
+}
+.container.typeface .description .badge {
+    width: 212px;
+    height: 60px;
+    background-color: #000;
+    color: #fff;
+    line-height: 60px;
+    border-radius: 10px;
+    text-align: center;
+    font-size: 16px;
+}
+.container.typeface .description .title {
+    margin: 44px 0 37px 0;
+    font-size: 60px;
+    letter-spacing: -2px;
+    line-height: 1;
+}
+.container.typeface .description .text {
+    font-size: 16px;
+}
+
+.container.typeface .section {
+    display: flex;
+}
+.container.typeface .section + .section {
+    margin-top: 100px;
+}
+.container.typeface .section .type {
+    width: 120px;
+    flex-shrink: 0;
+    line-height: 3;
+    color: #adadad;
+}
+.container.typeface .section .content {
+}
+.container.typeface .section .content .line-height-1 {
+    line-height: 1;
+}
+.container.typeface .section .content .font-size-56 {
+    font-size: 56px;
+}
+.container.typeface .section .content .font-size-40 {
+    font-size: 40px;
+}
+`}</style>
+
+# test
+
+<div className="container typeface">
+
+</div>
