@@ -2,23 +2,28 @@
     <div class="text-field">
         <label :for="id" :class="{ ir: hiddenLabel }">{{ label }}</label>
         <input
+            :id="id"
             ref="input"
             :value="value"
             autocomplete="new-password"
             :pattern="pattern"
             v-bind="$attrs"
             :maxlength="maxlength"
+            :placeholder="placeholder"
             @input="onInput"
             @keydown="onKeydown"
             @focus="onFocus"
         />
+        <button type="button" class="clear" @click="clearValue">
+            <i />
+            <span class="ir">전체삭제</span>
+        </button>
     </div>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 import _ from 'lodash'
-
 
 export interface OnChangeParameters {
     value: string
@@ -45,18 +50,21 @@ export default class TextField extends Vue {
     readonly hiddenLabel!: boolean
 
     /** name 속성 지정 */
-    @Prop({ type: String , default: '', required: true })
+    @Prop({ type: String, default: '', required: true })
     readonly name!: string
 
     /** 최대 자릿수 지정 */
-    @Prop({ type: Number , default: Infinity, required: false })
+    @Prop({ type: Number, default: Infinity, required: false })
     readonly maxlength!: number
+
+    @Prop({ type: String, default: '', required: false })
+    readonly placeholder!: string
 
     /** 타이핑한 값 */
     private value: string = ''
 
     get pattern(): string {
-        // const 
+        // const
         return '\\d*'
     }
 
@@ -81,11 +89,10 @@ export default class TextField extends Vue {
         const conditions = [
             this.type === 'number',
             value.length >= this.maxlength,
-            !(shiftKey || ctrlKey || metaKey || altKey || isBackspace)
+            !(shiftKey || ctrlKey || metaKey || altKey || isBackspace),
         ]
 
-        conditions.every(condition => condition) && 
-            event.preventDefault()
+        conditions.every(condition => condition) && event.preventDefault()
     }
 
     onInput(event: InputEvent) {
@@ -95,17 +102,81 @@ export default class TextField extends Vue {
 
     onKeydown(event: KeyboardEvent) {
         this.applyMaxLength(event)
+
+        /**
+         * keydown 이벤트
+         * @event keydown
+         */
         this.$emit('keydown', event)
     }
 
     onFocus() {
+        /**
+         * focus 이벤트
+         * @event focus
+         */
         this.$emit('focus', this.index)
     }
 
     mounted() {
+        /**
+         * mounted 이벤트
+         * @event mounted
+         */
         this.$emit('mounted', this.$refs.input)
+    }
+
+    clearValue() {
+        // TODO: 전체 value 삭제하는 기능 추가해야함
     }
 }
 </script>
 
-<style scoped></style>
+<style lang="scss" scoped>
+.text-field {
+    position: relative;
+
+    label {
+        font-size: 14px;
+        font-weight: normal;
+        line-height: normal;
+        letter-spacing: -0.5px;
+        color: #666;
+        display: block;
+        margin-bottom: 7px;
+    }
+
+    input {
+        border-radius: 10px;
+        border: solid 1px #ebebeb;
+        font-size: 16px;
+        font-weight: 500;
+        line-height: normal;
+        letter-spacing: -0.5px;
+        color: #222;
+        height: 56px;
+        box-sizing: border-box;
+        max-width: 600px;
+        width: 100%;
+        padding: 19px 20px 18px;
+
+        &::-webkit-input-placeholder {
+            color: #bbb;
+        }
+
+        &:focus {
+            outline: none;
+            border-color: #544944;
+        }
+    }
+
+    button.clear {
+        width: 24px;
+        height: 24px;
+        background: transparent;
+
+        i {
+        }
+    }
+}
+</style>
