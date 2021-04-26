@@ -12,6 +12,7 @@ module.exports = {
         resolve: {
             alias: {
                 '@styles': path.join(__dirname, 'src/styles'),
+                '@asstes': path.join(__dirname, 'src/assets'),
             },
             extensions: ['.vue', 'tsx'],
         },

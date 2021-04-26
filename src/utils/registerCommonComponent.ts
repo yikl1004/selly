@@ -1,5 +1,9 @@
 import Vue, { VueConstructor } from 'vue'
 import _ from 'lodash'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { fas } from '@fortawesome/free-solid-svg-icons'
+import { far } from '@fortawesome/free-regular-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 // components
 import componentList from '@components/common'
@@ -9,6 +13,9 @@ const registerCommonComponent = (): void => {
         // 배열 원소가 1개 뿐이므로 index는 0
         const params = Object.entries(componentInfo)[0]
         Vue.component(...params)
+
+        library.add(fas, far)
+        Vue.component('FWIcon', FontAwesomeIcon)
     })
     console.log('common components registered...')
 }

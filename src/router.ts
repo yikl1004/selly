@@ -4,6 +4,7 @@ import VueRouter, { RouteConfig } from 'vue-router'
 import Main from '@pages/index.vue'
 import Example from '@pages/example/index.vue'
 import Sales from '@pages/sales/index.vue'
+import CommercialReport from '@pages/marketing/commercial-report/index.vue'
 
 Vue.use(VueRouter)
 
@@ -25,13 +26,21 @@ const routes: Array<RouteConfig> = [
         name: 'Example',
         component: Example,
         meta: {
-            layout: 'none',
+            layout: 'default',
         },
     },
     {
         path: '/sales',
         name: 'Sales',
         component: Sales,
+        meta: {
+            layout: 'default',
+        },
+    },
+    {
+        path: '/marketing/commercial-report',
+        name: 'commercialReport',
+        component: CommercialReport,
         meta: {
             layout: 'default',
         },

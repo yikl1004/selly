@@ -50,7 +50,6 @@ export default class Main extends Vue {
     private inputs: HTMLInputElement[] = []
     private currentIndex: number = -1
 
-
     onFocus(index: number) {
         console.log('onFocus', index)
         this.currentIndex = index
@@ -67,26 +66,17 @@ export default class Main extends Vue {
     focusPreviousInput(event: KeyboardEvent) {
         const currentTarget = this.inputs[this.currentIndex]
         const prevTarget = this.inputs[this.currentIndex - 1]
-        const conditions = [
-            currentTarget.value.length === 0,
-            prevTarget,
-            event.key.toLowerCase() === 'backspace'
-        ]
-        
-        conditions.every(condition => !!condition) &&
-            prevTarget.focus()
+        const conditions = [currentTarget.value.length === 0, prevTarget, event.key.toLowerCase() === 'backspace']
+
+        conditions.every(condition => !!condition) && prevTarget.focus()
     }
 
     focusNextInput(value: string) {
         const currentTarget = this.inputs[this.currentIndex]
         const nextTarget = this.inputs[this.currentIndex + 1]
-        const conditions = [
-            currentTarget.value.length === currentTarget.maxLength,
-            nextTarget
-        ]
+        const conditions = [currentTarget.value.length === currentTarget.maxLength, nextTarget]
 
-        conditions.every(condition => !!condition) &&
-            nextTarget.focus()
+        conditions.every(condition => !!condition) && nextTarget.focus()
     }
 
     onKeydown(event: KeyboardEvent) {
@@ -94,16 +84,13 @@ export default class Main extends Vue {
     }
 
     mountedInput(el: HTMLInputElement) {
-        if ( this.inputs.length === this.list.length ) {
+        if (this.inputs.length === this.list.length) {
             this.inputs = []
         }
         this.inputs.push(el)
     }
 
-    mounted() {
-        const refs = this.$refs
-        console.log(refs.textField)
-    }
+    mounted() {}
 }
 </script>
 

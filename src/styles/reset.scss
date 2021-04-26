@@ -71,7 +71,7 @@ iframe {
 }
 
 textarea {
-    -webkit-border-radius: 0;
+    border-radius: 0;
     -webkit-appearance: none;
     resize: none;
 }
@@ -89,6 +89,7 @@ address {
 input,
 select {
     vertical-align: middle;
+    -webkit-appearance: none;
 }
 
 table {

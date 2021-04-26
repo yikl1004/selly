@@ -1,11 +1,17 @@
 import Vue from 'vue'
 import { ArgTypes, Meta, Story } from '@storybook/vue'
 import TextField from '@components/form/TextField.vue'
+import getProps from '../../assets/getProps'
 
 export default {
     title: 'Components/form/TextFiled',
     component: TextField,
-    argTypes: {},
+    argTypes: {
+        type: {
+            options: ['text', 'number'],
+            control: { type: 'select' },
+        },
+    },
     parameters: {
         docs: {
             description: {
@@ -18,14 +24,48 @@ export default {
 
 interface Args {}
 
-const Template: Story<Args> = (args, { argTypes }) => ({
-    props: Object.keys(argTypes),
-    template: '<TextField v-bind="$props" />',
-})
+const Template: Story<Args> = (args, { argTypes }) => {
+    console.log(getProps(argTypes))
+    return {
+        props: getProps(argTypes),
+        template: `<TextField v-bind="$props" />`,
+    }
+}
 
 export const Primary = Template.bind({})
 Primary.args = {
     id: 'my-text',
     label: '소득구분',
     placeholder: '소득구분 입력',
+}
+
+export const NumberType = Template.bind({})
+NumberType.args = {
+    id: 'my-text-number',
+    label: '소득구분',
+    placeholder: '소득구분 입력',
+    type: 'number',
+}
+
+export const SeperateNumberType = Template.bind({})
+SeperateNumberType.args = {
+    id: 'my-seperate-number',
+    label: '희망한도',
+    unit: '만원',
+    placeholder: '만원단위',
+}
+
+export const Error = Template.bind({})
+Error.args = {
+    id: 'error-example',
+    label: '희망한도',
+    placeholder: '만원단위',
+    class: 'error',
+}
+
+export const Success = Template.bind({})
+Success.args = {
+    id: 'success-example',
+    label: '희망한도',
+    placeholder: '만원단위',
 }

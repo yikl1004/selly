@@ -56,7 +56,7 @@ export default class SideMenu extends Vue {
             children: [
                 {
                     text: '상권분석 리포트',
-                    href: '/',
+                    href: '/marketing/commercial-report',
                 },
                 {
                     text: '마케팅 설계 안내',
