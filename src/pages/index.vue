@@ -27,7 +27,6 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import _ from 'lodash'
 import { OnChangeParameters } from '@components/form/TextField.vue'
 
 interface InputElement {

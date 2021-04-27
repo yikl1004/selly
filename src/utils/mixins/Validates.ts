@@ -1,5 +1,4 @@
 import { Component, Vue } from 'vue-property-decorator'
-import _ from 'lodash'
 
 @Component
 export default class Validates extends Vue {

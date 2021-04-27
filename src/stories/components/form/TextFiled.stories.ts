@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import { ArgTypes, Meta, Story } from '@storybook/vue'
 import TextField from '@components/form/TextField.vue'
+import _ from 'lodash'
 import getProps from '../../assets/getProps'
 
 export default {
@@ -44,14 +45,21 @@ NumberType.args = {
     id: 'my-text-number',
     label: '소득구분',
     placeholder: '소득구분 입력',
-    type: 'number',
+    // type: 'number',
+}
+
+export const Readonly = Template.bind({})
+Readonly.args = {
+    id: 'my-readonly',
+    label: '소득구분',
+    defaultValue: '안녕?',
+    readonly: true,
 }
 
 export const SeperateNumberType = Template.bind({})
 SeperateNumberType.args = {
     id: 'my-seperate-number',
     label: '희망한도',
-    unit: '만원',
     placeholder: '만원단위',
 }
 
@@ -60,7 +68,11 @@ Error.args = {
     id: 'error-example',
     label: '희망한도',
     placeholder: '만원단위',
-    class: 'error',
+    defaultValue: '5674',
+    type: 'seperateNumber',
+    validate: (value: string) => _.toNumber(value) < 3500,
+    successMessage: '정확히 입력하셨습니다',
+    errorMessage: '한도 초과입니다.',
 }
 
 export const Success = Template.bind({})
@@ -68,4 +80,9 @@ Success.args = {
     id: 'success-example',
     label: '희망한도',
     placeholder: '만원단위',
+    defaultValue: '3200',
+    type: 'seperateNumber',
+    validate: (value: string) => _.toNumber(value) < 3500,
+    successMessage: '정확히 입력하셨습니다',
+    errorMessage: '한도 초과입니다.',
 }

@@ -8,7 +8,6 @@
                 :value="displayValue"
                 autocomplete="new-password"
                 :pattern="pattern"
-                v-bind="$attrs"
                 :maxlength="maxlength"
                 :placeholder="placeholder"
                 :type="inputType"
@@ -20,7 +19,7 @@
             <span v-if="unit" class="unit">
                 {{ unit }}
             </span>
-            <button v-show="!!value.length" type="button" class="clear" @click="clearValue">
+            <button v-if="!readonly && !!value.length" type="button" class="clear" @click="clearValue">
                 <i />
                 <span class="ir">전체삭제</span>
             </button>
@@ -32,8 +31,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue, Watch, Mixins } from 'vue-property-decorator'
-import _ from 'lodash'
+import { Component, Prop, Watch, Mixins } from 'vue-property-decorator'
 import Validates from '@utils/mixins/Validates'
 
 export interface OnChangeParameters {
@@ -59,11 +57,11 @@ export default class TextField extends Mixins(Validates) {
      */
 
     /** type 속성 */
-    @Prop({ type: String, default: 'text', required: false })
+    @Prop({ type: String, default: 'text' })
     readonly type!: 'text' | 'number' | 'seperateNumber'
 
     /** form에 사용될 id */
-    @Prop({ type: String, default: 'textField', required: true })
+    @Prop({ type: String, required: true })
     readonly id!: string
 
     /** label태그에 들어갈 텍스트 */
@@ -71,7 +69,7 @@ export default class TextField extends Mixins(Validates) {
     readonly label!: string
 
     /** label을 비노출여부 */
-    @Prop({ type: Boolean, default: false, required: false })
+    @Prop(Boolean)
     readonly hiddenLabel!: boolean
 
     /** name 속성 지정 */
@@ -79,39 +77,44 @@ export default class TextField extends Mixins(Validates) {
     readonly name!: string
 
     /** 최대 자릿수 지정 */
-    @Prop({ type: Number, default: Infinity, required: false })
+    @Prop({ type: Number, default: 9999 })
     readonly maxlength!: number
 
     /** 입력 전 표시될 가이드 텍스트 */
-    @Prop({ type: String, default: '', required: false })
+    @Prop({ type: String, default: '' })
     readonly placeholder!: string
 
     /** 읽기전용 여부 */
-    @Prop({ type: Boolean, default: false, required: false })
+    @Prop({ type: Boolean, default: false })
     readonly readonly!: boolean
 
     /** 단위 표시 */
-    @Prop({ type: String, default: '', required: false })
+    @Prop({ type: String, default: '' })
     readonly unit!: string
 
     /** 유효성 검사 */
-    @Prop({ type: Function, required: false })
+    @Prop(Function)
     readonly validate!: Validate
 
     /** 에러 메세지 */
-    @Prop({ type: String })
+    @Prop(String)
     readonly errorMessage!: string
 
     /** 성공 메세지 */
-    @Prop({ type: String })
+    @Prop(String)
     readonly successMessage!: string
+
+    /** 기본 값 */
+    @Prop(String)
+    readonly defaultValue!: string
 
     /**
      * @category DATA(State)
      */
 
     /** 실제 값 */
-    private value: string = ''
+    private value: string = this.defaultValue || ''
+    private dirty: boolean = false
 
     /**
      * @category COMPUTED
@@ -121,7 +124,7 @@ export default class TextField extends Mixins(Validates) {
     }
 
     get index(): number {
-        return _.toNumber(this.$attrs['data-index'])
+        return this._.toNumber(this.$attrs['data-index'])
     }
 
     get inputType(): InputType {
@@ -136,19 +139,21 @@ export default class TextField extends Mixins(Validates) {
     /** 타이핑한 값 */
     get displayValue(): string {
         const conditions = [this.value, this.type === 'seperateNumber']
-        return conditions.every(condition => condition) ? _.toNumber(this.value).toLocaleString() : this.value
+        return conditions.every(condition => condition) ? this._.toNumber(this.value).toLocaleString() : this.value
     }
 
     /** 에러 여부 */
     get isError(): string | undefined {
-        if (this.value.length) {
+        const conditions = [this.value.length, typeof this.validate === 'function']
+        if (conditions.every(condition => condition)) {
             return this.validate(this.value) ? 'success' : 'error'
         }
     }
 
     /** 에러 메세지 */
     get message(): string | undefined {
-        if (this.value.length) {
+        const conditions = [this.value.length, typeof this.validate === 'function']
+        if (conditions.every(condition => condition)) {
             return this.validate(this.value) ? this.successMessage : this.errorMessage
         }
     }
@@ -203,6 +208,7 @@ export default class TextField extends Mixins(Validates) {
 
     onInput(event: InputEvent) {
         const target = event.target as HTMLInputElement
+        this.dirty = true
         this.value = target.value.replace(/\,/g, '')
     }
 

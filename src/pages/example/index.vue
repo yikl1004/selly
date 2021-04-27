@@ -16,7 +16,6 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import _ from 'lodash'
 
 @Component
 export default class extends Vue {
@@ -25,7 +24,7 @@ export default class extends Vue {
      * @title Custom
      */
     validate(value: string): boolean {
-        return _.toNumber(value) < 3500
+        return this._.toNumber(value) < 3500
     }
 }
 </script>

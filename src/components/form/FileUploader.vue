@@ -22,7 +22,6 @@
 
 <script lang="ts">
 import { Component, Emit, Prop, Vue } from 'vue-property-decorator'
-import _ from 'lodash'
 
 declare global {
     interface ImageUploaderVervoseFile {
@@ -73,10 +72,10 @@ export default class FileUploader extends Vue {
 
         if (result < 1024) {
             unit = 'KB'
-            size = _.toNumber(result.toFixed()) * 1
+            size = this._.toNumber(result.toFixed()) * 1
         } else {
             unit = 'MB'
-            size = _.toNumber((result / 1024).toFixed(2))
+            size = this._.toNumber((result / 1024).toFixed(2))
         }
 
         this.blobUrl = url
