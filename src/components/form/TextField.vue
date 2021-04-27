@@ -1,5 +1,5 @@
 <template>
-    <div class="text-field">
+    <div class="text-field" :class="isError">
         <label :for="id" :class="{ ir: hiddenLabel }">{{ label }}</label>
         <div class="input-area">
             <input
@@ -25,15 +25,16 @@
                 <span class="ir">전체삭제</span>
             </button>
         </div>
-        <p v-if="value.length > 0" class="message">
-            {{ isError ? errorMessage : successMessage }}
+        <p v-if="message" class="message">
+            {{ message }}
         </p>
     </div>
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
+import { Component, Prop, Vue, Watch, Mixins } from 'vue-property-decorator'
 import _ from 'lodash'
+import Validates from '@utils/mixins/Validates'
 
 export interface OnChangeParameters {
     value: string
@@ -46,19 +47,13 @@ interface Validate {
 }
 
 /**
- * TODO
- * 1. validation에 따른 success, failed 스타일 처리 해야함
+ * TODO:
  * 2. label에 표시될 tooltip이 아직 공통 컴포넌트가 없음, 해야함
  * 3. 단위 표시할 텍스트 노출방식에 대한 논의가 필요함
  */
 
-const MESSAGE = {
-    error: '희망한도를 입력해 주세요.',
-    success: '성공메시지 입니다',
-}
-
-@Component
-export default class TextField extends Vue {
+@Component<TextField>({})
+export default class TextField extends Mixins(Validates) {
     /**
      * @category PROPS
      */
@@ -118,9 +113,6 @@ export default class TextField extends Vue {
     /** 실제 값 */
     private value: string = ''
 
-    /** 에러 메세지 */
-    private message: string = MESSAGE.error
-
     /**
      * @category COMPUTED
      */
@@ -143,19 +135,27 @@ export default class TextField extends Vue {
 
     /** 타이핑한 값 */
     get displayValue(): string {
-        if (this.value && this.type === 'seperateNumber') {
-            return _.toNumber(this.value).toLocaleString()
-        }
-        return this.value
+        const conditions = [this.value, this.type === 'seperateNumber']
+        return conditions.every(condition => condition) ? _.toNumber(this.value).toLocaleString() : this.value
     }
 
     /** 에러 여부 */
-    get isError(): boolean {
-        if (this.validate(this.value)) {
-            return false
+    get isError(): string | undefined {
+        if (this.value.length) {
+            return this.validate(this.value) ? 'success' : 'error'
         }
+    }
 
-        return true
+    /** 에러 메세지 */
+    get message(): string | undefined {
+        if (this.value.length) {
+            return this.validate(this.value) ? this.successMessage : this.errorMessage
+        }
+    }
+
+    /** 숫자만 입력 받는 타입인지 여부 */
+    get isNumberType(): boolean {
+        return ['number', 'seperateNumber'].some(type => type === this.type)
     }
 
     /**
@@ -176,16 +176,11 @@ export default class TextField extends Vue {
      */
 
     applyMaxLength(event: KeyboardEvent) {
-        const { shiftKey, ctrlKey, metaKey, altKey } = event
+        const isMetaKeys = this.isMetaKeys(event)
         const target = event.target as HTMLInputElement
         const value = target.value
-        const isBackspace = event.key.toLowerCase() === 'backspace'
 
-        const conditions = [
-            this.type === 'number' || this.type === 'seperateNumber',
-            value.length >= this.maxlength,
-            !(shiftKey || ctrlKey || metaKey || altKey || isBackspace),
-        ]
+        const conditions = [this.isNumberType, value.length >= this.maxlength, !isMetaKeys]
 
         conditions.every(condition => condition) && event.preventDefault()
     }
@@ -200,6 +195,10 @@ export default class TextField extends Vue {
         /**
          * @description 텍스트가 아닌 숫자만 입력 가능하게...
          */
+        if (this.isNumberType) {
+            const conditions = [this.isString(event), !this.isMetaKeys(event)]
+            conditions.every(condition => condition) && event.preventDefault()
+        }
     }
 
     onInput(event: InputEvent) {
@@ -209,6 +208,7 @@ export default class TextField extends Vue {
 
     onKeydown(event: KeyboardEvent) {
         this.applyMaxLength(event)
+        this.onlyNumber(event)
 
         /**
          * keydown 이벤트
@@ -230,9 +230,8 @@ export default class TextField extends Vue {
          * @description value를 초기화하고, onFocus 함
          */
 
-        const target = this.$refs.input as HTMLInputElement
         this.value = ''
-        target.focus()
+        ;(this.$refs.input as HTMLInputElement).focus()
     }
 
     /**
@@ -251,127 +250,4 @@ export default class TextField extends Vue {
 }
 </script>
 
-<style lang="scss" scoped>
-.text-field {
-    position: relative;
-
-    label {
-        font-size: 14px;
-        font-weight: normal;
-        line-height: normal;
-        letter-spacing: -0.5px;
-        color: #666;
-        display: block;
-        margin-bottom: 7px;
-    }
-
-    .input-area {
-        position: relative;
-        /* max-width: 600px; */
-
-        input {
-            border-radius: 10px;
-            border: solid 1px #ebebeb;
-            font-size: 16px;
-            font-weight: 500;
-            line-height: normal;
-            letter-spacing: -0.5px;
-            color: #222;
-            height: 56px;
-            box-sizing: border-box;
-            width: 100%;
-            padding: 19px 20px 18px;
-
-            &::-webkit-input-placeholder {
-                color: #bbb;
-            }
-
-            &:focus {
-                outline: none;
-                border-color: #544944;
-            }
-
-            &:read-only {
-                background-color: #f3f3f3;
-                border: 0;
-            }
-        }
-
-        button.clear {
-            width: 24px;
-            height: 24px;
-            background: transparent;
-            position: absolute;
-            bottom: 16px;
-            right: 16px;
-
-            i {
-                width: 16px;
-                height: 16px;
-                background-color: #bbb;
-                display: block;
-                border-radius: 8px;
-                position: absolute;
-                left: 50%;
-                top: 50%;
-                transform: translate(-50%, -50%) rotate(45deg);
-
-                &:before,
-                &:after {
-                    content: '';
-                    display: block;
-                    background-color: #fff;
-                    position: absolute;
-                    top: 50%;
-                    left: 50%;
-                    transform: translate(-50%, -50%);
-                }
-
-                &:before {
-                    width: 11px;
-                    height: 2px;
-                }
-                &:after {
-                    width: 2px;
-                    height: 11px;
-                }
-            }
-        }
-    }
-
-    &.error {
-        .input-area {
-            input {
-                border: solid 1px #ee1100;
-            }
-        }
-        .message {
-            color: #ee1100;
-            background-image: url('/assets/icon/icon-info-outline.svg');
-        }
-    }
-    &.success {
-        .input-area {
-            input {
-                border: solid 1px #5089ca;
-            }
-        }
-        .message {
-            color: #5089ca;
-            background-image: url('/assets/icon/icon-check-outline.svg');
-        }
-    }
-
-    .message {
-        font-size: 12px;
-        letter-spacing: -0.5px;
-        font-weight: normal;
-        margin-top: 8px;
-        display: flex;
-        padding-left: 20px;
-        background-size: 14px 14px;
-        background-repeat: no-repeat;
-        background-position: 0px 0px;
-    }
-}
-</style>
+<style lang="scss" scoped src="./TextField.scss"></style>

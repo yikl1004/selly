@@ -4,7 +4,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import { registerCommonComponent, registerPlugins } from '@utils/index'
 import '../src/styles/index.scss'
-import '../src/styles/storybook.md.scss'
+import './storybook.md.scss'
 
 Vue.use(Vuex)
 registerPlugins()

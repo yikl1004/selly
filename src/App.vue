@@ -12,4 +12,4 @@ import Layout from '@/layout/Layout.vue'
 export default class App extends Vue {}
 </script>
 
-<style lang="scss" src="@styles/index.scss"></style>
+<style lang="scss"></style>
