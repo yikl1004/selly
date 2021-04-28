@@ -13,11 +13,17 @@
 
     .input-area {
         position: relative;
-        /* max-width: 600px; */
+        border: solid 1px #ebebeb;
+        border-radius: 10px;
+
+        &.focus {
+            outline: none;
+            border-color: #544944;
+        }
 
         input {
             border-radius: 10px;
-            border: solid 1px #ebebeb;
+            border: 0;
             font-size: 16px;
             font-weight: 500;
             line-height: normal;
@@ -32,15 +38,14 @@
                 color: #bbb;
             }
 
-            &:focus {
-                outline: none;
-                border-color: #544944;
-            }
-
             &:read-only {
                 background-color: #f3f3f3;
                 border: 0;
                 color: #999;
+            }
+
+            &:focus {
+                outline: none;
             }
         }
 
@@ -88,9 +93,7 @@
 
     &.error {
         .input-area {
-            input {
-                border: solid 1px #ee1100;
-            }
+            border: solid 1px #ee1100;
         }
         .message {
             color: #ee1100;
@@ -99,9 +102,7 @@
     }
     &.success {
         .input-area {
-            input {
-                border: solid 1px #5089ca;
-            }
+            border: solid 1px #5089ca;
         }
         .message {
             color: #5089ca;

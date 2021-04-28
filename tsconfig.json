@@ -3,26 +3,50 @@
     "compilerOptions": {
         "target": "esnext",
         "module": "esnext",
-        "types": ["webpack-env", "vue/types/vue", "react"],
+        "types": [
+            "webpack-env",
+            "vue/types/vue",
+            "react"
+        ],
         "paths": {
-            "@/*": ["src/*"],
-            "@components/*": ["src/components/*"],
-            "@pages/*": ["src/pages/*"],
-            "@services/*": ["src/services/*"],
-            "@stores/*": ["src/stores/*"],
-            "@styles/*": ["src/styles"],
-            "@utils/*": ["src/utils/*"],
-            "@asstes/*": ["src/assets/*"]
+            "@/*": [
+                "src/*"
+            ],
+            "@components/*": [
+                "src/components/*"
+            ],
+            "@pages/*": [
+                "src/pages/*"
+            ],
+            "@services/*": [
+                "src/services/*"
+            ],
+            "@stores/*": [
+                "src/stores/*"
+            ],
+            "@styles/*": [
+                "src/styles"
+            ],
+            "@utils/*": [
+                "src/utils/*"
+            ],
+            "@asstes/*": [
+                "src/assets/*"
+            ]
         },
-        "lib": ["esnext", "dom", "dom.iterable", "scripthost"]
+        "lib": [
+            "esnext",
+            "dom",
+            "dom.iterable",
+            "scripthost"
+        ]
     },
     "include": [
-        "src/*.ts",
         "src/**/*.ts",
-        "src/**/*.vue",
-        "tests/**/*.ts",
-        "tests/**/*.vue"
+        "cli/tsc-staged.ts"
     ],
     "exclude": ["node_modules"],
-    "files": ["src/shims-vue.d.ts"]
+    "files": [
+        "src/shims-vue.d.ts"
+    ]
 }

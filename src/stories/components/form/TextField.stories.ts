@@ -1,5 +1,4 @@
-import Vue from 'vue'
-import { ArgTypes, Meta, Story } from '@storybook/vue'
+import { Meta, Story } from '@storybook/vue'
 import TextField from '@components/form/TextField.vue'
 import _ from 'lodash'
 import getProps from '../../assets/getProps'
@@ -45,7 +44,6 @@ NumberType.args = {
     id: 'my-text-number',
     label: '소득구분',
     placeholder: '소득구분 입력',
-    // type: 'number',
 }
 
 export const Readonly = Template.bind({})
@@ -63,8 +61,8 @@ SeperateNumberType.args = {
     placeholder: '만원단위',
 }
 
-export const Error = Template.bind({})
-Error.args = {
+export const ErrorStatus = Template.bind({})
+ErrorStatus.args = {
     id: 'error-example',
     label: '희망한도',
     placeholder: '만원단위',
@@ -75,8 +73,8 @@ Error.args = {
     errorMessage: '한도 초과입니다.',
 }
 
-export const Success = Template.bind({})
-Success.args = {
+export const SuccessStatus = Template.bind({})
+SuccessStatus.args = {
     id: 'success-example',
     label: '희망한도',
     placeholder: '만원단위',

@@ -14,7 +14,7 @@ if (!projectRoot) {
 process.stdin.resume()
 
 const restoreTsconfig = () => {
-    // child.execSync('git restore tsconfig.json', { cwd: projectRoot })
+    child.execSync('git restore tsconfig.json', { cwd: projectRoot })
 }
 
 const exitHandler = () => {

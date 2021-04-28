@@ -1,7 +1,7 @@
 <template>
     <div class="text-field" :class="isError">
         <label :for="id" :class="{ ir: hiddenLabel }">{{ label }}</label>
-        <div class="input-area">
+        <div class="input-area" :class="{ focus: focusedClass }">
             <input
                 :id="id"
                 ref="input"
@@ -15,6 +15,7 @@
                 @input="onInput"
                 @keydown="onKeydown"
                 @focus="onFocus"
+                @blur="onBlur"
             />
             <span v-if="unit" class="unit">
                 {{ unit }}
@@ -114,7 +115,9 @@ export default class TextField extends Mixins(Validates) {
 
     /** 실제 값 */
     private value: string = this.defaultValue || ''
-    private dirty: boolean = false
+
+    /** focus 상태 */
+    private focusedClass: boolean = false
 
     /**
      * @category COMPUTED
@@ -208,7 +211,6 @@ export default class TextField extends Mixins(Validates) {
 
     onInput(event: InputEvent) {
         const target = event.target as HTMLInputElement
-        this.dirty = true
         this.value = target.value.replace(/\,/g, '')
     }
 
@@ -229,6 +231,12 @@ export default class TextField extends Mixins(Validates) {
          * @event focus
          */
         this.$emit('focus', this.index)
+
+        this.focusedClass = true
+    }
+
+    onBlur() {
+        this.focusedClass = false
     }
 
     clearValue() {
