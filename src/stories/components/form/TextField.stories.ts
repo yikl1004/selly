@@ -83,12 +83,3 @@ SuccessStatus.args = {
     successMessage: '정확히 입력하셨습니다',
     errorMessage: '한도 초과입니다.',
 }
-
-export const AddedTest = Template.bind({})
-AddedTest.args = {
-    id: 'success-example',
-    label: '희망한도',
-    placeholder: '만원단위',
-    defaultValue: '3200',
-    type: 'seperateNumber',
-}
