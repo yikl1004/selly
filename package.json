@@ -13,7 +13,7 @@
     "postinstall": "husky install",
     "story": "start-storybook -p 6006 -c .storybook watch-css -s ./src",
     "build-storybook": "build-storybook",
-    "chromatic": "npx chromatic --project-token e38d1f04d1f6"
+    "chromatic": "npx chromatic --project-token e38d1f04d1f6 --auto-accept-changes"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.35",
