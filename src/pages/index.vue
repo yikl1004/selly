@@ -49,9 +49,9 @@ export default class Main extends Vue {
     private inputs: HTMLInputElement[] = []
     private currentIndex: number = -1
 
-    onFocus(index: number) {
-        console.log('onFocus', index)
-        this.currentIndex = index
+    onFocus(event: FocusEvent) {
+        const { name } = event.target as HTMLInputElement
+        this.currentIndex = this.list.findIndex(item => item.name === name)
     }
 
     onChange(value: string) {

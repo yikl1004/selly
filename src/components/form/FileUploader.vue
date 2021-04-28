@@ -101,4 +101,4 @@ export default class FileUploader extends Vue {
 }
 </script>
 
-<style scoped></style>
+<style lang="scss" scoped src="./FileUploader.scss"></style>

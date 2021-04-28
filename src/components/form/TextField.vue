@@ -51,8 +51,14 @@ interface Validate {
  * 3. 단위 표시할 텍스트 노출방식에 대한 논의가 필요함
  */
 
-@Component<TextField>({})
+@Component
 export default class TextField extends Mixins(Validates) {
+    /**
+     * @category Refs
+     */
+    $refs!: Vue['$refs'] & {
+        input: HTMLInputElement
+    }
     /**
      * @category PROPS
      */
@@ -126,10 +132,6 @@ export default class TextField extends Mixins(Validates) {
         return this.inputType === 'number' ? '\\d*' : ''
     }
 
-    get index(): number {
-        return this._.toNumber(this.$attrs['data-index'])
-    }
-
     get inputType(): InputType {
         const dictionary: { [key: string]: InputType } = {
             text: 'text',
@@ -161,11 +163,6 @@ export default class TextField extends Mixins(Validates) {
         }
     }
 
-    /** 숫자만 입력 받는 타입인지 여부 */
-    get isNumberType(): boolean {
-        return ['number', 'seperateNumber'].some(type => type === this.type)
-    }
-
     /**
      * @title WATCH
      */
@@ -175,7 +172,7 @@ export default class TextField extends Mixins(Validates) {
         /**
          * value가 변경 될때 마다 호출되는 callback(value: string, index: number, maxLength: number)
          */
-        this.$emit('change', newValue, this.index, this.maxlength)
+        this.$emit('change', newValue)
     }
 
     /**
@@ -183,35 +180,14 @@ export default class TextField extends Mixins(Validates) {
      * @title Custom Methods
      */
 
-    applyMaxLength(event: KeyboardEvent) {
-        const isMetaKeys = this.isMetaKeys(event)
-        const target = event.target as HTMLInputElement
-        const value = target.value
-
-        const conditions = [this.isNumberType, value.length >= this.maxlength, !isMetaKeys]
-
-        conditions.every(condition => condition) && event.preventDefault()
-    }
-
     onlyText(event: KeyboardEvent) {
         /**
          * TODO: 숫자가 아닌 텍스트만 입력 가능하게...
          */
     }
 
-    onlyNumber(event: KeyboardEvent) {
-        /**
-         * @description 텍스트가 아닌 숫자만 입력 가능하게...
-         */
-        if (this.isNumberType) {
-            const conditions = [this.isString(event), !this.isMetaKeys(event)]
-            conditions.every(condition => condition) && event.preventDefault()
-        }
-    }
-
     onInput(event: InputEvent) {
-        const target = event.target as HTMLInputElement
-        this.value = target.value.replace(/\,/g, '')
+        this.value = this.$refs.input.value.replace(/\,/g, '')
     }
 
     onKeydown(event: KeyboardEvent) {
@@ -225,27 +201,23 @@ export default class TextField extends Mixins(Validates) {
         this.$emit('keydown', event)
     }
 
-    onFocus() {
+    onFocus(event: FocusEvent) {
         /**
          * focus 이벤트
          * @event focus
          */
-        this.$emit('focus', this.index)
+        this.$emit('focus', event)
 
         this.focusedClass = true
     }
 
-    onBlur() {
+    onBlur(event: FocusEvent) {
         this.focusedClass = false
     }
 
     clearValue() {
-        /**
-         * @description value를 초기화하고, onFocus 함
-         */
-
         this.value = ''
-        ;(this.$refs.input as HTMLInputElement).focus()
+        this.$refs.input.focus()
     }
 
     /**
@@ -258,8 +230,6 @@ export default class TextField extends Mixins(Validates) {
          * @event mounted
          */
         this.$emit('mounted', this.$refs.input)
-
-        console.log(this)
     }
 }
 </script>

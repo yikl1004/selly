@@ -25,7 +25,6 @@ export default {
 interface Args {}
 
 const Template: Story<Args> = (args, { argTypes }) => {
-    console.log(getProps(argTypes))
     return {
         props: getProps(argTypes),
         template: `<TextField v-bind="$props" />`,

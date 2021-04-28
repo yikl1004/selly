@@ -92,6 +92,21 @@ select {
     -webkit-appearance: none;
 }
 
+input,
+textarea {
+    &::-webkit-input-placeholder {
+        user-select: none;
+    }
+}
+input,
+textarea,
+select,
+button {
+    &:focus {
+        outline: none;
+    }
+}
+
 table {
     width: 100%;
     border-collapse: separate;
