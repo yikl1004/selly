@@ -52,7 +52,7 @@ import { Component, Vue, Prop, Mixins, Watch } from 'vue-property-decorator'
 import Validates from '@utils/mixins/Validates'
 
 @Component
-export default class PersonalNumber extends Mixins(Validates) {
+export default class SecretNumber extends Mixins(Validates) {
     /**
      * @category Types
      */

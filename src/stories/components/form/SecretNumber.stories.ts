@@ -1,10 +1,10 @@
 import { Meta, Story } from '@storybook/vue'
-import PersonalNumber from '@components/form/PersonalNumber.vue'
+import SecretNumber from '@components/form/SecretNumber.vue'
 import getProps from '../../assets/getProps'
 
 export default {
-    title: 'Components/form/Personal Number',
-    component: PersonalNumber,
+    title: 'Components/form/Secret Number',
+    component: SecretNumber,
     argTypes: {
         backLength: {
             options: [1, 7],
