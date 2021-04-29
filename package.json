@@ -1,7 +1,7 @@
 {
   "name": "selly",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
   "scripts": {
     "serve": "concurrently \"npm run serve:server\" \"npm run serve:client\"",
     "serve:client": "vue-cli-service serve",
