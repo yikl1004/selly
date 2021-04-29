@@ -163,4 +163,4 @@ export default class PersonalNumber extends Mixins(Validates) {
 }
 </script>
 
-<style lang="scss" scoped src="./PersonalNumber.scss"></style>
+<style lang="scss" scoped src="./SecretNumber.scss"></style>
