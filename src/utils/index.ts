@@ -1,5 +1,5 @@
 import registerCommonComponent from '@utils/registerCommonComponent'
-import registerPlugins from '@utils/registerPlugins'
+import registerPlugins from '@utils/plugins'
 
 export { registerCommonComponent, registerPlugins }
 

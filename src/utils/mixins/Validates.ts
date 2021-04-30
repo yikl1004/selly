@@ -1,26 +1,42 @@
 import { Component, Vue } from 'vue-property-decorator'
+import { SecretType } from '@/types'
 
+/**
+ * 설명을 적어야 하는데 뭐라고 또 말을 만들어서 써야 하나...
+ * @title 몰라...
+ */
 @Component
 export default class Validates extends Vue {
     private numberRegExp: RegExp = /^[0-9]*$/g
     private stringRegExp: RegExp = /^[ㄱ-힇a-zA-Z]*$/g
+    private specialRegExp: RegExp = /^[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]*$/g
+    private phoneRegExp: RegExp = /^\d{2,3}-\d{3,4}-\d{4}$/
 
-    readonly type!: 'number' | 'seperateNumber' | 'text'
+    readonly type!: 'number' | 'seperateNumber' | 'text' | SecretType
 
     /** 숫자만 입력 받는 타입인지 여부 */
     get isNumberType(): boolean {
-        return ['number', 'seperateNumber'].some(type => type === this.type)
+        return ['number', 'seperateNumber', 'regist', 'registeGender', 'card', 'card2'].some(type => type === this.type)
     }
 
     /**
-     * 특수문자를 제외한 문자열인지를 확인
+     *
+     * @param {RegExp} regExp 정규식 객체
+     * @param {string} key event.key 값이 넘어올 걸 예상
+     * @returns {boolean}
+     */
+    private execute(regExp: RegExp, key: string): boolean {
+        const result = new RegExp(regExp).test(key)
+        return result
+    }
+
+    /**
+     * 특수문자를 제외한 문자열인지를 확인 (1글자만 확인)
      * @param {KeyboardEvent} event
      * @returns {boolean}
      */
     isString(event: KeyboardEvent): boolean {
-        const result = new RegExp(this.stringRegExp).test(event.key)
-
-        return result
+        return event.key.length > 1 ? false : this.execute(this.stringRegExp, event.key)
     }
 
     /**
@@ -29,12 +45,20 @@ export default class Validates extends Vue {
      * @returns {boolean}
      */
     isNumber(event: KeyboardEvent): boolean {
-        const result = new RegExp(this.numberRegExp).test(event.key)
-        return result
+        return this.execute(this.numberRegExp, event.key)
     }
 
     /**
-     * metaKey 여부 확인
+     * 키보드에서 입력가능한 특수문자 인지 확인(Unicode, ASCII code, Entity code 등은 추후에... ㅠㅠ )
+     * @param {KeyboardEvent} event
+     * @returns {boolean}
+     */
+    isSpecial(event: KeyboardEvent): boolean {
+        return this.execute(this.specialRegExp, event.key)
+    }
+
+    /**
+     * Key 여부 확인
      * @param {KeyboardEvent} event
      * @returns {boolean}
      */
@@ -50,9 +74,9 @@ export default class Validates extends Vue {
      * @param {KeyboardEvent} event
      */
     applyMaxLength(event: KeyboardEvent) {
-        const isMetaKeys = this.isMetaKeys(event)
         const target = event.target as HTMLInputElement
         const value = target.value
+        const isMetaKeys = this.isMetaKeys(event)
         const conditions = [this.isNumberType, value.length >= target.maxLength, !isMetaKeys]
 
         conditions.every(condition => condition) && event.preventDefault()
@@ -63,9 +87,13 @@ export default class Validates extends Vue {
      * @param {KeyboardEvent} event
      */
     onlyNumber(event: KeyboardEvent) {
+        const isMeta = this.isMetaKeys(event)
+        const isString = this.isString(event)
+        const isSpecial = this.isSpecial(event)
+        const conditions = [isString, isSpecial]
+
         if (this.isNumberType) {
-            const conditions = [this.isString(event), !this.isMetaKeys(event)]
-            conditions.every(condition => condition) && event.preventDefault()
+            conditions.some(condition => condition) && event.preventDefault()
         }
     }
 }

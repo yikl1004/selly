@@ -2,42 +2,51 @@
     <div class="text-field">
         <label :for="`${id}-front`" :class="{ ir: hiddenLabel }">{{ label }}</label>
         <div class="input-area" :class="{ focus: focusedClass }">
-            <input
-                :id="`${id}-front`"
-                ref="front"
-                :value="frontValue"
-                autocomplete="new-password"
-                :pattern="/\d*/"
-                :maxlength="6"
-                placeholder="생년월일 6자리"
-                type="tel"
-                :readonly="readonly"
-                @input="onInputFront"
-                @keydown="onKeydownFront"
-                @focus="onFocus"
-                @blur="onBlur"
-            />
-            <span class="dash" />
+            <template v-if="isRegistType">
+                <input
+                    :id="`${id}-front`"
+                    ref="front"
+                    :value="frontValue"
+                    autocomplete="new-password"
+                    pattern="[0-9]{6}"
+                    :maxlength="6"
+                    placeholder="생년월일 6자리"
+                    type="tel"
+                    :readonly="readonly"
+                    @input="onInputFront"
+                    @keydown="onKeydownFront"
+                    @focus="onFocus"
+                    @blur="onBlur"
+                />
+                <span class="dash" />
+            </template>
             <div class="fake-input">
                 <div class="fake" @click="onClickFake">
-                    <template v-if="backLength === 7">
-                        <span v-for="index in backLength" :key="index" :class="{ on: index <= backValue.length }" />
+                    <template v-if="isRegist">
+                        <span v-for="index in digit" :key="`regist-blank-${index}`" :class="{ on: index <= secretValue.length }" />
                     </template>
-                    <template v-else-if="backLength === 1">
-                        <span :class="{ on: backValue.length }" />
-                        <span v-for="index in 6" :key="index" class="on" />
+                    <template v-else-if="isRegisteGender">
+                        <span :class="{ on: secretValue.length }" />
+                        <span v-for="index in 6" :key="`regist-fill-${index}`" class="on" />
+                    </template>
+                    <template v-else-if="isCard">
+                        <span v-for="index in 4" :key="`regist-blank-${index}`" :class="{ on: index <= secretValue.length }" />
+                    </template>
+                    <template v-else-if="isCard2">
+                        <span v-for="index in 2" :key="`card-blank-${index}`" :class="{ on: index <= secretValue.length }" />
+                        <span v-for="index in 2" :key="`card-fill-${index}`" class="on" />
                     </template>
                 </div>
                 <input
                     :id="`${id}-back`"
                     ref="back"
-                    class="back"
-                    :value="backValue"
+                    class="back security"
+                    :value="secretValue"
                     :pattern="/\d*/"
-                    :maxlength="backLength"
+                    :maxlength="digit"
                     type="tel"
                     :readonly="readonly"
-                    @input="onInputBack"
+                    @input="onInputSecret"
                     @keydown="onKeydownBack"
                     @focus="onFocus"
                     @blur="onBlur"
@@ -50,6 +59,7 @@
 <script lang="ts">
 import { Component, Vue, Prop, Mixins, Watch } from 'vue-property-decorator'
 import Validates from '@utils/mixins/Validates'
+import { SecretType } from '@/types'
 
 @Component
 export default class SecretNumber extends Mixins(Validates) {
@@ -77,13 +87,17 @@ export default class SecretNumber extends Mixins(Validates) {
     @Prop({ type: String, default: '', required: true })
     readonly label!: string
 
-    /** label을 비노출여부 */
+    /** label 비노출여부 */
     @Prop(Boolean)
     readonly hiddenLabel!: boolean
 
-    /** 뒷자리 자릿수 */
-    @Prop({ type: Number, default: 7 })
-    readonly backLength!: number
+    /** type */
+    @Prop({ type: String, required: true })
+    readonly type!: SecretType
+
+    /** 마스킹 자릿수 */
+    // @Prop({ type: Number, default: 7 })
+    // readonly backLength!: number
 
     /**
      * @category DATA(State)
@@ -93,7 +107,7 @@ export default class SecretNumber extends Mixins(Validates) {
     private frontValue: string = ''
 
     /** 실제 값(뒷자리) */
-    private backValue: string = ''
+    private secretValue: string = ''
 
     /** focus 상태 */
     private focusedClass: boolean = false
@@ -102,7 +116,40 @@ export default class SecretNumber extends Mixins(Validates) {
      * @category COMPUTED
      */
     get value(): string {
-        return `${this.backValue}${this.frontValue}`
+        return `${this.secretValue}${this.frontValue}`
+    }
+
+    /** 마스킹 자릿 수 */
+    get digit(): number {
+        const dictionary = {
+            regist: 7,
+            registeGender: 1,
+            card: 4,
+            card2: 2,
+        }
+
+        return dictionary[this.type]
+    }
+
+    /** 주민등록번호 입력 타입인지 확인 */
+    get isRegistType(): boolean {
+        return ['regist', 'registGender'].some(type => type === this.type)
+    }
+    /** 주민등록번호 7자리 */
+    get isRegist(): boolean {
+        return this.type === 'regist'
+    }
+    /** 주민등록번호 성별 1자리 */
+    get isRegisteGender(): boolean {
+        return this.type === 'registeGender'
+    }
+    /** 카드번호 전체 */
+    get isCard(): boolean {
+        return this.type === 'card'
+    }
+    /** 카드번호 앞 2자리 */
+    get isCard2(): boolean {
+        return this.type === 'card2'
     }
 
     /**
@@ -121,7 +168,7 @@ export default class SecretNumber extends Mixins(Validates) {
      * @category METHODS
      */
 
-    onInputFront(event: InputEvent) {
+    private onInputFront(event: InputEvent) {
         const { value, maxLength } = this.$refs.front
         const conditions = [value.length === maxLength]
 
@@ -129,21 +176,24 @@ export default class SecretNumber extends Mixins(Validates) {
         conditions.every(condition => condition) && this.$refs.back.focus()
     }
 
-    onInputBack(event: InputEvent) {
+    private onInputSecret(event: InputEvent) {
         const { value } = this.$refs.back
-        this.backValue = value
+        this.secretValue = value
     }
 
-    onKeydownFront(event: KeyboardEvent) {}
+    private onKeydownFront(event: KeyboardEvent) {
+        this.onlyNumber(event)
+    }
 
-    onKeydownBack(event: KeyboardEvent) {
+    private onKeydownBack(event: KeyboardEvent) {
         const { value } = this.$refs.back
-        const conditions = [value.length === 0, event.key.toLowerCase() === 'backspace']
+        const conditions = [value.length === 0, event.key.toLowerCase() === 'backspace', this.$refs.front]
 
+        this.onlyNumber(event)
         conditions.every(condition => condition) && this.$refs.front.focus()
     }
 
-    onFocus(event: FocusEvent) {
+    private onFocus(event: FocusEvent) {
         /**
          * focus 이벤트
          * @event focus
@@ -153,11 +203,11 @@ export default class SecretNumber extends Mixins(Validates) {
         this.focusedClass = true
     }
 
-    onBlur(event: FocusEvent) {
+    private onBlur(event: FocusEvent) {
         this.focusedClass = false
     }
 
-    onClickFake() {
+    private onClickFake() {
         this.$refs.back.focus()
     }
 }

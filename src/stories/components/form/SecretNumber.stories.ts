@@ -31,18 +31,21 @@ const Template: Story<Args> = (args, { argTypes }) => {
 
 export const Primary = Template.bind({})
 Primary.args = {
+    type: '',
     id: 'personal-number',
     label: '주민등록번호',
 }
 
 export const OneDigit = Template.bind({})
 OneDigit.args = {
+    type: '',
     id: 'personal-number',
     label: '주민등록번호',
 }
 
 export const FullDigit = Template.bind({})
 FullDigit.args = {
+    type: '',
     id: 'personal-number-1',
     label: '주민등록번호',
     backLength: 1,
