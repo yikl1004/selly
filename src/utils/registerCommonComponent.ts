@@ -1,5 +1,7 @@
 import Vue, { VueConstructor } from 'vue'
 import _ from 'lodash'
+
+// 아래는 임시로... 디자인이 아직 안나옴 ㅠㅠ (2021-05-03)
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { fas } from '@fortawesome/free-solid-svg-icons'
 import { far } from '@fortawesome/free-regular-svg-icons'

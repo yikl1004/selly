@@ -5,7 +5,8 @@ import Header from '@components/common/Header.vue'
 import FileUploader from '@components/form/FileUploader.vue'
 import TextField from '@components/form/TextField.vue'
 import BasicButton from '@components/common/BasicButton.vue'
-import SecretNumber from '@/components/form/SecretNumber.vue'
+import SecretNumber from '@components/form/SecretNumber.vue'
+import SearchField from '@components/form/SearchField.vue'
 
 const componentList: { [key: string]: VueConstructor }[] = [
     { Link },
@@ -14,6 +15,7 @@ const componentList: { [key: string]: VueConstructor }[] = [
     { TextField },
     { BasicButton },
     { SecretNumber },
+    { SearchField },
 ]
 
 export { FileUploader, Link, Header, TextField }

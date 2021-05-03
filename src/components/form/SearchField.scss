@@ -1,0 +1,93 @@
+.search-field {
+    position: relative;
+
+    label {
+        font-size: 14px;
+        font-weight: normal;
+        line-height: normal;
+        letter-spacing: -0.5px;
+        color: #666;
+        display: block;
+        margin-bottom: 7px;
+    }
+
+    .input-area {
+        position: relative;
+        border: solid 1px #ebebeb;
+        border-radius: 10px;
+
+        &.focus {
+            outline: none;
+            border-color: #544944;
+        }
+
+        input {
+            border-radius: 10px;
+            border: 0;
+            font-size: 16px;
+            font-weight: 500;
+            line-height: normal;
+            letter-spacing: -0.5px;
+            color: #222;
+            height: 56px;
+            box-sizing: border-box;
+            width: 100%;
+            padding: 19px 20px 18px;
+
+            &::-webkit-input-placeholder {
+                color: #bbb;
+            }
+
+            &:read-only {
+                background-color: #f3f3f3;
+                border: 0;
+                color: #999;
+            }
+
+            &:focus {
+                outline: none;
+            }
+        }
+
+        button.clear {
+            width: 24px;
+            height: 24px;
+            background: transparent;
+            position: absolute;
+            bottom: 16px;
+            right: 16px;
+
+            i {
+                width: 16px;
+                height: 16px;
+                background-color: #bbb;
+                display: block;
+                border-radius: 8px;
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -50%) rotate(45deg);
+
+                &:before,
+                &:after {
+                    content: '';
+                    display: block;
+                    background-color: #fff;
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                }
+
+                &:before {
+                    width: 11px;
+                    height: 2px;
+                }
+                &:after {
+                    width: 2px;
+                    height: 11px;
+                }
+            }
+        }
+    }
+}

@@ -58,6 +58,7 @@ SeperateNumberType.args = {
     id: 'my-seperate-number',
     label: '희망한도',
     placeholder: '만원단위',
+    type: 'seperateNumber',
 }
 
 export const ErrorStatus = Template.bind({})

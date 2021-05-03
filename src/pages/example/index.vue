@@ -1,10 +1,8 @@
 <template>
     <div>
         <h1>예제 페이지</h1>
-        <SecretNumber id="person" label="주민등록번호 뒤 7자리" type="regist" />
-        <SecretNumber id="number1" label="카드번호 4자리" type="card" />
-        <SecretNumber id="number2" label="카드번호 앞 2자리" type="card2" />
         <input type="text" :value="displayValue" @input="onInput" />
+        <SearchField id="seach-area" label="검색영역" />
     </div>
 </template>
 
@@ -49,4 +47,4 @@ export default class extends Vue {
 }
 </script>
 
-<style scoped></style>
+<style scoped lang="scss"></style>

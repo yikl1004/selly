@@ -46,19 +46,11 @@ export default class BasicButton extends Vue {
 </script>
 
 <style lang="scss" scoped>
-$bg: #544944;
-$bg-active: #302a28;
-$bg-disabled: #ebebeb;
-$bg-small: #5089ca;
-$bg-small-active: #2d4f76;
-$text: #fff;
-$text-disabled: #bbb;
-
 .btn {
     width: 100%;
     letter-spacing: -0.5px;
     text-align: center;
-    color: $text;
+    color: $button-text-color;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -69,15 +61,15 @@ $text-disabled: #bbb;
         font-weight: 500;
         padding: 19px 40px 18px;
         border-radius: 10px;
-        background-color: $bg;
+        background-color: $button-bg;
 
         &:active {
-            background-color: $bg-active;
+            background-color: $button-bg-active;
         }
 
         &:disabled {
-            background-color: $bg-disabled;
-            color: $text-disabled;
+            background-color: $button-bg-disabled;
+            color: $button-text-disabled-color;
         }
     }
 
@@ -87,15 +79,15 @@ $text-disabled: #bbb;
         font-weight: bold;
         padding: 15px 40px 12px;
         border-radius: 24px;
-        background-color: $bg;
+        background-color: $button-bg;
 
         &:active {
-            background-color: $bg-active;
+            background-color: $button-bg-active;
         }
 
         &:disabled {
-            background-color: $bg-disabled;
-            color: $text-disabled;
+            background-color: $button-bg-disabled;
+            color: $button-text-disabled-color;
         }
     }
 
@@ -107,14 +99,14 @@ $text-disabled: #bbb;
         line-height: 1.5;
         padding: 7px 16px 7px;
         border-radius: 16px;
-        background-color: $bg-small;
+        background-color: $button-bg-small;
 
         &:active {
-            background-color: $bg-small-active;
+            background-color: $button-bg-small-active;
         }
 
         &:disabled {
-            background-color: $bg-disabled;
+            background-color: $button-bg-disabled;
         }
     }
 

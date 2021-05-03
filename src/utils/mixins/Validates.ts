@@ -36,7 +36,11 @@ export default class Validates extends Vue {
      * @returns {boolean}
      */
     isString(event: KeyboardEvent): boolean {
-        return event.key.length > 1 ? false : this.execute(this.stringRegExp, event.key)
+        if (event.key.length > 1) {
+            return false
+        } else {
+            return this.execute(this.stringRegExp, event.key)
+        }
     }
 
     /**
@@ -70,7 +74,8 @@ export default class Validates extends Vue {
     }
 
     /**
-     * maxLength 기능을 직접 구현(number 타입인 경우 maxLength는 동작하지 않음)
+     * maxLength 기능을 직접 구현
+     * number 타입인 경우 maxLength는 동작하지 않아서 직접 만듦, tel 타입을 써도 괜찮을 듯...
      * @param {KeyboardEvent} event
      */
     applyMaxLength(event: KeyboardEvent) {
@@ -87,7 +92,6 @@ export default class Validates extends Vue {
      * @param {KeyboardEvent} event
      */
     onlyNumber(event: KeyboardEvent) {
-        const isMeta = this.isMetaKeys(event)
         const isString = this.isString(event)
         const isSpecial = this.isSpecial(event)
         const conditions = [isString, isSpecial]
@@ -96,4 +100,10 @@ export default class Validates extends Vue {
             conditions.some(condition => condition) && event.preventDefault()
         }
     }
+
+    /**
+     * @TODO: 숫자가 아닌 텍스트만 입력 가능하게...
+     * @param event
+     */
+    onlyText(event: KeyboardEvent) {}
 }

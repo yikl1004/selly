@@ -8,6 +8,12 @@ const path = require('path')
  * @type { Options }
  */
 module.exports = {
+    pluginOptions: {
+        'style-resources-loader': {
+            preProcessor: 'scss',
+            patterns: [path.resolve(__dirname, './src/styles/_test.scss')],
+        },
+    },
     configureWebpack: {
         resolve: {
             alias: {

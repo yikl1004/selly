@@ -3,8 +3,6 @@ import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport'
 import Vue from 'vue'
 import Vuex from 'vuex'
 import { registerCommonComponent, registerPlugins } from '@utils/index'
-import '../src/styles/index.scss'
-import './storybook.md.scss'
 
 Vue.use(Vuex)
 registerPlugins()

@@ -28,8 +28,7 @@ export default class Layout extends Vue {
         return this.$route.meta.layout || 'default'
     }
 
-    mounted(): void {
-    }
+    mounted(): void {}
 
     beforeLeave() {}
 

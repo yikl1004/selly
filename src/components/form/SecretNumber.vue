@@ -22,20 +22,8 @@
             </template>
             <div class="fake-input">
                 <div class="fake" @click="onClickFake">
-                    <template v-if="isRegist">
-                        <span v-for="index in digit" :key="`regist-blank-${index}`" :class="{ on: index <= secretValue.length }" />
-                    </template>
-                    <template v-else-if="isRegisteGender">
-                        <span :class="{ on: secretValue.length }" />
-                        <span v-for="index in 6" :key="`regist-fill-${index}`" class="on" />
-                    </template>
-                    <template v-else-if="isCard">
-                        <span v-for="index in 4" :key="`regist-blank-${index}`" :class="{ on: index <= secretValue.length }" />
-                    </template>
-                    <template v-else-if="isCard2">
-                        <span v-for="index in 2" :key="`card-blank-${index}`" :class="{ on: index <= secretValue.length }" />
-                        <span v-for="index in 2" :key="`card-fill-${index}`" class="on" />
-                    </template>
+                    <span v-for="index in digit.blank" :key="`regist-blank-${index}`" :class="{ on: index <= secretValue.length }" />
+                    <span v-for="index in digit.fill" :key="`regist-fill-${index}`" class="on" />
                 </div>
                 <input
                     :id="`${id}-back`"
@@ -95,10 +83,6 @@ export default class SecretNumber extends Mixins(Validates) {
     @Prop({ type: String, required: true })
     readonly type!: SecretType
 
-    /** 마스킹 자릿수 */
-    // @Prop({ type: Number, default: 7 })
-    // readonly backLength!: number
-
     /**
      * @category DATA(State)
      */
@@ -120,12 +104,12 @@ export default class SecretNumber extends Mixins(Validates) {
     }
 
     /** 마스킹 자릿 수 */
-    get digit(): number {
+    get digit(): { blank: number; fill: number } {
         const dictionary = {
-            regist: 7,
-            registeGender: 1,
-            card: 4,
-            card2: 2,
+            regist: { blank: 7, fill: 0 },
+            registGender: { blank: 1, fill: 6 },
+            card: { blank: 4, fill: 0 },
+            card2: { blank: 2, fill: 2 },
         }
 
         return dictionary[this.type]
@@ -134,22 +118,6 @@ export default class SecretNumber extends Mixins(Validates) {
     /** 주민등록번호 입력 타입인지 확인 */
     get isRegistType(): boolean {
         return ['regist', 'registGender'].some(type => type === this.type)
-    }
-    /** 주민등록번호 7자리 */
-    get isRegist(): boolean {
-        return this.type === 'regist'
-    }
-    /** 주민등록번호 성별 1자리 */
-    get isRegisteGender(): boolean {
-        return this.type === 'registeGender'
-    }
-    /** 카드번호 전체 */
-    get isCard(): boolean {
-        return this.type === 'card'
-    }
-    /** 카드번호 앞 2자리 */
-    get isCard2(): boolean {
-        return this.type === 'card2'
     }
 
     /**
@@ -199,7 +167,6 @@ export default class SecretNumber extends Mixins(Validates) {
          * @event focus
          */
         this.$emit('focus', event)
-
         this.focusedClass = true
     }
 

@@ -1,33 +1,31 @@
 <template>
-    <div class="text-field" :class="isError">
-        <label :for="id" :class="{ ir: hiddenLabel }">{{ label }}</label>
-        <div class="input-area" :class="{ focus: focusedClass }">
-            <input
-                :id="id"
-                ref="input"
-                :value="displayValue"
-                autocomplete="new-password"
-                :pattern="pattern"
-                :maxlength="maxlength"
-                :placeholder="placeholder"
-                :type="inputType"
-                :readonly="readonly"
-                @input="onInput"
-                @keydown="onKeydown"
-                @focus="onFocus"
-                @blur="onBlur"
-            />
-            <span v-if="unit" class="unit">
-                {{ unit }}
-            </span>
-            <button v-if="!readonly && !!value.length" type="button" class="clear" @click="clearValue">
-                <i />
-                <span class="ir">전체삭제</span>
+    <div class="search-field">
+        <label :for="id" class="ir">{{ label }}</label>
+        <div class="flex">
+            <div class="input-area" :class="{ focus: focusedClass }">
+                <input
+                    :id="id"
+                    ref="input"
+                    :value="displayValue"
+                    autocomplete="new-password"
+                    :maxlength="maxlength"
+                    :placeholder="placeholder"
+                    type="text"
+                    :readonly="readonly"
+                    @input="onInput"
+                    @keydown="onKeydown"
+                    @focus="onFocus"
+                    @blur="onBlur"
+                />
+                <button v-if="!readonly && !!value.length" type="button" class="clear" @click="clearValue">
+                    <i />
+                    <span class="ir">전체삭제</span>
+                </button>
+            </div>
+            <button class="search-button" type="submit">
+                <span>검색</span>
             </button>
         </div>
-        <p v-if="message" class="message">
-            {{ message }}
-        </p>
     </div>
 </template>
 
@@ -52,7 +50,7 @@ interface Validate {
  */
 
 @Component
-export default class TextField extends Mixins(Validates) {
+export default class SearchField extends Mixins(Validates) {
     /**
      * @category Refs
      */
@@ -62,10 +60,6 @@ export default class TextField extends Mixins(Validates) {
     /**
      * @category PROPS
      */
-
-    /** type 속성 */
-    @Prop({ type: String, default: 'text' })
-    readonly type!: 'text' | 'number' | 'seperateNumber'
 
     /** form에 사용될 id */
     @Prop({ type: String, required: true })
@@ -95,22 +89,6 @@ export default class TextField extends Mixins(Validates) {
     @Prop({ type: Boolean, default: false })
     readonly readonly!: boolean
 
-    /** 단위 표시 */
-    @Prop({ type: String, default: '' })
-    readonly unit!: string
-
-    /** 유효성 검사 */
-    @Prop(Function)
-    readonly validate!: Validate
-
-    /** 에러 메세지 */
-    @Prop(String)
-    readonly errorMessage!: string
-
-    /** 성공 메세지 */
-    @Prop(String)
-    readonly successMessage!: string
-
     /** 기본 값 */
     @Prop(String)
     readonly defaultValue!: string
@@ -128,39 +106,11 @@ export default class TextField extends Mixins(Validates) {
     /**
      * @category COMPUTED
      */
-    get pattern(): string {
-        return this.inputType === 'number' ? '\\d*' : ''
-    }
-
-    get inputType(): InputType {
-        const dictionary: { [key: string]: InputType } = {
-            text: 'text',
-            number: 'number',
-            seperateNumber: 'text',
-        }
-        return dictionary[this.type]
-    }
 
     /** 타이핑한 값 */
     get displayValue(): string {
         const conditions = [this.value, this.type === 'seperateNumber']
         return conditions.every(condition => condition) ? this._.toNumber(this.value).toLocaleString() : this.value
-    }
-
-    /** 에러 여부 */
-    get isError(): string | undefined {
-        const conditions = [this.value.length, typeof this.validate === 'function']
-        if (conditions.every(condition => condition)) {
-            return this.validate(this.value) ? 'success' : 'error'
-        }
-    }
-
-    /** 에러 메세지 */
-    get message(): string | undefined {
-        const conditions = [this.value.length, typeof this.validate === 'function']
-        if (conditions.every(condition => condition)) {
-            return this.validate(this.value) ? this.successMessage : this.errorMessage
-        }
     }
 
     /**
@@ -228,4 +178,4 @@ export default class TextField extends Mixins(Validates) {
 }
 </script>
 
-<style lang="scss" scoped src="./TextField.scss"></style>
+<style lang="scss" scoped src="./SearchField.scss"></style>

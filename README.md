@@ -22,14 +22,14 @@
 
 - Typescript 도입을 통해 코드 안정성 및 생상성 증대
 - 엄격한 타입 Rule 도입으로 안정성 확보
-    - strictNullChecks
-    - noImplicitAny
+  - strictNullChecks
+  - noImplicitAny
 - Typescript 주요 Feature 적극 사용 권장
-    - Optional Chaining
-    - Nullish Coalescing
-    - Non Null Assertion Operator
-    - Promise.all
-    - ...
+  - Optional Chaining
+  - Nullish Coalescing
+  - Non Null Assertion Operator
+  - Promise.all
+  - ...
 - 클래스 기반 컴포넌트 (Vue Class Component) 를 활용해 Typescript의 많은 기능을 적극 도입
 - Typescript Decorator Pattern 을 통해 읽기 쉬운 코드를 작성하고 코드의 재사용성을 높임
 - async & await 적극적인 사용으로 읽기 쉬운 코드와 기존의 비동기 처리방식 개선
@@ -37,20 +37,20 @@
 
 ### Installation
 
-##### Clone this repo:
+#### Clone this repo
 
 ```sh
 git clone https://github.com/LOTTECARD/vue.ts-boilerplate.git
 cd vue.ts-boilerplate
 ```
 
-##### Install the dependencies:
+##### Install the dependencies
 
 ```sh
 npm install
 ```
 
-##### Development:
+##### Development
 
 ```sh
 npm run serve
@@ -58,29 +58,67 @@ npm run serve
 
 ### Project Structure
 
-.
-├── .vscode                 # 프로젝트 내에서 사용되는 vscode 설정
-├── cli                     # build 관련 ts 파일(ex. *.ts, *.vue 파일 유효성 검토)
-├── server                  # json-server api mock
-├── src                     # src root
-│   ├── assets              # image, fonts 등 resource 파일
-│   ├── components          # 앱 내에서 재사용을 위한 컴포넌트
-│   ├── pages               # Vue Router와 연결될 실제 Page component
-│   ├── services            # Server API Module Layer
-│   ├── stores              # Vuex Store (Module 단위 개발)
-│   │   ├── modules         # Vuex Modules
-│   │   └── ...
-│   ├── styles              # Global Sass (ex. reset, mixin, variable)
-│   ├── utils               # Utility Modules
-│   │   ├── decorator       # Vue에서 사용되는 Util
-│   │   └── ...
-│   └── ...                 # etc.
-└── ...
+```txt
+📦selly  
+┣ 📂.storybook             # 스토리북 설정 파일  
+┣ 📂.vscode                # VSCode 설정  
+┃ ┗ 📜settings.json        # VSCode 설정 JSON  
+┣ 📂cli  
+┃ ┣ 📜tsc-staged.ts        # husky typescript 체크(tsc)  
+┃ ┗ 📜vue-staged.ts        # husky Vetur 체크(vtc)  
+┣ 📂dist                   # build 된 파일  
+┣ 📂public                 # build 전 dev server root 폴더  
+┣ 📂src                    # 개발 소스  
+┃ ┣ 📂assets               # 정적자원(이미지, icon 등)  
+┃ ┃ ┣ 📂icon  
+┃ ┃ ┗ 📂images  
+┃ ┣ 📂components           # 공통 컴포넌트  
+┃ ┃ ┣ 📂common             # 분류가 따로 없는 컴포넌트  
+┃ ┃ ┗ 📂form               # 분류가 되는 컴포넌트는 폴더별로 구분  
+┃ ┣ 📂fonts                # 폰트  
+┃ ┣ 📂layout               # 레이아웃을 구성하는 컴포넌트(디자인 별로 구분)  
+┃ ┣ 📂pages                # 페이지가 되는 컴포넌트  
+┃ ┣ 📂services             # service 컴포넌트 (사용할지 말지 고민중)  
+┃ ┃ ┣ 📂core  
+┃ ┃ ┃ ┣ 📜decorators.ts    # 기능 단위 데코레이터  
+┃ ┃ ┃ ┣ 📜http.ts          # axios wrapping class  
+┃ ┃ ┃ ┗ 📜index.ts  
+┃ ┃ ┗ 📜card.ts            # service class 예시  
+┃ ┣ 📂stores               # store  
+┃ ┃ ┗ 📂modules            # 하위 모듈  
+┃ ┣ 📂stories              # 스토리북 작성 파일  
+┃ ┣ 📂styles               # style(CSS, SCSS)  
+┃ ┣ 📂types                # 기본 타입 정의(프로젝트 내)  
+┃ ┣ 📂utils                # 유틸성 모듈  
+┃ ┃ ┣ 📂mixins             # mixin class  
+┃ ┃ ┣ 📂plugins            # plugin functions  
+┃ ┃ ┗ 📜registerCommonComponent.ts  
+┃ ┣ 📜App.vue              # Root component  
+┃ ┣ 📜main.ts              # runnin Vue  
+┃ ┣ 📜router.ts            # router object  
+┃ ┣ 📜shims-tsx.d.ts       # tsx file definition  
+┃ ┗ 📜shims-vue.d.ts       # vue file definition  
+┣ 📜.env.development       # 개발용 환경변수  
+┣ 📜.eslintrc.js           # eslint 설정 파일  
+┣ 📜.gitignore             # git 무시 목록  
+┣ 📜.myeditorconfig        # 에디터 설정 백업  
+┣ 📜.npmrc                 # config npm repository server  
+┣ 📜.nvmrc                 # node version set  
+┣ 📜.prettierrc            # prettier 설정  
+┣ 📜README.md              # 프로젝트 설명  
+┣ 📜package-lock.json      # node package dependency 관리  
+┣ 📜package.json           # node package, script, etc config 관리  
+┣ 📜tsconfig.base.json     # 타입스크립트 설정 파일 (base)  
+┣ 📜tsconfig.json          # 타입스크립트 설정 파일 (extends base)  
+┣ 📜vetur.config.js        # vetur 설정 파일  
+┣ 📜vue.config.js          # vue 설정 파일  
+┗ 📜yarn.lock              # yarn lock 파일(yarn 사용)  
+```
 
 ### 가이드 외에 추가된 모듈 목록
 
 dependency
-> lodash
+> lodash  
 
 devDependency
 > tsconfig-paths-webpack-plugin
@@ -92,10 +130,47 @@ devDependency
 "@fortawesome/free-solid-svg-icons": "^5.15.3",
 "@fortawesome/vue-fontawesome": "^2.0.2",
 
-
 ### common module
+
 vue-portal
 toast (include animation, bottom to top)
 tooltip
 custom select
 tab(each other case)
+
+### 정규식 모음
+
+> [정규식 참고][RegExpReference]
+
+```ts
+// 특수문자/문자/숫자포함 8~15자리 이내의 암호
+/^.*(?=^.{8,15}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/
+
+// 핸드폰번호 정규식
+/^\d{3}-\d{3,4}-\d{4}$/;
+
+
+// 일반 전화번호 정규식
+/^\d{2,3}-\d{3,4}-\d{4}$/;
+
+// 이메일
+/^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i
+
+// 숫자만
+/^[0-9]*$/g
+
+// 문자열(특수문자 제외)
+/^[ㄱ-힇a-zA-Z]*$/g
+
+// 키보드에서 입력 가능한 특수문자
+/^[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]*$/g
+
+// 주민등록번호
+/\d{6} \- [1-4]\d{6}/
+
+// 모든 공백 체크 정규식
+/\s/g
+
+```
+
+[RegExpReference]: https://m.blog.naver.com/PostView.nhn?blogId=jwjung0723&logNo=221721325323&categoryNo=10&proxyReferer=&proxyReferer=https:%2F%2Fwww.google.com%2F

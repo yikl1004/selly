@@ -25,28 +25,41 @@ interface Args {}
 const Template: Story<Args> = (args, { argTypes }) => {
     return {
         props: getProps(argTypes),
-        template: `<PersonalNumber v-bind="$props" />`,
+        template: `<SecretNumber v-bind="$props" />`,
     }
 }
 
 export const Primary = Template.bind({})
 Primary.args = {
-    type: '',
+    type: 'regist',
     id: 'personal-number',
     label: '주민등록번호',
 }
 
 export const OneDigit = Template.bind({})
 OneDigit.args = {
-    type: '',
+    type: 'registGender',
     id: 'personal-number',
     label: '주민등록번호',
 }
 
 export const FullDigit = Template.bind({})
 FullDigit.args = {
-    type: '',
+    type: 'regist',
     id: 'personal-number-1',
     label: '주민등록번호',
-    backLength: 1,
+}
+
+export const CardPasswordFull = Template.bind({})
+CardPasswordFull.args = {
+    type: 'card',
+    id: 'personal-number-1',
+    label: '카드 비밀번호',
+}
+
+export const CardPasswordTowCaracter = Template.bind({})
+CardPasswordTowCaracter.args = {
+    type: 'card2',
+    id: 'personal-number-1',
+    label: '카드 비밀번호',
 }
