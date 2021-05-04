@@ -13,7 +13,7 @@
                     type="text"
                     :readonly="readonly"
                     @input="onInput"
-                    @keydown="onKeydown"
+                    @keydown.enter="onKeydownEnter"
                     @focus="onFocus"
                     @blur="onBlur"
                 />
@@ -22,7 +22,7 @@
                     <span class="ir">전체삭제</span>
                 </button>
             </div>
-            <button class="search-button" type="submit">
+            <button class="search-button" type="button" @click="onSearch">
                 <span>검색</span>
             </button>
         </div>
@@ -35,10 +35,8 @@ import Validates from '@utils/mixins/Validates'
 
 export interface OnChangeParameters {
     value: string
-    maxLength?: number
-    index?: number
 }
-type InputType = 'text' | 'number'
+
 interface Validate {
     (value: string): boolean
 }
@@ -62,16 +60,12 @@ export default class SearchField extends Mixins(Validates) {
      */
 
     /** form에 사용될 id */
-    @Prop({ type: String, required: true })
+    @Prop(String)
     readonly id!: string
 
     /** label태그에 들어갈 텍스트 */
     @Prop({ type: String, default: '', required: true })
     readonly label!: string
-
-    /** label을 비노출여부 */
-    @Prop(Boolean)
-    readonly hiddenLabel!: boolean
 
     /** name 속성 지정 */
     @Prop({ type: String, default: '', required: true })
@@ -98,7 +92,7 @@ export default class SearchField extends Mixins(Validates) {
      */
 
     /** 실제 값 */
-    private value: string = this.defaultValue || ''
+    private value: string = ''
 
     /** focus 상태 */
     private focusedClass: boolean = false
@@ -109,8 +103,7 @@ export default class SearchField extends Mixins(Validates) {
 
     /** 타이핑한 값 */
     get displayValue(): string {
-        const conditions = [this.value, this.type === 'seperateNumber']
-        return conditions.every(condition => condition) ? this._.toNumber(this.value).toLocaleString() : this.value
+        return this.value
     }
 
     /**
@@ -130,19 +123,24 @@ export default class SearchField extends Mixins(Validates) {
      * @title Custom Methods
      */
 
+    toggleFocus() {
+        this.focusedClass = !this.focusedClass
+    }
+
+    onSearch() {
+        /**
+         * keydown 이벤트
+         * @event search
+         */
+        this.$emit('search', this.value)
+    }
+
     onInput(event: InputEvent) {
         this.value = this.$refs.input.value.replace(/\,/g, '')
     }
 
-    onKeydown(event: KeyboardEvent) {
-        this.applyMaxLength(event)
-        this.onlyNumber(event)
-
-        /**
-         * keydown 이벤트
-         * @event keydown
-         */
-        this.$emit('keydown', event)
+    onKeydownEnter(event: KeyboardEvent) {
+        this.onSearch()
     }
 
     onFocus(event: FocusEvent) {
@@ -152,11 +150,11 @@ export default class SearchField extends Mixins(Validates) {
          */
         this.$emit('focus', event)
 
-        this.focusedClass = true
+        this.toggleFocus()
     }
 
     onBlur(event: FocusEvent) {
-        this.focusedClass = false
+        this.toggleFocus()
     }
 
     clearValue() {

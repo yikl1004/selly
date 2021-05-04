@@ -11,6 +11,17 @@
         margin-bottom: 7px;
     }
 
+    .flex {
+        .input-area {
+            width: 100%;
+            flex-shrink: 1;
+        }
+
+        .input-area + .search-button {
+            margin-left: 8px;
+        }
+    }
+
     .input-area {
         position: relative;
         border: solid 1px #ebebeb;
@@ -88,6 +99,27 @@
                     height: 11px;
                 }
             }
+        }
+    }
+
+    button.search-button {
+        padding: 0 22px;
+        border-radius: 10px;
+        background-color: #5089ca;
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 1.5;
+        letter-spacing: -0.5px;
+        text-align: center;
+        color: #ffffff;
+
+        &:active {
+            background-color: #2d4f76;
+        }
+
+        &:disabled {
+            background-color: #ebebeb;
+            color: #bbb;
         }
     }
 }

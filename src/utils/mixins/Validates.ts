@@ -1,5 +1,5 @@
-import { Component, Vue } from 'vue-property-decorator'
 import { SecretType } from '@/types'
+import { Component, Vue } from 'vue-property-decorator'
 
 /**
  * 설명을 적어야 하는데 뭐라고 또 말을 만들어서 써야 하나...

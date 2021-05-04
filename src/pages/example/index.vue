@@ -2,7 +2,10 @@
     <div>
         <h1>예제 페이지</h1>
         <input type="text" :value="displayValue" @input="onInput" />
-        <SearchField id="seach-area" label="검색영역" />
+        <button type="button" @click="openModal">
+            모달
+        </button>
+        <BottomSheet :show="visible" @close="closedModal" />
     </div>
 </template>
 
@@ -22,11 +25,12 @@ export default class extends Vue {
     private value: string = ''
     private displayValue: string = ''
 
+    private visible: boolean = false
+
     @Watch('value')
     changeValue() {
         let args: [RegExp, string] | []
         if (this.value.length < 7) {
-            console.log()
             args = [/(\d{3})(\d)/, '$1-$2']
         } else if (this.value.length < 11) {
             args = [/^(\d{3})(\d{3})(\d)/, '$1-$2-$3']
@@ -43,6 +47,14 @@ export default class extends Vue {
         // console.log(phoneNumber.replace(/(^01.{1}|[0-9]{3})([0-9]+)([0-9]{4})/, '$1-$2-$3'))
         // console.log(phoneNumber.replace(/^(\d{2,3})(\d{3,4})(\d{4})$/, '$1-$2-$3'))
         this.value = (event.target as HTMLInputElement).value.replace(/\-/g, '')
+    }
+
+    openModal() {
+        this.visible = true
+    }
+
+    closedModal() {
+        this.visible = false
     }
 }
 </script>

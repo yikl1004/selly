@@ -11,31 +11,43 @@ import { Component, Prop, Vue } from 'vue-property-decorator'
 
 type Size = 'large' | 'medium' | 'small'
 type ButtonType = 'button' | 'submit'
-type DesignType = 'basic' | 'line'
+type DesignType =
+    | 'basic' // 기본
+    | 'line' // 선형
+    | 'with' // 버튼과 함께 쓰이는 형태
 
 @Component
 export default class BasicButton extends Vue {
+    /**
+     * @category Props
+     */
     /** 디자인 타입 */
-    @Prop({ type: String, default: 'basic', required: false })
+    @Prop({ type: String, default: 'basic' })
     readonly type!: DesignType
 
     /** submit 타입 사용여부(true일 경우 props key만 사용, react 처럼) */
-    @Prop({ type: Boolean, default: false, required: false })
+    @Prop({ type: Boolean, default: false })
     readonly submit!: boolean
 
     /** 활성화 상태 */
-    @Prop({ type: Boolean, default: false, required: false })
+    @Prop({ type: Boolean, default: false })
     readonly disabled!: boolean
 
     /** 사이즈 */
-    @Prop({ type: String, default: 'large', required: false })
+    @Prop({ type: String, default: 'large' })
     readonly size!: Size
 
+    /**
+     * @category Computed
+     */
     /** submit props에 따라 button tag의 attribute를 결정 */
     get buttonType(): ButtonType {
         return this.submit ? 'submit' : 'button'
     }
 
+    /**
+     * @category Methods
+     */
     onClick(event: PointerEvent) {
         /**
          * click 이벤트
@@ -56,7 +68,7 @@ export default class BasicButton extends Vue {
     align-items: center;
 
     &.large {
-        max-width: 312px;
+        max-width: 400px;
         font-size: 16px;
         font-weight: 500;
         padding: 19px 40px 18px;
@@ -74,7 +86,7 @@ export default class BasicButton extends Vue {
     }
 
     &.medium {
-        max-width: 312px;
+        max-width: 400px;
         font-size: 14px;
         font-weight: bold;
         padding: 15px 40px 12px;
@@ -125,5 +137,26 @@ export default class BasicButton extends Vue {
             border: solid 1px #ebebeb;
         }
     }
+
+    /* &.with {
+        padding: 22px;
+        border-radius: 10px;
+        background-color: #5089ca;
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 1.5;
+        letter-spacing: -0.5px;
+        text-align: center;
+        color: #ffffff;
+
+        &:active {
+            background-color: #2d4f76;
+        }
+
+        &:disabled {
+            background-color: #ebebeb;
+            color: #bbb;
+        }
+    } */
 }
 </style>

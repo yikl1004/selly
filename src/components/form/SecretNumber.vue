@@ -47,7 +47,6 @@
 <script lang="ts">
 import { Component, Vue, Prop, Mixins, Watch } from 'vue-property-decorator'
 import Validates from '@utils/mixins/Validates'
-import { SecretType } from '@/types'
 
 @Component
 export default class SecretNumber extends Mixins(Validates) {
@@ -60,7 +59,7 @@ export default class SecretNumber extends Mixins(Validates) {
     }
 
     /**
-     * @category PROPS
+     * @category Props
      */
 
     /** form에 사용될 id */
@@ -81,10 +80,10 @@ export default class SecretNumber extends Mixins(Validates) {
 
     /** type */
     @Prop({ type: String, required: true })
-    readonly type!: SecretType
+    readonly type!: any
 
     /**
-     * @category DATA(State)
+     * @category Data(State)
      */
 
     /** 실제 값(앞자리) */
@@ -97,7 +96,7 @@ export default class SecretNumber extends Mixins(Validates) {
     private focusedClass: boolean = false
 
     /**
-     * @category COMPUTED
+     * @category Computed
      */
     get value(): string {
         return `${this.secretValue}${this.frontValue}`
@@ -105,7 +104,7 @@ export default class SecretNumber extends Mixins(Validates) {
 
     /** 마스킹 자릿 수 */
     get digit(): { blank: number; fill: number } {
-        const dictionary = {
+        const dictionary: { [key: string]: { blank: number; fill: number } } = {
             regist: { blank: 7, fill: 0 },
             registGender: { blank: 1, fill: 6 },
             card: { blank: 4, fill: 0 },
@@ -133,7 +132,7 @@ export default class SecretNumber extends Mixins(Validates) {
     }
 
     /**
-     * @category METHODS
+     * @category Methods
      */
 
     private onInputFront(event: InputEvent) {

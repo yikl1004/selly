@@ -1,9 +1,14 @@
 {
+    // vscode 설정
     "editor.formatOnSave": false,
     "editor.codeActionsOnSave": {
         "source.fixAll.eslint": true
     },
+
+    // JS, TS 에서 데코레이터 사용여부
     "js/ts.implicitProjectConfig.experimentalDecorators": true,
+
+    // 에디터 스타일 설정 ㅋㅋ
     "workbench.colorCustomizations": {
         "titleBar.activeForeground": "#000",
         "titleBar.inactiveForeground": "#000000CC",
@@ -35,4 +40,7 @@
     "prettier.tabWidth": 4,
     "prettier.useTabs": true,
     "prettier.enable": false,
+
+    // jshint
+    "jshint.enable": false,
 }
