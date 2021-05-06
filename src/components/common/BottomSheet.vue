@@ -1,9 +1,18 @@
 <template>
     <div class="bottom-sheet">
-        <transition name="bottom-sheet-dimm" @before-enter="beforeEnter" @after-enter="afterEnter">
+        <transition
+            name="bottom-sheet-dimm"
+            mode="out-in"
+            enter-active-class="animate__animated animate__fadeIn"
+            leave-active-class="animate__animated animate__fadeOut"
+        >
             <div v-show="show" class="dimm" @click="onClose" />
         </transition>
-        <transition name="bottom-sheet-inner">
+        <transition
+            mode="out-in"
+            enter-active-class="animate__animated animate__slideInUp"
+            leave-active-class="animate__animated animate__slideOutDown"
+        >
             <div v-show="show" class="inner">
                 <header class="heading">
                     <h2 class="title">
@@ -74,32 +83,7 @@ export default class BottomSheet extends Vue {
 $transition: all 0.3s ease-in-out;
 
 .bottom-sheet {
-    .bottom-sheet-dimm-enter-active {
-        transition: $transition;
-        opacity: 0;
-    }
-    .bottom-sheet-dimm-enter-to {
-        transition: $transition;
-        opacity: 1;
-    }
-    .bottom-sheet-dimm-leave-active {
-        transition: $transition;
-        opacity: 0;
-    }
-
-    .inner.bottom-sheet-inner-enter-active {
-        transition: $transition;
-        bottom: -100%;
-    }
-    .inner.bottom-sheet-inner-enter-to {
-        transition: $transition;
-        bottom: 0;
-    }
-    .inner.bottom-sheet-inner-leave-active {
-        transition: $transition;
-        bottom: -100%;
-    }
-
+    --animate-duration: 300ms;
     .dimm {
         background-color: rgba(34, 34, 34, 0.6);
         position: fixed;

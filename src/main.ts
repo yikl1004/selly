@@ -3,6 +3,8 @@ import App from '@/App.vue'
 import router from '@/router'
 import store from '@/stores'
 import { initialize } from '@/utils/index'
+
+import 'animate.css/animate.css'
 import '@styles/variables.scss'
 import '@styles/index.scss'
 

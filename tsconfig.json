@@ -8,6 +8,10 @@
             "vue/types/vue",
             "react"
         ],
+        "typeRoots": [
+            "./node_modules/@types",
+            "./src/typings/index.d.ts"
+        ],
         "paths": {
             "@/*": [
                 "src/*"
@@ -47,6 +51,6 @@
     ],
     "exclude": ["node_modules"],
     "files": [
-        "src/shims-vue.d.ts"
+        "src/typings/shims-vue.d.ts"
     ]
 }

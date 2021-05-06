@@ -1,4 +1,3 @@
-import { SecretType } from '@/types'
 import { Component, Vue } from 'vue-property-decorator'
 
 /**

@@ -1,6 +1,6 @@
 <template>
     <component :is="layout">
-        <transition :name="transitionName" mode="in-out" @beforeLeave="beforeLeave" @enter="enter">
+        <transition mode="in-out">
             <router-view />
         </transition>
     </component>
