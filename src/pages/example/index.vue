@@ -24,7 +24,6 @@ export default class extends Vue {
 
     private value: string = ''
     private displayValue: string = ''
-
     private visible: boolean = false
 
     @Watch('value')
@@ -55,6 +54,10 @@ export default class extends Vue {
 
     closedModal() {
         this.visible = false
+    }
+
+    mounted() {
+        console.log(this.$store)
     }
 }
 </script>

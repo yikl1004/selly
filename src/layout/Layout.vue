@@ -1,6 +1,10 @@
 <template>
     <component :is="layout">
-        <transition mode="in-out">
+        <transition
+            mode="out-in"
+            enter-active-class="animate__animated animate__fadeInRight"
+            leave-active-class="animate__animated animate__fadeOutLeft"
+        >
             <router-view />
         </transition>
     </component>
@@ -48,20 +52,8 @@ export default class Layout extends Vue {
 }
 </script>
 
-<style lang="scss">
-.slide-left-enter-active {
-    transition: left cubic-bezier(0.55, 0, 0.1, 1) 0.4s;
-    overflow: hidden;
-    position: absolute;
-    top: 50px;
-    left: 0;
-}
-
-.slide-left-enter {
-    left: 100%;
-}
-
-.slide-left-leave-active {
-    left: 100%;
+<style lang="scss" scoped>
+#layout {
+    --animate-duration: 300ms;
 }
 </style>

@@ -4,7 +4,7 @@ import { cacheAdapterEnhancer, throttleAdapterEnhancer } from 'axios-extensions'
 import { ResponseAdapterType } from './decorators'
 
 export type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE'
-export type LocaServiceResponse<T> = Promise<T | null>
+export type SellyServiceResponse<T> = Promise<T | null>
 
 export class HttpService {
     private readonly instance: AxiosInstance

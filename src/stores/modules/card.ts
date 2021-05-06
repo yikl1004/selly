@@ -1,4 +1,4 @@
-import store from '@/stores/index'
+import store from '@/stores'
 import { Module, VuexModule, MutationAction, getModule } from 'vuex-module-decorators'
 import CardService, { CardResponse } from '@/services/card'
 
@@ -6,8 +6,8 @@ export interface CardState {
     title: string
 }
 
-@Module({ dynamic: true, name: 'card', namespaced: true, store })
-class Card extends VuexModule {
+@Module({ name: 'card', namespaced: true, stateFactory: true })
+export class Card extends VuexModule {
     cardList: CardResponse[] = []
 
     @MutationAction({ mutate: ['cardList'] })
@@ -17,6 +17,13 @@ class Card extends VuexModule {
             cardList,
         }
     }
-}
 
-export const CardModule = getModule(Card)
+    @MutationAction({ mutate: ['cardList'] })
+    async wow() {
+        console.log('@@@@@@', this)
+        await 'wow'
+        return {
+            cardList: [],
+        }
+    }
+}

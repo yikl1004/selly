@@ -1,4 +1,4 @@
-import { HttpService, LocaServiceResponse, GET, Path, ResponseAdapter } from './core'
+import { HttpService, SellyServiceResponse, GET, Path, ResponseAdapter } from './core'
 
 export interface CardResponse {
     id: number
@@ -8,7 +8,7 @@ export interface CardResponse {
 
 export default class CardService extends HttpService {
     @GET('/card')
-    async getCardAll(): LocaServiceResponse<CardResponse[]> {
+    async getCardAll(): SellyServiceResponse<CardResponse[]> {
         return await null
     }
 
@@ -17,7 +17,7 @@ export default class CardService extends HttpService {
         console.log('hahaha')
         return { ...data, tmp2: 'tmp2' }
     })
-    async getCardbyId(@Path('id') id: number): LocaServiceResponse<CardResponse> {
+    async getCardbyId(@Path('id') id: number): SellyServiceResponse<CardResponse> {
         return await null
     }
 }
