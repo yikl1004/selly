@@ -6,33 +6,30 @@ import { ResponseAdapterType } from './decorators'
 export type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE'
 export type SellyServiceResponse<T> = Promise<T | null>
 
-export class HttpService {
-    private readonly instance: AxiosInstance
-
-    constructor() {
-        // console.log('process.env.API_DOMAIN', process.env.API_DOMAIN)
-        this.instance = axios.create({
-            baseURL: process.env.API_DOMAIN || 'http://localhost:3000',
-            headers: {
-                'Cache-Control': 'no-cache',
-            },
-            adapter: throttleAdapterEnhancer(cacheAdapterEnhancer(axios.defaults.adapter as AxiosAdapter)),
-            transformResponse: this.getTransformResponse(),
-        })
-    }
-
-    private getTransformResponse(): AxiosTransformer {
-        return (data: any) => {
-            try {
-                const _data = JSON.parse(data)
-                return {
-                    ..._data,
-                }
-            } catch (error) {
-                return {}
+const getTransformResponse = (): AxiosTransformer => {
+    return (data: any) => {
+        try {
+            const _data = JSON.parse(data)
+            return {
+                ..._data,
             }
+        } catch (error) {
+            return {}
         }
     }
+}
+
+const instance = axios.create({
+    baseURL: process.env.VUE_APP_API_DOMAIN || 'http://localhost:3000',
+    headers: {
+        'Cache-Control': 'no-cache',
+    },
+    adapter: throttleAdapterEnhancer(cacheAdapterEnhancer(axios.defaults.adapter as AxiosAdapter)),
+    transformResponse: getTransformResponse(),
+})
+
+export class HttpService {
+    private readonly instance: AxiosInstance = instance
 
     public async request<T>(config: AxiosRequestConfig, responseAdapter?: ResponseAdapterType): Promise<T> {
         const { transformResponse: defaultTransformResponse } = this.instance.defaults

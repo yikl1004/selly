@@ -11,7 +11,7 @@ export default class Validates extends Vue {
     private specialRegExp: RegExp = /^[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]*$/g
     private phoneRegExp: RegExp = /^\d{2,3}-\d{3,4}-\d{4}$/
 
-    readonly type!: 'number' | 'seperateNumber' | 'text' | SecretType
+    readonly type!: 'number' | 'seperateNumber' | 'text' | 'select' | SecretType
 
     /** 숫자만 입력 받는 타입인지 여부 */
     get isNumberType(): boolean {
@@ -105,4 +105,20 @@ export default class Validates extends Vue {
      * @param event
      */
     onlyText(event: KeyboardEvent) {}
+
+    phoneNumber(value: string) {
+        const cloneValue = this._.cloneDeep(value)
+        let args: [RegExp, string] | []
+        if (cloneValue.length < 7) {
+            args = [/(\d{3})(\d)/, '$1-$2']
+        } else if (cloneValue.length < 11) {
+            args = [/^(\d{3})(\d{3})(\d)/, '$1-$2-$3']
+        } else if (cloneValue.length >= 11) {
+            args = [/^(\d{3})(\d{4})(\d{4})$/, '$1-$2-$3']
+        } else {
+            args = []
+        }
+
+        return args.length === 2 ? cloneValue.replace(...args) : cloneValue
+    }
 }

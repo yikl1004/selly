@@ -1,13 +1,16 @@
 <template>
-    <component :is="layout">
-        <transition
-            mode="out-in"
-            enter-active-class="animate__animated animate__fadeInRight"
-            leave-active-class="animate__animated animate__fadeOutLeft"
-        >
-            <router-view />
-        </transition>
-    </component>
+    <div class="site-wrapper">
+        <component :is="layout">
+            <transition
+                mode="out-in"
+                enter-active-class="animate__animated animate__fadeInRight"
+                leave-active-class="animate__animated animate__fadeOutLeft"
+            >
+                <router-view />
+            </transition>
+        </component>
+        <PortalTarget name="bottomSheet" />
+    </div>
 </template>
 
 <script lang="ts">

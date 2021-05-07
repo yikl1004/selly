@@ -25,6 +25,13 @@
                 <p v-if="!!description" class="dscription">
                     {{ description }}
                 </p>
+                <ul class="select-options">
+                    <li v-for="(item, index) in list" :key="`list-${index}`" :class="{ selected: item.selected }">
+                        <button type="button" @click="onClickOption(index)">
+                            {{ item.displayName }}
+                        </button>
+                    </li>
+                </ul>
                 <slot name="checkButton" />
                 <button type="button" class="close" @click="onClose">
                     <span class="ir">닫기</span>
@@ -38,6 +45,12 @@
 import { Component, Prop, Vue } from 'vue-property-decorator'
 
 type DesignType = 'select' | 'banner' | 'description'
+
+export interface OptionItem {
+    displayName: string
+    value: string
+    selected?: boolean
+}
 
 @Component
 export default class BottomSheet extends Vue {
@@ -65,6 +78,10 @@ export default class BottomSheet extends Vue {
     @Prop({ type: String, default: '' })
     readonly type!: DesignType
 
+    /** 리스트 타입일 경우 */
+    @Prop({ type: Array, default: () => ({}) })
+    readonly list!: OptionItem[]
+
     /**
      * @category Data(State)
      */
@@ -88,6 +105,15 @@ export default class BottomSheet extends Vue {
 
     beforeEnter() {
         this.transitionBeforeClass = ''
+    }
+
+    onClickOption(index: number) {
+        /**
+         * list의 option 선택 시 트리거 되는 함수
+         * @event select-option
+         */
+        this.$emit('select-option', this.list[index].value)
+        this.onClose()
     }
 }
 </script>
@@ -141,6 +167,30 @@ $transition: all 0.3s ease-in-out;
 
         .btn {
             margin-top: 24px;
+        }
+
+        .select-options {
+            margin-top: 16px;
+            li {
+                button {
+                    width: 100%;
+                    padding: 17px 24px;
+                    font-size: 14px;
+                    line-height: 1.57;
+                    color: #222;
+                    text-align: left;
+                }
+
+                &.selected {
+                    background-image: url('/assets/icon/icon-check-active.svg');
+                    background-repeat: no-repeat;
+                    background-position: right 8px center;
+                    background-size: 48px 48px;
+                    button {
+                        color: #5089ca;
+                    }
+                }
+            }
         }
 
         button.close {

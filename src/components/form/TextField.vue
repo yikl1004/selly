@@ -1,7 +1,22 @@
 <template>
     <div class="text-field" :class="isError">
         <label :for="id" :class="{ ir: hiddenLabel }">{{ label }}</label>
-        <div class="input-area" :class="{ focus: focusedClass }">
+        <div class="input-area" :class="{ focus: focusedClass, 'select-type': isSelectType }">
+            <template v-if="isSelectType">
+                <button type="button" class="select-button" @click="openBottomSheet">
+                    {{ selectedValue.displayName }}
+                    <i class="open" />
+                </button>
+                <portal to="bottomSheet">
+                    <BottomSheet
+                        :show="bottomSheetVisible"
+                        :title="label"
+                        :list="list"
+                        @close="closeBottomSheet"
+                        @select-option="onSelectOption"
+                    />
+                </portal>
+            </template>
             <input
                 :id="id"
                 ref="input"
@@ -34,6 +49,7 @@
 <script lang="ts">
 import { Component, Prop, Watch, Mixins } from 'vue-property-decorator'
 import Validates from '@utils/mixins/Validates'
+import { OptionItem } from '../common/BottomSheet.vue'
 
 export interface OnChangeParameters {
     value: string
@@ -65,10 +81,10 @@ export default class TextField extends Mixins(Validates) {
 
     /** type 속성 */
     @Prop({ type: String, default: 'text' })
-    readonly type!: 'text' | 'number' | 'seperateNumber'
+    readonly type!: 'text' | 'number' | 'seperateNumber' | 'select'
 
     /** form에 사용될 id */
-    @Prop({ type: String, required: true })
+    @Prop({ type: String })
     readonly id!: string
 
     /** label태그에 들어갈 텍스트 */
@@ -115,6 +131,10 @@ export default class TextField extends Mixins(Validates) {
     @Prop(String)
     readonly defaultValue!: string
 
+    /** select 타입일 경우 option list를 주입해함!! */
+    @Prop({ type: Array, default: [] })
+    readonly list!: OptionItem[]
+
     /**
      * @category DATA(State)
      */
@@ -124,6 +144,12 @@ export default class TextField extends Mixins(Validates) {
 
     /** focus 상태 */
     private focusedClass: boolean = false
+
+    /** 선택영역 노춣 여부 */
+    private bottomSheetVisible: boolean = false
+
+    /** 선택영역에서 선택한 값 */
+    private selectedValue: OptionItem = this.list[0]
 
     /**
      * @category COMPUTED
@@ -141,10 +167,21 @@ export default class TextField extends Mixins(Validates) {
         return dictionary[this.type]
     }
 
+    get isSelectType(): boolean {
+        return this.type === 'select'
+    }
+
     /** 타이핑한 값 */
     get displayValue(): string {
-        const conditions = [this.value, this.type === 'seperateNumber']
-        return conditions.every(condition => condition) ? this._.toNumber(this.value).toLocaleString() : this.value
+        const conditionsSeperateNumbe = [this.value, this.type === 'seperateNumber']
+        const conditionSelectType = [this.value, this.type === 'select']
+        if (conditionsSeperateNumbe.every(condition => condition)) {
+            return this._.toNumber(this.value).toLocaleString()
+        } else if (conditionSelectType.every(condition => condition)) {
+            return this.phoneNumber(this.value)
+        } else {
+            return this.value
+        }
     }
 
     /** 에러 여부 */
@@ -181,7 +218,7 @@ export default class TextField extends Mixins(Validates) {
      */
 
     onInput(event: InputEvent) {
-        this.value = this.$refs.input.value.replace(/\,/g, '')
+        this.value = this.$refs.input.value.replace(/\,|\-/gi, '')
     }
 
     onKeydown(event: KeyboardEvent) {
@@ -212,6 +249,24 @@ export default class TextField extends Mixins(Validates) {
     clearValue() {
         this.value = ''
         this.$refs.input.focus()
+    }
+
+    openBottomSheet() {
+        this.bottomSheetVisible = true
+    }
+
+    closeBottomSheet() {
+        this.bottomSheetVisible = false
+    }
+
+    onSelectOption(value: string) {
+        this.selectedValue = this.list.find(item => item.value === value) as OptionItem
+
+        /**
+         * 선택된 값은 전달
+         * @event select
+         */
+        this.$emit('select', this.selectedValue)
     }
 
     /**
