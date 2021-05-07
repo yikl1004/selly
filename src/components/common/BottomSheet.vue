@@ -15,14 +15,17 @@
         >
             <div v-show="show" class="inner">
                 <header class="heading">
-                    <h2 class="title">
-                        사용 중이신 카드를 현재카드로 변경하시겠습니까?
+                    <h2 v-if="!!title" class="title">
+                        {{ title }}
                     </h2>
-                    <h3 class="sub-text">
-                        서브텍스트입니다서브텍스트입니다요
+                    <h3 v-if="!!subText" class="sub-text">
+                        {{ subText }}
                     </h3>
                 </header>
-                <BasicButton>카드 변경하기</BasicButton>
+                <p v-if="!!description" class="dscription">
+                    {{ description }}
+                </p>
+                <slot name="checkButton" />
                 <button type="button" class="close" @click="onClose">
                     <span class="ir">닫기</span>
                 </button>
@@ -33,6 +36,8 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
+
+type DesignType = 'select' | 'banner' | 'description'
 
 @Component
 export default class BottomSheet extends Vue {
@@ -48,9 +53,17 @@ export default class BottomSheet extends Vue {
     @Prop(String)
     readonly description!: string
 
+    /** 부연설명 */
+    @Prop(String)
+    readonly subText!: string
+
     /** 노출 여부 */
     @Prop({ type: Boolean, required: true })
     readonly show!: boolean
+
+    /** 디자인 타입 */
+    @Prop({ type: String, default: '' })
+    readonly type!: DesignType
 
     /**
      * @category Data(State)
@@ -94,6 +107,7 @@ $transition: all 0.3s ease-in-out;
         z-index: 1000;
     }
     .inner {
+        width: 100%;
         position: absolute;
         left: 0;
         bottom: 0;
