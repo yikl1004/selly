@@ -4,6 +4,15 @@
     "editor.codeActionsOnSave": {
         "source.fixAll.eslint": true
     },
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "[javascript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[vue]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.formatOnSave": false
+    },
+    "editor.formatOnType": true,
 
     // JS, TS 에서 데코레이터 사용여부
     "js/ts.implicitProjectConfig.experimentalDecorators": true,
@@ -21,7 +30,7 @@
     },
 
     // eslint
-    "eslint.format.enable": true,
+    // "eslint.format.enable": true,
     "eslint.run": "onSave",
     "eslint.alwaysShowStatus": true,
     "eslint.workingDirectories": [
@@ -30,16 +39,15 @@
     "eslint.validate": [
         "javascript",
         "typescript",
-        "vue"
+        "vue",
+        "vue-html"
     ],
 
     // Vetur
     "vetur.experimental.templateInterpolationService": true,
 
-    // prettier
-    "prettier.tabWidth": 4,
-    "prettier.useTabs": true,
-    "prettier.enable": false,
+    // prettier,
+    "prettier.enable": true,
 
     // jshint
     "jshint.enable": false,
