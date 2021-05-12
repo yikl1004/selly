@@ -4,6 +4,8 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import { registerCommonComponent, registerPlugins } from '@utils/index'
 
+import 'animate.css/animate.css'
+
 Vue.use(Vuex)
 registerPlugins()
 registerCommonComponent()

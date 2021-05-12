@@ -3,27 +3,26 @@ import { Module, VuexModule, MutationAction, getModule } from 'vuex-module-decor
 import CardService, { CardResponse } from '@/services/card'
 
 export interface CardState {
-    title: string
+	title: string
 }
 
 @Module({ name: 'card', namespaced: true, stateFactory: true })
 export class Card extends VuexModule {
-    cardList: CardResponse[] = []
+	cardList: CardResponse[] = []
 
-    @MutationAction({ mutate: ['cardList'] })
-    async getCardAll() {
-        const cardList = await new CardService().getCardAll()
-        return {
-            cardList,
-        }
-    }
+	@MutationAction({ mutate: ['cardList'] })
+	async getCardAll() {
+		const cardList = await new CardService().getCardAll()
+		return {
+			cardList,
+		}
+	}
 
-    @MutationAction({ mutate: ['cardList'] })
-    async wow() {
-        console.log('@@@@@@', this)
-        await 'wow'
-        return {
-            cardList: [],
-        }
-    }
+	@MutationAction({ mutate: ['cardList'] })
+	async wow() {
+		await 'wow'
+		return {
+			cardList: [],
+		}
+	}
 }

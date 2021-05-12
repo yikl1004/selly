@@ -13,6 +13,7 @@
 
     .flex {
         .input-area {
+            display: inherit;
             width: 100%;
             flex-shrink: 1;
         }
@@ -57,6 +58,18 @@
 
             &:focus {
                 outline: none;
+            }
+        }
+
+        .counter {
+            display: inherit;
+            align-items: center;
+            font-size: 16px;
+            color: #ee1100;
+            padding: 0 20px 0 0;
+
+            & + button.clear {
+                right: 62px;
             }
         }
 
