@@ -1,15 +1,8 @@
 <template>
 	<div>
 		<h1>테스트</h1>
-		<!-- <TextField
-            :list="list"
-            label="통신사 선택"
-            type="select"
-            name="phoneNumber"
-            :maxlength="13"
-            @select="onSelect"
-        /> -->
-		<ButtonField label="인증번호" name="cert" button-text="전송" use="cert" :timer="timer" />
+		<TextField id="phone-number" type="select" :list.sync="list" label="통신사 선택" name="phoneNumber" :maxlength="13" />
+		<!-- <ButtonField label="인증번호" name="cert" button-text="전송" use="cert" :timer="timer" /> -->
 	</div>
 </template>
 

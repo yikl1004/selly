@@ -111,11 +111,17 @@ export default class BottomSheet extends Vue {
 	}
 
 	onClickOption(index: number) {
+		const selectedValue = this.list[index].value
+		const list: OptionItem[] = this.list.map(option => {
+			option.selected = option.value === selectedValue
+			return option
+		})
+
 		/**
 		 * list의 option 선택 시 트리거 되는 함수
 		 * @event select-option
 		 */
-		this.$emit('select-option', this.list[index].value)
+		this.$emit('select-option', selectedValue, list)
 		this.onClose()
 	}
 }

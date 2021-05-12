@@ -259,7 +259,7 @@ export default class TextField extends Mixins(Validates) {
 		this.bottomSheetVisible = false
 	}
 
-	onSelectOption(value: string) {
+	onSelectOption(value: string, list: OptionItem[]) {
 		this.selectedValue = this.list.find(item => item.value === value) as OptionItem
 
 		/**
@@ -267,6 +267,12 @@ export default class TextField extends Mixins(Validates) {
 		 * @event select
 		 */
 		this.$emit('select', this.selectedValue)
+
+		/**
+		 * list prop 자동 업데이트
+		 * @event update:list
+		 */
+		this.$emit('update:list', list)
 	}
 
 	/**
