@@ -1,33 +1,33 @@
 <template>
-	<div class="search-field">
-		<label :for="id" :class="{ ir: hiddenLabel }">{{ label }}</label>
-		<div class="flex">
-			<div class="input-area" :class="{ focus: focusedClass }">
-				<input
-					:id="id"
-					ref="input"
-					:value="displayValue"
-					autocomplete="new-password"
-					:maxlength="maxlength"
-					:placeholder="placeholder"
-					type="text"
-					:readonly="readonly"
-					@input="onInput"
-					@keydown.enter="onKeydownEnter"
-					@focus="onFocus"
-					@blur="onBlur"
-				/>
-				<Timer v-if="cert" class="counter" :count="timer.count" :unit="timer.unit" :format="timer.format" />
-				<button v-if="!readonly && !!value.length" type="button" class="clear" @click="clearValue">
-					<i />
-					<span class="ir">전체삭제</span>
-				</button>
-			</div>
-			<button class="search-button" type="button" @click="onSearch">
-				<span>{{ buttonText }}</span>
-			</button>
-		</div>
-	</div>
+    <div class="search-field">
+        <label :for="id" :class="{ ir: hiddenLabel }">{{ label }}</label>
+        <div class="flex">
+            <div class="input-area" :class="{ focus: focusedClass }">
+                <input
+                    :id="id"
+                    ref="input"
+                    :value="displayValue"
+                    autocomplete="new-password"
+                    :maxlength="maxlength"
+                    :placeholder="placeholder"
+                    type="text"
+                    :readonly="readonly"
+                    @input="onInput"
+                    @keydown.enter="onKeydownEnter"
+                    @focus="onFocus"
+                    @blur="onBlur"
+                />
+                <Timer v-if="cert" class="counter" :count="timer.count" :unit="timer.unit" :format="timer.format" />
+                <button v-if="!readonly && !!value.length" type="button" class="clear" @click="clearValue">
+                    <i />
+                    <span class="ir">전체삭제</span>
+                </button>
+            </div>
+            <button class="search-button" type="button" @click="onSearch">
+                <span>{{ buttonText }}</span>
+            </button>
+        </div>
+    </div>
 </template>
 
 <script lang="ts">
@@ -35,17 +35,17 @@ import { Component, Prop, Watch, Mixins } from 'vue-property-decorator'
 import Validates from '@utils/mixins/Validates'
 
 export interface OnChangeParameters {
-	value: string
+    value: string
 }
 
 interface Validate {
-	(value: string): boolean
+    (value: string): boolean
 }
 
 interface Timer {
-	count: number
-	unit: 'minute' | 'second'
-	format?: string
+    count: number
+    unit: 'minute' | 'second'
+    format?: string
 }
 
 /**
@@ -56,146 +56,146 @@ interface Timer {
 
 @Component
 export default class ButtonField extends Mixins(Validates) {
-	/**
-	 * @category Refs
-	 */
-	$refs!: Vue['$refs'] & {
-		input: HTMLInputElement
-	}
-	/**
-	 * @category PROPS
-	 */
+    /**
+     * @category Refs
+     */
+    $refs!: Vue['$refs'] & {
+        input: HTMLInputElement
+    }
+    /**
+     * @category PROPS
+     */
 
-	/** form에 사용될 id */
-	@Prop(String)
-	readonly id!: string
+    /** form에 사용될 id */
+    @Prop(String)
+    readonly id!: string
 
-	/** label태그에 들어갈 텍스트 */
-	@Prop({ type: String, default: '', required: true })
-	readonly label!: string
+    /** label태그에 들어갈 텍스트 */
+    @Prop({ type: String, default: '', required: true })
+    readonly label!: string
 
-	/** label을 비노출여부 */
-	@Prop(Boolean)
-	readonly hiddenLabel!: boolean
+    /** label을 비노출여부 */
+    @Prop(Boolean)
+    readonly hiddenLabel!: boolean
 
-	/** name 속성 지정 */
-	@Prop({ type: String, default: '', required: true })
-	readonly name!: string
+    /** name 속성 지정 */
+    @Prop({ type: String, default: '', required: true })
+    readonly name!: string
 
-	/** 최대 자릿수 지정 */
-	@Prop({ type: Number, default: 9999 })
-	readonly maxlength!: number
+    /** 최대 자릿수 지정 */
+    @Prop({ type: Number, default: 9999 })
+    readonly maxlength!: number
 
-	/** 입력 전 표시될 가이드 텍스트 */
-	@Prop({ type: String, default: '' })
-	readonly placeholder!: string
+    /** 입력 전 표시될 가이드 텍스트 */
+    @Prop({ type: String, default: '' })
+    readonly placeholder!: string
 
-	/** 읽기전용 여부 */
-	@Prop({ type: Boolean, default: false })
-	readonly readonly!: boolean
+    /** 읽기전용 여부 */
+    @Prop({ type: Boolean, default: false })
+    readonly readonly!: boolean
 
-	/** 기본 값 */
-	@Prop(String)
-	readonly defaultValue!: string
+    /** 기본 값 */
+    @Prop(String)
+    readonly defaultValue!: string
 
-	/** 버튼에 들어갈 텍스트 */
-	@Prop({ type: String, required: true })
-	readonly buttonText!: string
+    /** 버튼에 들어갈 텍스트 */
+    @Prop({ type: String, required: true })
+    readonly buttonText!: string
 
-	/** 유형 */
-	@Prop({ type: Boolean, default: false })
-	readonly cert!: boolean
+    /** 유형 */
+    @Prop({ type: Boolean, default: false })
+    readonly cert!: boolean
 
-	/** 타이머 */
-	@Prop({ type: Object, default: () => ({ count: 3, unit: 'minute' }) })
-	private timer!: Timer
+    /** 타이머 */
+    @Prop({ type: Object, default: () => ({ count: 3, unit: 'minute' }) })
+    private timer!: Timer
 
-	/**
-	 * @category DATA(State)
-	 */
+    /**
+     * @category DATA(State)
+     */
 
-	/** 실제 값 */
-	private value: string = ''
+    /** 실제 값 */
+    private value: string = ''
 
-	/** focus 상태 */
-	private focusedClass: boolean = false
+    /** focus 상태 */
+    private focusedClass: boolean = false
 
-	/**
-	 * @category COMPUTED
-	 */
+    /**
+     * @category COMPUTED
+     */
 
-	/** 타이핑한 값 */
-	get displayValue(): string {
-		return this.value
-	}
+    /** 타이핑한 값 */
+    get displayValue(): string {
+        return this.value
+    }
 
-	/**
-	 * @title WATCH
-	 */
+    /**
+     * @title WATCH
+     */
 
-	@Watch('value')
-	changeValue(newValue: string) {
-		/**
-		 * value가 변경 될때 마다 호출되는 callback(value: string, index: number, maxLength: number)
-		 */
-		this.$emit('change', newValue)
-	}
+    @Watch('value')
+    changeValue(newValue: string) {
+        /**
+         * value가 변경 될때 마다 호출되는 callback(value: string, index: number, maxLength: number)
+         */
+        this.$emit('change', newValue)
+    }
 
-	/**
-	 * @category METHOD
-	 * @title Custom Methods
-	 */
+    /**
+     * @category METHOD
+     * @title Custom Methods
+     */
 
-	toggleFocus() {
-		this.focusedClass = !this.focusedClass
-	}
+    toggleFocus() {
+        this.focusedClass = !this.focusedClass
+    }
 
-	onSearch() {
-		/**
-		 * keydown 이벤트
-		 * @event search
-		 */
-		this.$emit('search', this.value)
-	}
+    onSearch() {
+        /**
+         * keydown 이벤트
+         * @event search
+         */
+        this.$emit('search', this.value)
+    }
 
-	onInput(event: InputEvent) {
-		this.value = this.$refs.input.value.replace(/\,/g, '')
-	}
+    onInput(event: InputEvent) {
+        this.value = this.$refs.input.value.replace(/\,/g, '')
+    }
 
-	onKeydownEnter(event: KeyboardEvent) {
-		this.onSearch()
-	}
+    onKeydownEnter(event: KeyboardEvent) {
+        this.onSearch()
+    }
 
-	onFocus(event: FocusEvent) {
-		/**
-		 * focus 이벤트
-		 * @event focus
-		 */
-		this.$emit('focus', event)
+    onFocus(event: FocusEvent) {
+        /**
+         * focus 이벤트
+         * @event focus
+         */
+        this.$emit('focus', event)
 
-		this.toggleFocus()
-	}
+        this.toggleFocus()
+    }
 
-	onBlur(event: FocusEvent) {
-		this.toggleFocus()
-	}
+    onBlur(event: FocusEvent) {
+        this.toggleFocus()
+    }
 
-	clearValue() {
-		this.value = ''
-		this.$refs.input.focus()
-	}
+    clearValue() {
+        this.value = ''
+        this.$refs.input.focus()
+    }
 
-	/**
-	 * @category METHODS
-	 * @title Lifecycle
-	 */
-	mounted() {
-		/**
-		 * mounted 이벤트
-		 * @event mounted
-		 */
-		this.$emit('mounted', this.$refs.input)
-	}
+    /**
+     * @category METHODS
+     * @title Lifecycle
+     */
+    mounted() {
+        /**
+         * mounted 이벤트
+         * @event mounted
+         */
+        this.$emit('mounted', this.$refs.input)
+    }
 }
 </script>
 

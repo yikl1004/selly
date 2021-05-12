@@ -1,7 +1,7 @@
 <template>
-	<div class="container">
-		<h1>메인</h1>
-	</div>
+    <div class="container">
+        <h1>메인</h1>
+    </div>
 </template>
 
 <script lang="ts">
