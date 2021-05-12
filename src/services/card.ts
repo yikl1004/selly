@@ -1,23 +1,19 @@
-import { HttpService, SellyServiceResponse, GET, Path, ResponseAdapter } from './core'
+import { HttpService, SellyServiceResponse } from './core/http'
+import { GET, Path, ResponseAdapter } from './core/decorators'
 
 export interface CardResponse {
-    id: number
-    name: string
-    description: string
+	id: number
+	name: string
+	description: string
 }
 
 export default class CardService extends HttpService {
-    @GET('/card')
-    async getCardAll(): SellyServiceResponse<CardResponse[]> {
-        return await null
-    }
-
-    @GET('/card/:id')
-    @ResponseAdapter(data => {
-        console.log('hahaha')
-        return { ...data, tmp2: 'tmp2' }
-    })
-    async getCardbyId(@Path('id') id: number): SellyServiceResponse<CardResponse> {
-        return await null
-    }
+	async getCardbyId(id: number): Promise<CardResponse> {
+		await null
+		return {
+			id: NaN,
+			name: '',
+			description: '',
+		}
+	}
 }

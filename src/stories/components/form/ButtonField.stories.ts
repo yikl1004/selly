@@ -18,6 +18,7 @@ export default {
 interface Args {}
 
 const Template: Story<Args> = (args, { argTypes }) => {
+	console.log('args', args)
 	return {
 		props: getProps(argTypes),
 		template: `<ButtonField v-bind="$props" />`,
@@ -32,8 +33,14 @@ Primary.args = {
 }
 
 export const WithCount = Template.bind({})
-Primary.args = {
+WithCount.args = {
 	label: '인증확인',
 	name: 'cert',
-	use: 'cert',
+	buttonText: '전송',
+	cert: true,
+	timer: {
+		count: 3,
+		unit: 'minute',
+		format: 'm:ss',
+	},
 }

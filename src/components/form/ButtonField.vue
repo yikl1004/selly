@@ -17,7 +17,7 @@
 					@focus="onFocus"
 					@blur="onBlur"
 				/>
-				<Timer v-if="isCert" class="counter" :count="timer.count" :unit="timer.unit" :format="timer.format" />
+				<Timer v-if="cert" class="counter" :count="timer.count" :unit="timer.unit" :format="timer.format" />
 				<button v-if="!readonly && !!value.length" type="button" class="clear" @click="clearValue">
 					<i />
 					<span class="ir">전체삭제</span>
@@ -40,6 +40,12 @@ export interface OnChangeParameters {
 
 interface Validate {
 	(value: string): boolean
+}
+
+interface Timer {
+	count: number
+	unit: 'minute' | 'second'
+	format?: string
 }
 
 /**
@@ -93,16 +99,16 @@ export default class ButtonField extends Mixins(Validates) {
 	readonly defaultValue!: string
 
 	/** 버튼에 들어갈 텍스트 */
-	@Prop(String)
+	@Prop({ type: String, required: true })
 	readonly buttonText!: string
 
 	/** 유형 */
-	@Prop({ type: String, default: 'search' })
-	readonly use!: 'search' | 'cert'
+	@Prop({ type: Boolean, default: false })
+	readonly cert!: boolean
 
 	/** 타이머 */
 	@Prop({ type: Object, default: () => ({ count: 3, unit: 'minute' }) })
-	private timer!: { count: number; unit: 'minute' | 'second'; format?: string }
+	private timer!: Timer
 
 	/**
 	 * @category DATA(State)
@@ -121,11 +127,6 @@ export default class ButtonField extends Mixins(Validates) {
 	/** 타이핑한 값 */
 	get displayValue(): string {
 		return this.value
-	}
-
-	/** 인증번호 타입 여부 */
-	get isCert(): boolean {
-		return this.use === 'cert'
 	}
 
 	/**
