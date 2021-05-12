@@ -1,49 +1,49 @@
 <template>
-	<div class="text-field" :class="isError">
-		<label :for="id" :class="{ ir: hiddenLabel }">{{ label }}</label>
-		<div class="input-area" :class="{ focus: focusedClass, 'select-type': isSelectType }">
-			<template v-if="isSelectType">
-				<button type="button" class="select-button" @click="openBottomSheet">
-					{{ selectedValue.displayName }}
-					<i class="open" />
-				</button>
-				<portal to="bottomSheet">
-					<BottomSheet
-						:show="bottomSheetVisible"
-						:title="label"
-						:list="list"
-						@close="closeBottomSheet"
-						@select-option="onSelectOption"
-					/>
-				</portal>
-			</template>
-			<input
-				:id="id"
-				ref="input"
-				:value="displayValue"
-				autocomplete="new-password"
-				:pattern="pattern"
-				:maxlength="maxlength"
-				:placeholder="placeholder"
-				:type="inputType"
-				:readonly="readonly"
-				@input="onInput"
-				@keydown="onKeydown"
-				@focus="onFocus"
-				@blur="onBlur"
-			/>
-			<span v-if="unit" class="unit">
-				{{ unit }}
-			</span>
-			<button v-if="!readonly && !!value.length" type="button" class="clear" @click="clearValue">
-				<i />
-				<span class="ir">전체삭제</span>
-			</button>
-		</div>
-		<p v-if="message" class="message">
-			{{ message }}
-		</p>
-	</div>
+    <div class="text-field" :class="isError">
+        <label :for="id" :class="{ ir: hiddenLabel }">{{ label }}</label>
+        <div class="input-area" :class="{ focus: focusedClass, 'select-type': isSelectType }">
+            <template v-if="isSelectType">
+                <button type="button" class="select-button" @click="openBottomSheet">
+                    {{ selectedValue.displayName }}
+                    <i class="open" />
+                </button>
+                <portal to="bottomSheet">
+                    <BottomSheet
+                        :show="bottomSheetVisible"
+                        :title="label"
+                        :list="list"
+                        @close="closeBottomSheet"
+                        @select-option="onSelectOption"
+                    />
+                </portal>
+            </template>
+            <input
+                :id="id"
+                ref="input"
+                :value="displayValue"
+                autocomplete="new-password"
+                :pattern="pattern"
+                :maxlength="maxlength"
+                :placeholder="placeholder"
+                :type="inputType"
+                :readonly="readonly"
+                @input="onInput"
+                @keydown="onKeydown"
+                @focus="onFocus"
+                @blur="onBlur"
+            />
+            <span v-if="unit" class="unit">
+                {{ unit }}
+            </span>
+            <button v-if="!readonly && !!value.length" type="button" class="clear" @click="clearValue">
+                <i />
+                <span class="ir">전체삭제</span>
+            </button>
+        </div>
+        <p v-if="message" class="message">
+            {{ message }}
+        </p>
+    </div>
 </template>
 
 <script lang="ts">
