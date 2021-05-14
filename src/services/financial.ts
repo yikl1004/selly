@@ -1,5 +1,5 @@
 import { HttpService, SellyServiceResponse } from './core/http'
-import { GET, Path, POST, ResponseAdapter } from './core/decorators'
+import { GET, Path, POST, Query, ResponseAdapter } from './core/decorators'
 import { SEFINAARVO } from './core/response'
 
 export interface FinancialQuery {
@@ -9,9 +9,12 @@ export interface FinancialQuery {
     rrno?: string
 }
 
-export default class FinacialService extends HttpService {
+class FinacialService extends HttpService {
     @POST('/API/FIN/SEFINAA001')
-    async getData(query: FinancialQuery): Promise<any> {
+    async getData(@Query('ciNo') ciNo: string): Promise<any> {
+        console.log('FinacialService.getData', ciNo)
         return await null
     }
 }
+
+export default new FinacialService()

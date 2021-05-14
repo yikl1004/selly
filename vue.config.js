@@ -41,6 +41,16 @@ module.exports = {
             },
             extensions: ['.vue', 'tsx'],
         },
+        devServer: {
+            headers: { 'Access-Control-Allow-Origin': '*' },
+            proxy: {
+                // 프록시 요청을 보낼 api의 시작 부분
+                '/api': {
+                    // 프록시 요청을 보낼 서버의 주소
+                    target: 'http://10.25.19.42:8080',
+                },
+            },
+        },
     },
     chainWebpack(config) {
         config.resolve.plugin('tsconfig-paths').use(require('tsconfig-paths-webpack-plugin'))

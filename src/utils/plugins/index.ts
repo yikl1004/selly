@@ -12,7 +12,17 @@ const registerPlugins = (): void => {
     Vue.use(ImageUploader)
     Vue.use(PortalVue)
     registerVueLodash()
-    console.log('vue plugins registered...')
+
+    // chalk(
+    //     {
+    //         'font-size': '16px',
+    //         'background-color': 'skyblue',
+    //         color: 'white',
+    //         padding: '3px 10px',
+    //         'border-radius': '10px',
+    //     },
+    //     'vue plugins registered...',
+    // )
 }
 
 export default registerPlugins

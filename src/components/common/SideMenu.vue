@@ -142,11 +142,11 @@ export default class SideMenu extends Vue {
     }
 
     handleClick(e: PointerEvent) {
-        console.log('click', e)
+        localStorage.setItem('sideBar', `handleClickTest${Math.random()}`)
     }
 
     titleClick(e: PointerEvent) {
-        console.log('titleClick', e)
+        localStorage.setItem('sideBar', `titleClickTest${Math.random()}`)
     }
 }
 </script>

@@ -90,7 +90,6 @@ export default class DropdownBox extends Vue {
         this.$emit('focus', event)
 
         this.focusedClass = true
-        console.log(11111)
     }
 
     onBlur(event: FocusEvent) {
@@ -129,7 +128,6 @@ export default class DropdownBox extends Vue {
     }
 
     onClick(event: FocusEvent) {
-        console.log('click')
         this.openBottomSheet(event)
     }
 }
