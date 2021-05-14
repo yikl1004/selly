@@ -21,7 +21,7 @@ import MenuButton from '@components/common/MenuButton.vue'
     },
 })
 export default class Header extends Vue {
-    private toggle: boolean = true
+    private toggle: boolean = false
 
     @Watch('$route')
     changeRoute() {
