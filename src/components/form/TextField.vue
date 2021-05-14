@@ -260,13 +260,23 @@ export default class TextField extends Mixins(Validates) {
     }
 
     onSelectOption(value: string) {
-        this.selectedValue = this.list.find(item => item.value === value) as OptionItem
+        this.selectedValue = this.list.find(option => option.value === value) as OptionItem
+        const changedList = this.list.map(option => {
+            option.selected = option.value === value
+            return option
+        })
 
         /**
          * 선택된 값은 전달
          * @event select
          */
         this.$emit('select', this.selectedValue)
+
+        /**
+         * .sync 수식어를 통한 업데이트
+         * @event update:list
+         */
+        this.$emit('update:list', changedList)
     }
 
     /**

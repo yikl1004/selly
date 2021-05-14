@@ -9,17 +9,19 @@ import SecretNumber from '@components/form/SecretNumber.vue'
 import ButtonField from '@components/form/ButtonField.vue'
 import BottomSheet from '@components/common/BottomSheet.vue'
 import Timer from '@components/common/Timer.vue'
+import DropdownBox from '@components/common/DropdownBox.vue'
 
 const componentList: { [key: string]: VueConstructor }[] = [
-	{ Link },
-	{ FileUploader },
-	{ Header },
-	{ TextField },
-	{ BasicButton },
-	{ SecretNumber },
-	{ ButtonField },
-	{ BottomSheet },
-	{ Timer },
+    { Link },
+    { FileUploader },
+    { Header },
+    { TextField },
+    { BasicButton },
+    { SecretNumber },
+    { ButtonField },
+    { BottomSheet },
+    { Timer },
+    { DropdownBox },
 ]
 
 export { FileUploader, Link, Header, TextField }

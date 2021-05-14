@@ -9,7 +9,7 @@
                 <router-view />
             </transition>
         </component>
-        <PortalTarget name="bottomSheet" />
+        <PortalTarget name="bottomSheet" multiple />
     </div>
 </template>
 

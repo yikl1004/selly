@@ -138,6 +138,12 @@ tooltip
 custom select
 tab(each other case)
 
+### Open API Generator
+
+```sh
+openapi-generator generate -i http://10.25.19.42:8080/v2/api-docs -g typescript-axios -o test-gen --skip-validate-spec
+```
+
 ### 정규식 모음
 
 > [정규식 참고][RegExpReference]

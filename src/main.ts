@@ -1,8 +1,8 @@
 import Vue from 'vue'
-import App from '@/App.vue'
-import router from '@/router'
-import store from '@/stores'
-import { initialize } from '@/utils/index'
+import store from '@stores/index'
+import { initialize } from '@utils/index'
+import App from './App.vue'
+import router from './router'
 
 import 'animate.css/animate.css'
 import '@styles/variables.scss'

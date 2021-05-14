@@ -3,16 +3,15 @@
         <label :for="id" :class="{ ir: hiddenLabel }">{{ label }}</label>
         <div class="input-area" :class="{ focus: focusedClass, 'select-type': true }">
             <input :id="id" type="text" :name="name" readonly @focus="onFocus" @blur="onBlur" @click="onClick" />
-            <button type="button" class="select-button">
-                {{ label }}
-                <i class="open" />
-            </button>
+            <span class="selected-display-name">
+                {{ selectedDisplayName }}
+            </span>
+            <i class="open" />
             <portal to="bottomSheet">
                 <BottomSheet
                     :show="bottomSheetVisible"
                     :title="label"
                     :list="list"
-                    :selected-value="{}"
                     @close="closeBottomSheet"
                     @select-option="onSelectOption"
                 />
@@ -72,6 +71,14 @@ export default class DropdownBox extends Vue {
     private selectedValue?: OptionItem
 
     /**
+     * @category Computed
+     */
+    get selectedDisplayName(): string {
+        const name = this.list.find(option => option.selected)?.displayName
+        return name || this.label
+    }
+
+    /**
      * @category Methods
      */
 
@@ -99,18 +106,30 @@ export default class DropdownBox extends Vue {
     }
 
     onSelectOption(value: string) {
-        const selectedValue = this.list.find(item => item.value === value) as OptionItem
-        this.selectedValue = this.list.find(item => item.value === value) as OptionItem
-        console.log(value, selectedValue)
+        const selectedValue = this.list.find(option => option.value === value) as OptionItem
+        const changedList = this.list.map(option => {
+            option.selected = option.value === value
+            return option
+        })
+        this.selectedValue = selectedValue
 
         /**
          * 선택된 값은 전달
          * @event select
          */
         this.$emit('select', this.selectedValue)
+
+        /**
+         * 변경된 option list를 업데이트 합니다
+         * @event update:list
+         */
+        this.$emit('update:list', changedList)
+
+        this.closeBottomSheet()
     }
 
     onClick(event: FocusEvent) {
+        console.log('click')
         this.openBottomSheet(event)
     }
 }

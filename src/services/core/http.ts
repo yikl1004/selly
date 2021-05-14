@@ -19,7 +19,7 @@ const getTransformResponse = (): AxiosTransformer => {
     }
 }
 
-const instance = axios.create({
+export const instance = axios.create({
     baseURL: process.env.VUE_APP_API_DOMAIN || 'http://localhost:3000',
     headers: {
         'Cache-Control': 'no-cache',

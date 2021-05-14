@@ -51,4 +51,7 @@
 
     // jshint
     "jshint.enable": false,
+    "vetur.format.options.tabSize": 4,
+    "vetur.format.options.useTabs": true,
+    "prettier.useTabs": true,
 }

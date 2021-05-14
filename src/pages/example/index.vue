@@ -1,20 +1,22 @@
 <template>
     <div>
         <h1>테스트</h1>
-        <DropdownBox id="phoneNumber" label="휴대폰번호" name="phone" :list="list" />
+        <DropdownBox id="phoneNumber" label="휴대폰번호" name="phone" :list.sync="list" />
+        <TextField type="select" label="아무거나" :list.sync="list" name="anything" />
+        <button type="button" @click="callApi">
+            api 테스트
+        </button>
     </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import { OptionItem } from '@/components/common/BottomSheet.vue'
-import DropdownBox from '@components/common/DropdownBox.vue'
+import { OptionItem } from '@components/common/BottomSheet.vue'
+import { namespace, Action } from 'vuex-class'
 
-@Component({
-    components: {
-        DropdownBox,
-    },
-})
+const FinancialModule = namespace('financial')
+
+@Component
 export default class ExamplePage extends Vue {
     private timer: { [key: string]: any } = { count: 3, unit: 'minute', format: 'm:ss' }
     private list: OptionItem[] = [
@@ -27,6 +29,9 @@ export default class ExamplePage extends Vue {
     ]
     private value: string = ''
 
+    @FinancialModule.Action('getData')
+    getData: any
+
     onSelect(option: OptionItem) {
         this.value = option.value
 
@@ -36,8 +41,10 @@ export default class ExamplePage extends Vue {
         })
     }
 
-    mounted() {
-        console.log(this.$refs.buttonField)
+    mounted() {}
+
+    callApi() {
+        this.getData()
     }
 }
 </script>

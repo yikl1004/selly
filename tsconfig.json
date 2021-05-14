@@ -13,9 +13,6 @@
             "./src/typings/index.d.ts"
         ],
         "paths": {
-            "@/*": [
-                "src/*"
-            ],
             "@components/*": [
                 "src/components/*"
             ],
