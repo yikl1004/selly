@@ -33,6 +33,9 @@
             ],
             "@asstes/*": [
                 "src/assets/*"
+            ],
+            "@layout/*": [
+                "src/layout/*"
             ]
         },
         "lib": [

@@ -6,6 +6,12 @@
         <button type="button" @click="callApi">
             api 테스트
         </button>
+        <div v-click-outside="hide" @click="toggle">
+            Toggle
+        </div>
+        <div v-show="opened">
+            Popup item
+        </div>
     </div>
 </template>
 
@@ -14,9 +20,13 @@ import { Component, Vue } from 'vue-property-decorator'
 import { OptionItem } from '@components/common/BottomSheet.vue'
 import { namespace, Action } from 'vuex-class'
 
-const FinancialModule = namespace('financial')
+const ClickOutside = require('vue-click-outside')
 
-@Component
+const FinanceModule = namespace('finance')
+
+@Component({
+    directives: { ClickOutside },
+})
 export default class ExamplePage extends Vue {
     private timer: { [key: string]: any } = { count: 3, unit: 'minute', format: 'm:ss' }
     private list: OptionItem[] = [
@@ -28,9 +38,10 @@ export default class ExamplePage extends Vue {
         { displayName: 'LGU+알뜰폰', value: 'lguplus_sub' },
     ]
     private value: string = ''
+    private opened: boolean = false
 
-    @FinancialModule.Action('getData')
-    getData: any
+    @FinanceModule.Action('getData')
+    readonly getData!: Function
 
     onSelect(option: OptionItem) {
         this.value = option.value
@@ -45,6 +56,14 @@ export default class ExamplePage extends Vue {
 
     callApi() {
         this.getData()
+    }
+
+    toggle() {
+        this.opened = true
+    }
+
+    hide() {
+        this.opened = false
     }
 }
 </script>

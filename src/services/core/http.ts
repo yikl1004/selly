@@ -19,16 +19,11 @@ const getTransformResponse = (): AxiosTransformer => {
     }
 }
 
-axios.defaults.headers.post['Content-Type'] = 'application/json;charset=utf-8'
-axios.defaults.headers.post['Axxwss-Control-Allow-Origin'] = '*'
 export const instance = axios.create({
-    baseURL: process.env.VUE_APP_API_DOMAIN || 'http://localhost:3000',
-    headers: {
-        'Cache-Control': 'no-cache',
-    },
+    baseURL: process.env.VUE_APP_API_DOMAIN,
+    headers: {},
     adapter: throttleAdapterEnhancer(cacheAdapterEnhancer(axios.defaults.adapter as AxiosAdapter)),
     transformResponse: getTransformResponse(),
-    withCredentials: true,
 })
 
 export class HttpService {

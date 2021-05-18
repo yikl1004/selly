@@ -125,10 +125,7 @@ devDependency
 
 ### TODO List
 
-삭제 예정 dependency
-"@fortawesome/fontawesome-svg-core": "^1.2.35",
-"@fortawesome/free-solid-svg-icons": "^5.15.3",
-"@fortawesome/vue-fontawesome": "^2.0.2",
+삭제 예정 dependency(테스트성, 또는 깜박하고 안지운 것들)
 
 ### common module
 
@@ -178,5 +175,26 @@ openapi-generator generate -i http://10.25.19.42:8080/v2/api-docs -g typescript-
 /\s/g
 
 ```
+
+### Commit Message
+
+> 추가: [add]  
+> 수정 중: [fix]  
+> 수정 완료: [fixed]
+> 완료: [complete]  
+> 테스트: [test]
+> 이슈 해결/수정/재수정/완료: [resolve]
+
+### 기타 인증/계정 정보
+
+#### 카카오 로그인 CI  
+
+0U4k05hAwCYT0IwN5kvW5leCyQ6QSZFyV2dH6gaNARlMwUUgHodI4jCOWIaU8ySUbfHpJyEAUP7AXj0w9yU40w==  
+0U4k05hAwCYT0IwN5kvW5leCyQ6QSZFyV2dH6gaNARlMwUUgHodI4jCOWIaU8ySUbfHpJyEAUP7AXj0w9yU40w====  
+
+#### 카드번호 인증  
+
+카드번호: 5137-9297-0057-7328  
+비밀번호: 12  
 
 [RegExpReference]: https://m.blog.naver.com/PostView.nhn?blogId=jwjung0723&logNo=221721325323&categoryNo=10&proxyReferer=&proxyReferer=https:%2F%2Fwww.google.com%2F

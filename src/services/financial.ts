@@ -1,7 +1,9 @@
+import { instance } from '@services/core/http'
 import { HttpService, SellyServiceResponse } from './core/http'
-import { GET, Path, POST, Query, ResponseAdapter } from './core/decorators'
+import { POST, Query, ResponseAdapter } from './core/decorators'
 import { SEFINAARVO } from './core/response'
 
+const api = '/API/LGN/SELGNAA001'
 export interface FinancialQuery {
     /* 카드번호 */
     crno?: string
@@ -10,10 +12,10 @@ export interface FinancialQuery {
 }
 
 class FinacialService extends HttpService {
-    @POST('/API/FIN/SEFINAA001')
+    @POST(api)
     async getData(@Query('ciNo') ciNo: string): Promise<any> {
-        console.log('FinacialService.getData', ciNo)
-        return await null
+        console.log(ciNo)
+        await null
     }
 }
 

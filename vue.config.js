@@ -42,14 +42,14 @@ module.exports = {
             extensions: ['.vue', 'tsx'],
         },
         devServer: {
-            headers: { 'Access-Control-Allow-Origin': '*' },
             proxy: {
                 // 프록시 요청을 보낼 api의 시작 부분
-                '/api': {
+                '/API': {
                     // 프록시 요청을 보낼 서버의 주소
                     target: 'http://10.25.19.42:8080',
                 },
             },
+            disableHostCheck: true,
         },
     },
     chainWebpack(config) {

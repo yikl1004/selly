@@ -73,9 +73,11 @@ export default class DropdownBox extends Vue {
     /**
      * @category Computed
      */
+
+    /** 보여지는 선택된 이름 */
     get selectedDisplayName(): string {
-        const name = this.list.find(option => option.selected)?.displayName
-        return name || this.label
+        const name = this.list.find(option => option.selected)
+        return (name && name.displayName) || this.label
     }
 
     /**

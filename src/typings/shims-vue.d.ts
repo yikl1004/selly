@@ -1,5 +1,5 @@
 declare module '*.vue' {
-    import Vue, { VueConstructor, PluginObject } from 'vue'
+    import Vue, { VueConstructor, PluginObject, DirectiveOptions } from 'vue'
     export default Vue
 }
 
@@ -15,6 +15,11 @@ declare module '*.vue' {
 // }
 
 declare module 'vue-image-upload-resize' {
-    const plugin: VueConstructor & PluginObject
+    const plugin: VueConstructor & PluginObject<any>
     export default plugin
+}
+
+declare module 'vue-click-outside' {
+    const directive: DirectiveOptions
+    export default directive
 }

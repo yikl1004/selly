@@ -1,11 +1,13 @@
 import Vue from 'vue'
-import ImageUploader from 'vue-image-upload-resize'
 import PortalVue from 'portal-vue'
 import registerVueLodash from '@utils/plugins/lodash'
+import ImageUploader from 'vue-image-upload-resize'
 
 // TODO: 삭제 해야됨
 import Antd from 'ant-design-vue'
 import 'ant-design-vue/dist/antd.css'
+
+// const ImageUploader = require('vue-image-upload-resize')
 
 const registerPlugins = (): void => {
     Vue.use(Antd)

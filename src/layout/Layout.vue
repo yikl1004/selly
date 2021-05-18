@@ -15,8 +15,8 @@
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
-import DefaultLayout from '@/layout/DefaultLayout.vue'
-import NoneLayout from '@/layout/NoneLayout.vue'
+import DefaultLayout from '@layout/DefaultLayout.vue'
+import NoneLayout from '@layout/NoneLayout.vue'
 
 type LayoutType = 'default' | 'none'
 
