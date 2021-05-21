@@ -1,10 +1,10 @@
 import { Meta, Story } from '@storybook/vue'
-import SearchField from '@components/form/ButtonField.vue'
+import ButtonField from '@components/form/ButtonField.vue'
 import getProps from '../../assets/getProps'
 
 export default {
     title: 'Components/form/Button Field',
-    component: SearchField,
+    component: ButtonField,
     argTypes: {},
     parameters: {
         docs: {
@@ -18,7 +18,6 @@ export default {
 interface Args {}
 
 const Template: Story<Args> = (args, { argTypes }) => {
-    console.log('args', args)
     return {
         props: getProps(argTypes),
         template: `<ButtonField v-bind="$props" />`,

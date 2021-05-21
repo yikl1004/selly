@@ -12,6 +12,50 @@ declare global {
             VUE_APP_API_DOMAIN: string
         }
     }
+
+    interface KakaoLoginApi {
+        success(authObj: any): void
+        fail(err: any): void
+    }
+
+    interface KakaoAPIRequestParams {
+        url?: string
+        success?(res: any): void
+        fail?(error: any): void
+    }
+
+    interface KakaoAuthAutorizeParameters {
+        redirectUri: string
+        state?: string
+        scope?: string
+        throughTalk?: boolean
+    }
+    interface KakaoCert {
+        cleanup(): void
+        isInitialized(): boolean
+        init(clientId: string): void
+        Auth: {
+            login(params: KakaoLoginApi): void
+            // TODO: 카카오싱크 연동하면서 추가해야 함
+            authorize(params: KakaoAuthAutorizeParameters): void
+        }
+        API: {
+            request(params: KakaoAPIRequestParams): void
+        }
+    }
+
+    interface IKakaoCertUserInfo {
+        id: string
+        kakao_account: {
+            email: string
+            gender: string
+            birthDate1: string
+        }
+    }
+
+    interface Window {
+        Kakao: KakaoCert
+    }
 }
 
 export {}

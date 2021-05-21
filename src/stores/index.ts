@@ -1,18 +1,21 @@
 import Vue from 'vue'
-import Vuex from 'vuex'
+import Vuex, { createLogger } from 'vuex'
+import Finance, { FinancialState } from './modules/finance'
 
-import Finance from './modules/financial'
-import { Card } from './modules/card'
+interface RootStore {
+    finance: FinancialState
+}
 
-interface RootStore {}
+const isDev = process.env.NODE_ENV === 'development'
 
 Vue.use(Vuex)
 
 const store = new Vuex.Store<RootStore>({
+    strict: isDev,
     modules: {
-        card: Card,
         finance: Finance,
     },
+    plugins: [createLogger()],
 })
 
 export default store

@@ -75,6 +75,7 @@ export default class TextField extends Mixins(Validates) {
     $refs!: Vue['$refs'] & {
         input: HTMLInputElement
     }
+
     /**
      * @category PROPS
      */

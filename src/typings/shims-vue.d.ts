@@ -14,12 +14,16 @@ declare module '*.vue' {
 //     }
 // }
 
-declare module 'vue-image-upload-resize' {
-    const plugin: VueConstructor & PluginObject<any>
-    export default plugin
-}
-
 declare module 'vue-click-outside' {
     const directive: DirectiveOptions
     export default directive
+}
+
+declare module 'vue-image-upload-resize' {
+    interface Options {
+        // 참고: https://www.npmjs.com/package/vue-image-upload-resize
+    }
+
+    const plugin: VueConstructor & PluginObject<Options>
+    export default plugin
 }

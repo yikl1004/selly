@@ -1,4 +1,5 @@
-import { VueConstructor } from 'vue'
+import Vue, { VueConstructor } from 'vue'
+import _ from 'lodash'
 
 import Link from '@components/common/Link.vue'
 import Header from '@components/common/Header.vue'
@@ -10,6 +11,7 @@ import ButtonField from '@components/form/ButtonField.vue'
 import BottomSheet from '@components/common/BottomSheet.vue'
 import Timer from '@components/common/Timer.vue'
 import DropdownBox from '@components/common/DropdownBox.vue'
+import LoginButton from '@components/common/LoginButton.vue'
 
 const componentList: { [key: string]: VueConstructor }[] = [
     { Link },
@@ -22,7 +24,16 @@ const componentList: { [key: string]: VueConstructor }[] = [
     { BottomSheet },
     { Timer },
     { DropdownBox },
+    { LoginButton },
 ]
 
-export { FileUploader, Link, Header, TextField }
+export const registerCommonComponent = (): void => {
+    componentList.forEach(componentInfo => {
+        // 배열 원소가 1개 뿐이므로 index는 0
+        const params = Object.entries(componentInfo)[0]
+        Vue.component(...params)
+    })
+    console.log('common components registered...')
+}
+
 export default componentList

@@ -19,8 +19,7 @@
 import { Component, Vue } from 'vue-property-decorator'
 import { OptionItem } from '@components/common/BottomSheet.vue'
 import { namespace, Action } from 'vuex-class'
-
-const ClickOutside = require('vue-click-outside')
+import ClickOutside from 'vue-click-outside'
 
 const FinanceModule = namespace('finance')
 

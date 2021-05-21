@@ -1,7 +1,5 @@
 <template>
     <header class="layout-header">
-        <MenuButton :opened="toggle" @toggle="onToggle" />
-        <SideMenu :open="toggle" @close="onClose" />
         <h1>
             <Link href="/">
                 Selly
@@ -12,14 +10,8 @@
 
 <script lang="ts">
 import { Component, Vue, Watch } from 'vue-property-decorator'
-import MenuButton from '@components/common/MenuButton.vue'
 
-@Component({
-    components: {
-        MenuButton,
-        SideMenu: () => import('@components/common/SideMenu.vue'),
-    },
-})
+@Component
 export default class Header extends Vue {
     private toggle: boolean = false
 

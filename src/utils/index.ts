@@ -1,7 +1,5 @@
-import registerCommonComponent from '@utils/registerCommonComponent'
+import { registerCommonComponent } from '@components/common/index'
 import registerPlugins from '@utils/plugins'
-
-export { registerCommonComponent, registerPlugins }
 
 // TODO: base64 코드를 blob 객체로 변환해주는 함수(만들지 말지 판단 안됨 지금은...)
 // export const dataURLtoFile = (dataurl: string, filename: string): File => {
@@ -26,3 +24,5 @@ export const initialize = (): void => {
     registerPlugins()
     registerCommonComponent()
 }
+
+export { registerCommonComponent, registerPlugins }
