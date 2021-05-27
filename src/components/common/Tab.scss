@@ -1,0 +1,41 @@
+.tab {
+    // 3개 이상의 탭에서는 flicking!!!
+    
+    .tab-item-list {
+        position: relative;
+        
+        ul {
+            display: flex;
+            width: 100%;
+    
+            li.tab-item {
+                display: inherit;
+                border-bottom: 1px solid #ebebeb;
+    
+                button {
+                    font-size: 16px;
+                    line-height: 1.5;
+                    letter-spacing: -0.5px;
+                    color: #999999;
+                    width: 100%;
+                    padding: 13px 0 13px 0;
+                }
+    
+                &.active {
+                    button {
+                        color: #222222;
+                    }
+                }
+            }
+        }
+    
+        .bar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 3px;
+            background-color: #222222;
+            transition: left 300ms ease-in-out;
+        }
+    }
+}

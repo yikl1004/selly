@@ -1,0 +1,93 @@
+.check-box-group {
+    .title {
+        font-size: 14px;
+        font-weight: normal;
+        line-height: normal;
+        letter-spacing: -0.5px;
+        color: #666;
+        display: block;
+        margin-bottom: 7px;
+    }
+
+    .input-area {
+        position: relative;
+        height: 56px;
+        padding: 13px 16px 13px 20px;
+        border-radius: 10px;
+        border: solid 1px #ebebeb;
+        background-color: #fff;
+
+        label.display-name {
+            font-size: 16px;
+            color: #222;
+            min-height: 30px;
+            padding-left: 38px;
+            position: relative;
+
+            &:before {
+                content: '';
+                display: block;
+                width: 30px;
+                height: 30px;
+                position: absolute;
+                left: 0;
+                top: 50%;
+                transform: translate(0, -50%);
+                background-image: url("/assets/icon/icon-uncheck-circle.svg");
+                background-position: left center;
+                background-repeat: no-repeat;
+                background-size: 30px 30px;
+            }
+        }
+
+        input[type="checkbox"]:checked {
+            & + label.display-name {
+                &:before {
+                    background-image: url("/assets/icon/icon-checked-circle.svg");
+                }
+            }
+        }
+
+        input[type="checkbox"]:disabled {
+            & + label.display-name {
+                &:before {
+                    background-image: url("/assets/icon/icon-uncheck-circle-disable.svg");
+                }
+            }
+            &:checked + label.display-name {
+                &:before {
+                    background-image: url("/assets/icon/icon-checked-circle-disable.svg");
+                }
+            }
+        }
+
+        .open {
+            display: block;
+            width: 24px;
+            height: 24px;
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translate(0, -50%);
+            transition: transform 250ms ease-in-out;
+            background-image: url("/assets/icon/icon-arrow-bottom2.svg");
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: 24px 24px;
+
+            &.opened {
+                transform: translate(0, -50%) rotate(180deg);
+            }
+        }
+    }
+
+    .check-list {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 250ms ease-in-out;
+
+        &.opened {
+            max-height: 1000px;
+        }
+    }
+}

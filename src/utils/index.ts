@@ -18,7 +18,6 @@ import registerPlugins from '@utils/plugins'
 
 // //Usage example:
 // const file = dataURLtoFile('data:text/plain;base64,aGVsbG8gd29ybGQ=', 'hello.txt')
-// console.log(file)
 
 export const initialize = (): void => {
     registerPlugins()

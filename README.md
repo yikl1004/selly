@@ -141,6 +141,69 @@ tab(each other case)
 openapi-generator generate -i http://10.25.19.42:8080/v2/api-docs -g typescript-axios -o test-gen --skip-validate-spec
 ```
 
+### PropSync
+
+child component
+
+```ts
+@Component
+class Component extends Vue {
+
+    // case 1
+    @PropSync('defaultValue', { type: Boolean })
+    protected value!: boolean
+
+    // case 2
+    @Prop({ type: Boolean })
+    readonly defaultValue!: boolean
+
+    get value(): boolean {
+        return this.defaultValue
+    }
+    set value(inputValue: boolean) {
+        this.$emit('update:defaultValue', inputValue)
+    }
+
+}
+```
+
+parent component
+
+```html
+<!-- ParentComponent - template -->
+<template>
+    <ChildComponent :default-value.sync="defaultValue">
+</template>
+```
+
+```ts
+// ParentComponent - script
+@Component
+class ParentComponent extends Vue {
+    private defaultValue: boolean = false
+}
+```
+
+### Class Component
+
+```ts
+@Component
+class Component extends Vue {
+    /**
+     * 1. Props
+     * 2. Data
+     * 3. Computed
+     * 4. Watch
+     * 5. Etc(Other decorator)
+     * 6. Methods
+     *      6-1. cumtom method
+     *      6-2. lifcycle method(순서는 실행 순서)
+     */
+
+
+}
+```
+
 ### 정규식 모음
 
 > [정규식 참고][RegExpReference]

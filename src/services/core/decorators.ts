@@ -47,11 +47,7 @@ function methodFactory(method: HttpMethod) {
     return (url: string) => <T>(target: T, propertyName: string, descriptor: any) => {
         descriptor.value = function(...args: any[]) {
             const parametersMetaData: ParametersMetaData[] = Reflect.getOwnMetadata(parameterMetadataKey, target, propertyName) || []
-            // console.log('parametersMetaData', parametersMetaData)
             const responseAdapterMetaData = Reflect.getOwnMetadata(responseAdapterMetadataKey, target, propertyName)
-            console.log('responseMetaData', responseAdapterMetaData)
-            console.log('11111', args)
-
             const regexPath = /:(.+)/
             const urlPaths: string[] = url
                 .split('/')
@@ -81,7 +77,6 @@ function methodFactory(method: HttpMethod) {
             }
             const data = args[dataParameters[0]?.index] || {}
 
-            console.log({ method, url: subUrl, params, data })
             return (this as HttpService).request({ method, url: subUrl, params, data })
         }
 

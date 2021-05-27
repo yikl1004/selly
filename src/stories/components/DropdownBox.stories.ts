@@ -25,7 +25,6 @@ interface Args {
 }
 
 const Template: Story<Args> = (args, { argTypes }) => {
-    console.log('args', args)
     return {
         props: getProps(argTypes),
         template: `<DropdownBox v-bind="$props" />`,

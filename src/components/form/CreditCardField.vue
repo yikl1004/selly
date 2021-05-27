@@ -35,6 +35,10 @@ interface InputElement {
     type?: 'text' | 'number'
 }
 
+/**
+ * TODO: 미완성 컴포넌트
+ */
+
 @Component
 export default class CreditCardField extends Vue {
     private list: InputElement[] = [
@@ -47,7 +51,7 @@ export default class CreditCardField extends Vue {
     private currentIndex: number = -1
 
     onSubmit(a: any) {
-        console.log('submit data...', a)
+        // console.log('submit data...', a)
     }
 
     onChange(value: string) {

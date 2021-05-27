@@ -1,0 +1,68 @@
+$normal-icon-uncheck: '/assets/icon/icon-uncheck.svg';
+$normal-icon-checked: '/assets/icon/icon-checked.svg';
+$normal-icon-uncheck-disable: '/assets/icon/icon-uncheck-disable.svg';
+$normal-icon-checked-disable: '/assets/icon/icon-checked-disable.svg';
+
+$circle-icon-uncheck: '/assets/icon/icon-uncheck-circle-small.svg';
+$circle-icon-checked: '/assets/icon/icon-checked-circle-small.svg';
+$circle-icon-uncheck-disable: '/assets/icon/icon-uncheck-circle-small-disable.svg';
+$circle-icon-checked-disable: '/assets/icon/icon-checked-circle-small-disable.svg';
+
+@mixin input-style($type) {
+    $icon-uncheck: if($type == circle, $circle-icon-uncheck, $normal-icon-uncheck);
+    $icon-checked: if($type == circle, $circle-icon-checked, $normal-icon-checked);;
+    $icon-uncheck-disable: if($type == circle, $circle-icon-uncheck-disable, $normal-icon-uncheck-disable);
+    $icon-checked-disable: if($type == circle, $circle-icon-checked-disable, $circle-icon-checked-disable);
+
+    label {
+        padding-left: if($type == circle, 32px, 26px);
+        font-size: if($type == circle, 14px, 12px);
+        background-image: url($icon-uncheck);
+        min-height: 24px;
+        display: flex;
+        align-items: center;
+    }
+
+    input[type="checkbox"] {
+        &:checked {
+            & + label {
+                background-image: url($icon-checked);
+            }
+        }
+
+        &:disabled {
+            & + label {
+                background-image: url($icon-uncheck-disable);
+            }
+            &:checked + label {
+                background-image: url($icon-checked-disable);
+            }
+        }
+    }
+}
+
+.check-box {
+    position: relative;
+
+    label {
+        color: #222;
+        background-repeat: no-repeat;
+        background-position: center left;
+        background-size: 24px 24px;
+    }
+
+    input[type="checkbox"] {
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+
+    &.normal {
+        @include input-style(normal)
+    }
+
+    &.circle {
+        @include input-style(circle)
+    }
+
+}

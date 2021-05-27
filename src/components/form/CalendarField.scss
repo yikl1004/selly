@@ -1,141 +1,26 @@
 .calendar-field {
-    position: relative;
-
-    label {
-        font-size: 14px;
-        font-weight: normal;
-        line-height: normal;
-        letter-spacing: -0.5px;
-        color: #666;
-        display: block;
-        margin-bottom: 7px;
-    }
+    @include form-field(true, false, false);
 
     .input-area {
-        position: relative;
-        border: solid 1px #ebebeb;
-        border-radius: 10px;
-
-        &.focus {
-            outline: none;
-            border-color: #544944;
-        }
-
-        input {
-            border-radius: 10px;
-            border: 0;
-            font-size: 16px;
-            font-weight: 500;
-            line-height: normal;
-            letter-spacing: -0.5px;
-            color: #222;
-            height: 56px;
-            box-sizing: border-box;
-            width: 100%;
-            padding: 19px 20px 18px;
-
-            &::-webkit-input-placeholder {
-                color: #bbb;
-            }
-
-            &:read-only {
-                background-color: #f3f3f3;
-                border: 0;
-                color: #999;
-            }
-
-            &:focus {
-                outline: none;
-            }
-        }
-
-        button.clear {
+        .icon-calendar {
+            display: block;
             width: 24px;
             height: 24px;
-            background: transparent;
             position: absolute;
-            bottom: 16px;
+            top: 16px;
             right: 16px;
+            z-index: 20;
+            background-image: url('/assets/icon/icon-calendar.svg');
+            background-repeat: no-repeat;
+            background-size: 24px 24px;
 
-            i {
-                width: 16px;
-                height: 16px;
-                background-color: #bbb;
-                display: block;
-                border-radius: 8px;
-                position: absolute;
-                left: 50%;
-                top: 50%;
-                transform: translate(-50%, -50%) rotate(45deg);
-
-                &:before,
-                &:after {
-                    content: '';
-                    display: block;
-                    background-color: #fff;
-                    position: absolute;
-                    top: 50%;
-                    left: 50%;
-                    transform: translate(-50%, -50%);
-                }
-
-                &:before {
-                    width: 11px;
-                    height: 2px;
-                }
-                &:after {
-                    width: 2px;
-                    height: 11px;
-                }
+            & + button.clear {
+                right: 56px;
             }
         }
 
-        &.select-type {
-            display: flex;
-            & > button.select-button, & > input {
-                display: inherit;
-            }
-            & > button.select-button {
-                align-items: center;
-                white-space: nowrap;
-                padding-right: 24px;
-                padding-left: 20px;
-                background-image: url('/assets/icon/icon-arrow-bottom2.svg');
-                background-repeat: no-repeat;
-                background-position: right center;
-                background-size: 24px 24px;
-            }
+        input:read-only + .icon-calendar {
+            background-image: url('/assets/icon/icon-calendar-deactive.svg');
         }
-    }
-
-    &.error {
-        .input-area {
-            border: solid 1px #ee1100;
-        }
-        .message {
-            color: #ee1100;
-            background-image: url('/assets/icon/icon-info-outline.svg');
-        }
-    }
-    &.success {
-        .input-area {
-            border: solid 1px #5089ca;
-        }
-        .message {
-            color: #5089ca;
-            background-image: url('/assets/icon/icon-check-outline.svg');
-        }
-    }
-
-    .message {
-        font-size: 12px;
-        letter-spacing: -0.5px;
-        font-weight: normal;
-        margin-top: 8px;
-        display: flex;
-        padding-left: 20px;
-        background-size: 14px 14px;
-        background-repeat: no-repeat;
-        background-position: 0px 0px;
     }
 }

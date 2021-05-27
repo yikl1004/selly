@@ -7,12 +7,22 @@ import ImageUploader from 'vue-image-upload-resize'
 import Antd from 'ant-design-vue'
 import 'ant-design-vue/dist/antd.css'
 
-// const ImageUploader = require('vue-image-upload-resize')
+// datepicker - https://vcalendar.io/
+const VCalendar = require('v-calendar')
+const DatePicker = require('v-calendar/lib/components/date-picker.umd')
 
 const registerPlugins = (): void => {
     Vue.use(Antd)
     Vue.use(ImageUploader)
     Vue.use(PortalVue)
+
+    // Use v-calendar & v-date-picker components
+    Vue.use(VCalendar, {
+        componentPrefix: 'vc', // Use <vc-calendar /> instead of <v-calendar />
+    })
+    // Vue.component('calendar', Calendar)
+    Vue.component('date-picker', DatePicker)
+
     registerVueLodash()
 
     // chalk(

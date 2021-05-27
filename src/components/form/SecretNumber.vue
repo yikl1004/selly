@@ -1,5 +1,5 @@
 <template>
-    <div class="text-field">
+    <div class="secret-number">
         <label :for="`${id}-front`" :class="{ ir: hiddenLabel }">{{ label }}</label>
         <div class="input-area" :class="{ focus: focusedClass }">
             <template v-if="isRegistType">

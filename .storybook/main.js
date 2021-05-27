@@ -8,6 +8,7 @@ const getResourceList = (list) => {
 const resource = {
     scss: [
         '../src/styles/_variables.scss',
+        '../src/styles/_mixins.scss',
         '../src/styles/index.scss',
         './storybook.md.scss'
     ],

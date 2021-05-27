@@ -13,7 +13,7 @@ const getResourceList = paths => {
 
 const styleResourceOptions = {
     preProcessor: 'scss',
-    patterns: getResourceList(['./src/styles/_variables.scss']),
+    patterns: getResourceList(['./src/styles/_variables.scss', './src/styles/_mixins.scss']),
     rules: ['normal', 'normal-modules', 'vue', 'vue-modules'],
 }
 
