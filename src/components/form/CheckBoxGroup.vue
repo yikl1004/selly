@@ -4,7 +4,7 @@
             {{ title }}
         </h3>
         <div class="input-area" :class="{ focus: focusedClass }">
-            <input :id="`${id}-all`" v-model="value" type="checkbox" :disabled="disabled" :name="name" @focus="onFocus" @blur="onBlur" />
+            <input :id="`${id}-all`" type="checkbox" :disabled="disabled" :name="name" @focus="onFocus" @blur="onBlur" />
             <label class="display-name" :for="`${id}-all`">
                 전체동의
             </label>
@@ -12,15 +12,23 @@
                 <span class="ir">{{ open ? '열림' : '닫힘' }}</span>
             </button>
         </div>
-        <div :class="['check-list', { opened: open }]">
-            <slot />
+        <div v-if="list.length" :class="['check-list', { opened: open }]">
+            <CheckBox
+                v-for="(check, index) in list"
+                :key="`check-box-group-${name}-${index}`"
+                v-bind="getCheckBoxProps(index)"
+                @change="onChangeCheckBox"
+            />
         </div>
     </div>
 </template>
 
 <script lang="ts">
-import { VNode, VNodeComponentOptions } from 'vue'
 import { Component, Prop, PropSync, ProvideReactive, Vue } from 'vue-property-decorator'
+import { CheckboxProps } from '@components/form/CheckBox.vue'
+
+export type CheckListItem = Omit<CheckboxProps, 'id' | 'name' | 'type' | 'defaultValue'> & { value: string }
+export type CheckList = CheckListItem[]
 
 @Component
 export default class CheckBoxGroup extends Vue {
@@ -44,11 +52,9 @@ export default class CheckBoxGroup extends Vue {
     @Prop({ type: Boolean, default: false })
     readonly disabled!: boolean
 
-    /**
-     * @category ETC
-     */
-    @ProvideReactive('checkList')
-    checkList: { [key: string]: boolean } = {}
+    /** 체크박스 리스트 */
+    @Prop({ type: Array, default: () => [], required: true })
+    readonly list!: CheckListItem[]
 
     /**
      * @category Data(State)
@@ -60,20 +66,11 @@ export default class CheckBoxGroup extends Vue {
     /** 토글 상태 */
     private open: boolean = false
 
+    /** 전체 체크 여부 */
+
     /**
      * @category Computed
      */
-    get value(): boolean {
-        return Object.values(this.checkList).every(check => check)
-    }
-    set value(changeValue: boolean) {
-        const checkList: { [key: string]: boolean } = {}
-        for (const check in this.checkList) {
-            checkList[check] = changeValue
-        }
-
-        this.checkList = checkList
-    }
 
     /**
      * @category Methods
@@ -91,23 +88,18 @@ export default class CheckBoxGroup extends Vue {
         this.open = !this.open
     }
 
-    initialize() {
-        const slots = this.$slots.default as VNode[]
-        const checkList: { [key: string]: boolean } = {}
-        slots.forEach(slot => {
-            const componentOptions = slot.componentOptions as VNodeComponentOptions
-            if (componentOptions) {
-                const propsData = componentOptions.propsData
-                const { name, defaultValue } = propsData as any
-                checkList[name] = defaultValue
-            }
-        })
-        this.checkList = checkList
+    getCheckBoxProps(index: number): CheckboxProps {
+        const item = this.list[index]
+        return {
+            id: `${this.name}-${index}`,
+            type: 'normal',
+            name: `${this.name}-${item.value}`,
+            defaultValue: false,
+            label: item.label,
+        }
     }
 
-    mounted() {
-        this.initialize()
-    }
+    onChangeCheckBox() {}
 }
 </script>
 
