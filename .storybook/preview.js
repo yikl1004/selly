@@ -2,7 +2,7 @@ import { addParameters } from '@storybook/vue'
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport'
 import Vue from 'vue'
 import Vuex from 'vuex'
-import { atomDark } from 'react-syntax-highlighter/dist/esm/styles/prism'
+// import { atomOneDark } from 'react-syntax-highlighter/dist/esm/styles/hljs'
 import { initialize } from '@utils/index'
 
 import 'animate.css/animate.css'
@@ -25,7 +25,7 @@ addParameters({
     docs: {
         source: {
             language: 'html',
-            style: atomDark,
+            // customStyle: atomOneDark,
         },
     },
 })
