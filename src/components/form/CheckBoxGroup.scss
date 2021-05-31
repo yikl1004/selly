@@ -85,9 +85,39 @@
         max-height: 0;
         overflow: hidden;
         transition: max-height 250ms ease-in-out;
+        margin-top: 10px;
+
+        .check-list-wrapper {
+            padding: 15px 20px 15px 0;
+            background-color: #fafafa;
+            border-radius: 10px;
+        }
 
         &.opened {
             max-height: 1000px;
+        }
+
+        .check-list-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            & + .check-list-item {
+                margin-top: 8px;
+            }
+
+            a.term {
+                text-decoration: underline;
+            }
+        }
+
+        .check-box{
+            padding-left: 24px;
+
+
+            label {
+                color: #666;
+            }
         }
     }
 }

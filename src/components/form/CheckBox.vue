@@ -1,6 +1,6 @@
 <template>
     <div :class="['check-box', type]">
-        <input :id="id" v-model="value" type="checkbox" :disabled="disabled" :name="name" @change="onChange" />
+        <input :id="id" v-model="value" value="sdkj" type="checkbox" :disabled="disabled" :name="name" @change="onChange" />
         <label :for="id">{{ label }}</label>
     </div>
 </template>
@@ -15,9 +15,10 @@ export interface CheckboxProps {
     label: string
     name: string
     type: DesignType
-    defaultValue?: boolean
+    checked?: boolean
     require?: boolean
     disabled?: boolean
+    index?: number
 }
 
 @Component
@@ -50,16 +51,29 @@ export default class CheckBox extends Vue {
     @Prop({ type: Boolean, default: false, required: false })
     readonly required!: boolean
 
-    /** form value */
+    /** 체크된 상태 */
     @Prop({ type: Boolean, default: false })
-    private defaultValue!: boolean
+    readonly checked!: boolean
+
+    /** CheckBoxGroup의 하위 인 경우의 index */
+    @Prop({ type: Number })
+    readonly index!: number
 
     /**
      * @category Data
      */
 
     /** value */
-    private value: boolean = this.defaultValue || false
+    private value: boolean = this.checked || false
+
+    /**
+     * @category Watch
+     */
+
+    @Watch('checked')
+    changeChecked(newValue: boolean, oldValue: boolean) {
+        this.value = newValue
+    }
 
     /**
      * @category Methods
@@ -67,7 +81,7 @@ export default class CheckBox extends Vue {
 
     /** 초기화 */
     init() {
-        this.value = this.defaultValue || false
+        this.value = this.checked || false
     }
 
     onChange() {
@@ -75,7 +89,7 @@ export default class CheckBox extends Vue {
          * 변경된 값을 상위로 전달 할수 있음
          * @event change
          */
-        this.$emit('change', this.value)
+        this.$emit('change', this.value, this.index)
     }
 }
 </script>
