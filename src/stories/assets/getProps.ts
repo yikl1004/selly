@@ -2,7 +2,7 @@ import _ from 'lodash'
 
 const eventList = ['change', 'keydown', 'focus', 'mounted', 'input']
 const exceptionList = ['default']
-const getProps = <ArgTypes = any>(argTypes: ArgTypes) => {
+const getProps = <ArgTypes = any>(argTypes: ArgTypes, excludes: string[] = []) => {
     // exception props
     let props = Object.keys(argTypes).filter(type => exceptionList.every(exception => exception !== type))
     // event props add prefix '@'
@@ -12,6 +12,10 @@ const getProps = <ArgTypes = any>(argTypes: ArgTypes) => {
         }
         return type
     })
+
+    if (excludes.length) {
+        props = _.difference(props, excludes)
+    }
 
     return props
 }
