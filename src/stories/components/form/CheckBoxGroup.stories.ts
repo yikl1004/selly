@@ -83,6 +83,7 @@ Primary.parameters = {
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import { CheckList } from '@components/form/CheckBoxGroup.vue'
+
 @Component
 export default class Main extends Vue {
     private checkList: CheckList = [
@@ -91,6 +92,7 @@ export default class Main extends Vue {
         { value: 'telecom', label: '통신사 이용약관 동의' },
         { value: 'cert', label: '본인확인 서비스 약관 동의' },
     ]
+
     onChange(list: CheckList) {
         this.checkList = list
     }

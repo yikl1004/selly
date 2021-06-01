@@ -64,7 +64,7 @@ export default class CheckBoxGroup extends Vue {
     readonly disabled!: boolean
 
     /** 체크박스 리스트 */
-    @Prop({ type: Array, default: () => [], required: true })
+    @Prop({ type: Array, required: true })
     readonly list!: CheckListItem[]
 
     @Prop({ type: String, default: 'normal' })
