@@ -11,6 +11,8 @@ import CalendarField from '@components/form/CalendarField.vue'
 import SingleSelection from '@components/form/SingleSelection.vue'
 import CheckBox from '@components/form/CheckBox.vue'
 import CheckBoxGroup from '@components/form/CheckBoxGroup.vue'
+import SwitchButton from '@components/form/SwitchButton.vue'
+
 // common
 import Link from '@components/common/Link.vue'
 import Header from '@components/common/Header.vue'
@@ -37,6 +39,7 @@ const componentList: { [key: string]: VueConstructor }[] = [
     { SingleSelection },
     { CheckBox },
     { CheckBoxGroup },
+    { SwitchButton },
 ]
 
 export const registerCommonComponent = (): void => {

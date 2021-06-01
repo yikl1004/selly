@@ -23,8 +23,8 @@ const Template: Story<Args> = (args, { argTypes }) => {
     }
 }
 
-export const Primary = Template.bind({})
-Primary.args = {
+export const Normal = Template.bind({})
+Normal.args = {
     type: 'normal',
     id: 'test1',
     name: 'test1',

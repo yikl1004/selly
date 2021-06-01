@@ -11,10 +11,6 @@ import { Component, Prop, Vue } from 'vue-property-decorator'
 
 type Size = 'large' | 'medium' | 'small'
 type ButtonType = 'button' | 'submit'
-type DesignType =
-    | 'basic' // 기본
-    | 'line' // 선형
-    | 'with' // 버튼과 함께 쓰이는 형태
 
 @Component
 export default class BasicButton extends Vue {
@@ -23,7 +19,7 @@ export default class BasicButton extends Vue {
      */
     /** 디자인 타입 */
     @Prop({ type: String, default: 'basic' })
-    readonly type!: DesignType
+    readonly type!: BasicButtonDesignType
 
     /** submit 타입 사용여부(true일 경우 props key만 사용, react 처럼) */
     @Prop({ type: Boolean, default: false })

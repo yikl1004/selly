@@ -8,13 +8,11 @@
 <script lang="ts">
 import { Component, Prop, PropSync, Vue, Watch } from 'vue-property-decorator'
 
-export type DesignType = 'normal' | 'circle'
-
 export interface CheckboxProps {
     id: string
     label: string
     name: string
-    type: DesignType
+    type: CheckBoxDesignType
     checked?: boolean
     require?: boolean
     disabled?: boolean
@@ -29,7 +27,7 @@ export default class CheckBox extends Vue {
 
     /** 디자인 타입 */
     @Prop({ type: String, default: 'normal' })
-    readonly type!: DesignType
+    readonly type!: CheckBoxDesignType
 
     /** form id */
     @Prop({ type: String, required: true })

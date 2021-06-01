@@ -52,6 +52,7 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
 
+// TODO: 아직 디자인 타입에 대한 정의가 상세히 나오지 않음
 type DesignType = 'select' | 'banner' | 'description'
 
 export interface OptionItem {

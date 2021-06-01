@@ -20,7 +20,6 @@ export interface ListItem {
 
 export type List = ListItem[]
 export type Align = 'col' | 'row'
-export type DesignType = 'button' | 'radio'
 
 @Component
 export default class SingleSelection extends Vue {
@@ -42,7 +41,7 @@ export default class SingleSelection extends Vue {
 
     /** 디자인 타입 */
     @Prop({ type: String, default: 'radio' })
-    readonly type!: DesignType
+    readonly type!: SingleSelectionDesignType
 
     /**
      * @category Data(State)

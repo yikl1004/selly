@@ -1,0 +1,141 @@
+$bg-on: #5089ca;
+$bg-off: #e0dcda;
+$bg-disabled: #ebebeb;
+$toggle-button-color-disabled: #fafafa;
+$toggle-button-color: #fff;
+$toggle-button-size-large: 26px;
+$toggle-button-size-small: 18px;
+$transition-time: 250ms;
+$transition: all $transition-time ease-in-out;
+
+.switch {
+    position: relative;
+
+    input[type="checkbox"] {
+        position: absolute;
+        top: 0;
+        left: 0;
+
+        &:checked {
+            & + label {
+                background-color: $bg-on;
+                transition: $transition;
+                
+                &:before {
+                    transition: $transition
+                }
+            }
+        }
+
+        &:disabled {
+            & + label {
+                background-color: $bg-disabled;
+
+                &:before {
+                    background-color: $toggle-button-color-disabled;
+                }
+            }
+        }
+    }
+
+    label {
+        width: 100%;
+        height: 100%;
+        display: block;
+        background-color: $bg-off;
+        transition: $transition;
+
+        &:before {
+            content: '';
+            display: block;
+            background-color: #ffffff;
+            position: absolute;
+            top: 50%;
+            left: 3px;
+            transform: translate(0, -50%);
+            transition: $transition;
+        }
+    }
+
+    &.large {
+        width: 64px;
+        height: 32px;
+
+        label {
+            border-radius: 16px;
+
+            &:before {
+                width: $toggle-button-size-large;
+                height: $toggle-button-size-large;
+                border-radius: $toggle-button-size-large / 2;
+            }
+        }
+
+        input[type="checkbox"] {
+            &:checked {
+                & + label {
+                    &:before {
+                        left: 35px;
+                    }
+                }
+            }
+        }
+    }
+
+    &.small {
+        width: 54px;
+        height: 24px;
+
+        label {
+            border-radius: 12px;
+
+            &:before {
+                width: $toggle-button-size-small;
+                height: $toggle-button-size-small;
+                border-radius: $toggle-button-size-small / 2;
+            }
+
+            .status {
+                font-size: 12px;
+                font-weight: 500;
+                text-transform: uppercase;
+                color: #666;
+                transition: $transition;
+                position: absolute;
+                top: 50%;
+                left: 24px;
+                z-index: 10;
+                transform: translateY(-40%);
+                line-height: 1;
+
+                &:before {
+                    content: 'off';
+                }
+            }
+        }
+
+        input[type="checkbox"] {
+            &:checked {
+                & + label {
+                    &:before {
+                        left: 33px;
+                    }
+                    .status {
+                        color: #fff;
+                        left: 10px;
+                        &:before {
+                            content: 'on';
+                        }
+                    }
+                }
+            }
+            &:disabled {
+                & + label {
+                    .status {
+                        color: #bbb;
+                    }
+                }
+            }
+        }
+    }
+}

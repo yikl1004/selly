@@ -58,6 +58,37 @@ declare global {
     interface Window {
         Kakao: KakaoCert
     }
+
+    /**
+     * @path { @component/form/SwitchButton.vue }
+     * @type { DesignType }
+     * @description 디자인타입을 결정합니다.
+     */
+    type SwitchDesignType = 'large' | 'small'
+
+    /**
+     * @path { @component/common/BasicButton.vue }
+     * @type { BasicButtonDesignType }
+     * @description 디자인타입을 결정합니다.
+     */
+    type BasicButtonDesignType =
+        | 'basic' // 기본
+        | 'line' // 선형
+        | 'with' // 버튼과 함께 쓰이는 형태
+
+    /**
+     * @path { @component/form/CheckBox.vue }
+     * @type { CheckBoxDesignType }
+     * @description 디자인타입을 결정합니다.
+     */
+    type CheckBoxDesignType = 'normal' | 'circle'
+
+    /**
+     * @path { @component/form/SingleSelection.vue }
+     * @type { CheckBoxDesignType }
+     * @description 디자인타입을 결정합니다.
+     */
+    type SingleSelectionDesignType = 'button' | 'radio'
 }
 
 export {}

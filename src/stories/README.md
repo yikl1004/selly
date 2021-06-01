@@ -1,50 +1,69 @@
-import { Meta, Story } from '@storybook/vue'
-import { action } from '@storybook/addon-actions'
-import CheckBoxGroup from '@components/form/CheckBoxGroup.vue'
-import _ from 'lodash'
+# Storybook 작성하기
+
+## Utils
+
+### getProps function
+
+usage  
+
+```ts
+// example
 import getProps from '../../assets/getProps'
+```
 
-export default {
-    title: 'Components/form/CheckBoxGroup',
-    component: CheckBoxGroup,
-    argTypes: {
-        listType: {
-            options: ['normal', 'circle'],
-            control: { type: 'select' },
-        },
-    },
-    excludeStories: /.*State$/,
-} as Meta
+origin source
 
-interface Args {
-    list: any
-    id: string
-    name: string
-    title: string
-    listType: 'normal' | 'circle'
+```ts
+import _ from 'lodash'
+
+const eventList = ['change', 'keydown', 'focus', 'mounted', 'input']
+const exceptionList = ['default']
+const getProps = <ArgTypes = any>(argTypes: ArgTypes, excludes: string[] = []) => {
+    // exception props
+    let props = Object.keys(argTypes).filter(type => exceptionList.every(exception => exception !== type))
+    // event props add prefix '@'
+    props = props.map(type => {
+        if (eventList.some(event => event === type)) {
+            return `on${_.capitalize(type)}`
+        }
+        return type
+    })
+
+    if (excludes.length) {
+        props = _.difference(props, excludes)
+    }
+
+    return props
 }
 
-const Template: Story<Args> = (args, { argTypes }) => {
-    // argTypes에서 'list' 는 제외하고 props를 가져 온다.
-    const props = getProps(argTypes, ['list'])
+export default getProps
 
+```
+
+## Actions
+
+참고: https://storybook.js.org/docs/vue/essentials/actions
+
+```ts
+import { action } from '@storybook/addon-actions'
+import { Meta, Story } from '@storybook/vue'
+
+export default {
+    ...
+    argTypes: {
+        onClick: {
+            action: 'clicked'
+        }
+    }
+    ...
+} as Meta
+
+// Action을 직접 사용 할 때
+const Template: Story<Args> = (args, { argTypes }) => {
     return {
-        data() {
-            return {
-                list: [
-                    { value: 'policy', label: '개인정보처리방침 동의', checked: true },
-                    { value: 'uniq', label: '고유식별정보 처리동의' },
-                    { value: 'telecom', label: '통신사 이용약관 동의' },
-                    { value: 'cert', label: '본인확인 서비스 약관 동의' },
-                ],
-            }
-        },
-        props,
-        template: `<CheckBoxGroup v-bind="$props" :list="list" @change="change" />`,
+        ...
         methods: {
             change(list: any[]) {
-                // @ts-ignore
-                this.list = list
                 const onChangeAction = action('change')
                 // @ts-ignore
                 onChangeAction(this.list)
@@ -52,14 +71,12 @@ const Template: Story<Args> = (args, { argTypes }) => {
         },
     }
 }
+```
 
+## Code Block 직접 작성하기
+
+```js
 export const Primary = Template.bind({})
-Primary.args = {
-    id: 'policy',
-    name: 'policy',
-    title: '이용약관동의',
-    listType: 'circle',
-}
 Primary.parameters = {
     // docs 에 관한 설정(storybook의 docs 탭)
     docs: {
@@ -100,3 +117,4 @@ export default class Main extends Vue {
         },
     },
 }
+```

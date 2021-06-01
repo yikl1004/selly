@@ -1,7 +1,7 @@
-import { addParameters } from '@storybook/vue'
-import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport'
 import Vue from 'vue'
 import Vuex from 'vuex'
+import { addParameters } from '@storybook/vue'
+import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport'
 import { initialize } from '@utils/index'
 
 import 'animate.css/animate.css'
@@ -21,4 +21,9 @@ addParameters({
         viewports: INITIAL_VIEWPORTS,
         defaultViewport: 'iphone12',
     },
+    docs: {
+        source: {
+            language: 'html'
+        }
+    }
 })

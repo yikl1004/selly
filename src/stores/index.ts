@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex, { createLogger } from 'vuex'
-import Finance, { FinancialState } from './modules/finance'
+import { default as finance, FinancialState } from './modules/finance'
 
 interface RootStore {
     finance: FinancialState
@@ -13,7 +13,7 @@ Vue.use(Vuex)
 const store = new Vuex.Store<RootStore>({
     strict: isDev,
     modules: {
-        finance: Finance,
+        finance,
     },
     plugins: [createLogger()],
 })
