@@ -80,7 +80,7 @@ export default class SecretNumber extends Mixins(Validates) {
 
     /** type */
     @Prop({ type: String, required: true })
-    readonly type!: any
+    readonly type!: SecretNumberType
 
     /**
      * @category Data(State)
@@ -128,7 +128,9 @@ export default class SecretNumber extends Mixins(Validates) {
          * 값이 변경 되면 변경된 값을 반환
          * @event change
          */
-        this.$emit('change', this.value)
+        this.$emit('change', {
+            value: this.value,
+        })
     }
 
     /**

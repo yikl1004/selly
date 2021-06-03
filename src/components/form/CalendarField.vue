@@ -7,8 +7,9 @@
                     <input
                         ref="input"
                         type="text"
-                        :readonly="readonly"
+                        readonly
                         :value="displayValue"
+                        :class="{ readonly }"
                         @keydown="onKeydown"
                         @focus="dateSelected($event, value, togglePopover)"
                         @blur="onBlur"
@@ -25,7 +26,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator'
+import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 import dayjs from 'dayjs'
 
 @Component
@@ -43,7 +44,7 @@ export default class CalendarField extends Vue {
      */
 
     /** form에 사용될 id */
-    @Prop({ type: String })
+    @Prop({ type: String, required: true })
     readonly id!: string
 
     /** label태그에 들어갈 텍스트 */
@@ -59,7 +60,7 @@ export default class CalendarField extends Vue {
     readonly defaultValue!: string
 
     /** 읽기전용 */
-    @Prop(Boolean)
+    @Prop({ type: Boolean, default: false })
     readonly readonly!: boolean
 
     /**
@@ -82,6 +83,18 @@ export default class CalendarField extends Vue {
     /** 화면에 보여질 value */
     get displayValue(): string {
         return dayjs(this.value).format('YYYY.MM.DD')
+    }
+
+    @Watch('value')
+    changeValue(newValue: Date, oldValue: Date) {
+        /**
+         * 값이 변경 될때 마다 호출
+         * @event change
+         */
+        this.$emit('change', {
+            value: newValue,
+            fieldName: this._.camelCase(this.id),
+        })
     }
 
     /**

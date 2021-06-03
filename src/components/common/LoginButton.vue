@@ -37,7 +37,7 @@ export default class extends Vue {
         //     success: (authObj: any) => {
         //         console.log('kakao login SUCCESS', authObj)
         // 사용자정보 가져오기: /v2/user/me
-        // 연결끊기: /v2/user/unlink
+        // 연결끊기(탈퇴? 처럼 쓸수 있겠으나 실제로는 앱과의 연관성만 끊어준다고 함): /v2/user/unlink
         //         KakaoAPI.request({
         //             url: '/v2/user/me',
         //             success: res => {

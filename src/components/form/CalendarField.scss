@@ -1,5 +1,5 @@
 .calendar-field {
-    @include form-field(true, false, false);
+    @include form-field(true, false, false, false);
 
     .input-area {
         .icon-calendar {
@@ -19,8 +19,14 @@
             }
         }
 
-        input:read-only + .icon-calendar {
-            background-image: url('/assets/icon/icon-calendar-deactive.svg');
+        input.readonly {
+            background-color: #f3f3f3;
+            border: 0;
+            color: #999;
+            
+            & + .icon-calendar {
+                background-image: url('/assets/icon/icon-calendar-deactive.svg');
+            }
         }
     }
 }

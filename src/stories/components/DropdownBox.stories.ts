@@ -1,9 +1,9 @@
 import { Meta, Story } from '@storybook/vue'
-import DropdownBox from '@components/common/DropdownBox.vue'
+import DropdownBox from '@components/form/DropdownBox.vue'
 import getProps from '../assets/getProps'
 
 export default {
-    title: 'Components/Dropdown Box',
+    title: 'Components/form/Dropdown Box',
     component: DropdownBox,
     argTypes: {},
     parameters: {

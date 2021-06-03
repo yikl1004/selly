@@ -2,6 +2,8 @@ import Vue from 'vue'
 import PortalVue from 'portal-vue'
 import registerVueLodash from '@utils/plugins/lodash'
 import ImageUploader from 'vue-image-upload-resize'
+import dayjs from 'dayjs'
+import duration from 'dayjs/plugin/duration'
 
 // TODO: 삭제 해야됨
 import Antd from 'ant-design-vue'
@@ -25,6 +27,8 @@ const registerPlugins = (): void => {
 
     registerVueLodash()
 
+    dayjs.extend(duration)
+
     // chalk(
     //     {
     //         'font-size': '16px',
@@ -36,5 +40,7 @@ const registerPlugins = (): void => {
     //     'vue plugins registered...',
     // )
 }
+
+export const moment = dayjs
 
 export default registerPlugins

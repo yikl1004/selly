@@ -5,6 +5,8 @@ import cloneDeep from 'lodash/cloneDeep'
 import merge from 'lodash/merge'
 import uniq from 'lodash/uniq'
 import isUndefined from 'lodash/isUndefined'
+import camelCase from 'lodash/camelCase'
+import kebabCase from 'lodash/kebabCase'
 
 export default function registerVueLodash() {
     Vue.use(VueLodash, {
@@ -14,6 +16,8 @@ export default function registerVueLodash() {
             merge,
             uniq,
             isUndefined,
+            camelCase,
+            kebabCase,
         },
     })
 }

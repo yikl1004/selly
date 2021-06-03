@@ -89,6 +89,42 @@ declare global {
      * @description 디자인타입을 결정합니다.
      */
     type SingleSelectionDesignType = 'button' | 'radio'
+
+    /**
+     * @path { @component/form/SingleSelection.vue }
+     * @type { SecretNumberType }
+     * @description 디자인타입을 결정합니다.
+     */
+    interface SingleSelectionListItem {
+        displayName: string
+        value: string
+        selected?: boolean
+    }
+
+    /**
+     * @path { @component/form/SecretNumber.vue }
+     * @type { SecretNumberType }
+     * @description 타입을 결정합니다.
+     */
+    type SecretNumberType = 'regist' | 'registGender' | 'card' | 'card2'
+
+    /**
+     * @path { @component/common/BottomSheet.vue }
+     * @type { BottomSheetOptionItem }
+     * @description "list" props의 타입
+     */
+    interface BottomSheetOptionItem {
+        displayName: string
+        value: string
+        selected?: boolean
+    }
+
+    /**
+     * @path { @component/form/DropdownBox.vue }
+     * @type { DropdownBoxList }
+     * @description "list" props의 타입(DropdownBox의 'list' Props)
+     */
+    type DropdownBoxList = BottomSheetOptionItem[]
 }
 
 export {}

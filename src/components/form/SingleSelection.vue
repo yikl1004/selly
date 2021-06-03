@@ -12,13 +12,6 @@
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 
-export interface ListItem {
-    displayName: string
-    value: string
-    selected?: boolean
-}
-
-export type List = ListItem[]
 export type Align = 'col' | 'row'
 
 @Component
@@ -29,7 +22,7 @@ export default class SingleSelection extends Vue {
 
     /** 선택 할 리스트 */
     @Prop({ type: Array, required: true })
-    readonly list!: List
+    readonly list!: SingleSelectionListItem[]
 
     /** id */
     @Prop({ type: String, required: true })
@@ -70,7 +63,10 @@ export default class SingleSelection extends Vue {
          * value가 변경될때 만다 change emit을 실행
          * @event change
          */
-        this.$emit('change', newValue)
+        this.$emit('change', {
+            value: newValue,
+            fieldName: this._.camelCase(this.id),
+        })
     }
 
     /**

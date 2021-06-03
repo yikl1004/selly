@@ -92,4 +92,4 @@ export default class CreditCardField extends Vue {
 }
 </script>
 
-<style scoped src="CreditCardField.scss"></style>
+<style scoped lang="scss" src="./CreditCardField.scss"></style>

@@ -64,7 +64,7 @@ export default class CheckBoxGroup extends Vue {
     readonly disabled!: boolean
 
     /** 체크박스 리스트 */
-    @Prop({ type: Array, required: true })
+    @Prop({ type: Array, default: () => [], required: true })
     readonly list!: CheckListItem[]
 
     @Prop({ type: String, default: 'normal' })
@@ -117,7 +117,6 @@ export default class CheckBoxGroup extends Vue {
         return {
             id: `${this.name}-${index}`,
             type: this.listType,
-            name: `${this.name}-${item.value}`,
             checked: !!item.checked,
             label: item.label,
             index,
@@ -132,9 +131,9 @@ export default class CheckBoxGroup extends Vue {
         this.$emit('change', checkedList)
     }
 
-    onChangeCheckBox(checked: boolean, index: number) {
+    onChangeCheckBox({ value, index }: { value: boolean; index: number }) {
         const checkedList = this._.cloneDeep(this.list).map((item, itemIndex) => {
-            item.checked = index === itemIndex ? checked : !!item.checked
+            item.checked = index === itemIndex ? value : !!item.checked
             return item
         })
 

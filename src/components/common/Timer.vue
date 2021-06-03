@@ -4,10 +4,7 @@
 
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
-import dayjs from 'dayjs'
-import duration from 'dayjs/plugin/duration'
-
-dayjs.extend(duration)
+import { moment as dayjs } from '@utils/plugins'
 
 @Component
 export default class Timer extends Vue {

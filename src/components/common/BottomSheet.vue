@@ -55,12 +55,6 @@ import { Component, Prop, Vue } from 'vue-property-decorator'
 // TODO: 아직 디자인 타입에 대한 정의가 상세히 나오지 않음
 type DesignType = 'select' | 'banner' | 'description'
 
-export interface OptionItem {
-    displayName: string
-    value: string
-    selected?: boolean
-}
-
 @Component
 export default class BottomSheet extends Vue {
     /**
@@ -89,7 +83,7 @@ export default class BottomSheet extends Vue {
 
     /** 리스트 타입일 경우 */
     @Prop({ type: Array, default: () => ({}) })
-    readonly list!: OptionItem[]
+    readonly list!: BottomSheetOptionItem[]
 
     /**
      * @category Data(State)

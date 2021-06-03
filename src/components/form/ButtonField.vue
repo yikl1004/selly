@@ -6,7 +6,8 @@
                 <input
                     :id="id"
                     ref="input"
-                    :value="displayValue"
+                    :value="value"
+                    :name="_.camelCase(id)"
                     autocomplete="new-password"
                     :maxlength="maxlength"
                     :placeholder="placeholder"
@@ -33,6 +34,7 @@
 <script lang="ts">
 import { Component, Prop, Watch, Mixins } from 'vue-property-decorator'
 import Validates from '@utils/mixins/Validates'
+import { FormBus } from '@components/form/FormProvider.vue'
 
 export interface OnChangeParameters {
     value: string
@@ -67,7 +69,7 @@ export default class ButtonField extends Mixins(Validates) {
      */
 
     /** form에 사용될 id */
-    @Prop(String)
+    @Prop({ type: String, required: true })
     readonly id!: string
 
     /** label태그에 들어갈 텍스트 */
@@ -77,10 +79,6 @@ export default class ButtonField extends Mixins(Validates) {
     /** label을 비노출여부 */
     @Prop(Boolean)
     readonly hiddenLabel!: boolean
-
-    /** name 속성 지정 */
-    @Prop({ type: String, default: '', required: true })
-    readonly name!: string
 
     /** 최대 자릿수 지정 */
     @Prop({ type: Number, default: 9999 })
@@ -115,22 +113,13 @@ export default class ButtonField extends Mixins(Validates) {
      */
 
     /** 실제 값 */
-    private value: string = ''
+    private value: string = this.defaultValue || ''
 
     /** focus 상태 */
     private focusedClass: boolean = false
 
     /**
-     * @category COMPUTED
-     */
-
-    /** 타이핑한 값 */
-    get displayValue(): string {
-        return this.value
-    }
-
-    /**
-     * @title WATCH
+     * @title Watch
      */
 
     @Watch('value')
@@ -138,7 +127,15 @@ export default class ButtonField extends Mixins(Validates) {
         /**
          * value가 변경 될때 마다 호출되는 callback(value: string, index: number, maxLength: number)
          */
-        this.$emit('change', newValue)
+        this.$emit('change', {
+            value: newValue,
+            fieldName: this._.camelCase(this.id),
+        })
+
+        FormBus.$emit('form:update', {
+            value: newValue,
+            fieldName: this._.camelCase(this.id),
+        })
     }
 
     /**

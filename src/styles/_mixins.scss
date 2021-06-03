@@ -1,4 +1,4 @@
-@mixin form-field($clear: true, $is-dropdown: false, $validate: true) {
+@mixin form-field($clear: true, $is-dropdown: false, $validate: true, $use-readonly: true) {
     position: relative;
 
     label {
@@ -50,11 +50,13 @@
             &::-webkit-input-placeholder {
                 color: #bbb;
             }
-
-            &:read-only {
-                background-color: #f3f3f3;
-                border: 0;
-                color: #999;
+            
+            @if $use-readonly {
+                &:read-only {
+                    background-color: #f3f3f3;
+                    border: 0;
+                    color: #999;
+                }
             }
 
             &:focus {

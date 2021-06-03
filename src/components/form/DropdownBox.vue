@@ -2,7 +2,7 @@
     <div class="dropdown-box">
         <label :for="id" :class="{ ir: hiddenLabel }">{{ label }}</label>
         <div class="input-area" :class="{ focus: focusedClass, 'select-type': true }">
-            <input :id="id" type="text" :name="name" readonly @focus="onFocus" @blur="onBlur" @click="onClick" />
+            <input :id="id" type="text" :name="_.camelCase(id)" readonly @focus="onFocus" @blur="onBlur" @click="onClick" />
             <span class="selected-display-name">
                 {{ selectedDisplayName }}
             </span>
@@ -11,7 +11,7 @@
                 <BottomSheet
                     :show="bottomSheetVisible"
                     :title="label"
-                    :list="list"
+                    :list="selectList"
                     @close="closeBottomSheet"
                     @select-option="onSelectOption"
                 />
@@ -22,7 +22,7 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
-import { OptionItem } from './BottomSheet.vue'
+import { FormBus, FormUpdateEvent } from './FormProvider.vue'
 
 @Component
 export default class DropdownBox extends Vue {
@@ -31,7 +31,7 @@ export default class DropdownBox extends Vue {
      */
 
     /** form에 사용될 id */
-    @Prop({ type: String })
+    @Prop({ type: String, required: true })
     readonly id!: string
 
     /** label태그에 들어갈 텍스트 */
@@ -42,17 +42,13 @@ export default class DropdownBox extends Vue {
     @Prop(Boolean)
     readonly hiddenLabel!: boolean
 
-    /** name 속성 지정 */
-    @Prop({ type: String, default: '', required: true })
-    readonly name!: string
-
     /** 기본 값 */
     @Prop(String)
     readonly defaultValue!: string
 
     /** option list를 주입해함!! */
     @Prop({ type: Array, default: () => [], required: true })
-    readonly list!: OptionItem[]
+    readonly list!: DropdownBoxList
 
     /**
      * @category Data(State)
@@ -67,8 +63,8 @@ export default class DropdownBox extends Vue {
     /** 선택영역 노춣 여부 */
     private bottomSheetVisible: boolean = false
 
-    /** 선택영역에서 선택한 값 */
-    private selectedValue?: OptionItem
+    /** props로 받은 리스트 */
+    private selectList: DropdownBoxList = this.list || []
 
     /**
      * @category Computed
@@ -76,7 +72,7 @@ export default class DropdownBox extends Vue {
 
     /** 보여지는 선택된 이름 */
     get selectedDisplayName(): string {
-        const name = this.list.find(option => option.selected)
+        const name = this.selectList.find(option => option.selected)
         return (name && name.displayName) || this.label
     }
 
@@ -107,30 +103,49 @@ export default class DropdownBox extends Vue {
     }
 
     onSelectOption(value: string) {
-        const selectedValue = this.list.find(option => option.value === value) as OptionItem
+        // const selectedValue = this.list.find(option => option.value === value) as BottomSheetOptionItem
         const changedList = this.list.map(option => {
             option.selected = option.value === value
             return option
         })
-        this.selectedValue = selectedValue
+        this.value = value
+        this.selectList = changedList
 
         /**
-         * 선택된 값은 전달
+         * 선택된 값을 select 이벤트를 통해 전달
          * @event select
          */
-        this.$emit('select', this.selectedValue)
+        this.$emit('select', this.value)
 
         /**
-         * 변경된 option list를 업데이트 합니다
+         * 변경된 option list를 업데이트(sync 수식어) ****** 보류
          * @event update:list
          */
-        this.$emit('update:list', changedList)
+        // this.$emit('update:list', changedList)
+
+        FormBus.$emit(FormUpdateEvent, {
+            value,
+            fieldName: this._.camelCase(this.id),
+        })
 
         this.closeBottomSheet()
     }
 
     onClick(event: FocusEvent) {
         this.openBottomSheet(event)
+    }
+
+    init() {
+        if (this.defaultValue) {
+            this.selectList = this.selectList.map(item => {
+                item.selected = this.defaultValue === item.value
+                return item
+            })
+        }
+    }
+
+    mounted() {
+        this.init()
     }
 }
 </script>

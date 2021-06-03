@@ -17,7 +17,6 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import { OptionItem } from '@components/common/BottomSheet.vue'
 import { namespace, Action } from 'vuex-class'
 import ClickOutside from 'vue-click-outside'
 
@@ -28,7 +27,7 @@ const FinanceModule = namespace('finance')
 })
 export default class ExamplePage extends Vue {
     private timer: { [key: string]: any } = { count: 3, unit: 'minute', format: 'm:ss' }
-    private list: OptionItem[] = [
+    private list: DropdownBoxList = [
         { displayName: 'KT', value: 'kt', selected: true },
         { displayName: 'SKT', value: 'skt' },
         { displayName: 'LG U+', value: 'lguplus' },
@@ -42,7 +41,7 @@ export default class ExamplePage extends Vue {
     @FinanceModule.Action('getData')
     readonly getData!: Function
 
-    onSelect(option: OptionItem) {
+    onSelect(option: BottomSheetOptionItem) {
         this.value = option.value
 
         this.list = this.list.map(item => {

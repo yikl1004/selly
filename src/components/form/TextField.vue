@@ -20,6 +20,7 @@
             <input
                 :id="id"
                 ref="input"
+                :name="_.camelCase(id)"
                 :value="displayValue"
                 autocomplete="new-password"
                 :pattern="pattern"
@@ -49,7 +50,6 @@
 <script lang="ts">
 import { Component, Prop, Watch, Mixins } from 'vue-property-decorator'
 import Validates from '@utils/mixins/Validates'
-import { OptionItem } from '../common/BottomSheet.vue'
 
 export interface OnChangeParameters {
     value: string
@@ -62,9 +62,9 @@ interface Validate {
 }
 
 /**
- * TODO:
- * 2. label에 표시될 tooltip이 아직 공통 컴포넌트가 없음, 해야함
- * 3. 단위 표시할 텍스트 노출방식에 대한 논의가 필요함
+ * TODO:<br />
+ * 2. label에 표시될 tooltip이 아직 공통 컴포넌트가 없음, 해야함<br />
+ * 3. 단위 표시할 텍스트 노출방식에 대한 논의가 필요함<br />
  */
 
 @Component
@@ -85,7 +85,7 @@ export default class TextField extends Mixins(Validates) {
     readonly type!: 'text' | 'number' | 'seperateNumber' | 'select'
 
     /** form에 사용될 id */
-    @Prop({ type: String })
+    @Prop({ type: String, required: true })
     readonly id!: string
 
     /** label태그에 들어갈 텍스트 */
@@ -95,10 +95,6 @@ export default class TextField extends Mixins(Validates) {
     /** label을 비노출여부 */
     @Prop(Boolean)
     readonly hiddenLabel!: boolean
-
-    /** name 속성 지정 */
-    @Prop({ type: String, default: '', required: true })
-    readonly name!: string
 
     /** 최대 자릿수 지정 */
     @Prop({ type: Number, default: 9999 })
@@ -133,8 +129,8 @@ export default class TextField extends Mixins(Validates) {
     readonly defaultValue!: string
 
     /** select 타입일 경우 option list를 주입해함!! */
-    @Prop({ type: Array, default: [] })
-    readonly list!: OptionItem[]
+    @Prop({ type: Array, default: () => [] })
+    readonly list!: DropdownBoxList
 
     /**
      * @category DATA(State)
@@ -150,7 +146,7 @@ export default class TextField extends Mixins(Validates) {
     private bottomSheetVisible: boolean = false
 
     /** 선택영역에서 선택한 값 */
-    private selectedValue: OptionItem = this.list[0]
+    private selectedValue: BottomSheetOptionItem = this.list[0]
 
     /**
      * @category COMPUTED
@@ -210,7 +206,10 @@ export default class TextField extends Mixins(Validates) {
         /**
          * value가 변경 될때 마다 호출되는 callback(value: string, index: number, maxLength: number)
          */
-        this.$emit('change', newValue)
+        this.$emit('change', {
+            value: newValue,
+            fieldName: this._.camelCase(this.id),
+        })
     }
 
     /**
@@ -261,7 +260,7 @@ export default class TextField extends Mixins(Validates) {
     }
 
     onSelectOption(value: string) {
-        this.selectedValue = this.list.find(option => option.value === value) as OptionItem
+        this.selectedValue = this.list.find(option => option.value === value) as BottomSheetOptionItem
         const changedList = this.list.map(option => {
             option.selected = option.value === value
             return option

@@ -32,7 +32,7 @@ export default class SwitchButton extends Vue {
     readonly id!: string
 
     /** value 지정 */
-    @PropSync('value', { type: Boolean, required: true })
+    @PropSync('value', { type: Boolean, required: false })
     private switchValue!: boolean
 
     /** 디자인 type */
