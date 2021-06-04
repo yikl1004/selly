@@ -1,6 +1,6 @@
 <template>
     <div :class="['switch', type]">
-        <input :id="id" v-model="switchValue" type="checkbox" :name="id" :disabled="disabled" />
+        <input :id="id" v-model="value" type="checkbox" :name="id" :disabled="disabled" />
         <label :for="id">
             <span class="ir">{{ label }}</span>
             <span class="status" :hidden="isLarge" />
@@ -32,8 +32,8 @@ export default class SwitchButton extends Vue {
     readonly id!: string
 
     /** value 지정 */
-    @PropSync('value', { type: Boolean, required: false })
-    private switchValue!: boolean
+    @Prop(Boolean)
+    readonly defaultValue!: boolean
 
     /** 디자인 type */
     @Prop({ type: String, default: 'large' })
@@ -42,6 +42,13 @@ export default class SwitchButton extends Vue {
     /** 활성화 여부 */
     @Prop({ type: Boolean, default: false })
     readonly disabled!: boolean
+
+    /**
+     * @category Data
+     */
+
+    /** on/off value */
+    private value: boolean = this.defaultValue || false
 
     /**
      * @category Computed

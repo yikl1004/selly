@@ -1,17 +1,24 @@
 import Vue, { PluginObject } from 'vue'
+import dayjs from 'dayjs'
+import duration from 'dayjs/plugin/duration'
 
-interface PluginOptions {}
+/**
+ * @description 플러그인 타입 추가
+ */
+declare module 'vue/types/vue' {
+    interface Vue {
+        $dayjs: typeof dayjs
+    }
+}
 
-// declare module 'vue/types/vue' {
-//     // 3. Vue에 보강할 내용을 선언하세요.
-//     interface Vue {
-//         dayjs: dayjs
-//     }
-// }
+interface DayjsPluginOptions {}
 
-// const dayjsPlugin: PluginObject<PluginOptions> = {
-//     install(Vue, options) {
-//         dayjs.extend(duration)
-//         Vue.prototype.dayjs = dayjs
-//     },
-// }
+const Dyajs: PluginObject<DayjsPluginOptions> = {
+    install(VueApp, options) {
+        // TODO: 추가 하고 싶은 기능을 개별적으로 import 해서 extend메서드로 확장해서 사용해야 합니다.
+        dayjs.extend(duration)
+        VueApp.prototype.$dayjs = dayjs
+    },
+}
+
+export default Dyajs

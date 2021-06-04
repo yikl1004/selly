@@ -56,8 +56,8 @@ export default class CalendarField extends Vue {
     readonly hiddenLabel!: boolean
 
     /** 기본 값 */
-    @Prop(String)
-    readonly defaultValue!: string
+    @Prop(Date)
+    readonly defaultValue!: Date
 
     /** 읽기전용 */
     @Prop({ type: Boolean, default: false })
@@ -71,7 +71,7 @@ export default class CalendarField extends Vue {
     private focusedClass: boolean = false
 
     /** 실제 값 */
-    private value: Date = new Date()
+    private value: Date = this.defaultValue || new Date()
 
     /** 선택된 값 */
     private selected: any = {}

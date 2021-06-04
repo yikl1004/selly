@@ -31,7 +31,7 @@
                     class="back security"
                     :value="secretValue"
                     :pattern="/\d*/"
-                    :maxlength="digit"
+                    :maxlength="digit.blank"
                     type="tel"
                     :readonly="readonly"
                     @input="onInputSecret"

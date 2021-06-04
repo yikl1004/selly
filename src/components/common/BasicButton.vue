@@ -48,7 +48,7 @@ export default class BasicButton extends Vue {
         /**
          * click 이벤트
          */
-        this.$emit('onClick', event)
+        this.$emit('click', event)
     }
 }
 </script>

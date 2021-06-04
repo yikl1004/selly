@@ -1,75 +1,44 @@
 <template>
-    <div class="container">
-        <h1>메인</h1>
-        <FormProvider :schema="data" @change="formChange" @submit="onSubmit">
-            <template slot-scope="{ schema }">
-                {{ schema }}
-                <DropdownBox id="dropdown-box" label="select 타입" :list="dropdownBoxList" :default-value="schema.dropdownBox" />
-                <ButtonField id="button-field" label="버튼형 텍스트" button-text="버튼" :default-value="schema.buttonField" />
-                <CalendarField id="calendarField" label="달력" :default-value="schema.calendarField" />
-                <CheckBox id="check-single" label="체크박스 단독" :default-value="schema.checkSingle" />
-                <SecretNumber id="secret-number" label="비밀번호 형식" type="regist" :default-value="schema.secretNumber" />
-                <SingleSelection id="single-selection" :list="singleSelectionList" :default-value="schema.singleSelection" />
-                <SwitchButton id="switch-button" label="스위치 버튼" :default-value="schema.switchButton" />
-                <TextField id="textfield-primary" label="입력" :default-value="schema.textfieldPrimary" />
-                <BasicButton submit>
-                    전송
-                </BasicButton>
-            </template>
-        </FormProvider>
+    <div>
+        <BasicButton @click="login">
+            로그인 하기
+        </BasicButton>
     </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue, Watch } from 'vue-property-decorator'
-import FormProvider from '@components/form/FormProvider.vue'
+import { namespace } from 'vuex-class'
 
-interface Data {
-    buttonField: string
-    calendarField: string
-    checkSingle: boolean
-    secretNumber: string
-    singleSelection: string
-    switchButton: boolean
-    textFieldPrimary: string
-}
+const AuthModule = namespace('auth')
 
-@Component({
-    components: { FormProvider },
-})
-export default class Main extends Vue {
-    private singleSelectionList: SingleSelectionListItem[] = [
-        { displayName: '첫번째', value: 'first' },
-        { displayName: '두번째', value: 'second' },
-        { displayName: '세번째', value: 'third' },
-        { displayName: '네번째', value: 'fourth' },
-    ]
-    private dropdownBoxList: DropdownBoxList = [
-        { displayName: 'KT', value: 'kt' },
-        { displayName: 'SKT', value: 'skt' },
-        { displayName: 'LG U+', value: 'lguplus' },
-        { displayName: 'KT알뜰폰', value: 'kt_sub' },
-        { displayName: 'SKT알뜰폰', value: 'skt_sub' },
-        { displayName: 'LGU+알뜰폰', value: 'lguplus_sub' },
-    ]
+@Component
+export default class LoginPage extends Vue {
+    @AuthModule.Action('getLoginInfo')
+    readonly getLoginInfo!: Function
 
-    private data: { [key: string]: object | number | string | boolean } = {
-        dropdownBox: 'kt',
-        buttonField: '확인',
-        calendarField: '2021.04.21',
-        checkSingle: true,
-        secretNumber: '1234561',
-        singleSelection: 'third',
-        switchButton: true,
-        textfieldPrimary: '테스트',
+    @AuthModule.Action('loginCheck')
+    readonly loginCheck!: Function
+
+    @AuthModule.State('isLogin')
+    readonly isLogin!: boolean
+
+    @Watch('isLogin', { deep: true })
+    changeIsLogin(newValue: boolean, oldValue: boolean) {
+        console.log({ isLogin: newValue })
+        newValue && this.$router.push({ name: 'Main' })
     }
 
-    formChange(data: any) {
-        this.data = data
+    /**
+     * @cateogry Methods
+     */
+
+    async login() {
+        await this.getLoginInfo()
     }
 
-    onSubmit() {
-        console.log(11111)
+    mounted() {
+        this.loginCheck()
     }
 }
 </script>

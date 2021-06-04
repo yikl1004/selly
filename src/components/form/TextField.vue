@@ -22,12 +22,11 @@
                 ref="input"
                 :name="_.camelCase(id)"
                 :value="displayValue"
-                autocomplete="new-password"
-                :pattern="pattern"
                 :maxlength="maxlength"
                 :placeholder="placeholder"
                 :type="inputType"
                 :readonly="readonly"
+                v-bind="restProps"
                 @input="onInput"
                 @keydown="onKeydown"
                 @focus="onFocus"
@@ -195,6 +194,17 @@ export default class TextField extends Mixins(Validates) {
         if (conditions.every(condition => condition)) {
             return this.validate(this.value) ? this.successMessage : this.errorMessage
         }
+    }
+
+    /** 기타 props */
+    get restProps() {
+        const props: { [key: string]: string | RegExp | number } = {}
+
+        if (this.pattern) {
+            props.pattern = this.pattern
+        }
+
+        return props
     }
 
     /**

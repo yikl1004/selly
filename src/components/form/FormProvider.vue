@@ -13,7 +13,7 @@ export const FormUpdateEvent = 'form:update'
 type Schema = { [key: string]: object | boolean | number | string }
 
 @Component
-export default class extends Vue {
+export default class FormProvider extends Vue {
     @Prop({ type: Object, required: true })
     readonly schema!: Schema
 
@@ -25,7 +25,6 @@ export default class extends Vue {
 
     init() {
         FormBus.$on(FormUpdateEvent, (value: any) => {
-            console.log(value)
             this.data[value.fieldName] = value.value
             this.$emit('change', this.data)
         })

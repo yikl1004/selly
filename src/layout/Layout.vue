@@ -1,14 +1,16 @@
 <template>
     <div class="site-wrapper">
-        <component :is="layout">
+        <router-view v-slot="{ Component }">
             <transition
                 mode="out-in"
                 enter-active-class="animate__animated animate__fadeInRight"
                 leave-active-class="animate__animated animate__fadeOutLeft"
             >
-                <router-view />
+                <default>
+                    <component :is="Component" />
+                </default>
             </transition>
-        </component>
+        </router-view>
         <PortalTarget name="bottomSheet" multiple />
     </div>
 </template>

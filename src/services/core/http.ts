@@ -6,6 +6,13 @@ import { ResponseAdapterType } from './decorators'
 export type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE'
 export type SellyServiceResponse<T> = Promise<T | null>
 
+/**
+ * @description
+ * API 응답 결과 중 "rc, responseCode" 에 대한 설명
+ * 0000: success
+ * 9999: falil
+ */
+
 const getTransformResponse = (): AxiosTransformer => {
     return (data: any) => {
         try {
@@ -24,6 +31,7 @@ export const instance = axios.create({
     headers: {},
     adapter: throttleAdapterEnhancer(cacheAdapterEnhancer(axios.defaults.adapter as AxiosAdapter)),
     transformResponse: getTransformResponse(),
+    withCredentials: true,
 })
 
 export class HttpService {

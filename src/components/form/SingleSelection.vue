@@ -36,12 +36,16 @@ export default class SingleSelection extends Vue {
     @Prop({ type: String, default: 'radio' })
     readonly type!: SingleSelectionDesignType
 
+    /** 초기값 */
+    @Prop(String)
+    readonly defaultValue!: string
+
     /**
      * @category Data(State)
      */
 
     /** 체크한 리스트 */
-    private value: string = this.list[0].value
+    private value: string = this.defaultValue || this.list[0].value
 
     /**
      * @category Computed
