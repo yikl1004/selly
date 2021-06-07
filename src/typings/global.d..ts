@@ -1,4 +1,10 @@
 declare global {
+    interface TransitionProps {
+        mode: 'out-in'
+        'enter-active-class': string
+        'leave-active-class': string
+    }
+
     type CSSObject = { [key: string]: string }
 
     /** password 타입의 input이 들어가는 컴포넌트의 타입 */
@@ -12,6 +18,8 @@ declare global {
     namespace NodeJS {
         interface ProcessEnv {
             VUE_APP_API_DOMAIN: string
+            VUE_APP_KAKAO_API_KEY: string
+            VUE_APP_SKIP_LOGIN: string
         }
     }
 

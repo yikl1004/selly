@@ -21,6 +21,9 @@ const registerPlugins = (): void => {
     // Use v-calendar & v-date-picker components
     Vue.use(VCalendar, {
         componentPrefix: 'vc', // Use <vc-calendar /> instead of <v-calendar />
+        masks: {
+            title: 'YYYY년 M',
+        },
     })
     // Vue.component('calendar', Calendar)
     Vue.component('date-picker', DatePicker)

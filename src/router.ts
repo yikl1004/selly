@@ -69,6 +69,11 @@ const router = new VueRouter({
  * navigatoin guard
  */
 router.beforeEach(async (to, from, next) => {
+    if (process.env.VUE_APP_SKIP_LOGIN === 'true') {
+        next()
+        return
+    }
+
     await store.dispatch('auth/loginCheck')
 
     const isLogin = store.state.auth.isLogin

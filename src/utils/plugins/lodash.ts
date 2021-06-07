@@ -1,4 +1,3 @@
-import Vue from 'vue'
 import VueLodash from 'vue-lodash'
 
 // lodash methods...

@@ -63,7 +63,7 @@ export default class extends Vue {
         window.Kakao.cleanup()
 
         if (!window.Kakao.isInitialized()) {
-            window.Kakao.init('da8413275bec093dd2f07488d9a4012e')
+            window.Kakao.init(process.env.VUE_APP_KAKAO_API_KEY)
         }
 
         /**
