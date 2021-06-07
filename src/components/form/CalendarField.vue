@@ -1,27 +1,32 @@
 <template>
     <div class="calendar-field">
         <label :for="id" :class="{ ir: hiddenLabel }">{{ label }}</label>
-        <date-picker v-model="selected.date" @dayclick="onDayClick">
-            <template #default="{ togglePopover, hidePopover }">
-                <div class="input-area" :class="{ focus: focusedClass }">
-                    <input
-                        ref="input"
-                        type="text"
-                        readonly
-                        :value="displayValue"
-                        :class="{ readonly }"
-                        @keydown="onKeydown"
-                        @focus="dateSelected($event, value, togglePopover)"
-                        @blur="onBlur"
-                    />
-                    <i class="icon-calendar" @click.stop="togglePopover({ ref: $refs.input })" />
-                    <button v-if="!!displayValue" type="button" class="clear" @click="removeDate(value, hidePopover)">
-                        <i />
-                        <span class="ir">전체삭제</span>
-                    </button>
-                </div>
-            </template>
-        </date-picker>
+        <div class="input-area" :class="{ focus: focusedClass }">
+            <input
+                ref="input"
+                type="text"
+                :value="displayValue"
+                :class="{ readonly }"
+                @keydown="onKeydown"
+                @blur="onBlur"
+                @focus="onFocus"
+            />
+            <i class="icon-calendar" />
+            <button v-if="!!displayValue" type="button" class="clear" @click="() => {}">
+                <i />
+                <span class="ir">전체삭제</span>
+            </button>
+        </div>
+        <div v-if="datepickerVisible" v-click-outside="hideDatepicker" class="dimm" />
+        <transition
+            mode="out-in"
+            enter-active-class="animate__animated animate__bounceInUp"
+            leave-active-class="animate__animated animate__bounceOutDown"
+        >
+            <div v-if="datepickerVisible" v-click-outside="hideDatepicker" class="datepicker-wrapper">
+                <date-picker v-model="selected.date" @dayclick="onDayClick"></date-picker>
+            </div>
+        </transition>
     </div>
 </template>
 
@@ -76,6 +81,8 @@ export default class CalendarField extends Vue {
     /** 선택된 값 */
     private selected: any = {}
 
+    private datepickerVisible: boolean = false
+
     /**
      * @category Computed
      */
@@ -105,16 +112,6 @@ export default class CalendarField extends Vue {
         event.preventDefault()
     }
 
-    removeDate(date: Date, hide: Function) {
-        this.value = new Date()
-        // hide()
-    }
-
-    dateSelected(event: FocusEvent, date: Date, toggle: Function) {
-        this.onFocus(event)
-        toggle({ ref: this.$refs.input })
-    }
-
     onDayClick(day: { date: Date }) {
         this.value = day.date
     }
@@ -130,11 +127,20 @@ export default class CalendarField extends Vue {
          */
         this.$emit('focus', event)
 
+        this.datepickerVisible = true
         this.focusedClass = true
     }
 
     onBlur(event: FocusEvent) {
         this.focusedClass = false
+    }
+
+    hideDatepicker() {
+        this.datepickerVisible = false
+    }
+
+    showDatepicker() {
+        this.datepickerVisible = true
     }
 }
 </script>

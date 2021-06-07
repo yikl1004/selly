@@ -1,7 +1,7 @@
 <template>
     <div>
         <h1>테스트</h1>
-        <DropdownBox id="phoneNumber" label="휴대폰번호" name="phone" :list.sync="list" />
+        <!-- <DropdownBox id="phoneNumber" label="휴대폰번호" name="phone" :list.sync="list" />
         <TextField type="select" label="아무거나" :list.sync="list" name="anything" />
         <button type="button" @click="callApi">
             api 테스트
@@ -11,7 +11,8 @@
         </div>
         <div v-show="opened">
             Popup item
-        </div>
+        </div> -->
+        <router-view />
     </div>
 </template>
 

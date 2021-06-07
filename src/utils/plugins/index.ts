@@ -3,6 +3,7 @@ import PortalVue from 'portal-vue'
 import ImageUploader from 'vue-image-upload-resize'
 import Lodash, { options as LodashOptions } from '@utils/plugins/lodash'
 import Dayjs from '@utils/plugins/dayjs'
+import ClickOutside from 'vue-click-outside'
 
 // TODO: 삭제 해야됨
 import chalk from 'chalk'
@@ -23,6 +24,7 @@ const registerPlugins = (): void => {
     })
     // Vue.component('calendar', Calendar)
     Vue.component('date-picker', DatePicker)
+    Vue.directive('click-outside', ClickOutside)
 
     chalk(
         {

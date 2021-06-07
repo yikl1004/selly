@@ -7,13 +7,32 @@ import LoginPage from '@pages/index.vue'
 import NeedLoginPage from '@pages/NeedLogin/index.vue'
 import MainPage from '@pages/main/index.vue'
 
+// examples
+import ExampleMain from '@pages/example/index.vue'
+import ExampleForm from '@pages/example/form/index.vue'
+
 Vue.use(VueRouter)
 
 type Meta = {
     layout?: 'default' | 'none' | string
 }
 
-const routes: Array<RouteConfig & { meta: Meta }> = [
+const routes: Array<RouteConfig & { meta?: Meta }> = [
+    // 여기는 예제 작성
+    {
+        path: '/example',
+        name: 'Example',
+        component: ExampleMain,
+        children: [
+            {
+                path: 'form',
+                name: 'ExampleForm',
+                component: ExampleForm,
+            },
+        ],
+    },
+
+    // 여기부터 페이지 작성
     {
         path: '/',
         name: 'Login',
@@ -46,6 +65,9 @@ const router = new VueRouter({
     routes,
 })
 
+/**
+ * navigatoin guard
+ */
 router.beforeEach(async (to, from, next) => {
     await store.dispatch('auth/loginCheck')
 

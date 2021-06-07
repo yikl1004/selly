@@ -14,6 +14,7 @@ import CheckBox from '@components/form/CheckBox.vue'
 import CheckBoxGroup from '@components/form/CheckBoxGroup.vue'
 import SwitchButton from '@components/form/SwitchButton.vue'
 import DropdownBox from '@components/form/DropdownBox.vue'
+import FormProvider from '@components/form/FormProvider.vue'
 
 // common
 import Link from '@components/common/Link.vue'
@@ -42,6 +43,7 @@ const componentList: { [key: string]: VueConstructor }[] = [
     { CheckBoxGroup },
     { SwitchButton },
     // { CreditCardField },
+    { FormProvider },
 ]
 
 export const registerCommonComponent = (): void => {
