@@ -1,5 +1,9 @@
 <template>
-    <Layout />
+    <div class="site-wrapper">
+        <Layout />
+        <PortalTarget name="bottomSheet" multiple />
+        <PortalTarget name="modal" />
+    </div>
 </template>
 
 <script lang="ts">

@@ -68,7 +68,7 @@ export default class CheckBoxGroup extends Vue {
     readonly list!: CheckListItem[]
 
     @Prop({ type: String, default: 'normal' })
-    readonly listType!: 'normal' | 'circle'
+    readonly listType!: 'normal' | 'square'
 
     /**
      * @category Data(State)
@@ -120,6 +120,7 @@ export default class CheckBoxGroup extends Vue {
             checked: !!item.checked,
             label: item.label,
             index,
+            disabled: this.disabled || this.list[index].disabled,
         }
     }
 
@@ -152,6 +153,7 @@ export default class CheckBoxGroup extends Vue {
 
     mounted() {
         console.log('<CheckBoxGroup />', this.list)
+        this.allCheck = this.list.every(item => item.checked)
     }
 }
 </script>

@@ -9,10 +9,10 @@ $circle-icon-uncheck-disable: '/assets/icon/icon-uncheck-circle-small-disable.sv
 $circle-icon-checked-disable: '/assets/icon/icon-checked-circle-small-disable.svg';
 
 @mixin input-style($type) {
-    $icon-uncheck: if($type == circle, $circle-icon-uncheck, $normal-icon-uncheck);
-    $icon-checked: if($type == circle, $circle-icon-checked, $normal-icon-checked);;
-    $icon-uncheck-disable: if($type == circle, $circle-icon-uncheck-disable, $normal-icon-uncheck-disable);
-    $icon-checked-disable: if($type == circle, $circle-icon-checked-disable, $circle-icon-checked-disable);
+    $icon-uncheck: if($type == sqaure, $circle-icon-uncheck, $normal-icon-uncheck);
+    $icon-checked: if($type == sqaure, $circle-icon-checked, $normal-icon-checked);;
+    $icon-uncheck-disable: if($type == sqaure, $circle-icon-uncheck-disable, $normal-icon-uncheck-disable);
+    $icon-checked-disable: if($type == sqaure, $circle-icon-checked-disable, $circle-icon-checked-disable);
 
     label {
         padding-left: if($type == circle, 32px, 26px);
@@ -61,8 +61,72 @@ $circle-icon-checked-disable: '/assets/icon/icon-checked-circle-small-disable.sv
         @include input-style(normal)
     }
 
-    &.circle {
-        @include input-style(circle)
+    &.square {
+        // @include input-style(square)
+
+        // square 타입에 대한 변수
+        $font-size: 14px;
+        $size: 24px;
+        $radius: 5px;
+        $active-color: #3674bc;
+        $check-icon: url("/assets/icon/icon-only-check.svg");
+        $border-normal: #ebebeb;
+        $border-active: $active-color;
+        $disabled-uncheck-bg: #fafafa;
+        $disabled-check-bg: #ebebeb;
+
+        label {
+            // padding-left: 32px;
+            // background-image: url($icon-uncheck);
+            font-size: $font-size;
+            min-height: 22px;
+            display: flex;
+            align-items: center;
+
+            &:before {
+                content: '';
+                display: inline-block;
+                width: $size;
+                height: $size;
+                background-color: #fff;
+                border: 1px solid #ebebeb;
+                border-radius: $radius;
+                box-sizing: border-box;
+                margin-right: 8px;
+                background-repeat: no-repeat;
+                background-position: center center;
+                background-size: $size $size;
+            }
+        }
+    
+        input[type="checkbox"] {
+            &:checked {
+                & + label {
+                    &:before {
+                        background-color: $active-color;
+                        border: 1px solid $active-color;
+                        background-image: $check-icon
+                    }
+                }
+            }
+    
+            &:disabled {
+                & + label {
+                    color: #bbb;
+
+                    &:before {
+                        background-color: $disabled-uncheck-bg;
+                        // border: 1px solid #ebebeb;
+                    }
+                }
+                &:checked + label {
+                    &:before {
+                        background-color: $disabled-check-bg;
+                        border: 1px solid $disabled-check-bg;
+                    }
+                }
+            }
+        }
     }
 
 }

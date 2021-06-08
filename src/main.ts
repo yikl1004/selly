@@ -10,6 +10,8 @@ import '@styles/index.scss'
 
 Vue.config.productionTip = false
 
+console.log(process.env)
+
 /**
  * @title 공통컴포넌트 등록, 전역 플러그인 등록
  */

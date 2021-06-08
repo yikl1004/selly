@@ -1,5 +1,5 @@
 <template>
-    <div class="site-wrapper">
+    <div class="layout">
         <router-view v-slot="{ Component }">
             <transition
                 mode="out-in"
@@ -11,7 +11,6 @@
                 </default>
             </transition>
         </router-view>
-        <PortalTarget name="bottomSheet" multiple />
     </div>
 </template>
 

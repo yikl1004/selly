@@ -72,23 +72,23 @@ router.beforeEach(async (to, from, next) => {
     if (process.env.VUE_APP_SKIP_LOGIN === 'true') {
         next()
         return
-    }
-
-    await store.dispatch('auth/loginCheck')
-
-    const isLogin = store.state.auth.isLogin
-    const exceptionPages = ['Login', 'NeedLogin']
-    console.log({ to, from })
-    if (isLogin) {
-        if (exceptionPages.some(page => page === to.name)) {
-            next({ name: isNull(from.name) ? 'Main' : (from.name as string) })
-        } else {
-            next()
-        }
-    } else if (exceptionPages.some(page => page === to.name)) {
-        next()
     } else {
-        next({ name: 'NeedLogin' })
+        await store.dispatch('auth/loginCheck')
+
+        const isLogin = store.state.auth.isLogin
+        const exceptionPages = ['Login', 'NeedLogin']
+        console.log({ to, from })
+        if (isLogin) {
+            if (exceptionPages.some(page => page === to.name)) {
+                next({ name: isNull(from.name) ? 'Main' : (from.name as string) })
+            } else {
+                next()
+            }
+        } else if (exceptionPages.some(page => page === to.name)) {
+            next()
+        } else {
+            next({ name: 'NeedLogin' })
+        }
     }
 })
 

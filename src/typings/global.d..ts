@@ -89,7 +89,7 @@ declare global {
      * @type { CheckBoxDesignType }
      * @description 디자인타입을 결정합니다.
      */
-    type CheckBoxDesignType = 'normal' | 'circle'
+    type CheckBoxDesignType = 'normal' | 'square'
 
     /**
      * @path { @component/form/SingleSelection.vue }

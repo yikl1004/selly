@@ -3,8 +3,8 @@
     "version": "0.1.0",
     "private": false,
     "scripts": {
-        "local": "vue-cli-service serve --mode local",
         "dev": "vue-cli-service serve --mode development",
+        "prd": "vue-cli-service serve --mode production",
         "serve:client": "vue-cli-service serve",
         "serve:server": "ts-node --project ./tsconfig.base.json ./server/index.ts",
         "story": "start-storybook -p 6006 -c .storybook watch-css -s ./src",

@@ -27,36 +27,48 @@
             &:before {
                 content: '';
                 display: block;
-                width: 30px;
-                height: 30px;
+                width: 24px;
+                height: 24px;
                 position: absolute;
                 left: 0;
                 top: 50%;
                 transform: translate(0, -50%);
-                background-image: url("/assets/icon/icon-uncheck-circle.svg");
-                background-position: left center;
-                background-repeat: no-repeat;
-                background-size: 30px 30px;
+                box-sizing: border-box;
+                border: 1px solid #ebebeb;
+                border-radius: 5px;
+                background-color: #fff;
+                // background-image: url("/assets/icon/icon-uncheck-circle.svg");
+                // background-position: left center;
+                // background-repeat: no-repeat;
+                // background-size: 30px 30px;
             }
         }
 
         input[type="checkbox"]:checked {
             & + label.display-name {
                 &:before {
-                    background-image: url("/assets/icon/icon-checked-circle.svg");
+                    // background-image: url("/assets/icon/icon-checked-circle.svg");
+                    border-color: #3674bc;
+                    background-color: #3674bc;
+                    background-image: url("/assets/icon/icon-only-check.svg")
                 }
             }
         }
 
         input[type="checkbox"]:disabled {
             & + label.display-name {
+                color: #999;
+
                 &:before {
-                    background-image: url("/assets/icon/icon-uncheck-circle-disable.svg");
+                    border-color: #ebebeb;
+                    background-color: #fafafa;
                 }
             }
+            
             &:checked + label.display-name {
                 &:before {
-                    background-image: url("/assets/icon/icon-checked-circle-disable.svg");
+                    background-color: #ebebeb;
+                    background-image: url("/assets/icon/icon-only-check.svg")
                 }
             }
         }

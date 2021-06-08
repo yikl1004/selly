@@ -35,7 +35,7 @@ export default class extends Vue {
     @Watch('isLogin', { deep: true })
     changeIsLogin(newValue: boolean, oldValue: boolean) {
         console.log({ isLogin: newValue })
-        newValue && this.$router.push({ name: 'Main' })
+        // newValue && this.$router.push({ name: 'Main' })
     }
 
     /**

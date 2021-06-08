@@ -1,6 +1,7 @@
 @import "./font.scss";
 @import "./reset.scss";
 
+// common
 .ir {
     width: 1px;
     height: 1px;
@@ -18,4 +19,18 @@
 
 .flex {
     display: flex;
+}
+
+// v-calendar
+.vc-container {
+    .vc-nav-container {
+        .vc-nav-header {
+            .vc-nav-title {
+                // 년도 표시할 때 suffix나 format을 잡아줄 방법이 없음. 그래서 추가함
+                &:after {
+                    content: '년';
+                }
+            }
+        }
+    }
 }
