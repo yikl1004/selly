@@ -2,7 +2,15 @@
     <div :class="['single-selection', type]">
         <ul :class="['list', align]">
             <li v-for="(item, index) in list" :key="`single-selection-item-${index}`" class="list-item">
-                <input :id="getItemId(id, index)" v-model="value" type="radio" :name="id" :value="item.value" />
+                <input
+                    :id="getItemId(id, index)"
+                    v-model="value"
+                    type="radio"
+                    :name="id"
+                    :value="item.value"
+                    :disabled="item.disabled"
+                    :checked="item.checked"
+                />
                 <label :for="getItemId(id, index)">{{ item.displayName }}</label>
             </li>
         </ul>

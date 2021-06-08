@@ -106,7 +106,8 @@ declare global {
     interface SingleSelectionListItem {
         displayName: string
         value: string
-        selected?: boolean
+        checked?: boolean
+        disabled?: boolean
     }
 
     /**

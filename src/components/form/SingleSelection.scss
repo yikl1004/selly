@@ -63,6 +63,13 @@
         }
     }
 
+    $white: #fff;
+    $active-color: #6890c0;
+    $deactive-color: #bbb;
+    $disabled-border-color: #ebebeb;
+    $disabled-bg: #fafafa;
+    $bullet-size: 22px;
+
     &.radio {
         ul.list {
             display: flex;
@@ -84,31 +91,39 @@
                         left: 0;
                         top: 50%;
                         transform: translate(0, -50%);
-                        width: 22px;
-                        height: 22px;
-                        border-radius: 11px;
-                        border-width: 1px;
-                        border-style: solid;
-                        border-color: #bbb;
+                        width: $bullet-size;
+                        height: $bullet-size;
+                        border-radius: $bullet-size / 2;
+                        box-sizing: border-box;
+                        background-color: $white;
+                        box-shadow: 0px 0px 0 1px $deactive-color;
                     }
                 }
 
                 input:checked {
                     & + label {
                         &:before {
-                            border-color: #6890c0;
+                            box-shadow: 0px 0px 0 1px $active-color;
+                            background-color: $active-color;
+                            border: 4px solid #fff;
                         }
-                        &:after {
-                            content: '';
-                            display: block;
-                            width: 12px;
-                            height: 12px;
-                            border-radius: 6px;
-                            background-color: #5789c5;
-                            position: absolute;
-                            left: 5px;
-                            top: 50%;
-                            transform: translate(0, -50%);
+                    }
+                }
+
+                input:disabled {
+                    &:checked {
+                        & + label {
+                            &:before {
+                                background-color: $disabled-bg;
+                                border: 4px solid $disabled-bg;
+                            }
+                        }
+                    }
+                    & + label {
+                        &:before {
+                            box-shadow: 0px 0px 0 1px $disabled-border-color;
+                            background-color: $disabled-bg;
+                            border: 4px solid $disabled-bg;
                         }
                     }
                 }
