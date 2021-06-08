@@ -9,9 +9,7 @@
                 <span class="ir">전체삭제</span>
             </button>
         </div>
-        <transition v-bind="transitionProps.dimm">
-            <div v-if="datepickerVisible" class="dimm" />
-        </transition>
+        <Dimmed :show="datepickerVisible" />
         <transition v-bind="transitionProps.datepicker">
             <div v-if="datepickerVisible" class="datepicker-wrapper">
                 <date-picker
@@ -82,11 +80,6 @@ export default class CalendarField extends Vue {
             mode: 'out-in',
             'enter-active-class': 'animate__animated animate__bounceInUp',
             'leave-active-class': 'animate__animated animate__bounceOutDown',
-        },
-        dimm: {
-            mode: 'out-in',
-            'enter-active-class': 'animate__animated animate__fadeIn',
-            'leave-active-class': 'animate__animated animate__fadeOut',
         },
     }
 

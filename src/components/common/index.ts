@@ -23,6 +23,7 @@ import BottomSheet from '@components/common/BottomSheet.vue'
 import Timer from '@components/common/Timer.vue'
 import LoginButton from '@components/common/LoginButton.vue'
 import Tab from '@components/common/Tab.vue'
+import Dimmed from '@components/common/Dimmed.vue'
 
 const componentList: { [key: string]: VueConstructor }[] = [
     { Link },
@@ -44,6 +45,7 @@ const componentList: { [key: string]: VueConstructor }[] = [
     { SwitchButton },
     // { CreditCardField },
     { FormProvider },
+    { Dimmed },
 ]
 
 export const registerCommonComponent = (): void => {
