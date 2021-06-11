@@ -24,6 +24,7 @@ import Timer from '@components/common/Timer.vue'
 import LoginButton from '@components/common/LoginButton.vue'
 import Tab from '@components/common/Tab.vue'
 import Dimmed from '@components/common/Dimmed.vue'
+import Modal from '@components/common/Modal.vue'
 
 const componentList: { [key: string]: VueConstructor }[] = [
     { Link },
@@ -46,6 +47,7 @@ const componentList: { [key: string]: VueConstructor }[] = [
     // { CreditCardField },
     { FormProvider },
     { Dimmed },
+    { Modal },
 ]
 
 export const registerCommonComponent = (): void => {

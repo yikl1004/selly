@@ -5,7 +5,7 @@
         enter-active-class="animate__animated animate__fadeIn"
         leave-active-class="animate__animated animate__fadeOut"
     >
-        <div v-show="show" class="dimm" @click="onClose" />
+        <div v-if="show" class="dimm" @click="onClose" />
     </transition>
 </template>
 
@@ -13,7 +13,7 @@
 import { Component, Prop, Vue } from 'vue-property-decorator'
 
 @Component
-export default class extends Vue {
+export default class Dimmed extends Vue {
     /**
      * @category Props
      */

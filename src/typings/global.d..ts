@@ -26,9 +26,12 @@ declare global {
     interface KakaoLoginApi {
         success(authObj: any): void
         fail(err: any): void
+        scope: string
     }
 
     interface KakaoAPIRequestParams {
+        scopes?: string
+        scope?: string
         url?: string
         success?(res: any): void
         fail?(error: any): void
@@ -39,6 +42,7 @@ declare global {
         state?: string
         scope?: string
         throughTalk?: boolean
+        serviceTerms?: string
     }
     interface KakaoCert {
         cleanup(): void
@@ -66,6 +70,13 @@ declare global {
     interface Window {
         Kakao: KakaoCert
     }
+
+    /**
+     * @path { @component/common/Modal.vue }
+     * @type { ModalDesignType }
+     * @description Modal 컴포넌트의 디자인타입을 결정하는 Props
+     */
+    type ModalDesignType = 'dialog' | 'popup'
 
     /**
      * @path { @component/form/SwitchButton.vue }

@@ -8,6 +8,7 @@ import uniq from 'lodash/uniq'
 import isUndefined from 'lodash/isUndefined'
 import camelCase from 'lodash/camelCase'
 import kebabCase from 'lodash/kebabCase'
+import pickBy from 'lodash/pickBy'
 
 export const options = {
     lodash: {
@@ -18,6 +19,7 @@ export const options = {
         isUndefined,
         camelCase,
         kebabCase,
+        pickBy,
     },
 }
 export default VueLodash

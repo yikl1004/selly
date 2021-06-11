@@ -15,6 +15,12 @@ export default {
                 type: 'select',
             },
         },
+        type: {
+            options: ['basic', 'line', 'with'],
+            control: {
+                type: 'select',
+            },
+        },
     },
     parameters: {
         docs: {

@@ -1,7 +1,49 @@
 <template>
-    <button type="button" @click="onClick">
-        카카오 로그인
-    </button>
+    <ul class="kakao-login-test-list">
+        <li>
+            <BasicButton @click="login">
+                로그인
+            </BasicButton>
+            <p class="description">
+                1. 동의하지 않은 회원인 경우 동의 후 로그인(카카오 화면)<br />
+                2. 인가받은 코드가 결과 값으로 넘어 오는데 이것은 어떻게 처리할지?
+            </p>
+        </li>
+        <li>
+            <BasicButton @click="getTerms">
+                동의한 약관 정보 가져오기
+            </BasicButton>
+            <p class="description">
+                1. 동의한 항목과 동의한 날짜를 알 수 있음<br />
+                2. 이 data를 활용하는 곳이 있는지
+            </p>
+        </li>
+        <li>
+            <BasicButton @click="revokeAgree">
+                동의 철회(동의 별 철회 가능)
+            </BasicButton>
+            <p class="description"></p>
+        </li>
+        <li>
+            <BasicButton @click="logout">
+                로그아웃
+            </BasicButton>
+            <p class="description">
+                1. access_token을 날리면서 로그아웃 처리됨<br />
+                2. access_token이 유실되면 자동으로 로그아웃 처리<br />
+                3. 로그아웃 API 처리가 필요함
+            </p>
+        </li>
+        <li>
+            <BasicButton @click="unlink">
+                탈퇴
+            </BasicButton>
+            <p class="description">
+                1. 카카오에 등록한 selly 앱과의 연결을 끊음<br />
+                2. 연결만 끊기 때문에 회원탈퇴 API가 필요함
+            </p>
+        </li>
+    </ul>
 </template>
 
 <script lang="ts">
@@ -39,10 +81,16 @@ export default class extends Vue {
     }
 
     /**
+     * @category Data
+     */
+    private kakaoApi!: KakaoCert
+
+    /**
      * @cateogry Methods
      */
 
     async login() {
+        this.doProcess()
         await this.getLoginInfo()
     }
 
@@ -52,68 +100,115 @@ export default class extends Vue {
             script.id = 'kakao-login-sdk'
             script.src = 'https://developers.kakao.com/sdk/js/kakao.min.js'
             document.head.appendChild(script)
+
+            script.onload = () => {
+                this.kakaoApi = window.Kakao
+                this.init()
+            }
         }
     }
 
     doProcess() {
-        if (!window.Kakao) {
-            console.log('kakao object 가 없습니다.')
-        }
-
-        window.Kakao.cleanup()
-
-        if (!window.Kakao.isInitialized()) {
-            window.Kakao.init(process.env.VUE_APP_KAKAO_API_KEY)
-        }
-
         /**
          * 로그인 창을 띄웁니다.
          * user-agent가 변경되면 ( ex: chrome 개발자모드>모바일 ) sdk 내부에서 체크하는 모듈이 존재하여 오류가 발생함
          * 카카오로그인은 개발자모드 > 모바일 변경없이하여야 로그인이 정상적으로 진행됨
-         */
-        const KakaoAPI = window.Kakao.API
-        /**
+         * @reference https://developers.kakao.com/docs/latest/ko/reference/rest-api-reference
          * @path /v2/user/me : 사용자정보 가져오기
          * @path /v2/user/unlink : 연결끊기(탈퇴? 처럼 쓸수 있겠으나 실제로는 앱과의 연관성만 끊어준다고 함)
          */
         const userInfoPath = '/v2/user/me'
         const unlinkPath = '/v2/user/unlink'
 
-        // window.Kakao.Auth.login({
-        //     success: (authObj: any) => {
-        //         console.log('kakao login SUCCESS', authObj)
-        //         KakaoAPI.request({
-        //             url: '/v2/user/me',
-        //             success: res => {
-        //                 console.log('kakao API SUCCESS', res)
-        //             },
-        //             fail: error => {
-        //                 console.log('kakao API FAIL', error)
-        //             },
-        //         })
-        //     },
-        //     fail: (err: any) => {
-        //         // alert('요청에 실패 하였습니다.');
-        //         window.Kakao.cleanup()
-        //         console.log('kakao login FAIL', err)
-        //     },
+        // this.kakaoApi.Auth.authorize({
+        //     //     // state: 'account_ci,account_email',
+        //     scope: ['phone_number', 'account_ci', 'account_email'].toString(),
+        //     redirectUri: 'http://selly.lottecard.com:8080/example',
+        //     serviceTerms: 'sellydev_20200610',
         // })
 
-        window.Kakao.Auth.authorize({
-            redirectUri: '/example',
-            scope: ['account_email', 'gender'].toString(),
+        this.kakaoApi.Auth.login({
+            scope: ['account_ci', 'account_email', 'phone_number'].toString(),
+            success: (authObj: any) => {
+                console.log('kakao login SUCCESS', authObj)
+            },
+            fail: (err: any) => {
+                // alert('요청에 실패 하였습니다.');
+                this.kakaoApi.cleanup()
+                console.log('kakao login FAIL', err)
+            },
         })
     }
 
-    onClick() {
-        this.login()
+    unlink() {
+        this.kakaoApi.API.request({
+            url: '/v1/user/unlink',
+            success: res => {
+                console.log('kakao API UNLINK SUCCESS', res)
+            },
+            fail: error => {
+                console.log('kakao API UNLINK FAIL', error)
+            },
+        })
+    }
+
+    getTerms() {
+        this.kakaoApi.API.request({
+            url: '/v1/user/service/terms',
+            success: res => {
+                console.log('KAKAO SERVICE TERMS SUCCESS', res)
+            },
+            fail: error => {
+                console.log('KAKAO SERVICE TERMS FAIL', error)
+            },
+        })
+    }
+
+    revokeAgree() {
+        this.kakaoApi.API.request({
+            url: '/v2/user/revoke/scopes',
+            // scopes: [''],
+        })
+    }
+
+    init() {
+        if (!this.kakaoApi) {
+            console.log('kakao object 가 없습니다.')
+            return
+        }
+
+        this.kakaoApi.cleanup()
+
+        if (!this.kakaoApi.isInitialized()) {
+            this.kakaoApi.init(process.env.VUE_APP_KAKAO_API_KEY)
+        }
+    }
+
+    logout() {
+        this.kakaoApi.API.request({
+            url: '/v1/user/logout',
+            success: res => {
+                console.log('KAKAO LOGOUT SUCCESS', res)
+            },
+            fail: error => {
+                console.log('KAKAO LOGOUT FAIL', error)
+            },
+        })
     }
 
     mounted() {
-        // this.loadScript()
+        this.loadScript()
         this.loginCheck()
     }
 }
 </script>
 
-<style scoped></style>
+<style scoped lang="scss">
+.kakao-login-test-list {
+    li {
+        & + li {
+            margin-top: 16px;
+        }
+    }
+}
+</style>

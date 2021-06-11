@@ -91,21 +91,16 @@ export default class BottomSheet extends Vue {
      * @category Methods
      */
     onClose() {
-        // TODO: 어떻게 만들지?...
+        /**
+         * 닫기
+         * @event close
+         */
         this.$emit('close')
-    }
-
-    afterEnter() {
-        this.transitionBeforeClass = 'transition-before'
-    }
-
-    beforeEnter() {
-        this.transitionBeforeClass = ''
     }
 
     onClickOption(index: number) {
         /**
-         * list의 option 선택 시 트리거 되는 함수
+         * list option 선택 시 실행
          * @event select-option
          */
         this.$emit('select-option', this.list[index].value)

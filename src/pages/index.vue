@@ -1,42 +1,79 @@
 <template>
-    <div>
+    <div class="container">
         <LoginButton />
-        <button type="button" @click="openModal">
-            모달 테스트
-        </button>
-        <portal to="bottomSheet">
-            <transition
-                mode="out-in"
-                enter-active-class="animate__animated animate__fadeIn"
-                leave-active-class="animate__animated animate__fadeOut"
-            >
-                <div v-if="show" style="width: 200px height: 80px; background-color: red">
-                    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ipsa modi aliquid odit facilis corporis assumenda, ducimus
-                    eligendi officiis, aut aperiam provident unde inventore quas dolorum repellat adipisci? Ad, quae hic?
-                    <button type="button" @click="closeModal">
-                        닫기
-                    </button>
-                </div>
-            </transition>
-        </portal>
+
+        <!-- <scroll-container class="flex" @change="updateState">
+            <div class="list">
+                <scroll-item v-for="i in 200" :id="i" :key="i" @change="onChange">
+                    <p :class="['bloc', getClass(i)]" :style="getStyle(i)">
+                        {{ i }}
+                    </p>
+                </scroll-item>
+            </div>
+        </scroll-container> -->
     </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue, Watch } from 'vue-property-decorator'
+import { Component, Vue } from 'vue-property-decorator'
 
-@Component
+const { ScrollContainer, ScrollItem } = require('vue-scrollmonitor')
+
+@Component({
+    components: { ScrollContainer, ScrollItem },
+})
 export default class LoginPage extends Vue {
-    show: boolean = false
+    state: any[] = []
 
-    openModal() {
-        this.show = true
+    get itemsInViewport() {
+        return this._.pickBy(this.state, ({ isInViewport }) => isInViewport)
     }
 
-    closeModal() {
-        this.show = false
+    getClass(i: number): string {
+        const state = this.state[i]
+        if (state && (state.isFullyInViewport || state.isAboveViewport)) {
+            return 'in'
+        } else {
+            return 'out'
+        }
+    }
+
+    getStyle(i: number) {}
+
+    updateState(state: any) {
+        this.state = state
+    }
+
+    onChange(state: any) {
+        console.log('change')
     }
 }
 </script>
 
-<style scoped></style>
+<style scoped lang="scss">
+.list {
+    width: 100%;
+    padding: 24px;
+}
+.bloc {
+    background-color: #fff;
+    width: 100%;
+    height: 120px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.2);
+    transform: translateY(20%);
+    opacity: 0;
+
+    transition: all 300ms ease-in-out;
+
+    &.isaboveviewport,
+    &.isfullyinviewport {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.bloc + .bloc {
+    margin-top: 40px;
+}
+</style>

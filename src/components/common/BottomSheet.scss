@@ -1,6 +1,7 @@
 $transition: all 0.3s ease-in-out;
 
 .bottom-sheet {
+    --animate-duration: 300ms;
     .inner {
         width: 100%;
         position: fixed;
