@@ -20,25 +20,70 @@ declare global {
             VUE_APP_API_DOMAIN: string
             VUE_APP_KAKAO_API_KEY: string
             VUE_APP_SKIP_LOGIN: string
+            VUE_APP_KAKAO_REST_API_KEY: string
         }
+    }
+
+    /**
+     * @interface KakaoUserInfoRes
+     * @description "/"
+     */
+    interface KakaoUserInfoRes {
+        connected_at: string
+        id: number
+        kakao_account: {
+            ci: string
+            ci_authenticated_at: string
+            ci_needs_agreement: boolean
+            email: string
+            email_needs_agreement: boolean
+            has_ci: boolean
+            has_email: boolean
+            has_phone_number: boolean
+            is_email_valid: boolean
+            is_email_verified: boolean
+            phone_number: string
+            phone_number_needs_agreement: boolean
+        }
+        profile: {
+            is_default_image: boolean
+            nickname: string
+            profile_image_url: string
+            thumbnail_image_url: string
+        }
+        profile_needs_agreement: boolean
+        properties: {
+            nickname: string
+            profile_image: string
+            thumbnail_image: string
+        }
+        synched_at: string
+    }
+
+    interface KakaoUnlinkRes {
+        id: number
     }
 
     interface KakaoLoginApi {
         success(authObj: any): void
         fail(err: any): void
-        scope: string
+        scope?: string
     }
 
     interface KakaoAPIRequestParams {
         scopes?: string
         scope?: string
         url?: string
-        success?(res: any): void
+        success?(res: KakaoUserInfoRes): void
         fail?(error: any): void
+        data?: {
+            redirect_uri?: string
+            through_talk?: boolean
+        }
     }
 
     interface KakaoAuthAutorizeParameters {
-        redirectUri: string
+        redirectUri?: string
         state?: string
         scope?: string
         throughTalk?: boolean
@@ -48,10 +93,13 @@ declare global {
         cleanup(): void
         isInitialized(): boolean
         init(clientId: string): void
+        // TODO: 카카오싱크 연동하면서 추가해야 함
         Auth: {
-            login(params: KakaoLoginApi): void
-            // TODO: 카카오싱크 연동하면서 추가해야 함
             authorize(params: KakaoAuthAutorizeParameters): void
+            /** 토큰 가져오기 */
+            login(params: KakaoLoginApi): void
+            /** 카카오 로그인한 유저의 정보 호출 */
+            getStatusInfo(params: any): void
         }
         API: {
             request(params: KakaoAPIRequestParams): void
