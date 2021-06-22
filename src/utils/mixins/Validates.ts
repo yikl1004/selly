@@ -26,6 +26,7 @@ export default class Validates extends Vue {
      */
     private execute(regExp: RegExp, key: string): boolean {
         const result = new RegExp(regExp).test(key)
+
         return result
     }
 
