@@ -119,6 +119,8 @@ declare global {
         Kakao: KakaoCert
     }
 
+    type FormInputType = 'number' | 'seperateNumber' | 'text' | 'select' | SecretType
+
     /**
      * @path { @component/common/Modal.vue }
      * @type { ModalDesignType }
