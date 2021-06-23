@@ -15,11 +15,11 @@ import ExampleForm from '@pages/example/form/index.vue'
 
 Vue.use(VueRouter)
 
-type Meta = {
+export type RouteMeta = {
     layout?: 'default' | 'none' | string
 }
 
-const routes: Array<RouteConfig & { meta?: Meta }> = [
+const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
     // 여기는 예제 작성
     {
         path: '/example',
@@ -32,6 +32,9 @@ const routes: Array<RouteConfig & { meta?: Meta }> = [
                 component: ExampleForm,
             },
         ],
+        meta: {
+            layout: 'none',
+        },
     },
 
     // 여기부터 페이지 작성

@@ -1,10 +1,13 @@
 <template>
-    <header class="layout-header">
-        <h1>
+    <header class="page-header">
+        <h1 class="logo">
             <Link href="/">
                 Selly
             </Link>
         </h1>
+        <button type="button" class="global-navigation">
+            <span class="ir">전체 메뉴</span>
+        </button>
     </header>
 </template>
 
@@ -14,6 +17,10 @@ import { Component, Vue, Watch } from 'vue-property-decorator'
 @Component
 export default class Header extends Vue {
     private toggle: boolean = false
+
+    get classes(): string {
+        return true ? 'aa' : 'bb'
+    }
 
     @Watch('$route')
     changeRoute() {
@@ -33,15 +40,17 @@ export default class Header extends Vue {
 <style lang="scss">
 .layout-header {
     height: 50px;
-    background-color: #000;
     display: flex;
     justify-content: center;
     align-items: center;
     position: relative;
 
-    h1 {
+    .logo {
         color: #fff;
         margin: 0;
+    }
+
+    .global-navigation {
     }
 }
 </style>

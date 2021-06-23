@@ -1,16 +1,14 @@
 <template>
     <div class="layout">
-        <router-view v-slot="{ Component }">
-            <transition
-                mode="out-in"
-                enter-active-class="animate__animated animate__fadeInRight"
-                leave-active-class="animate__animated animate__fadeOutLeft"
-            >
-                <default>
-                    <component :is="Component" />
-                </default>
-            </transition>
-        </router-view>
+        <transition
+            mode="out-in"
+            enter-active-class="animate__animated animate__fadeInRight"
+            leave-active-class="animate__animated animate__fadeOutLeft"
+        >
+            <component :is="layout">
+                <router-view />
+            </component>
+        </transition>
     </div>
 </template>
 
@@ -18,22 +16,21 @@
 import { Vue, Component } from 'vue-property-decorator'
 import DefaultLayout from '@layout/DefaultLayout.vue'
 import NoneLayout from '@layout/NoneLayout.vue'
+import { RouteMeta } from 'src/router'
 
-type LayoutType = 'default' | 'none'
+type LayoutType = 'default-layout' | 'none-layout'
 
 const DEFAULT_TRANSITION = 'fade'
 
 @Component({
-    components: {
-        default: DefaultLayout,
-        none: NoneLayout,
-    },
+    components: { DefaultLayout, NoneLayout },
 })
 export default class Layout extends Vue {
     private transitionName: string = DEFAULT_TRANSITION
 
-    get layout(): LayoutType {
-        return this.$route.meta.layout || 'default'
+    get layout(): string {
+        const layout = this.$route.meta.layout as RouteMeta
+        return layout ? `${layout}-layout` : 'default-layout'
     }
 
     mounted(): void {}
@@ -42,22 +39,12 @@ export default class Layout extends Vue {
 
     enter() {}
 
-    created() {
-        this.$router.beforeEach((to, from, next) => {
-            const toDepth = to.path.split('/').length
-            const fromDepth = from.path.split('/').length
-            const transitionName = toDepth < fromDepth ? 'slide-right' : 'slide-left'
-
-            this.transitionName = transitionName || DEFAULT_TRANSITION
-
-            next()
-        })
-    }
+    created() {}
 }
 </script>
 
 <style lang="scss" scoped>
-#layout {
-    --animate-duration: 300ms;
+.layout {
+    --animate-duration: 150ms;
 }
 </style>
