@@ -1,6 +1,7 @@
 <template>
     <div class="layout-default">
-        <Header />
+        <Header header-type="main" @click="openGnb" />
+        <Gnb :show.sync="show" @click="closeGnb" />
         <slot />
     </div>
 </template>
@@ -10,6 +11,15 @@ import { Vue, Component } from 'vue-property-decorator'
 
 @Component
 export default class DefaultLayout extends Vue {
+    private show: boolean = false
+    openGnb() {
+        this.show = true
+    }
+
+    closeGnb() {
+        this.show = false
+    }
+
     mounted() {
         console.log('DefaultLayout MOUNTED')
     }

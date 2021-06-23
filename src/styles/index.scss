@@ -19,6 +19,14 @@
     min-height: 100%;
     padding: 0 24px;
 }
+.page-header {
+    & ~ .container {
+        padding-top: 56px;
+    }
+    &.proccess-type ~ .container {
+        padding-top: 61px;
+    }
+}
 
 .flex {
     display: flex;
