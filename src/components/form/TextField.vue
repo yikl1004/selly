@@ -81,7 +81,7 @@ export default class TextField extends Mixins(Validates) {
 
     /** type 속성 */
     @Prop({ type: String, default: 'text' })
-    readonly type!: FormInputType
+    declare readonly type: FormInputType
 
     /** form에 사용될 id */
     @Prop({ type: String, required: true })
