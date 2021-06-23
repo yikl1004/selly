@@ -1,6 +1,6 @@
 <template>
     <div class="textarea-box" :class="isError">
-        <label :for="id" :class="{ ir: hiddenLabel }">{{ label }}</label>
+        <LabelTitle id="labelid" title-type="label" :hidden-label="hiddenLabel" label="lable" />
         <div class="input-area" :class="{ focus: focusedClass, readonly: readonly, disabled: disabled }">
             <textarea
                 :id="id"

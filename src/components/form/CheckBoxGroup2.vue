@@ -1,8 +1,6 @@
 <template>
     <div class="check-box-group">
-        <h3 class="title">
-            {{ title }}
-        </h3>
+        <LabelTitle id="labelid" title-type="label" :hidden-label="hiddenLabel" label="lable" />
         <div class="check-box-area">
             <!-- 클래스에 checked 추가시 체크표시 -->
             <button type="button" class="btn-checkbox" :disabled="disabled">
@@ -61,6 +59,10 @@ export default class CheckBoxGroup extends Vue {
     /** label */
     @Prop({ type: String })
     readonly label!: string
+
+    /** label을 비노출여부 */
+    @Prop(Boolean)
+    readonly hiddenLabel!: boolean
 
     /** 체크박스 리스트 */
     @Prop({ type: Array, default: () => [], required: true })

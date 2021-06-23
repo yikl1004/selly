@@ -37,6 +37,7 @@ import FullPopup from '@components/common/FullPopup.vue'
 import CautionBox from '@components/common/CautionBox.vue'
 import BulletList from '@components/common/BulletList.vue'
 import Gnb from '@components/common/Gnb.vue'
+import LabelTitle from '@components/common/LabelTitle.vue'
 
 //개발씽크맞추기 전
 import DropdownBox2 from '@components/form/DropdownBox2.vue'
@@ -77,6 +78,7 @@ const componentList: { [key: string]: VueConstructor }[] = [
     { CautionBox },
     { BulletList },
     { Gnb },
+    { LabelTitle },
 
     //개발씽크 맞추기 전
     { DropdownBox2 },

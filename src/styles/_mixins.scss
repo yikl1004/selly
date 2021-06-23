@@ -1,17 +1,6 @@
 @mixin form-field($clear: true, $is-dropdown: false, $validate: true, $use-readonly: true) {
     position: relative;
 
-    label,
-    .label {
-        display: block;
-        margin-bottom: 7px;
-        font-size: 14px;
-        font-weight: normal;
-        line-height: normal;
-        letter-spacing: -0.5px;
-        color: #666;
-    }
-
     .input-area {
         position: relative;
         border: solid 1px #ebebeb;

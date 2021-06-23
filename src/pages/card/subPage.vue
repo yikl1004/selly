@@ -45,12 +45,12 @@
             </FormProvider>
 
             <!-- 인풋 텍스트 -->
-            <!-- <div>
+            <div>
                 <TextField
                     id="my-text"
                     type="text"
-                    label="소득구분"
-                    :hiddenLabel="null"
+                    label="소득구분a"
+                    :hidden-label="null"
                     :maxlength="9999"
                     placeholder="소득구분 입력"
                     :readonly="false"
@@ -59,14 +59,14 @@
                     :validate="null"
                     error-message="에러메시지"
                     success-message="성공메시지"
-                    :defaultValue="null"
+                    :default-value="null"
                 />
 
                 <TextField
                     id="phone-number"
                     type="select"
                     label="통신사 선택"
-                    :hiddenLabel="null"
+                    :hidden-label="null"
                     :maxlength="9999"
                     placeholder="소득구분 입력"
                     :readonly="false"
@@ -75,8 +75,15 @@
                     :validate="null"
                     error-message="에러메시지"
                     success-message="성공메시지"
-                    :defaultValue="null"
-                    :list='[{"displayName":"KT","value":"kt","selected":true},{"displayName":"SKT","value":"skt"},{"displayName":"LG U+","value":"lguplus"},{"displayName":"KT알뜰폰","value":"kt_sub"},{"displayName":"SKT알뜰폰","value":"skt_sub"},{"displayName":"LGU+알뜰폰","value":"lguplus_sub"}]'
+                    :default-value="null"
+                    :list="[
+                        { displayName: 'KT', value: 'kt', selected: true },
+                        { displayName: 'SKT', value: 'skt' },
+                        { displayName: 'LG U+', value: 'lguplus' },
+                        { displayName: 'KT알뜰폰', value: 'kt_sub' },
+                        { displayName: 'SKT알뜰폰', value: 'skt_sub' },
+                        { displayName: 'LGU+알뜰폰', value: 'lguplus_sub' },
+                    ]"
                     :update:list="null"
                     :select="null"
                     name="phoneNumber"
@@ -107,7 +114,7 @@
                     error-message="에러메시지"
                     success-message="성공메시지"
                 />
-            </div> -->
+            </div>
 
             <!-- 버튼케이스 -->
             <!-- <div>

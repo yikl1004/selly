@@ -1,6 +1,6 @@
 <template>
     <div class="dropdown-box">
-        <strong class="label" :class="{ ir: hiddenLabel }">{{ label }}</strong>
+        <LabelTitle id="labelid" title-type="label" :hidden-label="hiddenLabel" label="lable" />
         <div class="input-area" :class="{ 'select-type': true }">
             <button type="button" class="btn-input-select" :disabled="disabled" @click="onClick">
                 <span>{{ selectedDisplayName }}</span>
