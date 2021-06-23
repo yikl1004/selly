@@ -1,0 +1,39 @@
+.box-acco-item {
+    border-bottom: 1px solid #ebebeb;
+    .acco-anchor {
+        display: block;
+        position: relative;
+        width: 100%;
+        min-height: 56px;
+        padding: 16px 56px 16px 24px;
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 1.5;
+        color: #222;
+        text-align: left;
+        word-break: break-all;
+        &:after {
+            content: '';
+            display: block;
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            width: 24px;
+            height: 24px;
+            transform: translateY(-50%);
+            background: url('/assets/icon/icon-arrow-bottom2.svg') no-repeat;
+            transition: transform 250ms ease-in-out;
+        }
+    }
+    .acco-cont {
+        display: none;
+    }
+    &.active {
+        .acco-anchor:after {
+            transform: translate(0, -50%) rotate(180deg);
+        }
+        .acco-cont {
+            display: block;
+        }
+    }
+}

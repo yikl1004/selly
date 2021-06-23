@@ -1,175 +1,120 @@
-/* Common */
-body,
-p,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-ul,
-ol,
-li,
-dl,
-dt,
-dd,
-table,
-th,
-td,
-form,
-fieldset,
-legend,
-input,
-textarea,
-button,
-select,
-div,
-figure,
-article,
-header,
-nav,
-footer,
-section {
-    margin: 0;
-    padding: 0;
+/* reset */
+* {
+    -webkit-box-sizing: border-box; 
+    -moz-box-sizing: border-box; 
     box-sizing: border-box;
-    word-break: keep-all;
-    word-wrap: break-word;
-    white-space: normal;
-    text-size-adjust: 100%;
+}
+*:before,
+*:after {
+    -webkit-box-sizing: border-box; 
+    -moz-box-sizing: border-box; 
+    box-sizing: border-box;
+}
+html, 
+body{
+    height:100%; 
+    font-family:'Spoqa Han Sans Neo', 'Malgun Gothic','맑은 고딕', '돋음','Dotum','Apple SD Gothic Neo', Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    font-weight:400;
+    line-height:1.6;
+    letter-spacing: -0.5px;
+    -webkit-text-size-adjust:none;
+}
+body{
+    height:100%; 
+    color:#666;
+}
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, textarea, p, blockquote, th, td, input, select, textarea, button {
+    margin: 0;
+    padding: 0
 }
 
-body,
-input,
-textarea,
-select,
-button,
-table,
-th,
-td {
-    color: #555;
-    font-family: 'Spoqa Han Sans Neo';
-    font-weight: 500;
-    font-size: 15px;
-    line-height: 1.5;
+/* HTML5 display-role reset for older browsers */
+address, article, aside, canvas, details, figure, figcaption, footer, header, menu, nav, section {
+    display:block; 
+    margin:0; 
+    padding:0;
 }
+ol, ul, li, dl, dt, dd {list-style:none;}
+h1, h2, h3, h4, h5₩, h6 {font-size:100%; font-weight:normal;}
+table{width:100%;border-spacing:0;}
+caption{width: 0; height: 0; margin: 0; padding: 0; overflow: hidden; border: 0; text-indent: -999em;}
+th, td {word-break:break-all;border-collapse: collapse;}
+fieldset {width:100%;pointer-events: none;}
+fieldset, img {border:0;}
+img {max-width:100%;vertical-align:middle;}
+legend {position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0, 0, 0, 0); border: 0;}
+button, select, input, textarea, label, img {vertical-align:middle;}
+input {-webkit-appearance: none;-webkit-border-radius: 0;}
+button {background:transparent;cursor:pointer;border:0;}
+button:disabled {cursor: default;}
+address, caption, em, strong, th{font-style:normal; font-weight:normal}
+a{background:transparent; text-decoration:none; color:inherit;}
+em, address {font-style:normal;}
+i {font-style: normal}
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-    font-weight: normal;
-}
-
-img,
-fieldset,
-iframe {
-    border: 0;
+/* checkbox */
+.input_chk {
+    display: inline-block;
+    position: relative;
+    padding-left: 27px;
+    font-size:15px;
+    color: #666;
     vertical-align: top;
+    font-family: 'notoR'
 }
-
-textarea {
-    border-radius: 0;
-    -webkit-appearance: none;
-    resize: none;
-}
-
-ul,
-ol {
-    list-style: none;
-}
-
-em,
-address {
-    font-style: normal;
-}
-
-input,
-select {
-    vertical-align: middle;
-    -webkit-appearance: none;
-}
-
-input,
-textarea {
-    &::-webkit-input-placeholder {
-        user-select: none;
-    }
-}
-input,
-textarea,
-select,
-button {
-    &:focus {
-        outline: none;
-    }
-}
-
-table {
-    width: 100%;
-    border-collapse: separate;
-    border-spacing: 0;
-}
-
-hr,
-legend {
-    display: none;
-}
-
-caption {
-    overflow: hidden;
-    position: static;
-    top: 0;
+.input_chk input {
+    position: absolute;
+    top: 2px;
     left: 0;
-    width: 0;
-    height: 0;
-    font-size: 0;
-    line-height: 0;
+    width:20px;
+    height:20px;
+    -webkit-appearance:none;
+    -moz-appearance: none;
+    -webkit-border-radius: 0;
+    border: 1px solid #999;
+    box-sizing:border-box;
+    background: #fff;
+}
+.input_chk input:before {
+    content: '';
+    display:none;
+    position: absolute;
+    left: 50%;
+    top:50%;
+    width: 11px;
+    height: 9px;
+    // background: url('../images/common/ico_checkbox.png') no-repeat;
+    background-size: 11px 9px;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%)
+}
+.input_chk input:checked {
+    border-color: #e32c51;
+    background: #e32c51;
 }
 
-strong,
-b {
-    font-weight: 600;
+.input_chk input:checked:before {
+    display: block;
+}
+.input_chk input:disabled {
+    border-color: #999;
+    background: #ddd;
+    opacity: 0.2;
+}
+.input_chk input:disabled:checked {
+    border-color: #333;
+    background: #333;
+    opacity: 0.2;
+}
+.input_chk input:disabled:checked:before {
 }
 
-button {
-    border: none;
-    background: none;
-    cursor: pointer;
-}
-
-a {
-    text-decoration: none;
-}
-
-a,
-button {
-    cursor: pointer;
-}
-
-a:focus,
-button:focus,
-input[type=radio]:focus,
-input[type=checkbox]:focus {
-    outline: none;
-}
-input[type=tel].security {
-    -webkit-text-security: disc;
-}
-
-:-ms-input-placeholder {
-    color: #b2b2b2;
-    font-weight: 400;
-}
-
-:-moz-placeholder {
-    color: #b2b2b2;
-    font-weight: 400;
-}
-
-::-webkit-input-placeholder {
-    color: #b2b2b2;
-    font-weight: 400;
+/* textarea */
+textarea {
+    width: 100%;
+    /* Remove First */
+    -webkit-appearance: none;
+    -webkit-border-radius: 0;
+    resize: none;
 }

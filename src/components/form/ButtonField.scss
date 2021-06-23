@@ -28,23 +28,10 @@
     }
 
     button.search-button {
-        padding: 0 22px;
-        border-radius: 10px;
-        background-color: #5089ca;
-        font-size: 16px;
-        font-weight: 500;
-        line-height: 1.5;
-        letter-spacing: -0.5px;
+        @include button-style(56, $point-color-blue, #003950, #ebebeb,#bbb);
+        min-width:72px;
+        padding: 0 14px;
         text-align: center;
-        color: #ffffff;
-
-        &:active {
-            background-color: #2d4f76;
-        }
-
-        &:disabled {
-            background-color: #ebebeb;
-            color: #bbb;
-        }
+        color:#fff;        
     }
 }

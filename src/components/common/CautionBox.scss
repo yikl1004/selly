@@ -1,0 +1,53 @@
+.caution-box {
+    padding-top: 60px;
+    .icon-caution {
+        display: block;
+        width: 48px;
+        height: 48px;
+        margin: 0 auto;
+        background-repeat: no-repeat;
+    }   
+    &.caution {
+        .icon-caution {
+            background-image: url('/assets/icon/icon-caution-empty.svg');
+        }
+    }
+    &.complete {
+        .icon-caution {
+            background-image: url('/assets/icon/icon-caution-complete.svg');
+        }
+    }
+    .caution-title {
+        display: block;
+        font-size: 20px;
+        color: #222;
+        line-height: 1.4;
+        font-weight: bold;
+    }
+    .caution-sub-txt {
+        font-size: 14px;
+        line-height: 1.57;
+        color: #666;
+    }
+    .caution-text-box {
+        margin-top: 24px;
+        text-align: center;
+        
+        .caution-sub-txt {
+            margin-top: 16px;
+        }
+    }
+    .tel-box {
+        margin-top: 48px;
+        .link-tel {
+            display: inline-block;
+            width: auto;
+            height:22px;
+            font-size:14px;
+            line-height:1.57;
+            font-weight:400;
+            text-decoration: underline;
+            color:$point-color-blue
+        }
+    }
+}

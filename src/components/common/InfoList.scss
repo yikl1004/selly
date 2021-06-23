@@ -1,0 +1,35 @@
+.box-info-wrap {
+    .info-title {
+        margin-bottom: 16px;
+        .title {
+            font-size: 16px;;
+            font-weight: bold;
+            line-height: 1.5;
+            color: #222;
+        }
+    }
+}
+.box-info-list {
+    padding-bottom: 16px;
+    border-top: 1px solid #888;
+    border-bottom: 1px solid #888;
+    .info-item {
+        overflow: hidden;
+        padding-top: 16px;
+    }
+    .info-label {
+        float: left;
+        width: 30%;
+    }
+    .info-desc {
+        float: right;
+        width: 70%;
+        font-weight: 500;
+        color: #222;
+        text-align: right;
+        line-height: 1.43;
+        span {
+            display: block;
+        }
+    }
+}

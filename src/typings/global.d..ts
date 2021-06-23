@@ -92,8 +92,11 @@ declare global {
      */
     type BasicButtonDesignType =
         | 'basic' // 기본
-        | 'line' // 선형
         | 'with' // 버튼과 함께 쓰이는 형태
+        | 'textBlue' // 텍스트버튼_파랑
+        | 'textGray' // 텍스트버튼_회색
+        | 'dialogBlue' // dialog버튼_파랑
+        | 'dialogWhite' // dialog버튼_흰색
 
     /**
      * @path { @component/form/CheckBox.vue }

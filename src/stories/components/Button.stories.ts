@@ -10,13 +10,13 @@ export default {
             action: 'onClick',
         },
         size: {
-            options: ['large', 'medium', 'small'],
+            options: ['none', 'large', 'medium', 'small'],
             control: {
                 type: 'select',
             },
         },
         type: {
-            options: ['basic', 'line', 'with'],
+            options: ['basic', 'textBlue', 'textGray', 'with', 'dialogBlue', 'dialogWhite'],
             control: {
                 type: 'select',
             },
@@ -72,20 +72,21 @@ Small.args = {
     size: 'small',
 }
 
-export const LineLarge = Template.bind({})
-LineLarge.args = {
-    size: 'large',
-    type: 'line',
+export const textBlue = Template.bind({})
+textBlue.args = {
+    type: 'textBlue',
 }
 
-export const LineMedium = Template.bind({})
-LineMedium.args = {
-    size: 'medium',
-    type: 'line',
+export const textGray = Template.bind({})
+textGray.args = {
+    type: 'textGray',
 }
 
-export const LineSmall = Template.bind({})
-LineSmall.args = {
-    size: 'small',
-    type: 'line',
+export const dialogBlue = Template.bind({})
+dialogBlue.args = {
+    type: 'dialogBlue',
+}
+export const dialogWhite = Template.bind({})
+dialogWhite.args = {
+    type: 'dialogWhite',
 }

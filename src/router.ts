@@ -6,6 +6,8 @@ import store from '@stores/index'
 import LoginPage from '@pages/index.vue'
 import NeedLoginPage from '@pages/NeedLogin/index.vue'
 import MainPage from '@pages/main/index.vue'
+import CardPage from '@pages/card/index.vue'
+import CardSubPage from '@pages/card/subPage.vue'
 
 // examples
 import ExampleMain from '@pages/example/index.vue'
@@ -53,6 +55,22 @@ const routes: Array<RouteConfig & { meta?: Meta }> = [
         path: '/main',
         name: 'Main',
         component: MainPage,
+        meta: {
+            layout: 'default',
+        },
+    },
+    {
+        path: '/card',
+        name: 'Card',
+        component: CardPage,
+        meta: {
+            layout: 'none',
+        },
+    },
+    {
+        path: '/card/subpage',
+        name: 'CardSub',
+        component: CardSubPage,
         meta: {
             layout: 'default',
         },

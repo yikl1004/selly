@@ -1,0 +1,113 @@
+.check-box-group {
+    .title {
+        font-size: 14px;
+        font-weight: normal;
+        line-height: normal;
+        letter-spacing: -0.5px;
+        color: #666;
+        display: block;
+        margin-bottom: 7px;
+    }
+
+    .check-box-area {
+        display: flex;
+        position: relative;
+        height: 56px;
+        border-radius: 10px;
+        border: solid 1px #ebebeb;
+        background-color: #fff;
+    }
+    .btn-checkbox {
+        display: block;
+        position: relative;
+        width:100%;
+        height: 100%;
+        padding: 13px 16px 13px 52px;
+        font-size: 16px;
+        color: #222;
+        font-weight: 500;
+        text-align: left;
+        &:before {
+            content: '';
+            display: block;
+            width: 24px;
+            height: 24px;
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translate(0, -50%);
+            box-sizing: border-box;
+            border: 1px solid #ebebeb;
+            border-radius: 5px;
+            background-color: #fff;
+        }
+        &.checked {
+            &:before {
+                background-color: $point-color-blue;
+                border-color:$point-color-blue;
+                background-image: url("/assets/icon/icon-only-check.svg")
+            }
+        }
+        &:disabled{
+            &:before {
+                background-color: #fafafa;
+            }
+            &.checked:before {
+                border-color: #ebebeb;
+                background-color: #ebebeb;
+            }
+        }
+    }
+
+    .open {
+        display: block;
+        position: relative;
+        min-width: 56px;
+        height: 56px;
+        &:before {
+            content: '';
+            display: block;
+            position: absolute;            
+            width: 24px;
+            height: 24px;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            transition: transform 250ms ease-in-out;
+            background-image: url("/assets/icon/icon-arrow-bottom2.svg");
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: 24px 24px;
+        }
+
+        &.opened:before {
+            transform: translate(-50%,-50%) rotate(180deg);
+        }
+    }
+    .check-list {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 250ms ease-in-out;
+        margin-top: 20px;
+
+        .check-list-wrapper {
+            padding: 0 20px;
+        }
+
+        &.opened {
+            max-height: 1000px;
+        }
+
+        .check-list-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            & + .check-list-item {
+                margin-top: 20px;
+            }
+
+        }
+
+    }
+}

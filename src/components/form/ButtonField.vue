@@ -2,7 +2,7 @@
     <div class="search-field">
         <label :for="id" :class="{ ir: hiddenLabel }">{{ label }}</label>
         <div class="flex">
-            <div class="input-area" :class="{ focus: focusedClass }">
+            <div class="input-area" :class="{ focus: focusedClass, readonly: readonly, disabled: disabled }">
                 <input
                     :id="id"
                     ref="input"
@@ -13,6 +13,7 @@
                     :placeholder="placeholder"
                     type="text"
                     :readonly="readonly"
+                    :disabled="disabled"
                     @input="onInput"
                     @keydown.enter="onKeydownEnter"
                     @focus="onFocus"
@@ -24,7 +25,7 @@
                     <span class="ir">전체삭제</span>
                 </button>
             </div>
-            <button class="search-button" type="button" @click="onSearch">
+            <button class="search-button" :disabled="disabled" type="button" @click="onSearch">
                 <span>{{ buttonText }}</span>
             </button>
         </div>
@@ -91,6 +92,10 @@ export default class ButtonField extends Mixins(Validates) {
     /** 읽기전용 여부 */
     @Prop({ type: Boolean, default: false })
     readonly readonly!: boolean
+
+    /** 비활성화 여부 */
+    @Prop({ type: Boolean, default: false })
+    readonly disabled!: boolean
 
     /** 기본 값 */
     @Prop(String)

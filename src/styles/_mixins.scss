@@ -1,14 +1,15 @@
 @mixin form-field($clear: true, $is-dropdown: false, $validate: true, $use-readonly: true) {
     position: relative;
 
-    label {
+    label,
+    .label {
+        display: block;
+        margin-bottom: 7px;
         font-size: 14px;
         font-weight: normal;
         line-height: normal;
         letter-spacing: -0.5px;
         color: #666;
-        display: block;
-        margin-bottom: 7px;
     }
 
     .input-area {
@@ -19,10 +20,7 @@
             height: 56px;
         }
 
-        &.focus {
-            outline: none;
-            border-color: #544944;
-        }
+        
 
         input {
             @if $is-dropdown {
@@ -57,6 +55,10 @@
                     border: 0;
                     color: #999;
                 }
+            }
+
+            @if $clear {
+                padding-right:50px;
             }
 
             &:focus {
@@ -106,6 +108,16 @@
                 }
             }
         }
+        &.focus {
+            outline: none;
+            border-color: #544944;
+        }
+        &.readonly,
+        &.disabled {
+            border-color: #f3f3f3;
+            background-color: #f3f3f3;
+            color: #999;
+        }
     }
 
     @if $validate {
@@ -113,31 +125,47 @@
             .input-area {
                 border: solid 1px #ee1100;
             }
-            .message {
-                color: #ee1100;
-                background-image: url('/assets/icon/icon-info-outline.svg');
-            }
         }
         &.success {
             .input-area {
                 border: solid 1px #5089ca;
             }
-            .message {
-                color: #5089ca;
-                background-image: url('/assets/icon/icon-check-outline.svg');
-            }
         }
-    
-        .message {
-            font-size: 12px;
-            letter-spacing: -0.5px;
-            font-weight: normal;
-            margin-top: 8px;
-            display: flex;
-            padding-left: 20px;
-            background-size: 14px 14px;
-            background-repeat: no-repeat;
-            background-position: 0px 0px;
-        }
+    }
+}
+
+@mixin button-style($height:60,  $bg:#fff, $active:#fafafa, $disabled:#fff, $disabledColor:#bbb) {
+    height:$height + px;
+    background:$bg;
+
+    @if $height >= 56 {
+        font-size:16px;
+        font-weight:500;
+        border-radius: 10px;
+        line-height:1.5;
+        color:#fff;
+    }
+    @else if $height >= 48 {
+        font-size: 14px;
+        font-weight: 700;
+        border-radius: 10px;
+        line-height:1.57;
+    }
+    @else if $height <= 32 {
+        width:auto;
+        min-width: 64px;
+        padding:0 16px;
+        font-size: 12px;
+        font-weight:700;
+        line-height:1.5;
+        border-radius: 32px;
+    }
+    &:active,
+    &:focus {
+        background-color:$active
+    }
+    &:disabled {
+        background-color:$disabled;
+        color:$disabledColor
     }
 }

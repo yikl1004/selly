@@ -1,0 +1,42 @@
+.textarea-box {
+
+    @include form-field(false, true);
+    .input-area {
+        display: flex;
+        flex-flow: column;
+        height:130px;
+        padding: 16px 20px 17px;
+        border:1px solid #ebebeb;
+        border-radius: 10px;
+        background: #fff;
+        textarea {
+            height: 100%;
+            border: 0;
+            font-size:16px;
+            color:#222;
+            line-height: 1.5;
+            font-weight: 500;
+            &::-webkit-input-placeholder,
+            &:-ms-input-placeholder, 
+            &::-ms-input-placeholder {color:#bbb;}
+        }
+        .text-counter {
+            margin-top: 13px;
+            text-align: right;
+            font-size:12px;
+            color:#bbb;
+            line-height: 1.33;
+        }
+
+        &.disabled,
+        &.readonly {
+            background-color:#f3f3f3;
+            border-color:#f3f3f3;
+            color:#999;
+            textarea {
+                background-color:#f3f3f3;
+
+            }
+        }
+    }
+}

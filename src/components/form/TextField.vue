@@ -1,7 +1,7 @@
 <template>
     <div class="text-field" :class="isError">
         <label :for="id" :class="{ ir: hiddenLabel }">{{ label }}</label>
-        <div class="input-area" :class="{ focus: focusedClass, 'select-type': isSelectType }">
+        <div class="input-area" :class="{ focus: focusedClass, readonly: readonly, disabled: disabled }">
             <template v-if="isSelectType">
                 <button type="button" class="select-button" @click="openBottomSheet">
                     {{ selectedValue.displayName }}
@@ -26,6 +26,7 @@
                 :placeholder="placeholder"
                 :type="inputType"
                 :readonly="readonly"
+                :disabled="disabled"
                 v-bind="restProps"
                 @input="onInput"
                 @keydown="onKeydown"
@@ -40,9 +41,8 @@
                 <span class="ir">전체삭제</span>
             </button>
         </div>
-        <p v-if="message" class="message">
-            {{ message }}
-        </p>
+        <!--//유효성 검사가 되어 메시지 노출할때만 보여줌. 에러일때와 성공일때-->
+        <TextInputMessage v-if="isError !== undefined" :error-message="errorMessage" :message-type="isError" />
     </div>
 </template>
 
@@ -80,10 +80,11 @@ export default class TextField extends Mixins(Validates) {
      */
 
     /** type 속성 */
-    @Prop({ type: String, default: 'text' })
-    readonly type!: 'text' | 'number' | 'seperateNumber' | 'select'
-
+    @Prop({ type: String, default: 'select' })
+    // @ts-ignore
+    readonly type!: any
     /** form에 사용될 id */
+
     @Prop({ type: String, required: true })
     readonly id!: string
 
@@ -106,6 +107,10 @@ export default class TextField extends Mixins(Validates) {
     /** 읽기전용 여부 */
     @Prop({ type: Boolean, default: false })
     readonly readonly!: boolean
+
+    /** 비활성화 여부 */
+    @Prop({ type: Boolean, default: false })
+    readonly disabled!: boolean
 
     /** 단위 표시 */
     @Prop({ type: String, default: '' })
@@ -186,6 +191,7 @@ export default class TextField extends Mixins(Validates) {
         if (conditions.every(condition => condition)) {
             return this.validate(this.value) ? 'success' : 'error'
         }
+        return 'error'
     }
 
     /** 에러 메세지 */

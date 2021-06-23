@@ -61,20 +61,20 @@ ErrorStatus.args = {
     defaultValue: '5674',
     type: 'seperateNumber',
     validate: (value: string) => _.toNumber(value) < 3500,
-    successMessage: '정확히 입력하셨습니다',
+    Message: '정확히 입력하셨습니다',
     errorMessage: '한도 초과입니다.',
 }
 
-export const SuccessStatus = Template.bind({})
-SuccessStatus.args = {
-    id: 'success-example',
-    label: '희망한도',
-    placeholder: '만원단위',
-    defaultValue: '3200',
-    type: 'seperateNumber',
-    validate: (value: string) => _.toNumber(value) < 3500,
-    successMessage: '정확히 입력하셨습니다',
-}
+// export const SuccessStatus = Template.bind({})
+// SuccessStatus.args = {
+//     id: 'success-example',
+//     label: '희망한도',
+//     placeholder: '만원단위',
+//     defaultValue: '3200',
+//     type: 'seperateNumber',
+//     validate: (value: string) => _.toNumber(value) < 3500,
+//     successMessage: '정확히 입력하셨습니다',
+// }
 
 export const WithSelect = Template.bind({})
 WithSelect.args = {

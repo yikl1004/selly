@@ -1,0 +1,26 @@
+.fixed-btn-box{
+    display: flex;
+    position: fixed;
+    align-items: center;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width:100%;
+    padding: 24px;;
+    background-color: #fff;
+    .btn {
+        &.basic {
+            &:first-of-type {
+                min-width: 32%;
+                @include button-style(60, #6c625a, #201c1b, #ebebeb,#bbb );
+            }
+            &:last-of-type {
+                @include button-style(60, #413a2f, #201c1b, #ebebeb,#bbb );
+            }
+            & + .basic {
+                min-width: calc(68% - 8px);
+                margin-left:8px;
+            }
+        }
+    }
+}

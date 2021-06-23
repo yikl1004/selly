@@ -1,0 +1,27 @@
+.box-text-message {
+    display: flex;
+    align-items: flex-start;
+    .text-message {
+        padding-top: 6px;
+        font-size: 12px;
+        line-height: 1.33;
+    }
+    .icon {
+        display: block;
+        min-width: 24px;
+        height: 24px;
+        background-repeat: no-repeat;
+    }
+    &.error {
+        color: #fa4123;
+        .icon {
+            background-image: url('/assets/icon/icon-error.svg');
+        }
+    }
+    &.success {
+        color: #00648c;
+        .icon {
+            background-image: url('/assets/icon/icon-success.svg');
+        }
+    }
+}

@@ -1,0 +1,51 @@
+.btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    letter-spacing: -0.5px;
+    text-align: center;
+    &.large {
+        @include button-style(60, #413a2f, #201c1b, #ebebeb,#bbb );
+    }
+    &.medium {
+        @include button-style(48);
+        border:1px solid #bbb;
+        &:disabled {
+            border-color:#ebebeb
+        }
+    }
+    &.small {
+        @include button-style(32);
+        border:1px solid #bbb;
+    }
+    &.dialogBlue,
+    &.dialogWhite {
+        border-radius: 8px;
+        font-size:14px;
+        font-weighT:500;
+    }
+    &.dialogBlue {        
+        @include button-style(40, $point-color-blue, #003950, #ebebeb,#bbb);
+        color:#fff;
+    }
+    &.dialogWhite {  
+        @include button-style(40);
+        border:1px solid #bbb;
+        color:#222
+    }
+    &.textBlue,
+    &.textGray {
+        display: inline-block;
+        width: auto;
+        height:22px;
+        font-size:14px;
+        line-height:1.57;
+        font-weight:400;
+        text-decoration: underline;
+        color:$point-color-blue
+    }
+    &.textGray {
+        color:#999
+    }
+}

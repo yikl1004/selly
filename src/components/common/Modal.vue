@@ -7,21 +7,21 @@
         >
             <div v-if="showState" ref="modal" :class="['modal', type]" @click="outsideClick">
                 <div ref="inner" class="inner">
-                    <header class="modal-header">
+                    <!-- <header class="modal-header">
                         <h2 v-if="title" class="title">
                             {{ title }}
                         </h2>
-                    </header>
+                    </header> -->
                     <div class="contents">
                         <div class="description">
                             <slot />
                         </div>
                     </div>
                     <div class="button-group">
-                        <BasicButton v-if="buttonText.cancel" size="small" type="line" @click="onCancel">
+                        <BasicButton v-if="buttonText.cancel" type="dialogWhite" @click="onCancel">
                             {{ buttonText.cancel }}
                         </BasicButton>
-                        <BasicButton size="small" @click="onConfirm">
+                        <BasicButton type="dialogBlue" @click="onConfirm">
                             {{ buttonText.confirm }}
                         </BasicButton>
                     </div>

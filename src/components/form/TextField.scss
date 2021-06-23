@@ -1,23 +1,18 @@
 .text-field {
-
     @include form-field();
-
     .input-area {
-        &.select-type {
-            display: flex;
-            & > button.select-button, & > input {
-                display: inherit;
-            }
-            & > button.select-button {
-                align-items: center;
-                white-space: nowrap;
-                padding-right: 24px;
-                padding-left: 20px;
-                background-image: url('/assets/icon/icon-arrow-bottom2.svg');
-                background-repeat: no-repeat;
-                background-position: right center;
-                background-size: 24px 24px;
-            }
-        }
+        display: flex;
+    }
+    .select-button {
+        min-width: 108px;
+        align-items: center;
+        white-space: nowrap;
+        padding-right: 24px;
+        padding-left: 20px;
+        background-image: url('/assets/icon/icon-arrow-bottom2.svg');
+        background-repeat: no-repeat;
+        background-position: right center;
+        background-size: 24px 24px;
+        text-align: left;
     }
 }
