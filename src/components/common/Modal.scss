@@ -8,12 +8,10 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 64px 0 64px;
+    padding: 64px 24px 64px;
 
     &.popup {
         .inner {
-            padding-top: 24px;
-
             .modal-header {
                 margin-left: -24px;
                 margin-right: -24px;
@@ -24,22 +22,17 @@
                     margin-top: 0;
                 }
             }
-
-            .contents {
-                padding-top: 16px;
-            }
         }
     }
 
     .inner {
         display: flex;
         flex-direction: column;
-        width: 296px;
         max-height: 100%;
         background-color: #fff;
         border-radius: 20px;
         box-sizing: border-box;
-        padding: 32px 24px 24px;
+        padding: 48px 24px 24px;
 
         .modal-header {
             .title {

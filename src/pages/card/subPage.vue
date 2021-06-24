@@ -2,33 +2,8 @@
     <div class="container">
         <div class="box-card-loan">
             <Title title="1. 가맹점 선택" />
+
             <BulletList />
-            <InfoList />
-            <CautionBox type="complete" />
-
-            <BasicButton size="large" @click="openPopup">
-                모달 확인
-            </BasicButton>
-            <FullPopup
-                :show.sync="show"
-                title="이거슨 제목인가?"
-                :button-text="{ confirm: '확인', cancel: '취소' }"
-                type="popup"
-                @confirm="onConfirm"
-                @cancel="onCancel"
-            >
-                <!-- 줄바꿈은 br 태그를 직접 넣는 걸로.... -->
-                모든 국민은 법 앞에 평등하다. 누구든지 성별·종교 또는 사회적 신분에 의하여 정치적·경제적·사회적·문화적 생활의 모든 영역에
-                있어서 차별을 받지 아니한다.
-            </FullPopup>
-
-            <CheckBoxGroup2 name="group" title="타이틀" label="체크박스내용" :disabled="true" :list="checkList" />
-
-            <Radio label="라벨1" name="radio01" value="value" />
-            <Radio label="라벨2" name="radio01" value="value1" />
-            <Radio label="라벨2" name="radio01" value="value1" :disabled="true" />
-
-            <AccoItem :list="accordionList" />
 
             <FormProvider :schema="data" @change="formChange" @submit="onSubmit">
                 <template slot-scope="{ schema }">
@@ -43,6 +18,59 @@
                     />
                 </template>
             </FormProvider>
+
+            <SecretNumber id="personal-number-1" :readonly="false" label="카드 비밀번호" type="card2" />
+
+            <TextField
+                id="my-text"
+                type="text"
+                label="소득구분a"
+                :hidden-label="null"
+                :maxlength="9999"
+                placeholder="소득구분 입력"
+                :readonly="false"
+                :disabled="false"
+                unit=""
+                :validate="null"
+                error-message="에러메시지"
+                success-message="성공메시지"
+                :default-value="null"
+            />
+
+            <CheckBoxGroup2 name="group" title="타이틀" label="체크박스내용" :disabled="false" />
+
+            <CheckBoxGroup2 name="group" title="타이틀" label="체크박스내용" :disabled="true" :list="checkList" />
+
+            <RadioGroup name="group" title="타이틀" label="체크박스내용" :disabled="false" :list="checkList" />
+
+            <InfoList type="" />
+            <CautionBox type="complete" />
+
+            <br /><br />
+            <!--팝업확인-->
+            <BasicButton size="large" @click="openPopup">
+                풀팝업 확인
+            </BasicButton>
+            <FullPopup
+                :show.sync="show"
+                title="이거슨 제목인가?"
+                :button-text="{ confirm: '확인', cancel: '취소' }"
+                type="popup"
+                @confirm="onConfirm"
+                @cancel="onCancel"
+            >
+                <!-- 줄바꿈은 br 태그를 직접 넣는 걸로.... -->
+                <p>
+                    모든 국민은 법 앞에 평등하다. 누구든지 성별·종교 또는 사회적 신분에 의하여 정치적·경제적·사회적·문화적 생활의 모든
+                    영역에 영역에 있어서 차별을 받지 아니한다.
+                </p>
+            </FullPopup>
+
+            <Radio label="라벨1" name="radio01" value="value" />
+            <Radio label="라벨2" name="radio01" value="value1" />
+            <Radio label="라벨2" name="radio01" value="value1" :disabled="true" />
+
+            <AccoItem :list="accordionList" />
 
             <!-- 인풋 텍스트 -->
             <div>

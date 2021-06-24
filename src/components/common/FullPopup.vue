@@ -118,4 +118,4 @@ export default class FullPopup extends Vue {
 }
 </script>
 
-<style scoped lang="scss" src="./FullPopup.scss"></style>
+<style lang="scss" src="./FullPopup.scss"></style>

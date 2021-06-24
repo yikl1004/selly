@@ -37,6 +37,9 @@
                 overflow-y: auto;
                 height: 100%;
                 padding: 10px 24px;
+                & > p {
+                    color: #222;
+                }
             }
             .popup-btn-bottom {
                 display: block;
