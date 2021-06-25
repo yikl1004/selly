@@ -3,6 +3,7 @@
         <Header header-type="sub" @click="openGnb" />
         <Gnb :show.sync="show" @click="closeGnb" />
         <slot />
+        <Footer />
     </div>
 </template>
 

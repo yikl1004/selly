@@ -22,6 +22,7 @@ import EmailForm from '@components/form/EmailForm.vue'
 // common
 import Anchor from '@components/common/Anchor.vue'
 import Header from '@components/common/Header.vue'
+import Footer from '@components/common/Footer.vue'
 import FixedBtnBox from '@components/common/FixedBtnBox.vue'
 import BottomSheet from '@components/common/BottomSheet.vue'
 import Timer from '@components/common/Timer.vue'
@@ -51,6 +52,7 @@ const componentList: { [key: string]: VueConstructor }[] = [
     { Anchor },
     { FileUploader },
     { Header },
+    { Footer },
     { FixedBtnBox },
     { TextField },
     { Radio },
