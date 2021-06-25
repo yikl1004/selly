@@ -1,6 +1,6 @@
 <template>
     <div class="layout-default">
-        <Header header-type="main" @click="openGnb" />
+        <Header header-type="sub" @click="openGnb" />
         <Gnb :show.sync="show" @click="closeGnb" />
         <slot />
     </div>

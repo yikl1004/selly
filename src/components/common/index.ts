@@ -16,6 +16,7 @@ import SwitchButton from '@components/form/SwitchButton.vue'
 import DropdownBox from '@components/form/DropdownBox.vue'
 import FormProvider from '@components/form/FormProvider.vue'
 import Radio from '@components/form/Radio.vue'
+import RadioGroup from '@components/form/RadioGroup.vue'
 
 // common
 import Anchor from '@components/common/Anchor.vue'
@@ -51,6 +52,7 @@ const componentList: { [key: string]: VueConstructor }[] = [
     { FixedBtnBox },
     { TextField },
     { Radio },
+    { RadioGroup },
     { BasicButton },
     { SecretNumber },
     { ButtonField },

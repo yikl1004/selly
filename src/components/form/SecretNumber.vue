@@ -1,6 +1,6 @@
 <template>
-    <div class="secret-number">
-        <label :for="`${id}-front`" :class="{ ir: hiddenLabel }">{{ label }}</label>
+    <div class="secret-number" :class="{ password: type === 'card' || type === 'card2' }">
+        <LabelTitle id="labelid" title-type="label" :hidden-label="hiddenLabel" :label="label" />
         <div class="input-area" :class="{ focus: focusedClass }">
             <template v-if="isRegistType">
                 <input
