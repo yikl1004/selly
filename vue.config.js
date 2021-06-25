@@ -49,6 +49,10 @@ module.exports = {
                     // 프록시 요청을 보낼 서버의 주소
                     target: 'http://10.25.19.42:8080',
                 },
+                '/addrlink': {
+                    target: 'https://www.juso.go.kr',
+                    changeOrigin: true,
+                },
             },
             disableHostCheck: true,
         },
