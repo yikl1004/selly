@@ -1,0 +1,33 @@
+.email-field {
+    @include form-field();
+    .email-input-box {
+        display: flex;
+        align-items: center;
+    }
+    .input-area {
+
+        width:calc(100% - 16px)
+    }
+    .icon {
+        display: block;
+        min-width: 32px;
+        font-size: 16px;
+        line-height: 1.5;
+        text-align: center;
+    }
+    .select-button {
+        min-width: 108px;
+        align-items: center;
+        white-space: nowrap;
+        padding-right: 24px;
+        padding-left: 20px;
+        background-image: url('/assets/icon/icon-arrow-bottom2.svg');
+        background-repeat: no-repeat;
+        background-position: right center;
+        background-size: 24px 24px;
+        text-align: left;
+    }
+    .email-domain-select{
+        margin-top: 12px;
+    }
+}

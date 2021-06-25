@@ -12,11 +12,27 @@
         </div>
         <div v-if="list.length" :class="['check-list', { opened: open }]">
             <div class="check-list-wrapper">
-                <div v-for="(check, index) in list" :key="`check-box-group-${name}-${index}`" class="check-list-item">
-                    <CheckBox2 v-bind="getCheckBoxProps(index)" @change="onChangeCheckBox" />
-                    <BasicButton type="textBlue">
-                        보기
-                    </BasicButton>
+                <!-- 동의 리스트가 두개 들어올 경우 동의내용에 대한 타이틀 노출 필요 -->
+                <div class="check-list-title">
+                    <strong>개인(신용)정보 동의</strong>
+                </div>
+                <div class="check-list-box">
+                    <div v-for="(check, index) in list" :key="`check-box-group-${name}-${index}`" class="check-list-item">
+                        <CheckBox2 v-bind="getCheckBoxProps(index)" @change="onChangeCheckBox" />
+                        <BasicButton type="textBlue">
+                            보기
+                        </BasicButton>
+                    </div>
+                </div>
+                <!-- 체크박스가 2줄로 나오는 케이스가 있음. check-list-box에 col 클래스 추가 -->
+                <div class="check-list-title">
+                    <strong>개인(신용)정보 동의</strong>
+                </div>
+
+                <div class="check-list-box col">
+                    <div v-for="(check, index) in list" :key="`check-box-group-${name}-${index}`" class="check-list-item">
+                        <CheckBox2 v-bind="getCheckBoxProps(index)" @change="onChangeCheckBox" />
+                    </div>
                 </div>
             </div>
         </div>
