@@ -2,7 +2,54 @@
     <div class="container">
         <div class="box-card-loan">
             <Title title="1. 가맹점 선택" />
-
+            <div class="table-box">
+                <div class="table-scroll">
+                    <table>
+                        <caption>
+                            제목
+                        </caption>
+                        <colgroup>
+                            <col />
+                            <col />
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th scope="col">
+                                    상품명
+                                </th>
+                                <th scope="col">
+                                    이자율
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>내용</td>
+                                <td>내용</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <EmailForm
+                id="my-email"
+                label="이메일"
+                :hidden-label="null"
+                :readonly="false"
+                :disabled="false"
+                :validate="null"
+                :default-value="null"
+                :list="[
+                    { displayName: 'KT', value: 'kt', selected: true },
+                    { displayName: 'SKT', value: 'skt' },
+                    { displayName: 'LG U+', value: 'lguplus' },
+                    { displayName: 'KT알뜰폰', value: 'kt_sub' },
+                    { displayName: 'SKT알뜰폰', value: 'skt_sub' },
+                    { displayName: 'LGU+알뜰폰', value: 'lguplus_sub' },
+                ]"
+                :update:list="null"
+                :select="null"
+            />
             <BulletList />
 
             <FormProvider :schema="data" @change="formChange" @submit="onSubmit">
@@ -18,6 +65,8 @@
                     />
                 </template>
             </FormProvider>
+
+            <SecretNumber id="personal-number" :readonly="false" label="주민등록번호" :hidden-label="null" type="regist" />
 
             <SecretNumber id="personal-number-1" :readonly="false" label="카드 비밀번호" type="card2" />
 
@@ -36,14 +85,18 @@
                 success-message="성공메시지"
                 :default-value="null"
             />
-
             <CheckBoxGroup2 name="group" title="타이틀" label="체크박스내용" :disabled="false" />
 
             <CheckBoxGroup2 name="group" title="타이틀" label="체크박스내용" :disabled="true" :list="checkList" />
 
             <RadioGroup name="group" title="타이틀" label="체크박스내용" :disabled="false" :list="checkList" />
 
-            <InfoList type="" />
+            <FormTextBox type="row" />
+            <FormTextBox type="col" />
+
+            <InfoList />
+            <InfoList type="style01" />
+
             <CautionBox type="complete" />
 
             <br /><br />

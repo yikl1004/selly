@@ -45,3 +45,34 @@
         }
     }
 }
+
+//table
+.table-box {
+    overflow: hidden;
+    width: 100%;
+    .table-scroll {
+        overflow-x: auto;
+    }
+    table {
+        min-width: 312px;
+        margin-left: -1px;
+        border-top: 1px solid #ebebeb;
+        border-bottom: 1px solid #ebebeb;
+        thead {
+            th {
+                padding: 13px 20px 12px;
+                background-color: #fafafa;
+                color: #222;
+                border-left: 1px solid #ebebeb;
+            }
+        }
+        tbody {
+            th,
+            td {
+                padding: 13px 20px 12px;
+                color: #222;
+                border-left: 1px solid #ebebeb;
+            }
+        }
+    }
+}

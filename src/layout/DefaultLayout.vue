@@ -3,6 +3,7 @@
         <Header header-type="sub" />
         <Gnb :show="gnbOpen" @close="setGnb(false)" />
         <slot />
+        <Footer />
     </div>
 </template>
 

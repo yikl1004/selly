@@ -17,10 +17,12 @@ import DropdownBox from '@components/form/DropdownBox.vue'
 import FormProvider from '@components/form/FormProvider.vue'
 import Radio from '@components/form/Radio.vue'
 import RadioGroup from '@components/form/RadioGroup.vue'
+import EmailForm from '@components/form/EmailForm.vue'
 
 // common
 import Anchor from '@components/common/Anchor.vue'
 import Header from '@components/common/Header.vue'
+import Footer from '@components/common/Footer.vue'
 import FixedBtnBox from '@components/common/FixedBtnBox.vue'
 import BottomSheet from '@components/common/BottomSheet.vue'
 import Timer from '@components/common/Timer.vue'
@@ -39,6 +41,7 @@ import CautionBox from '@components/common/CautionBox.vue'
 import BulletList from '@components/common/BulletList.vue'
 import Gnb from '@components/common/Gnb.vue'
 import LabelTitle from '@components/common/LabelTitle.vue'
+import FormTextBox from '@components/common/FormTextBox.vue'
 
 //개발씽크맞추기 전
 import DropdownBox2 from '@components/form/DropdownBox2.vue'
@@ -49,10 +52,12 @@ const componentList: { [key: string]: VueConstructor }[] = [
     { Anchor },
     { FileUploader },
     { Header },
+    { Footer },
     { FixedBtnBox },
     { TextField },
     { Radio },
     { RadioGroup },
+    { EmailForm },
     { BasicButton },
     { SecretNumber },
     { ButtonField },
@@ -81,6 +86,7 @@ const componentList: { [key: string]: VueConstructor }[] = [
     { BulletList },
     { Gnb },
     { LabelTitle },
+    { FormTextBox },
 
     //개발씽크 맞추기 전
     { DropdownBox2 },

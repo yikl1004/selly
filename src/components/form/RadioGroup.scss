@@ -1,13 +1,9 @@
 .radio-group {
     .radio-area {
-        &:after {
-            content:'';
-            display: block;
-            clear: both;
-        }
+        display: flex;
+        flex-wrap: wrap;
     }
     .radio-list-item {
-        float: left;
         width: 50%;
         margin-top: 20px;
         &:nth-child(1),

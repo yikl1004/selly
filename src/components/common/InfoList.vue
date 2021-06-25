@@ -1,5 +1,5 @@
 <template>
-    <div class="box-info-wrap">
+    <div class="box-info-wrap" :class="type">
         <div class="info-title">
             <h3 class="title">
                 나의 한도
@@ -40,10 +40,8 @@ export default class InfoList extends Vue {
     /**
      * @category Props
      */
-
-    /** 아코디언 제목과 내용 배열로 받음 */
-    @Prop({ type: Array, default: () => [], required: true })
-    readonly list!: AccordionListItem[]
+    @Prop({ type: String, default: '' })
+    readonly type!: string
 
     /**
      * @category Data(State)

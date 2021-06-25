@@ -92,7 +92,26 @@
             margin-top: 20px;
             padding: 0 20px;
         }
-
+        .check-list-title {
+            margin:20px 0 16px;
+            color: #222;
+            &:first-of-type {
+                margin-top: 0;
+            }
+        }
+        .check-list-box {
+            &.col {
+                display: flex;
+                flex-wrap: wrap;
+                .check-list-item {
+                    width: 50%;
+                    align-items: baseline;
+                    &:nth-child(2) {
+                        margin-top: 0;
+                    }
+                }
+            }
+        }
         &.opened {
             max-height: 1000px;
         }
