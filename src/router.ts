@@ -16,7 +16,7 @@ import CardSubPage from '@pages/card/subPage.vue'
 // examples
 import ExampleMain from '@pages/example/index.vue'
 import ExampleForm from '@pages/example/form/index.vue'
-import ExampleTest from '@pages/example/test/index.vue'
+import ExampleTestbed from '@pages/example/testbed/index.vue'
 
 Vue.use(VueRouter)
 
@@ -39,7 +39,7 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
             {
                 path: 'test',
                 name: 'Test',
-                component: ExampleTest,
+                component: ExampleTestbed,
             },
         ],
         meta: {
