@@ -6,17 +6,22 @@ import store from '@stores/index'
 import LoginPage from '@pages/index.vue'
 import NeedLoginPage from '@pages/NeedLogin/index.vue'
 import MainPage from '@pages/main/index.vue'
+import SelectStorePage from '@pages/auth/SelectStore.vue'
+import CompleteJoinPage from '@pages/auth/CompleteJoin.vue'
+import UnableJoinPage from '@pages/auth/UnableJoin.vue'
+
 import CardPage from '@pages/card/index.vue'
 import CardSubPage from '@pages/card/subPage.vue'
 
 // examples
 import ExampleMain from '@pages/example/index.vue'
 import ExampleForm from '@pages/example/form/index.vue'
+import ExampleTest from '@pages/example/test/index.vue'
 
 Vue.use(VueRouter)
 
 export type RouteMeta = {
-    layout?: 'default' | 'none' | string
+    layout?: 'default' | 'none' | 'floating' | string
 }
 
 const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
@@ -31,6 +36,11 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
                 name: 'ExampleForm',
                 component: ExampleForm,
             },
+            {
+                path: 'test',
+                name: 'Test',
+                component: ExampleTest,
+            },
         ],
         meta: {
             layout: 'none',
@@ -38,14 +48,50 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
     },
 
     // 여기부터 페이지 작성
+
+    // 로그인, 회원가입 페이지
     {
         path: '/',
         name: 'Login',
         component: LoginPage,
         meta: {
-            layout: 'default',
+            layout: 'none',
         },
     },
+
+    // 사업자번호 선택 (단일 / 복수)
+    {
+        path: '/auth/selectStore',
+        name: 'SelectStore',
+        component: SelectStorePage,
+        meta: {
+            layout: 'default',
+            auth: true,
+        },
+    },
+
+    // 가입완료
+    {
+        path: '/auth/completeJoin',
+        name: 'CompleteJoin',
+        component: CompleteJoinPage,
+        meta: {
+            layout: 'default',
+            auth: true,
+        },
+    },
+
+    // 가입불가
+    {
+        path: '/auth/unableJoin',
+        name: 'UnableJoin',
+        component: UnableJoinPage,
+        meta: {
+            layout: 'default',
+            auth: true,
+        },
+    },
+
     {
         path: '/needLogin',
         name: 'NeedLogin',

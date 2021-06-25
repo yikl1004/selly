@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1>카카오 로그인 페이지</h1>
+        <h1>회원가입 - 복수/단일 사업자</h1>
     </div>
 </template>
 
@@ -8,7 +8,7 @@
 import { Component, Vue } from 'vue-property-decorator'
 
 @Component
-export default class Login extends Vue {}
+export default class SelectStorePage extends Vue {}
 </script>
 
 <style scoped></style>
