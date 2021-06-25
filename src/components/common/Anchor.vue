@@ -11,7 +11,7 @@
 import { Component, Prop, Vue } from 'vue-property-decorator'
 
 @Component
-export default class SellyLink extends Vue {
+export default class Anchor extends Vue {
     @Prop({ type: String, default: '/', required: true })
     public href!: string
 
