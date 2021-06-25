@@ -167,7 +167,13 @@ export default class LoginButton extends Vue {
             success: (authObj: any) => {
                 console.log('kakao login SUCCESS', authObj)
                 this.kakaoApi.Auth.getStatusInfo((status: any) => {
-                    console.log(status)
+                    console.log('getStatusInfo', status)
+                })
+                this.kakaoApi.API.request({
+                    url: '/v2/user/me',
+                    success: res => {
+                        console.log('/v2/user/me', res)
+                    },
                 })
             },
             fail: (err: any) => {
@@ -191,6 +197,7 @@ export default class LoginButton extends Vue {
     }
 
     getTerms() {
+        // TODO: 약관 내용은 아직 API 적용하면 안됨
         this.kakaoApi.API.request({
             url: this.kakaoApiUri.serviceTerms,
             success: res => {
