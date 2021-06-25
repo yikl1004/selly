@@ -2,9 +2,9 @@
     <section v-if="showState" class="box-gnb-wrap">
         <div class="gnb-header">
             <h2>
-                <Link href="/" class="logo">
+                <Anchor href="/" class="logo">
                     <span class="ir">Selly</span>
-                </Link>
+                </Anchor>
             </h2>
             <button type="button" class="btn-gnb-close" @click="onClick">
                 <span class="ir">메뉴 닫기</span>
@@ -49,47 +49,47 @@
             <div class="gnb-2dep-box">
                 <div class="gnb-2dep active">
                     <ul>
-                        <li><Link>매출내역</Link></li>
-                        <li><Link>입금내역</Link></li>
+                        <li><Anchor>매출내역</Anchor></li>
+                        <li><Anchor>입금내역</Anchor></li>
                     </ul>
                 </div>
 
                 <div class="gnb-2dep">
                     <ul>
-                        <li><Link>금융상품 안내</Link></li>
-                        <li><Link>대출내역</Link></li>
+                        <li><Anchor>금융상품 안내</Anchor></li>
+                        <li><Anchor>대출내역</Anchor></li>
                     </ul>
                 </div>
 
                 <div class="gnb-2dep">
                     <ul>
-                        <li><Link>마케팅 안내</Link></li>
-                        <li><Link>마케팅내역</Link></li>
-                        <li><Link>상권분석</Link></li>
+                        <li><Anchor>마케팅 안내</Anchor></li>
+                        <li><Anchor>마케팅내역</Anchor></li>
+                        <li><Anchor>상권분석</Anchor></li>
                     </ul>
                 </div>
 
                 <div class="gnb-2dep">
                     <ul>
-                        <li><Link>매출내역</Link></li>
-                        <li><Link>입금내역</Link></li>
+                        <li><Anchor>매출내역</Anchor></li>
+                        <li><Anchor>입금내역</Anchor></li>
                     </ul>
                 </div>
 
                 <div class="gnb-2dep">
                     <ul>
-                        <li><Link>세무서비스 있나없나</Link></li>
+                        <li><Anchor>세무서비스 있나없나</Anchor></li>
                     </ul>
                 </div>
 
                 <div class="gnb-2dep">
                     <ul>
-                        <li><Link>회원정보</Link></li>
-                        <li><Link>사업자정보</Link></li>
-                        <li><Link>공지사항</Link></li>
-                        <li><Link>사업자정보</Link></li>
-                        <li><Link>자주 묻는 질문</Link></li>
-                        <li><Link>이용약관</Link></li>
+                        <li><Anchor>회원정보</Anchor></li>
+                        <li><Anchor>사업자정보</Anchor></li>
+                        <li><Anchor>공지사항</Anchor></li>
+                        <li><Anchor>사업자정보</Anchor></li>
+                        <li><Anchor>자주 묻는 질문</Anchor></li>
+                        <li><Anchor>이용약관</Anchor></li>
                     </ul>
                 </div>
             </div>
@@ -100,6 +100,11 @@
 <script lang="ts">
 import { Component, Prop, PropSync, Vue } from 'vue-property-decorator'
 
+interface MenuItem {
+    name: string
+    path: string
+}
+
 @Component
 export default class Gnb extends Vue {
     /**
@@ -109,6 +114,12 @@ export default class Gnb extends Vue {
     /** 노출 여부(초기 설정) */
     @PropSync('show', { type: Boolean, default: false, required: true })
     public showState!: boolean
+
+    /**
+     * @category Data
+     */
+
+    private menuList: MenuItem[] = [{ name: '매출', path: '' }]
 
     /**
      * @category Methods

@@ -4,9 +4,9 @@
         <div class="header-inner">
             <!-- 로고 -->
             <h1 v-if="headerType === 'main'" class="header-logo">
-                <Link href="/" class="logo">
+                <Anchor href="/" class="logo">
                     <span class="ir">Selly</span>
-                </Link>
+                </Anchor>
             </h1>
 
             <!-- 이전버튼 -->

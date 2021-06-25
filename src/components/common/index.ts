@@ -18,7 +18,7 @@ import FormProvider from '@components/form/FormProvider.vue'
 import Radio from '@components/form/Radio.vue'
 
 // common
-import Link from '@components/common/Link.vue'
+import Anchor from '@components/common/Anchor.vue'
 import Header from '@components/common/Header.vue'
 import FixedBtnBox from '@components/common/FixedBtnBox.vue'
 import BottomSheet from '@components/common/BottomSheet.vue'
@@ -45,7 +45,7 @@ import CheckBoxGroup2 from '@components/form/CheckBoxGroup2.vue'
 import CheckBox2 from '@components/form/CheckBox2.vue'
 
 const componentList: { [key: string]: VueConstructor }[] = [
-    { Link },
+    { Anchor },
     { FileUploader },
     { Header },
     { FixedBtnBox },
