@@ -1,12 +1,12 @@
 <template>
-    <section v-if="showState" class="box-gnb-wrap">
+    <section v-if="show" class="box-gnb-wrap">
         <div class="gnb-header">
             <h2>
                 <Anchor href="/" class="logo">
                     <span class="ir">Selly</span>
                 </Anchor>
             </h2>
-            <button type="button" class="btn-gnb-close" @click="onClick">
+            <button type="button" class="btn-gnb-close" @click="onClose">
                 <span class="ir">메뉴 닫기</span>
             </button>
         </div>
@@ -19,29 +19,10 @@
         <div class="box-gnb-list">
             <div class="gnb-1dep-box">
                 <ul>
-                    <li class="active">
-                        <button type="button">
-                            매출/입금
-                        </button>
-                    </li>
-                    <li>
-                        <button type="button">
-                            금융상품
-                        </button>
-                    </li>
-                    <li>
-                        <button type="button">
-                            마케팅
-                        </button>
-                    </li>
-                    <li>
-                        <button type="button">
-                            세무서비스
-                        </button>
-                    </li>
-                    <li>
-                        <button type="button">
-                            설정
+                    <li v-for="(item, index) in gnbList" :key="`gnb-depth1-${index}`" :class="{ active: index === activeIndex }">
+                        {{ typeof index }}
+                        <button type="button" @active="onActive(index)">
+                            {{ item.name }}
                         </button>
                     </li>
                 </ul>
@@ -49,12 +30,13 @@
             <div class="gnb-2dep-box">
                 <div class="gnb-2dep active">
                     <ul>
-                        <li><Anchor>매출내역</Anchor></li>
-                        <li><Anchor>입금내역</Anchor></li>
+                        <!-- <li v-for="(child, index) in currentChildren" key="``"></li> -->
+                        <!-- <li><Anchor>매출내역</Anchor></li>
+                        <li><Anchor>입금내역</Anchor></li> -->
                     </ul>
                 </div>
 
-                <div class="gnb-2dep">
+                <!-- <div class="gnb-2dep">
                     <ul>
                         <li><Anchor>금융상품 안내</Anchor></li>
                         <li><Anchor>대출내역</Anchor></li>
@@ -91,7 +73,7 @@
                         <li><Anchor>자주 묻는 질문</Anchor></li>
                         <li><Anchor>이용약관</Anchor></li>
                     </ul>
-                </div>
+                </div> -->
             </div>
         </div>
     </section>
@@ -99,11 +81,14 @@
 
 <script lang="ts">
 import { Component, Prop, PropSync, Vue } from 'vue-property-decorator'
+import { namespace } from 'vuex-class'
 
 interface MenuItem {
     name: string
     path: string
 }
+
+const UiModule = namespace('ui')
 
 @Component
 export default class Gnb extends Vue {
@@ -112,23 +97,40 @@ export default class Gnb extends Vue {
      */
 
     /** 노출 여부(초기 설정) */
-    @PropSync('show', { type: Boolean, default: false, required: true })
-    public showState!: boolean
+    @Prop({ type: Boolean, default: false, required: true })
+    public show!: boolean
 
     /**
      * @category Data
      */
 
     private menuList: MenuItem[] = [{ name: '매출', path: '' }]
+    private activeIndex: number = 1
+
+    @UiModule.State('gnbList')
+    readonly gnbList!: GnbItem[]
+
+    /**
+     * @category Computed
+     */
+
+    get currentChildren(): GnbItem[] {
+        return this.gnbList[this.activeIndex].children || ([] as GnbItem[])
+    }
 
     /**
      * @category Methods
      */
-    onClick(event: PointerEvent) {
+
+    onClose(event: PointerEvent) {
         /**
          * click 이벤트
          */
-        this.$emit('click', event)
+        this.$emit('close', event)
+    }
+
+    onActive(index: number) {
+        this.activeIndex = index
     }
 }
 </script>

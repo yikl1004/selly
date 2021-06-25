@@ -1,4 +1,11 @@
 declare global {
+    // menu 정보
+    interface GnbItem {
+        name: string
+        path: string
+        children?: GnbItem[]
+    }
+
     interface TransitionProps {
         mode: 'out-in'
         'enter-active-class': string
