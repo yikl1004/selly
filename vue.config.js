@@ -34,7 +34,7 @@ module.exports = {
     //     },
     // },
 
-    publicPath: '/selly',
+    // publicPath: '/selly',
     outputDir: 'docs',
     configureWebpack: {
         resolve: {
