@@ -1,0 +1,26 @@
+.check-box-area {
+    @include border-box($height:84); 
+    .check-box {
+        @include checkbox-style;
+        label {
+            display: block;
+            position: relative;
+            width: 100%;
+            height: 100%;
+            padding: 16px 20px;
+            text-align: left;
+        }
+        i {
+            font-weight: 500;
+            font-size: 16px;
+            color: #222;
+        }
+        .store-name {
+            display: block;
+            padding-left: 30px;
+            font-weight: 500;
+            font-size: 16px;
+            color: #666;
+        }
+    }
+}

@@ -1,0 +1,23 @@
+.complete-store-list {
+    margin-top: 48px;
+    .store-box {
+        @include border-box(84);
+        margin-top: 12px;
+        padding: 16px 24px;
+        line-height: 1.57;
+        color: #666;
+        line-height: 24px;
+        font-size: 16px;
+        font-weight: 500;
+        &:first-of-type {
+            margin-top: 0;
+        }
+        i {
+            color: #222;
+        }
+        .store-name {
+            display: block;
+            margin-top: 4px;
+        }
+    }
+}

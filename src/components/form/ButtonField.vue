@@ -1,6 +1,6 @@
 <template>
     <div class="search-field">
-        <LabelTitle id="labelid" title-type="label" :hidden-label="hiddenLabel" label="lable" />
+        <LabelTitle id="labelid" title-type="label" :hidden-label="hiddenLabel" :label="label" />
         <div class="flex">
             <div class="input-area" :class="{ focus: focusedClass, readonly: readonly, disabled: disabled }">
                 <input

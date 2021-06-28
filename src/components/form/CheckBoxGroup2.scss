@@ -11,11 +11,7 @@
 
     .check-box-area {
         display: flex;
-        position: relative;
-        height: 56px;
-        border-radius: 10px;
-        border: solid 1px #ebebeb;
-        background-color: #fff;
+        @include border-box;
     }
     .btn-checkbox {
         display: block;

@@ -1,6 +1,6 @@
 <template>
     <div class="radio-group">
-        <LabelTitle id="labelid" title-type="label" :hidden-label="hiddenLabel" label="lable" />
+        <LabelTitle id="labelid" title-type="label" :hidden-label="hiddenLabel" :label="title" />
         <div class="radio-area">
             <div v-for="(check, index) in list" :key="`radio-group-${name}-${index}`" class="radio-list-item">
                 <Radio label="라벨1" name="radio01" value="value" />

@@ -85,11 +85,11 @@
                 success-message="성공메시지"
                 :default-value="null"
             />
-            <CheckBoxGroup2 name="group" title="타이틀" label="체크박스내용" :disabled="false" />
+            <CheckBoxGroup2 name="group" title="제목" label="버튼 체크박스" :disabled="false" />
 
-            <CheckBoxGroup2 name="group" title="타이틀" label="체크박스내용" :disabled="true" :list="checkList" />
+            <CheckBoxGroup2 name="group" title="제목" label="버튼체크박스 그룹" :disabled="true" :list="checkList" />
 
-            <RadioGroup name="group" title="타이틀" label="체크박스내용" :disabled="false" :list="checkList" />
+            <RadioGroup name="group" title="제목" label="체크박스내용" :disabled="false" :list="checkList" />
 
             <FormTextBox type="row" />
             <FormTextBox type="col" />

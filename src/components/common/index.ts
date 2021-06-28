@@ -11,6 +11,7 @@ import ButtonField from '@components/form/ButtonField.vue'
 import CalendarField from '@components/form/CalendarField.vue'
 import SingleSelection from '@components/form/SingleSelection.vue'
 import CheckBox from '@components/form/CheckBox.vue'
+import CheckBoxBlock from '@components/form/CheckBoxBlock.vue'
 import CheckBoxGroup from '@components/form/CheckBoxGroup.vue'
 import SwitchButton from '@components/form/SwitchButton.vue'
 import DropdownBox from '@components/form/DropdownBox.vue'
@@ -69,6 +70,7 @@ const componentList: { [key: string]: VueConstructor }[] = [
     { Tab },
     { SingleSelection },
     { CheckBox },
+    { CheckBoxBlock },
     { CheckBoxGroup },
     { SwitchButton },
     // { CreditCardField },

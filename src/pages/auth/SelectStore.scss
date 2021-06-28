@@ -1,0 +1,31 @@
+.select-store-wrap {
+    padding-bottom: 60px;
+    .select-store {
+        padding: 24px 0;
+        background: #fafafa;
+    }
+    .store-user-info {
+        strong {
+            display: block;
+            font-size: 20px;
+            color: #222;
+            line-height: 1.4;
+            font-weight: 500;
+        }
+        p {
+            margin-top: 8px;
+        }
+    }
+    .user-store-list {
+        margin-top: 32px;
+        .check-box-area {
+            margin-top: 12px;
+            &:first-of-type {
+                margin-top:0
+            }
+        }
+    }
+    .search-field {
+        margin-top: 32px;
+    }
+}

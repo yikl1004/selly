@@ -1,6 +1,6 @@
 <template>
-    <div>
-        <h1>가입 불가</h1>
+    <div class="container">
+        <CautionBox type="caution" />
     </div>
 </template>
 

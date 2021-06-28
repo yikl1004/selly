@@ -1,6 +1,6 @@
 <template>
     <div class="check-box-group">
-        <LabelTitle id="labelid" title-type="label" :hidden-label="hiddenLabel" label="lable" />
+        <LabelTitle id="labelid" title-type="label" :hidden-label="hiddenLabel" :label="title" />
         <div class="check-box-area">
             <!-- 클래스에 checked 추가시 체크표시 -->
             <button type="button" class="btn-checkbox" :disabled="disabled">
