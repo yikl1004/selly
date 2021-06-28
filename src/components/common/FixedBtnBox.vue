@@ -1,7 +1,5 @@
 <template>
-    <div class="fixed-btn-box">
-        <slot />
-    </div>
+    <PortalTarget name="floating" class="fixed-btn-box" />
 </template>
 
 <script lang="ts">

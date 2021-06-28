@@ -92,11 +92,11 @@ export default class LoginButton extends Vue {
     @AuthModule.Mutation('setCI')
     readonly setCI!: Function
 
-    @Watch('isLogin', { deep: true })
-    changeIsLogin(newValue: boolean, oldValue: boolean) {
-        console.log({ isLogin: newValue })
-        // newValue && this.$router.push({ name: 'Main' })
-    }
+    // @Watch('isLogin', { deep: true })
+    // changeIsLogin(newValue: boolean, oldValue: boolean) {
+    //     console.log({ isLogin: newValue })
+    //     // newValue && this.$router.push({ name: 'Main' })
+    // }
 
     /**
      * @category Data
@@ -105,6 +105,7 @@ export default class LoginButton extends Vue {
     private legacyOpen: boolean = false
     private newOpen: boolean = false
 
+    // kakao api
     private kakaoApi!: KakaoCert
 
     /** kakao API URI */
@@ -118,9 +119,9 @@ export default class LoginButton extends Vue {
     }
 
     /** autorize 공통 파라미터 */
-    private autorizeCommonParms: KakaoAuthAutorizeParameters = {
-        redirectUri: 'http://selly.lottecard.com:8080/example',
-    }
+    // private autorizeCommonParms: KakaoAuthAutorizeParameters = {
+    //     redirectUri: 'http://selly.lottecard.com:8080/example',
+    // }
 
     /**
      * @cateogry Methods

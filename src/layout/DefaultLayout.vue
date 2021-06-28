@@ -3,7 +3,8 @@
         <Header header-type="sub" />
         <Gnb :show="gnbOpen" @close="setGnb(false)" />
         <slot />
-        <Footer />
+        <Footer v-if="isFooter" />
+        <FixedBtnBox v-else></FixedBtnBox>
     </div>
 </template>
 
@@ -20,6 +21,11 @@ export default class DefaultLayout extends Vue {
 
     @UiModule.Mutation('setGnb')
     readonly setGnb!: (gnbOpen: boolean) => void
+
+    get isFooter(): boolean {
+        // undefined는 true로 간주
+        return this.$route.meta.footer !== false
+    }
 
     mounted() {
         console.log('DefaultLayout MOUNTED')

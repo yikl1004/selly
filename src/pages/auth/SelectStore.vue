@@ -30,13 +30,21 @@
                 name="cert"
             />
         </div>
+        <portal to="floating">
+            <BasicButton size="large" @click="onNext">
+                다음
+            </BasicButton>
+        </portal>
     </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Prop, Vue } from 'vue-property-decorator'
 
 @Component
-export default class SelectStorePage extends Vue {}
+export default class SelectStorePage extends Vue {
+    @Prop({ type: Function, default: () => {}, required: true })
+    readonly onNext!: Function
+}
 </script>
 <style scoped lang="scss" src="./SelectStore.scss"></style>

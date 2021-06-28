@@ -12,14 +12,22 @@
                 <span class="store-name">이층집 갈비</span>
             </div>
         </div>
+        <portal to="floating">
+            <BasicButton size="large" @click="onComplete">
+                확인
+            </BasicButton>
+        </portal>
     </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Prop, Vue } from 'vue-property-decorator'
 
 @Component
-export default class CompleteJoinPage extends Vue {}
+export default class CompleteJoinPage extends Vue {
+    @Prop({ type: Function, default: () => {}, required: true })
+    readonly onComplete!: Function
+}
 </script>
 
 <style lang="scss" src="./CompleteJoin.scss"></style>
