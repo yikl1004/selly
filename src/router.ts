@@ -3,8 +3,9 @@ import VueRouter, { RouteConfig } from 'vue-router'
 import isNull from 'lodash/isNull'
 import store from '@stores/index'
 
+import NotFoundPage from '@pages/notFound/index.vue'
 import LoginPage from '@pages/index.vue'
-import NeedLoginPage from '@pages/NeedLogin/index.vue'
+import NeedLoginPage from '@pages/needLogin/index.vue'
 import MainPage from '@pages/main/index.vue'
 import SelectStorePage from '@pages/auth/SelectStore.vue'
 import CompleteJoinPage from '@pages/auth/CompleteJoin.vue'
@@ -49,7 +50,13 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
 
     // 여기부터 페이지 작성
 
-    // 로그인, 회원가입 페이지
+    /* 404: not found */
+    {
+        path: '*',
+        component: NotFoundPage,
+    },
+
+    /* 로그인, 회원가입 페이지 */
     {
         path: '/',
         name: 'Login',
@@ -59,7 +66,7 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
         },
     },
 
-    // 사업자번호 선택 (단일 / 복수)
+    /* 사업자번호 선택 (단일 / 복수) */
     {
         path: '/auth/selectStore',
         name: 'SelectStore',
@@ -70,7 +77,7 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
         },
     },
 
-    // 가입완료
+    /* 가입완료 */
     {
         path: '/auth/completeJoin',
         name: 'CompleteJoin',
@@ -81,7 +88,7 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
         },
     },
 
-    // 가입불가
+    /* 가입불가 */
     {
         path: '/auth/unableJoin',
         name: 'UnableJoin',
@@ -92,6 +99,7 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
         },
     },
 
+    /* "로그인이 필요합니다" 페이지 */
     {
         path: '/needLogin',
         name: 'NeedLogin',
@@ -100,6 +108,8 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
             layout: 'none',
         },
     },
+
+    /* 메인 */
     {
         path: '/main',
         name: 'Main',
@@ -108,6 +118,8 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
             layout: 'default',
         },
     },
+
+    // 작성 중인 페이지
     {
         path: '/card',
         name: 'Card',

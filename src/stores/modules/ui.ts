@@ -19,7 +19,9 @@ export default class Ui extends VuexModule {
 
     @MutationAction({ mutate: ['gnbList'] })
     async getGnbList() {
-        const { data: gnbList } = await axiosInstance.get('/assets/static/dummy/menu.json')
+        const { data } = await axiosInstance.get('/assets/static/dummy/menu.json')
+        const { gnbList } = data
+        console.log('gnbList', Object.prototype.toString.apply(gnbList))
 
         return {
             gnbList,
