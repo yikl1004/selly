@@ -1,5 +1,5 @@
 <template>
-    <div class="tab type2" :class="[`col-${col}`]">
+    <div class="tab" :class="[`col-${col}`, type]">
         <div class="tab-item-list">
             <ul>
                 <li
@@ -41,6 +41,9 @@ export default class Tab extends Vue {
     @Prop({ type: Array, required: true })
     readonly list!: List[]
 
+    @Prop({ type: String, default: '' })
+    readonly type!: string
+
     /**
      * @category Data(State)
      */
@@ -60,15 +63,15 @@ export default class Tab extends Vue {
     /** bar 스타일 */
     get barStyle(): CSSObject {
         return {
-            left: `${(100 / this.col) * this.currentIndex}%`,
-            width: `${100 / this.col}%`,
+            // left: `${(100 / this.col) * this.currentIndex}%`,
+            // width: `${100 / this.col}%`,
         }
     }
 
     /** tab item 스타일 */
     get tabItemStyle(): CSSObject {
         return {
-            width: `${100 / this.col}%`,
+            // width: `${100 / this.col}%`,
         }
     }
 
