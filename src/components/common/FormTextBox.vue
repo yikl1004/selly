@@ -1,8 +1,8 @@
 <template>
     <div class="form-text-box" :class="type">
-        <LabelTitle id="labelid" title-type="label" :hidden-label="hiddenLabel" label="lable" />
+        <LabelTitle id="labelid" :hidden-label="hiddenLabel" :label="label" />
         <div class="form-text-area">
-            만 41세
+            {{ value }}
         </div>
     </div>
 </template>
@@ -27,6 +27,9 @@ export default class FormTextBox extends Vue {
     /** type : 좌우배치 row / 상하배치 col */
     @Prop({ type: String, default: 'row' })
     readonly type!: string
+
+    @Prop({ type: String })
+    readonly value!: string
 }
 </script>
 

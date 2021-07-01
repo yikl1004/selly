@@ -7,8 +7,12 @@
     &.row {
         display: flex;
         justify-content: space-between;
+        .label-title-box {
+            margin-bottom: 0;
+        }
         .form-text-area {
-            margin-top: 27px;
+            height: 22px;
+            margin-top: 32px;
             font-weight: 700;
         }
     }

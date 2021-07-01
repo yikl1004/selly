@@ -1,6 +1,7 @@
 <template>
     <div class="dropdown-box">
-        <LabelTitle id="labelid" title-type="label" :hidden-label="hiddenLabel" label="lable" />
+        <!-- id 필요여부에 따라 삭제 -->
+        <LabelTitle id="labelid" :hidden-label="hiddenLabel" :label="label" />
         <div class="input-area" :class="{ 'select-type': true }">
             <button type="button" class="btn-input-select" :disabled="disabled" @click="onClick">
                 <span>{{ selectedDisplayName }}</span>

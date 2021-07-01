@@ -41,6 +41,8 @@
                 />
             </div>
         </div>
+
+        <TextInputMessage :message="errorMessage" message-type="error" />
     </div>
 </template>
 
@@ -81,6 +83,14 @@ export default class SecretNumber extends Mixins(Validates) {
     /** type */
     @Prop({ type: String, required: true })
     readonly type!: SecretNumberType
+
+    /** 에러 메세지 */
+    @Prop(String)
+    readonly errorMessage!: string
+
+    /** 성공 메세지 */
+    @Prop(String)
+    readonly successMessage!: string
 
     /**
      * @category Data(State)

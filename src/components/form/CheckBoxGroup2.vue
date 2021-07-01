@@ -1,10 +1,10 @@
 <template>
     <div class="check-box-group">
-        <LabelTitle id="labelid" title-type="label" :hidden-label="hiddenLabel" :label="title" />
+        <LabelTitle :hidden-label="hiddenLabel" :label="label" />
         <div class="check-box-area">
             <!-- 클래스에 checked 추가시 체크표시 -->
             <button type="button" class="btn-checkbox" :disabled="disabled">
-                <i>{{ label }}</i>
+                <i>{{ value }}</i>
             </button>
             <button v-if="list.length" type="button" :class="['open', { opened: open }]" @click="toggle">
                 <span class="ir">{{ open ? '열림' : '닫힘' }}</span>
@@ -56,9 +56,9 @@ export default class CheckBoxGroup extends Vue {
      * @category Prop
      */
 
-    /** 제목 */
+    /** 내용(버튼 텍스트) */
     @Prop({ type: String })
-    readonly title!: string
+    readonly value!: string
 
     /** form name */
     @Prop({ type: String, required: true })
