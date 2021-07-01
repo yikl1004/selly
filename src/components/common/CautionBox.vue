@@ -2,14 +2,18 @@
     <div class="caution-box" :class="type">
         <i class="icon-caution"></i>
         <div class="caution-text-box">
-            <strong class="caution-title">prop 받을때 br도 받을수있게 처리필요</strong>
-            <p class="caution-sub-txt">
-                prop 받을때 br도 받을수있게 처리필요
+            <strong class="caution-title">{{ title }}</strong>
+            <p v-if="description" class="caution-sub-txt">
+                {{ description }}
             </p>
             <!-- ~이용이 어려운 상황입니다.일때 나오는 전화번호 안내 박스 -->
-            <div class="tel-box">
-                <p>대출 상담시간 09:00 ~ 18:00 (영업일)</p>
-                <a href="tel:1577-3355" class="link-tel">1588-8100</a>
+            <div v-if="linkInfo || link" class="tel-box">
+                <p v-if="linkInfo">
+                    {{ linkInfo }}
+                </p>
+                <a v-for="(item, index) in link" :key="`caution-box-link-${index}`" :href="getHref(item)" class="link-tel">
+                    {{ item.text }}
+                </a>
             </div>
         </div>
     </div>
@@ -17,6 +21,12 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
+
+interface Link {
+    href: string
+    text: string
+    type?: 'tel'
+}
 
 @Component
 export default class CautionBox extends Vue {
@@ -28,15 +38,34 @@ export default class CautionBox extends Vue {
     @Prop({ type: String, default: 'complete' })
     readonly type!: string
 
-    /**
-     * @category Data(State)
-     */
-    /**  */
-    private currentIndex: number = -1
+    /** 제목 */
+    @Prop({ type: String, required: true })
+    readonly title!: string
 
-    /**
-     * @category Methods
-     */
+    /** 설명 글 */
+    @Prop({ type: String })
+    readonly description!: string
+
+    /** 링크 (복수 허용) */
+    @Prop({ type: [Array, String] })
+    readonly link!: Link[] | Link
+
+    /** 링크에 대한 설명(or HTML) */
+    @Prop({ type: String })
+    readonly linkInfo!: string
+
+    /** @category Methods */
+
+    // getter용
+    getHref(link: Link): string {
+        let href = ''
+        if (link.type === 'tel') {
+            href = `tel:${link.href}`
+        } else {
+            href = link.href
+        }
+        return href
+    }
 }
 </script>
 

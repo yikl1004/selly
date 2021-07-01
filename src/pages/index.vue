@@ -10,20 +10,49 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Vue, Watch } from 'vue-property-decorator'
+import { namespace } from 'vuex-class'
+
+const { Mutation, Action, State } = namespace('auth')
 
 @Component
 export default class Login extends Vue {
     /**
-     * @category Data
+     * @category Use store
      */
+
+    @Mutation('setUserInfo') readonly setUserInfo!: (userInfo: UserInfo) => void
+    @Mutation('init') readonly init!: Function
+    @Action('getLoginInfo') readonly getLoginInfo!: Function
+    @State('responseCode') readonly responseCode!: ResponseCode
+
+    /** @category Data */
 
     // kakao api
     private kakaoApi!: KakaoCert
 
-    /**
-     * @category Methods
-     */
+    /** @category Watch */
+
+    @Watch('responseCode')
+    changeResponseCode(value: ResponseCode, oldValue: ResponseCode) {
+        let step = ''
+
+        switch (value) {
+            case '1010':
+                step = '-1'
+                break
+            default:
+                step = '1'
+                break
+        }
+
+        this.$router.push({
+            name: 'Join',
+            params: { step },
+        })
+    }
+
+    /** @category Methods */
 
     login() {
         /**
@@ -35,16 +64,24 @@ export default class Login extends Vue {
          * @path /v2/user/unlink : 연결끊기(탈퇴? 처럼 쓸수 있겠으나 실제로는 앱과의 연관성만 끊어준다고 함)
          */
 
+        // 로그인 요청
         this.kakaoApi.Auth.login({
-            success: (authObj: any) => {
+            success: (authObj: KakaoUserInfoRes) => {
                 console.log('kakao login SUCCESS', authObj)
-                // this.kakaoApi.Auth.getStatusInfo((status: any) => {
-                //     console.log('getStatusInfo', status)
-                // })
+
+                // 로그인 성공 시, 유저 정보 요청
                 this.kakaoApi.API.request({
                     url: '/v2/user/me',
                     success: res => {
-                        console.log('/v2/user/me', res)
+                        console.log('/v2/user/me, 카카오에 요청한 유저정보', res)
+                        this.setUserInfo({
+                            // ciNo: res.kakao_account.ci,
+                            ciNo: '8FsPBb/e2PxJLYQv22nQOKFNx7PTJTa6UoPNmx3b5eo94hjVhwc3FIFYsl8lbwKEL3d91h7nbdXl2pBmkFaOcg==',
+                            kkoId: `${res.id}`,
+                            cellNo: res.kakao_account.phone_number,
+                            email: res.kakao_account.email,
+                        })
+                        this.getLoginInfo()
                     },
                 })
             },
@@ -65,12 +102,14 @@ export default class Login extends Vue {
 
             script.onload = () => {
                 this.kakaoApi = window.Kakao
-                this.init()
+                this.initialize()
             }
+        } else {
+            this.kakaoApi = window.Kakao
         }
     }
 
-    init() {
+    initialize() {
         if (!this.kakaoApi) {
             console.log('kakao object 가 없습니다.')
             return
@@ -83,10 +122,13 @@ export default class Login extends Vue {
         }
     }
 
+    /** @category Life-Cycle */
+
     mounted() {
         this.loadScript()
-        // this.loginCheck()
     }
+
+    beforeDestroy() {}
 }
 </script>
 

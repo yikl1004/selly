@@ -33,7 +33,15 @@ export default class JoinPage extends Vue {
         this.$router.push({ name: 'Login' })
     }
 
-    created() {}
+    created() {
+        this.step = this._.toNumber(this.$route.params.step)
+    }
+
+    mounted() {
+        if (Number.isNaN(this.step)) {
+            this.$router.push({ name: 'Login' })
+        }
+    }
 }
 </script>
 

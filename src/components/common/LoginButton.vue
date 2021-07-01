@@ -83,9 +83,6 @@ export default class LoginButton extends Vue {
     @AuthModule.Action('getLoginInfo')
     readonly getLoginInfo!: Function
 
-    @AuthModule.Action('loginCheck')
-    readonly loginCheck!: Function
-
     @AuthModule.State('isLogin')
     readonly isLogin!: boolean
 
