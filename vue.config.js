@@ -33,6 +33,9 @@ module.exports = {
     //         patterns: getResourceList(resource.scss),
     //     },
     // },
+
+    // publicPath: '/selly',
+    outputDir: 'docs',
     configureWebpack: {
         resolve: {
             alias: {

@@ -1,41 +1,154 @@
 .tab {
     // 3개 이상의 탭에서는 flicking!!!
-    
     .tab-item-list {
         position: relative;
-        
+    }
+    
+    &.flicking {
+        .tab-item-list {
+            border-bottom: 1px solid red;
+            ul {
+                flex-wrap: nowrap;
+                overflow-x: auto;
+            }
+        }
+        li.tab-item {
+            position: relative;
+            flex: 1 1 auto;
+            white-space: nowrap;
+            text-align: center;
+
+            button {
+                width: auto;
+                padding:14px 13px 15px; 
+                border-bottom: none;
+                white-space: nowrap;
+            }
+        }
+    }
+
+    &.solid {
         ul {
-            display: flex;
-            width: 100%;
-    
-            li.tab-item {
-                display: inherit;
+            overflow: hidden;
+        }
+        li.tab-item {
+            position: relative;
+            border-bottom: none;
+            &:before,
+            &:after {
+                content: '';
+                display: none;
+                position: absolute;
+                top:0;
+                bottom: 0;
+                width: 10px;
+                height: 100%;
+                border-top: 1px solid #ebebeb;
                 border-bottom: 1px solid #ebebeb;
-    
+                background-color: #f8f8f8;
+            }
+            &:before{
+                left: 0;
+            }
+            &:after {
+                right: 0;
+            }
+            button {
+            background-color: #f8f8f8;
+                border: 1px solid #ebebeb;
+                font-size: 14px;
+                z-index: 1;
+            }
+
+            &.active {
+                &:before,
+                &:after {display: block;}
                 button {
-                    font-size: 16px;
-                    line-height: 1.5;
-                    letter-spacing: -0.5px;
-                    color: #999999;
-                    width: 100%;
-                    padding: 13px 0 13px 0;
-                }
-    
-                &.active {
-                    button {
-                        color: #222222;
+                    background-color: $point-color-blue;
+                    border-color: $point-color-blue;
+                    color: #fff;
+                    border-radius: 10px;
+                    &:before {
+                        display: none;
                     }
                 }
             }
-        }
-    
-        .bar {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            height: 3px;
-            background-color: #222222;
-            transition: left 300ms ease-in-out;
+            &:first-of-type {
+                &:before {
+                    display: none;
+                }
+                button {
+                    border-right: none;
+                    border-top-left-radius: 10px;
+                    border-bottom-left-radius: 10px;
+                }
+            }
+            &:nth-child(2){
+                button {
+                    border-left: none;
+                    border-right: none;
+                }
+            }
+            &:last-of-type {
+                &:after {
+                    display: none;
+                }
+                button {
+
+                    border-top-right-radius: 10px;
+                    border-bottom-right-radius: 10px;
+                    border-left: none;
+                }
+            }
         }
     }
+    
+}
+.tab-item-list ul {
+    display: flex;
+    width: 100%;
+
+    li.tab-item {
+        display: block;
+        width: 100%;
+        border-bottom: 1px solid #ebebeb;
+
+        button {
+            display: block;
+            position: relative;
+            width: 100%;
+            padding: 14px 0 15px 0;
+            font-size: 16px;
+            color: #999;
+            &:before {
+                content: '';
+                display: none;
+                position: absolute;
+                left: 0;
+                bottom: -1px;
+                width: 100%;
+                height: 3px;
+                background-color: #222;
+            }
+        }
+
+        &.active {
+            button {
+                color: #222;
+                font-weight: 500;;
+                &:before{
+                    display: block;
+                }
+            }
+        }
+    }
+}
+
+.bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 3px;
+    background-color: #222;
+    transition: left 300ms ease-in-out;
 }

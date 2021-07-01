@@ -2,6 +2,76 @@
     <div class="container">
         <div class="box-card-loan">
             <Title title="1. 가맹점 선택" />
+            <Tab :list="tabList" :active="0" type="solid">
+                <template slot-scope="{ activeIndex }">
+                    <div v-if="activeIndex === 0">
+                        <p>1</p>
+                    </div>
+                    <div v-if="activeIndex === 1">
+                        <p>2</p>
+                    </div>
+                    <div v-if="activeIndex === 2">
+                        <p>3</p>
+                    </div>
+                </template>
+            </Tab>
+
+            <Tab :list="tabList" :active="0">
+                <template slot-scope="{ activeIndex }">
+                    <div v-if="activeIndex === 0">
+                        <p>1</p>
+                    </div>
+                    <div v-if="activeIndex === 1">
+                        <p>2</p>
+                    </div>
+                    <div v-if="activeIndex === 2">
+                        <p>3</p>
+                    </div>
+                </template>
+            </Tab>
+
+            <Tab
+                :list="[
+                    { name: '탭1' },
+                    { name: '탭2' },
+                    { name: '탭3' },
+                    { name: '탭4' },
+                    { name: '탭5' },
+                    { name: '탭6' },
+                    { name: '탭7' },
+                    { name: '탭8' },
+                    { name: '탭9' },
+                ]"
+                :active="0"
+                type="flicking"
+            >
+                <template slot-scope="{ activeIndex }">
+                    <div v-if="activeIndex === 0">
+                        <p>1</p>
+                    </div>
+                    <div v-if="activeIndex === 1">
+                        <p>2</p>
+                    </div>
+                    <div v-if="activeIndex === 2">
+                        <p>3</p>
+                    </div>
+                    <div v-if="activeIndex === 3">
+                        <p>4</p>
+                    </div>
+                    <div v-if="activeIndex === 4">
+                        <p>5</p>
+                    </div>
+                    <div v-if="activeIndex === 5">
+                        <p>6</p>
+                    </div>
+                    <div v-if="activeIndex === 6">
+                        <p>7</p>
+                    </div>
+                    <div v-if="activeIndex === 7">
+                        <p>8</p>
+                    </div>
+                </template>
+            </Tab>
             <div class="table-box">
                 <div class="table-scroll">
                     <table>
@@ -296,6 +366,8 @@ export default class CardSubPage extends Vue {
         { value: 'telecom', label: '통신사 이용약관 동의' },
         { value: 'cert', label: '본인확인 서비스 약관 동의' },
     ]
+
+    private tabList = [{ name: 'first' }, { name: 'second' }, { name: 'third' }]
 
     // s: popup
     private show: boolean = false
