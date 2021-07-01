@@ -4,10 +4,6 @@ import { HttpService, SellyServiceResponse } from './core/http'
 import { POST, Query, ResponseAdapter } from './core/decorators'
 import { SEFINAARVO } from './core/response'
 
-interface API {
-    url: string
-    method: 'post' | 'get'
-}
 interface Parameters {
     mainInfo: {
         aplPhc?: string // FIXME: 미정

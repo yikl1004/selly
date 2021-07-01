@@ -8,35 +8,55 @@ interface API {
     url: string
     method: 'post' | 'get'
 }
-interface Parameters {
-    // FIXME: 자세한 설명이 아직 나오지 않았음 - 2021-06-04
+export interface AuthParameters {
+    /**
+     * @description 로그인 / 카카오 최초 인입자 셀리 가입처리
+     */
     loginInfo: {
-        cellNo?: string
+        // 카카오로 전달 받은 ci
         ciNo: string
+        // 카카오로 전달 받은 휴대폰번호
+        cellNo?: string
+        // 카카오로 전달 받은 이메일
         email?: string
+        // 카카오 유저 정보 중 id
+        kkoId: string
+        // 약관 동의 항목
+        list?: {
+            agTag: string
+            agDtti: string
+        }[]
     }
 }
 
-interface Response {
+/**
+ * TODO: 공통 코드에 대한 정리
+ * 1010: 회원가입 불가 대상입니다.
+ */
+export interface AuthResponse {
     loginInfo: {
+        rc: ResponseCode
+        rsMsg: string
         data: {
-            mbrBzRegYn: 'Y'
-        }
-        rc: '0000' | '9999'
-        rsMsg: null | string
+            // 01: 로그인 완료(메인으로 이동), 02: 회원가입 후 등록한 사업자번호 없음(회원가입 절차 진행)
+            rspDc: '01' | '02' | ''
+            // S: 정회원, J: 준회원
+            mbrDc: 'S' | 'J' | ''
+        } | null
     }
 }
 
-type LoginInfoRes = Promise<AxiosResponse<Response['loginInfo']>>
+type LoginInfoRes = Promise<AxiosResponse<AuthResponse['loginInfo']>>
 
 class AuthService extends HttpService {
-    private loginInfo: API = {
+    private login: API = {
         url: '/API/LGN/SELGNAA001', // [Post] 로그인/카카오최초인입
         method: 'post',
     }
 
-    async getLoginInfo(params: Parameters['loginInfo']): LoginInfoRes {
-        const { url, method } = this.loginInfo
+    async getLoginInfo(params: AuthParameters['loginInfo']): LoginInfoRes {
+        const { url, method } = this.login
+        console.log({ method, url, params })
         return await instance.request({ method, url, params })
     }
 }
