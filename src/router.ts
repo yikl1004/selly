@@ -16,6 +16,10 @@ import UnableJoinPage from '@pages/auth/UnableJoin.vue'
 import CardPage from '@pages/card/index.vue'
 import CardSubPage from '@pages/card/subPage.vue'
 
+//매출
+import SalesPage from '@pages/sales/index.vue'
+import SalesHistory from '@pages/sales/SalesHistory.vue'
+
 // 금융
 import FinancePage from '@pages/finance/index.vue'
 import CreditCardAuth from '@pages/finance/CreditCardAuth.vue'
@@ -152,6 +156,18 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
         },
     },
 
+    //매출페이지
+    //매출내역 메인
+    {
+        path: '/sales',
+        name: 'Sales',
+        component: SalesPage,
+    },
+    {
+        path: '/sales/saleshistory',
+        name: 'Sales History',
+        component: SalesHistory,
+    },
     // 금융페이지
     // 금융메인 / 금융 안내페이지
     {

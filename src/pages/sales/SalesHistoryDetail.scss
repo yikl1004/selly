@@ -1,0 +1,49 @@
+.sales-detail-wrap {
+    padding-top: 20px;
+    .sales-day-info {
+        .day {
+            display: block;
+            font-size: 20px;
+            font-weight:500;
+            color: #222;
+        }
+        .price {
+            font-size: 26px;
+            font-weight: 700;
+            color: #222;
+        }
+        .compare {
+            li {
+                margin-top: 5px;
+                &:first-of-type{
+                    margin-top: 0;
+                }
+            }
+            .compare-price {
+                font-size: 16px;
+                font-weight: 500;
+                color: #222;
+                &:after {
+                    content: '';
+                    display: inline-block;
+                    width: 24px;
+                    height: 24px;
+                    background-repeat: no-repeat;
+                    vertical-align: top;
+                }
+                &.up {
+                    color: $primary-color;
+                    &:after {
+                        background-image: url('/assets/icon/icon-arrow-up.svg');
+                    }
+                }
+                &.down {
+                    color: $point-color-blue;
+                    &:after {
+                        background-image: url('/assets/icon/icon-arrow-down.svg');
+                    }
+                }
+            }
+        }
+    }
+}

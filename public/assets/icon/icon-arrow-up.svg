@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+    <g fill="none" fill-rule="evenodd">
+        <g>
+            <g>
+                <g>
+                    <path d="M0 0H24V24H0z" transform="translate(-165.000000, -318.000000) translate(24.000000, 234.000000) translate(141.000000, 84.000000)"/>
+                    <text fill="#FA4123" font-family="SpoqaHanSansNeo-Medium, Spoqa Han Sans Neo" font-size="16" font-weight="400" letter-spacing="-.5" transform="translate(-165.000000, -318.000000) translate(24.000000, 234.000000) translate(141.000000, 84.000000)">
+                        <tspan x="4" y="18">↑</tspan>
+                    </text>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
