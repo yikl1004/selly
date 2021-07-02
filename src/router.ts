@@ -16,6 +16,10 @@ import UnableJoinPage from '@pages/auth/UnableJoin.vue'
 import CardPage from '@pages/card/index.vue'
 import CardSubPage from '@pages/card/subPage.vue'
 
+// 금융
+import FinancePage from '@pages/finance/index.vue'
+import CreditCardAuth from '@pages/finance/CreditCardAuth.vue'
+
 // examples
 import ExampleMain from '@pages/example/index.vue'
 import ExampleForm from '@pages/example/form/index.vue'
@@ -146,6 +150,24 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
         component: CardSubPage,
         meta: {
             layout: 'default',
+        },
+    },
+
+    // 금융페이지
+    // 금융메인 / 금융 안내페이지
+    {
+        path: '/finance',
+        name: 'Finance',
+        component: FinancePage,
+    },
+    {
+        path: '/finance/creditcardauth',
+        name: 'CreditCardAuth',
+        component: CreditCardAuth,
+
+        meta: {
+            layout: 'default',
+            footer: false,
         },
     },
 ]

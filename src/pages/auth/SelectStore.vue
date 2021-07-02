@@ -24,27 +24,27 @@
                         :disabled="false"
                     />
                 </div>
-            </div>
 
-            <ButtonField
-                :id="null"
-                label="추천인 코드(선택)"
-                :hidden-label="null"
-                :maxlength="9999"
-                placeholder="추천인 코드 입력"
-                :readonly="false"
-                :disabled="false"
-                :default-value="null"
-                button-text="확인"
-                :search="null"
-                name="cert"
-            />
+                <ButtonField
+                    :id="null"
+                    label="추천인 코드(선택)"
+                    :hidden-label="null"
+                    :maxlength="9999"
+                    placeholder="추천인 코드 입력"
+                    :readonly="false"
+                    :disabled="false"
+                    :default-value="null"
+                    button-text="확인"
+                    :search="null"
+                    name="cert"
+                />
+            </div>
+            <portal to="floating">
+                <BasicButton size="large" @click="onNext">
+                    다음
+                </BasicButton>
+            </portal>
         </div>
-        <portal to="floating">
-            <BasicButton size="large" @click="onNext">
-                다음
-            </BasicButton>
-        </portal>
     </div>
 </template>
 

@@ -1,6 +1,6 @@
 <template>
     <label class="radio-box">
-        <input type="radio" value="radio" :name="name" :disabled="disabled" />
+        <input type="radio" value="radio" :name="name" :disabled="disabled" :checked="checked" />
         <i>{{ label }}</i>
     </label>
 </template>

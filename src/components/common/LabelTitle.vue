@@ -1,8 +1,9 @@
 <template>
     <div class="label-title-box">
-        <!-- 라벨인것과 아난것 구분 -->
-        <!-- <label :for="id" class="label" :class="{ ir: hiddenLabel }">{{ label }}</label> -->
-        <strong class="label">{{ label }}</strong>
+        <label v-if="labelType === 'label'" :for="id" class="label" :class="{ ir: hiddenLabel }">{{ label }}</label>
+        <strong v-else class="label">
+            {{ label }}
+        </strong>
         <slot />
     </div>
 </template>
@@ -27,6 +28,10 @@ export default class LabelTitle extends Vue {
     /** label을 비노출여부 */
     @Prop(Boolean)
     readonly hiddenLabel!: boolean
+
+    /** label tag / 단순 제목영역인지 구분 */
+    @Prop({ type: String, default: '' })
+    readonly labelType!: string
 }
 </script>
 
