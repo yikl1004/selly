@@ -11,20 +11,23 @@ export interface AuthState {
 declare global {
     type UserInfo = AuthParameters['loginInfo']
     type LoginInfo = AuthResponse['loginInfo']['data']
+    type MemberWorkplaceInfo = AuthResponse['memberWorkplaceInfo']
+    type MainInfo = AuthResponse['mainInfo']
 }
 
 @Module({ name: 'auth', namespaced: true })
 export default class Auth extends VuexModule<AuthState> {
     public loginInfo: LoginInfo | null = null
     public kakaoUserInfo: UserInfo | null = null
-    public responseCode: ResponseCode | null = null
+    public memberWorkplaceInfo: MemberWorkplaceInfo | null = null
+    public mainInfo: MainInfo | null = null
 
     @Mutation
     init() {
         return {
             loginInfo: null,
             kakaoUserInfo: null,
-            responseCode: null,
+            memberWorkplaceInfo: null,
         }
     }
 
@@ -40,7 +43,26 @@ export default class Auth extends VuexModule<AuthState> {
 
         return {
             loginInfo: data.data,
-            responseCode: data.rc,
+        }
+    }
+
+    @MutationAction
+    async getMemberWorkplaceInfo() {
+        const state = this.state as AuthState
+        const { data } = await AuthService.getMemberWorkplaceInfo()
+
+        return {
+            memberWorkplaceInfo: data,
+        }
+    }
+
+    @MutationAction
+    async getMainInfo() {
+        const state = this.state as AuthState
+        const { data } = await AuthService.getMainInfo()
+
+        return {
+            mainInfo: data,
         }
     }
 }

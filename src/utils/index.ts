@@ -1,5 +1,6 @@
 import { registerCommonComponent } from '@components/common/index'
 import registerPlugins from '@utils/plugins'
+import registerMixins from '@utils/mixins'
 
 // TODO: base64 코드를 blob 객체로 변환해주는 함수(만들지 말지 판단 안됨 지금은...)
 // export const dataURLtoFile = (dataurl: string, filename: string): File => {
@@ -20,6 +21,7 @@ import registerPlugins from '@utils/plugins'
 // const file = dataURLtoFile('data:text/plain;base64,aGVsbG8gd29ybGQ=', 'hello.txt')
 
 export const initialize = (): void => {
+    registerMixins()
     registerPlugins()
     registerCommonComponent()
 }

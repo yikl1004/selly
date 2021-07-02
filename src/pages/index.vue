@@ -1,5 +1,8 @@
 <template>
-    <div class="page-login-wrap">
+    <div v-if="isMain" class="main">
+        <h2>메인 페이지</h2>
+    </div>
+    <div v-else class="page-login-wrap">
         <div style="height:500px; background:#2b2b2b;text-align:center;line-height:500px">
             상단 비주얼 추가 작업 예정
         </div>
@@ -24,7 +27,9 @@ export default class Login extends Vue {
     @Mutation('setUserInfo') readonly setUserInfo!: (userInfo: UserInfo) => void
     @Mutation('init') readonly init!: Function
     @Action('getLoginInfo') readonly getLoginInfo!: Function
-    @State('responseCode') readonly responseCode!: ResponseCode
+    @Action('getMainInfo') readonly getMainInfo!: Function
+    @State('loginInfo') readonly loginInfo!: LoginInfo
+    @State('mainInfo') readonly mainInfo!: MainInfo
 
     /** @category Data */
 
@@ -33,23 +38,41 @@ export default class Login extends Vue {
 
     /** @category Watch */
 
-    @Watch('responseCode')
-    changeResponseCode(value: ResponseCode, oldValue: ResponseCode) {
-        let step = ''
+    // 로그인 정보에 따라 화면을 이동한다
+    @Watch('loginInfo')
+    changeLoginInfo(value: LoginInfo, oldValue: LoginInfo | null) {
+        let to: VueRouterLocation | null = null
 
-        switch (value) {
-            case '1010':
-                step = '-1'
+        switch (value?.rspDc) {
+            // 메인으로 이동
+            case '01':
+                to = { name: 'Login', query: { pageName: 'main' } }
                 break
+            // 사업자확인으로 이동(가입 절차)
+            case '02':
+                to = { name: 'Join', params: { step: '1' } }
+                break
+            // 가입불가 대상
+            case '03':
+                to = { name: 'Join', params: { step: '-1' } }
             default:
-                step = '1'
                 break
         }
 
-        this.$router.push({
-            name: 'Join',
-            params: { step },
-        })
+        !this._.isNull(to) && this.$router.push(to)
+    }
+
+    @Watch('mainInfo', { deep: true })
+    changeMainInfo(value: MainInfo, oldValue: MainInfo) {
+        if (value.rc === '8888') {
+            this.$router.push({ name: 'Login' })
+        }
+    }
+
+    /** @category Computed */
+
+    get isMain(): boolean {
+        return this.$route.query.pageName === 'main'
     }
 
     /** @category Methods */
@@ -76,7 +99,8 @@ export default class Login extends Vue {
                         console.log('/v2/user/me, 카카오에 요청한 유저정보', res)
                         this.setUserInfo({
                             // ciNo: res.kakao_account.ci,
-                            ciNo: '8FsPBb/e2PxJLYQv22nQOKFNx7PTJTa6UoPNmx3b5eo94hjVhwc3FIFYsl8lbwKEL3d91h7nbdXl2pBmkFaOcg==',
+                            // ciNo: '8FsPBb/e2PxJLYQv22nQOKFNx7PTJTa6UoPNmx3b5eo94hjVhwc3FIFYsl8lbwKEL3d91h7nbdXl2pBmkFaOcg==',    // 03
+                            ciNo: 'oX2QI067j6qIzdx5aXTovZtYWu68wzg3zd8h+35kT7N3k40s+GmdIDK4Ts0miqRuDyv6x4cpoP7Ku5cvpVD8lQ==', // 02
                             kkoId: `${res.id}`,
                             cellNo: res.kakao_account.phone_number,
                             email: res.kakao_account.email,
@@ -123,6 +147,13 @@ export default class Login extends Vue {
     }
 
     /** @category Life-Cycle */
+
+    created() {
+        console.log(this.$route.query)
+        if (this.$route.query.pageName === 'main') {
+            this.getMainInfo()
+        }
+    }
 
     mounted() {
         this.loadScript()

@@ -4,15 +4,25 @@
             <div class="select-store">
                 <div class="store-user-info">
                     <strong>
-                        김로카 사장님<br />
+                        {{ memberWorkplaceInfo.data.mbrNm }} 사장님<br />
                         사업자정보를 확인하세요.
                     </strong>
-                    <p>현재 등록된 2개의 사업자 가입이 가능합니다.<br />선택한 사업자만 셀리 서비스에 가입됩니다.</p>
+                    <p>
+                        현재 등록된 {{ memberWorkplaceInfo.data.list.length }}개의 사업자 가입이 가능합니다.<br />선택한 사업자만 셀리
+                        서비스에 가입됩니다.
+                    </p>
                 </div>
 
                 <div class="user-store-list">
-                    <CheckBoxBlock name="group" title="타이틀" label="체크박스내용" :disabled="false" />
-                    <CheckBoxBlock name="group" title="타이틀" label="체크박스내용" :disabled="false" />
+                    <CheckBoxBlock
+                        v-for="(item, index) in memberWorkplaceInfo.data.list"
+                        :id="`userStoreList${index}`"
+                        :key="`user-store-list-item-${index}`"
+                        name="group"
+                        :label="convertBizNoFormatter({ bizNo: item.bzno })"
+                        :biz-name="item.bzmanNm"
+                        :disabled="false"
+                    />
                 </div>
             </div>
 
@@ -40,11 +50,24 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
+import { namespace } from 'vuex-class'
+
+const { State } = namespace('auth')
 
 @Component
 export default class SelectStorePage extends Vue {
-    @Prop({ type: Function, default: () => {}, required: true })
-    readonly onNext!: Function
+    /** @category Stores */
+    @State('memberWorkplaceInfo') readonly memberWorkplaceInfo!: MemberWorkplaceInfo
+
+    /** @category Methods */
+
+    onNext() {
+        /**
+         * 다음으로 이동
+         * @event next
+         */
+        this.$emit('next')
+    }
 }
 </script>
 <style scoped lang="scss" src="./SelectStore.scss"></style>

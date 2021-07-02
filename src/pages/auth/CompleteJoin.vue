@@ -25,8 +25,15 @@ import { Component, Prop, Vue } from 'vue-property-decorator'
 
 @Component
 export default class CompleteJoinPage extends Vue {
-    @Prop({ type: Function, default: () => {}, required: true })
-    readonly onComplete!: Function
+    /** @category Methods */
+
+    onComplete() {
+        /**
+         * 완료 이벤트
+         * @event complete
+         */
+        this.$emit('complete')
+    }
 }
 </script>
 

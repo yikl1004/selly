@@ -1,4 +1,4 @@
-import Vue from 'vue'
+import { Vue, Component } from 'vue-property-decorator'
 import store from '@stores/index'
 import { initialize } from '@utils/index'
 import App from './App.vue'

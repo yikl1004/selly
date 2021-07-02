@@ -1,4 +1,11 @@
+import { RawLocation } from 'vue-router'
+
 declare global {
+    type VueRouterLocation = RawLocation
+
+    // Y 또는 N 문자열
+    type YN = 'Y' | 'N'
+
     // 응답코드
     type ResponseCode =
         // case 생길 때 마다 추가 예정
@@ -10,6 +17,7 @@ declare global {
         | '1101' // 주민번호 입력값이 없습니다.
         | '9999' // 시스템에러가 발생하였습니다.
         | '1000' // 필수정보가 누락되었습니다.
+        | '8888' // 로그인 후 이용해 주세요
 
     // API
     interface API {

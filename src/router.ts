@@ -68,10 +68,10 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
         meta: {
             layout: 'none',
         },
-        beforeEnter(to, from, next) {
-            console.log('router beforeEnter', { to, from })
-            next()
-        },
+        // beforeEnter(to, from, next) {
+        //     console.log('router beforeEnter', { to, from })
+        //     next()
+        // },
     },
 
     {
@@ -80,6 +80,7 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
         component: JoinPage,
         meta: {
             footer: false,
+            layout: 'none',
         },
     },
 

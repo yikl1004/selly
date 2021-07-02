@@ -45,7 +45,7 @@ module.exports = {
             extensions: ['.vue', 'tsx'],
         },
         devServer: {
-            host: 'selly.lottecard.com',
+            // host: 'selly.lottecard.com',
             proxy: {
                 // 프록시 요청을 보낼 api의 시작 부분
                 '/API': {

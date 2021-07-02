@@ -1,6 +1,7 @@
 <template>
     <div class="layout-none">
         <slot />
+        <FixedBtnBox />
     </div>
 </template>
 

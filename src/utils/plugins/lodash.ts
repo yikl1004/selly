@@ -9,6 +9,7 @@ import isUndefined from 'lodash/isUndefined'
 import camelCase from 'lodash/camelCase'
 import kebabCase from 'lodash/kebabCase'
 import pickBy from 'lodash/pickBy'
+import isNull from 'lodash/isNull'
 
 export const options = {
     lodash: {
@@ -20,6 +21,7 @@ export const options = {
         camelCase,
         kebabCase,
         pickBy,
+        isNull,
     },
 }
 export default VueLodash

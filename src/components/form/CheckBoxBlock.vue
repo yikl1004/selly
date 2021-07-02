@@ -4,7 +4,7 @@
             <label>
                 <input :id="id" v-model="value" value="sdkj" type="checkbox" :name="_.camelCase(id)" @change="onChange" />
                 <i>{{ label }}</i>
-                <span class="store-name">이층집 갈비</span>
+                <span class="store-name">{{ bizName }}</span>
             </label>
         </div>
     </div>
@@ -56,6 +56,10 @@ export default class CheckBoxBlock extends Vue {
     /** CheckBoxGroup의 하위 인 경우의 index */
     @Prop({ type: Number })
     readonly index!: number
+
+    /** 사업장 명 또는 다른 명칭 */
+    @Prop({ type: String, required: true })
+    readonly bizName!: string
 
     /**
      * @category Data
