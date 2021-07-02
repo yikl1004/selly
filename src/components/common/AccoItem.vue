@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="box-acco-list" :class="type">
         <div v-for="(item, index) in list" :key="`acco-item-${index}`" :class="['box-acco-item', { active: index === currentIndex }]">
             <button
                 type="bubton"
@@ -13,6 +13,7 @@
             <div :id="`acco-item-${index}`" class="acco-cont">
                 <div class="acco-cont-inner">
                     {{ item.desc }}
+                    <slot />
                 </div>
             </div>
         </div>
@@ -36,6 +37,9 @@ export default class AccoItem extends Vue {
     /** 아코디언 제목과 내용 배열로 받음 */
     @Prop({ type: Array, default: () => [], required: true })
     readonly list!: AccordionListItem[]
+
+    @Prop({ type: String, default: '' })
+    readonly type!: string
 
     /**
      * @category Data(State)

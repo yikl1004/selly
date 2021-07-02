@@ -1,0 +1,41 @@
+.price-list {
+    padding: 0 20px 20px;
+    .sales-week-avg {
+        overflow: hidden;;
+        padding: 22px 0 14px;;
+        border-bottom: 1px solid #ddd;
+        span {
+            float: left;
+        }
+        .price {
+            float: right;
+            font-size: 16px;
+            font-weight: 500;
+            color: #222;
+            strong {
+                font-weight: 700;
+            }
+        }
+    }
+    ul {
+        padding: 20px 0;
+        border-bottom: 1px solid #ddd;
+        li {
+            overflow: hidden;
+            margin-top: 13px;
+            &:first-of-type {
+                margin-top: 0;
+            }
+        }
+        span {
+            float: left;
+        }
+        .price {
+            float: right;;
+            color: #222;
+            strong {
+                font-weight: 500;
+            }
+        }
+    }
+}

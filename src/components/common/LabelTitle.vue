@@ -1,6 +1,6 @@
 <template>
-    <div class="label-title-box">
-        <label v-if="labelType === 'label'" :for="id" class="label" :class="{ ir: hiddenLabel }">{{ label }}</label>
+    <div class="label-title-box" :class="{ ir: hiddenLabel }">
+        <label v-if="labelType === 'label'" :for="id" class="label">{{ label }}</label>
         <strong v-else class="label">
             {{ label }}
         </strong>
