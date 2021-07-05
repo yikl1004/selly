@@ -7,12 +7,24 @@
             <ul class="compare">
                 <li>
                     전일 대비
-                    <strong class="compare-price up">6,000,000원</strong>
+                    <strong class="compare-price up">
+                        6,000,000원
+                        <i class="ico"><span class="ir">오름</span></i>
+                    </strong>
+                </li>
+                <li>
+                    최근 7일 평균 대비
+                    <strong class="compare-price down">
+                        6,000,000원
+                        <i class="ico"><span class="ir">내림</span></i>
+                    </strong>
                 </li>
 
                 <li>
-                    최근 7일 평균 대비
-                    <strong class="compare-price down">6,000,000원</strong>
+                    변화없음 케이스
+                    <strong class="compare-price">
+                        <i class="ico"><span class="ir">변화없음</span></i>
+                    </strong>
                 </li>
             </ul>
         </div>
@@ -21,9 +33,9 @@
             차트영역
         </div>
 
-        <AccoItem :list="accordionList" type="gray">
+        <AccoItemSingle title="최근 7일 평균">
             <PriceList />
-        </AccoItem>
+        </AccoItemSingle>
 
         <DepositHistory />
     </div>
@@ -31,7 +43,6 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import { AccordionListItem } from '@components/common/AccoItem.vue'
 import PriceList from '@components/sales/PriceList.vue'
 import DepositHistory from '@components/sales/DepositHistory.vue'
 
@@ -61,13 +72,6 @@ export default class SalesHistoryDetail extends Vue {
 
     private tabList = [{ name: '일간' }, { name: '주간' }, { name: '요일별' }]
 
-    private accordionList: AccordionListItem[] = [
-        {
-            title: '최근 7일 평균',
-            desc: '',
-        },
-    ]
-
     private data: { [key: string]: object | number | string | boolean } = {
         dropdownBox: 'kt',
         buttonField: '확인',
@@ -88,4 +92,4 @@ export default class SalesHistoryDetail extends Vue {
 }
 </script>
 
-<style lang="scss" scoped src="./SalesHistoryDetail.scss"></style>
+<style lang="scss" src="./SalesHistoryDetail.scss"></style>

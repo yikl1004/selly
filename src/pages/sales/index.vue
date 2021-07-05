@@ -14,6 +14,7 @@
 
 <script lang="ts">
 import { Component, Vue, Watch } from 'vue-property-decorator'
+
 @Component({
     components: {},
 })
@@ -27,17 +28,4 @@ export default class SalesPages extends Vue {
 }
 </script>
 
-<style scoped lang="scss">
-.sales-main-box {
-    .sale-main-title {
-        h2 {
-            font-size: 20px;
-            font-weight: bold;
-            color: #222;
-        }
-        p {
-            margin-top: 14px;
-        }
-    }
-}
-</style>
+<style scoped lang="scss" src="./defaultStyle.scss" />

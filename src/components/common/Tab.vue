@@ -1,5 +1,5 @@
 <template>
-    <div class="tab" :class="[`col-${col}`, type]">
+    <div class="tab" :class="type">
         <div class="tab-item-list">
             <ul>
                 <li
@@ -7,7 +7,6 @@
                     :key="`tab-item-${index}`"
                     class="tab-item"
                     :class="{ active: index === currentIndex }"
-                    :style="tabItemStyle"
                     @click="onClickItem(index)"
                 >
                     <button type="button">
@@ -15,7 +14,6 @@
                     </button>
                 </li>
             </ul>
-            <div class="bar" :style="barStyle" />
         </div>
         <slot :active-index="currentIndex" />
     </div>
@@ -52,30 +50,6 @@ export default class Tab extends Vue {
     private currentIndex: number = 0
 
     /**
-     * @category Computed
-     */
-
-    /** 갯수 */
-    get col(): number {
-        return this.list.length
-    }
-
-    /** bar 스타일 */
-    get barStyle(): CSSObject {
-        return {
-            // left: `${(100 / this.col) * this.currentIndex}%`,
-            // width: `${100 / this.col}%`,
-        }
-    }
-
-    /** tab item 스타일 */
-    get tabItemStyle(): CSSObject {
-        return {
-            // width: `${100 / this.col}%`,
-        }
-    }
-
-    /**
      * @category Methods
      */
 
@@ -98,4 +72,4 @@ export default class Tab extends Vue {
 }
 </script>
 
-<style scoped lang="scss" src="./Tab.scss"></style>
+<style lang="scss" src="./Tab.scss"></style>

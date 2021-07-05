@@ -1,29 +1,30 @@
 <template>
     <div class="container no-padding">
-        <FormProvider :schema="data" @change="formChange" @submit="onSubmit">
-            <template slot-scope="{ schema }">
-                <DropdownBox2
-                    id="dropdown-box01"
-                    label="사업자 선택"
-                    :hidden-label="true"
-                    :list="dropdownBoxList"
-                    :default-value="schema.dropdownBox"
-                    :disabled="false"
-                    error-message="에러메시지가 필요할까"
-                    success-message="없어도 될듯"
-                />
-            </template>
-        </FormProvider>
-
+        <div class="content-inner">
+            <FormProvider :schema="data" @change="formChange" @submit="onSubmit">
+                <template slot-scope="{ schema }">
+                    <DropdownBox2
+                        id="dropdown-box01"
+                        label="사업자 선택"
+                        :hidden-label="true"
+                        :list="dropdownBoxList"
+                        :default-value="schema.dropdownBox"
+                        :disabled="false"
+                        error-message="에러메시지가 필요할까"
+                        success-message="없어도 될듯"
+                    />
+                </template>
+            </FormProvider>
+        </div>
         <Tab :list="tabList" :active="0" type="solid">
             <template slot-scope="{ activeIndex }">
-                <div v-if="activeIndex === 0">
+                <div v-if="activeIndex === 0" class="tab-inner">
                     <SalesHistoryDetail />
                 </div>
-                <div v-if="activeIndex === 1">
+                <div v-if="activeIndex === 1" class="tab-inner">
                     <p>주간</p>
                 </div>
-                <div v-if="activeIndex === 2">
+                <div v-if="activeIndex === 2" class="tab-inner">
                     <p>요일별</p>
                 </div>
             </template>
@@ -33,7 +34,7 @@
 
 <script lang="ts">
 import { Component, Vue, Watch } from 'vue-property-decorator'
-import SalesHistoryDetail from '@pages/sales/SalesHistoryDetail.vue'
+import SalesHistoryDetail from '@components/sales/SalesHistoryDetail.vue'
 
 interface Data {
     buttonField: string
@@ -81,4 +82,4 @@ export default class SalesHistory extends Vue {
 }
 </script>
 
-<style scoped lang="scss"></style>
+<style lang="scss" scoped src="./SalesHistory.scss"></style>
