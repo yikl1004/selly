@@ -39,6 +39,7 @@
         "vue-property-decorator": "^9.1.2",
         "vue-router": "^3.5.1",
         "vue-scrollmonitor": "^0.1.0",
+        "vue-toast-notification": "^0.6.2",
         "vuex": "^3.6.2",
         "vuex-class": "^0.3.2",
         "vuex-module-decorators": "^1.0.1"

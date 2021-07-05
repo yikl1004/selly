@@ -13,6 +13,7 @@ declare global {
     type LoginInfo = AuthResponse['loginInfo']['data']
     type MemberWorkplaceInfo = AuthResponse['memberWorkplaceInfo']
     type MainInfo = AuthResponse['mainInfo']
+    type BizInfo = AuthResponse['bizInfo']
 }
 
 @Module({ name: 'auth', namespaced: true })
@@ -21,6 +22,7 @@ export default class Auth extends VuexModule<AuthState> {
     public kakaoUserInfo: UserInfo | null = null
     public memberWorkplaceInfo: MemberWorkplaceInfo | null = null
     public mainInfo: MainInfo | null = null
+    public bizInfo: BizInfo | null = null
 
     @Mutation
     init() {
@@ -48,7 +50,6 @@ export default class Auth extends VuexModule<AuthState> {
 
     @MutationAction
     async getMemberWorkplaceInfo() {
-        const state = this.state as AuthState
         const { data } = await AuthService.getMemberWorkplaceInfo()
 
         return {
@@ -58,11 +59,19 @@ export default class Auth extends VuexModule<AuthState> {
 
     @MutationAction
     async getMainInfo() {
-        const state = this.state as AuthState
         const { data } = await AuthService.getMainInfo()
 
         return {
             mainInfo: data,
+        }
+    }
+
+    @MutationAction
+    async getBizInfoInput(params: AuthParameters['bizInfo']) {
+        const { data } = await AuthService.getBizInfoInput(params)
+
+        return {
+            bizInfo: data,
         }
     }
 }

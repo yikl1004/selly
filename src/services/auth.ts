@@ -8,6 +8,11 @@ interface API {
     url: string
     method: 'post' | 'get'
 }
+
+export interface BizInfoItem {
+    bzno: string
+    rgyn: YN
+}
 export interface AuthParameters {
     /**
      * @description 로그인 / 카카오 최초 인입자 셀리 가입처리
@@ -26,6 +31,12 @@ export interface AuthParameters {
             agTag: string
             agDtti: string
         }[]
+    }
+    /**
+     * @description my>최초로그인시 사업자정보 입력 내용
+     */
+    bizInfo: {
+        list: BizInfoItem[]
     }
 }
 
@@ -74,11 +85,31 @@ export interface AuthResponse {
             todBilAm: number
         }
     }
+    bizInfo: {
+        rc: ResponseCode
+        rsMsg: string
+        data: {
+            // 회원 이름
+            mbrNm: string
+            // 사업자 리스트
+            list: {
+                // 사업자 번호
+                bzno: string
+                // 사업자 이름
+                bzmanNm: string
+                // 사업자 등록 여부
+                ltRgyn: YN
+                // 로카 가맹점 여부
+                locaMcYn: YN
+            }[]
+        }
+    }
 }
 
 type LoginInfoRes = Promise<AxiosResponse<AuthResponse['loginInfo']>>
 type MemberWorkplaceInfoRes = Promise<AxiosResponse<AuthResponse['memberWorkplaceInfo']>>
 type MainInfoRes = Promise<AxiosResponse<AuthResponse['mainInfo']>>
+type BizInfoRes = Promise<AxiosResponse<AuthResponse['bizInfo']>>
 
 class AuthService extends HttpService {
     // 로그인/카카오최초인입
@@ -124,6 +155,13 @@ class AuthService extends HttpService {
         const { url, method } = this.memberWorkplaceInfo
 
         return await instance.request({ method, url })
+    }
+
+    // my>최초로그인시 사업자정보 입력 요청
+    async getBizInfoInput(data: AuthParameters['bizInfo']): BizInfoRes {
+        const { url, method } = this.bizInfoInput
+
+        return await instance.request({ method, url, data })
     }
 }
 

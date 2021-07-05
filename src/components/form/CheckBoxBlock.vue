@@ -11,7 +11,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, PropSync, Vue, Watch } from 'vue-property-decorator'
+import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 
 export interface CheckboxProps {
     id: string
@@ -21,6 +21,12 @@ export interface CheckboxProps {
     require?: boolean
     disabled?: boolean
     index?: number
+}
+
+export interface OnSelectValue {
+    value: string | boolean
+    index: number
+    fieldName: string
 }
 
 @Component
@@ -95,7 +101,7 @@ export default class CheckBoxBlock extends Vue {
             value: this.value,
             index: this.index,
             fieldName: this._.camelCase(this.id),
-        })
+        } as OnSelectValue)
     }
 }
 </script>

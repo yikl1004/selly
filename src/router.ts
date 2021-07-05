@@ -208,6 +208,9 @@ router.beforeEach((to, from, next) => {
      *      3-2. 컴포넌트 내부의 beforeRouteEnter 가드 (params: to, from, next())
      *      3-3. 위 2가지 방법중 한가지를 택해서 사용하는 것이 나을것 같음...(뇌피셜 by CMK)
      */
+
+    // TODO: 세션연장에 대한 구문을 여기다가 넣어야됨
+
     next()
 })
 

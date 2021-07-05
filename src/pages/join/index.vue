@@ -11,6 +11,7 @@ import CompleteJoin from '@pages/auth/CompleteJoin.vue'
 import UnableJoin from '@pages/auth/UnableJoin.vue'
 import { ResgisterHook } from '@utils/decorators'
 import { namespace } from 'vuex-class'
+import { AuthParameters, BizInfoItem } from '@services/auth'
 
 const AuthModule = namespace('auth')
 
@@ -30,12 +31,19 @@ export default class JoinPage extends Vue {
     private step: number = 1
 
     /** @category Stores */
+
+    // 사업장 정보
     @AuthModule.Action('getMemberWorkplaceInfo')
     readonly getMemberWorkplaceInfo!: Function
 
+    // 최초로그인시 사업자정보 입력 요청
+    @AuthModule.Action('getBizInfoInput')
+    readonly getBizInfoInput!: (params: AuthParameters['bizInfo']) => Promise<void>
+
     /** @category Methods */
 
-    onNext() {
+    async onNext(list: BizInfoItem[]) {
+        await this.getBizInfoInput({ list })
         this.step = 2
     }
 

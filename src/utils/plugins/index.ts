@@ -7,6 +7,7 @@ import ClickOutside from 'vue-click-outside'
 
 // TODO: 삭제 해야됨
 import chalk from 'chalk'
+import VueToast from 'vue-toast-notification'
 
 // datepicker - https://vcalendar.io/
 const VCalendar = require('v-calendar')
@@ -17,12 +18,9 @@ const registerPlugins = (): void => {
     Vue.use(PortalVue)
     Vue.use(Lodash, LodashOptions)
     Vue.use(Dayjs)
-
-    // Use v-calendar & v-date-picker components
-    Vue.use(VCalendar, {
-        componentPrefix: 'vc', // Use <vc-calendar /> instead of <v-calendar />
-    })
+    Vue.use(VCalendar, { componentPrefix: 'vc' })
     // Vue.component('calendar', Calendar)
+    Vue.use(VueToast, { position: 'bottom' })
     Vue.component('date-picker', DatePicker)
     Vue.directive('click-outside', ClickOutside)
 

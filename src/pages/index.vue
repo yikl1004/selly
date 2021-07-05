@@ -99,8 +99,9 @@ export default class Login extends Vue {
                         console.log('/v2/user/me, 카카오에 요청한 유저정보', res)
                         this.setUserInfo({
                             // ciNo: res.kakao_account.ci,
-                            // ciNo: '8FsPBb/e2PxJLYQv22nQOKFNx7PTJTa6UoPNmx3b5eo94hjVhwc3FIFYsl8lbwKEL3d91h7nbdXl2pBmkFaOcg==',    // 03
-                            ciNo: 'oX2QI067j6qIzdx5aXTovZtYWu68wzg3zd8h+35kT7N3k40s+GmdIDK4Ts0miqRuDyv6x4cpoP7Ku5cvpVD8lQ==', // 02
+                            // ciNo: '8FsPBb/e2PxJLYQv22nQOKFNx7PTJTa6UoPNmx3b5eo94hjVhwc3FIFYsl8lbwKEL3d91h7nbdXl2pBmkFaOcg==',    // 03 (가입불가)
+                            // ciNo: 'ED4YJ80zZDOrVurxQJeQgzze/lkHapSfQlnzHCUUKMtuyy9E+m9zR3oFXMYM/JXuRlDLfOb1YE+PV41q4ec44g==', // 02 (사업자정보 1개)
+                            ciNo: '',
                             kkoId: `${res.id}`,
                             cellNo: res.kakao_account.phone_number,
                             email: res.kakao_account.email,
