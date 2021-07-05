@@ -32,6 +32,7 @@ import Tab from '@components/common/Tab.vue'
 import Dimmed from '@components/common/Dimmed.vue'
 import Modal from '@components/common/Modal.vue'
 import AccoItem from '@components/common/AccoItem.vue'
+import AccoItemSingle from '@components/common/AccoItemSingle.vue'
 import ProgressBar from '@components/common/ProgressBar.vue'
 import Title from '@components/common/Title.vue'
 import InfoList from '@components/common/InfoList.vue'
@@ -78,6 +79,7 @@ const componentList: { [key: string]: VueConstructor }[] = [
     { Dimmed },
     { Modal },
     { AccoItem },
+    { AccoItemSingle },
     { ProgressBar },
     { Title },
     { InfoList },

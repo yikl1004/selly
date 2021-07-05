@@ -1,5 +1,5 @@
 .sales-detail-wrap {
-    padding-top: 20px;
+    padding: 25px 24px 0;
     .sales-day-info {
         .day {
             display: block;
@@ -13,37 +13,48 @@
             color: #222;
         }
         .compare {
+            margin-top: 7px;
             li {
-                margin-top: 5px;
+                margin-top: 3px;
                 &:first-of-type{
                     margin-top: 0;
                 }
             }
             .compare-price {
+                position: relative;
+                padding-right: 24px;
                 font-size: 16px;
                 font-weight: 500;
                 color: #222;
-                &:after {
-                    content: '';
-                    display: inline-block;
+                .ico {
+                    display: block;
+                    position: absolute;
+                    right: 0;
+                    top: -5px;
                     width: 24px;
                     height: 24px;
+                    background-image: url('/assets/icon/icon-arrow-equal.svg');
+                    background-position: 0 2px;
                     background-repeat: no-repeat;
-                    vertical-align: top;
                 }
                 &.up {
                     color: $primary-color;
-                    &:after {
+                    .ico {
                         background-image: url('/assets/icon/icon-arrow-up.svg');
+                        background-position: 0 0;
                     }
                 }
                 &.down {
                     color: $point-color-blue;
-                    &:after {
+                    .ico {
                         background-image: url('/assets/icon/icon-arrow-down.svg');
+                        background-position: 0 0;
                     }
                 }
             }
         }
+    }
+    .sales-history-list {
+        margin: 32px -24px 0 -24px;
     }
 }

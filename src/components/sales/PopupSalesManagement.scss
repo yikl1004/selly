@@ -1,0 +1,18 @@
+.popup-sales-management {
+    h3 {
+        font-size: 20px;
+        color: #222;
+        font-weight: 700;
+        line-height: 1.4;
+    }
+    p {
+        margin-top: 25px;
+        strong {
+            font-weight: normal;
+            color: $primary-color;
+        }
+        &:first-of-type {
+            margin-top: 14px;
+        }
+    }
+}

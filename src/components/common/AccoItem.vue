@@ -1,5 +1,5 @@
 <template>
-    <div class="box-acco-list" :class="type">
+    <div class="box-acco-list">
         <div v-for="(item, index) in list" :key="`acco-item-${index}`" :class="['box-acco-item', { active: index === currentIndex }]">
             <button
                 type="bubton"
@@ -13,7 +13,6 @@
             <div :id="`acco-item-${index}`" class="acco-cont">
                 <div class="acco-cont-inner">
                     {{ item.desc }}
-                    <slot />
                 </div>
             </div>
         </div>

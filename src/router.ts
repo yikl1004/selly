@@ -18,6 +18,7 @@ import CardSubPage from '@pages/card/subPage.vue'
 
 //매출
 import SalesPage from '@pages/sales/index.vue'
+import SalesLinkage from '@pages/sales/SalesLinkage.vue'
 import SalesHistory from '@pages/sales/SalesHistory.vue'
 
 // 금융
@@ -163,6 +164,11 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
         path: '/sales',
         name: 'Sales',
         component: SalesPage,
+    },
+    {
+        path: '/sales/linkage',
+        name: 'Sales Linkage',
+        component: SalesLinkage,
     },
     {
         path: '/sales/saleshistory',
