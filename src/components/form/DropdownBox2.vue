@@ -15,8 +15,9 @@
                     @select-option="onSelectOption"
                 />
             </portal>
-            <TextInputMessage :message="errorMessage" message-type="error" />
         </div>
+
+        <TextInputMessage :message="errorMessage" message-type="error" />
     </div>
 </template>
 

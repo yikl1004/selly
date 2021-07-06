@@ -1,7 +1,21 @@
 .footer {
-    height: 214px;
+    min-height: 214px;
+    padding: 40px 24px;
     background: #2b2b2b;
-    color: #fff;
-    font-size: 16px;
-    text-align: center;
+    color: #999;
+    .logo-footer {
+        display: block;
+        width: 53px;
+        height: 26px;
+        background: url('/assets/common/logo-footer.svg') no-repeat;
+    }
+    .footer-info {
+        margin-top: 16px;
+        .copyright {
+            margin-top: 10px;
+            font-size: 12px;
+            color:#666;
+            line-height: 1.5;
+        }
+    }
 }

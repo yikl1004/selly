@@ -5,13 +5,13 @@
         position: relative;
         border: solid 1px #ebebeb;
         border-radius: 10px;
+        height: 56px;
+        background-color: #fff;
         @if $is-dropdown {
             height: 56px;
         }
-
-        
-
         input {
+            background-color: transparent;
             @if $is-dropdown {
                 position: absolute;
                 top: 0;
@@ -28,7 +28,7 @@
                 line-height: normal;
                 letter-spacing: -0.5px;
                 color: #222;
-                height: 56px;
+                height: 100%;
                 box-sizing: border-box;
                 width: 100%;
                 padding: 19px 20px 18px;
@@ -106,6 +106,10 @@
             border-color: #f3f3f3;
             background-color: #f3f3f3;
             color: #999;
+            & > input,
+            & > button {
+                color: #999;
+            }
         }
     }
 
@@ -203,16 +207,16 @@
         opacity: 0;
         &:checked + i{
             &:before {
-                background-color: $point-color-blue;
-                border-color:$point-color-blue;
+                background-color: $primary-color;
+                border-color:$primary-color;
                 background-image: url("/assets/icon/icon-only-check.svg")
             }
         }
-        &:disabled + i{
-            &:before {
+        &:disabled {
+            & + i:before {
                 background-color: #fafafa;
             }
-            &:checked:before {
+            &:checked + i:before {
                 border-color: #ebebeb;
                 background-color: #ebebeb;
             }

@@ -1,10 +1,10 @@
 import { Meta, Story } from '@storybook/vue'
-import DropdownBox from '@components/form/DropdownBox2.vue'
+import DropdownBox2 from '@components/form/DropdownBox2.vue'
 import getProps from '../assets/getProps'
 
 export default {
-    title: 'Components2/form/Dropdown Box',
-    component: DropdownBox,
+    title: 'Components/form/Dropdown Box2',
+    component: DropdownBox2,
     argTypes: {},
     parameters: {
         docs: {
@@ -27,7 +27,7 @@ interface Args {
 const Template: Story<Args> = (args, { argTypes }) => {
     return {
         props: getProps(argTypes),
-        template: `<DropdownBox v-bind="$props" />`,
+        template: `<DropdownBox2 v-bind="$props" />`,
     }
 }
 
