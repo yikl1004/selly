@@ -10,6 +10,7 @@
         font-size:14px;
         color: #222;
         line-height: 24px;
+        word-break: keep-all;
         &:before,
         &:after {
             content: '';
@@ -30,7 +31,7 @@
             top: 6px;
             width:12px;
             height:12px;
-            background-color: $point-color-blue;
+            background-color: $primary-color;
         }
     }
     
@@ -68,7 +69,7 @@
         &:checked {
             & + i {
                 &:before {
-                    border-color: $point-color-blue;
+                    border-color: $primary-color;
                 }
                 &:after {
                     display: block;

@@ -1,6 +1,6 @@
 <template>
     <div class="textarea-box" :class="isError">
-        <LabelTitle id="labelid" title-type="label" :hidden-label="hiddenLabel" label="lable" />
+        <LabelTitle :id="id" label-type="label" :hidden-label="hiddenLabel" :label="label" />
         <div class="input-area" :class="{ focus: focusedClass, readonly: readonly, disabled: disabled }">
             <textarea
                 :id="id"

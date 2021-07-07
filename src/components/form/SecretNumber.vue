@@ -1,6 +1,6 @@
 <template>
-    <div class="secret-number" :class="{ password: type === 'card' || type === 'card2' }">
-        <LabelTitle id="labelid" title-type="label" :hidden-label="hiddenLabel" :label="label" />
+    <div class="secret-number" :class="{ password: !isRegistType }">
+        <LabelTitle :hidden-label="hiddenLabel" :label="label" />
         <div class="input-area" :class="{ focus: focusedClass }">
             <template v-if="isRegistType">
                 <input
@@ -13,6 +13,7 @@
                     placeholder="생년월일 6자리"
                     type="tel"
                     :readonly="readonly"
+                    title="주민등록번호 앞자리"
                     @input="onInputFront"
                     @keydown="onKeydownFront"
                     @focus="onFocus"
@@ -34,6 +35,7 @@
                     :maxlength="digit.blank"
                     type="tel"
                     :readonly="readonly"
+                    :title="isRegistType ? '주민등록번호 뒷자리' : '카드 비밀번호 입력'"
                     @input="onInputSecret"
                     @keydown="onKeydownBack"
                     @focus="onFocus"

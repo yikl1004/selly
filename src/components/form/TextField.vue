@@ -1,6 +1,6 @@
 <template>
     <div class="text-field" :class="isError">
-        <LabelTitle id="labelid" title-type="label" :hidden-label="hiddenLabel" label="lable" />
+        <LabelTitle :id="id" label-type="label" :hidden-label="hiddenLabel" :label="label" />
         <div class="input-area" :class="{ focus: focusedClass, readonly: readonly, disabled: disabled }">
             <template v-if="isSelectType">
                 <button type="button" class="select-button" @click="openBottomSheet">

@@ -4,7 +4,7 @@ import _ from 'lodash'
 import getProps from '../../assets/getProps'
 
 export default {
-    title: 'Components/form/SwitchButton',
+    title: 'Components/form/SwitchButton_',
     component: SwitchButton,
     argTypes: {
         type: {
