@@ -14,7 +14,7 @@
                         <div class="popup-inner">
                             <slot />
                         </div>
-                        <div class="popup-btn-bottom">
+                        <div v-if="buttonText" class="popup-btn-bottom">
                             <FixedBtnBox target="modal">
                                 <BasicButton v-if="buttonText.cancel" size="large" @click="onCancel">
                                     {{ buttonText.cancel }}
@@ -63,10 +63,7 @@ export default class FullPopup extends Vue {
     readonly title!: string
 
     /** 버튼 텍스트 */
-    @Prop({
-        type: Object,
-        default: () => ({ cancel: '취소', confirm: '확인' }),
-    })
+    @Prop({ type: Object })
     readonly buttonText!: ButtonText
 
     /** 디자인 타입 */

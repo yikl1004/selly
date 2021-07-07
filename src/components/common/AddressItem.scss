@@ -1,0 +1,29 @@
+.address-item {
+    display: block;
+    width: 100%;
+    padding: 28px 0 20px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    .zip-code {
+        display: block;
+        font-size:16px;
+        color: #222;
+        font-weight: 500;
+    }
+    .road-name {
+        &.new {
+            margin-top: 14px;
+            color: #222;
+        }
+        &.old {
+            display: flex;
+            align-items: baseline;
+            margin-top: 7px;
+            color: #666;
+            .flag-box {
+                min-width: 38px;
+                margin-right: 4px;
+            }
+        }
+    }
+}
