@@ -21,7 +21,7 @@ export default class UnableJoinPage extends Vue {
     /** @category Methods */
 
     toFirstStep() {
-        this.$router.push({ name: 'Login', params: { step: '1' } })
+        this.$router.push({ name: 'Main', params: { step: '1' } })
     }
 }
 </script>

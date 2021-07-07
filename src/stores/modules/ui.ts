@@ -1,6 +1,9 @@
 import { Module, VuexModule, MutationAction, getModule, Action, Mutation } from 'vuex-module-decorators'
 import { axiosInstance } from '@services/core'
 
+declare global {
+    type HeaderType = 'main' | 'sub' | 'process'
+}
 export interface UiState {
     gnbOpen: boolean
     gnbList: GnbItem[]
@@ -10,6 +13,18 @@ export interface UiState {
 export default class Ui extends VuexModule {
     public gnbOpen: UiState['gnbOpen'] = false
     public gnbList: UiState['gnbList'] = []
+    public headerType: HeaderType = 'main'
+    public visible: boolean = false
+
+    @Mutation
+    setVisibleHeader(visible: boolean) {
+        this.visible = visible
+    }
+
+    @Mutation
+    setHeaderType(headerType: HeaderType) {
+        this.headerType = headerType
+    }
 
     @Mutation
     setGnb(gnbOpen: boolean) {

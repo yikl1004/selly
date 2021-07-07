@@ -3,9 +3,11 @@ import AuthService, { AuthResponse, AuthParameters } from '@services/auth'
 
 interface APIResponse {}
 export interface AuthState {
-    loginInfo: LoginInfo
-    kakaoUserInfo: UserInfo
-    responseCode?: ResponseCode
+    loginInfo: LoginInfo | null
+    kakaoUserInfo: UserInfo | null
+    memberWorkplaceInfo: MemberWorkplaceInfo | null
+    mainInfo: MainInfo | null
+    bizInfo: BizInfo | null
 }
 
 declare global {
@@ -14,6 +16,7 @@ declare global {
     type MemberWorkplaceInfo = AuthResponse['memberWorkplaceInfo']
     type MainInfo = AuthResponse['mainInfo']
     type BizInfo = AuthResponse['bizInfo']
+    type LogoutInfo = AuthResponse['logoutInfo']
 }
 
 @Module({ name: 'auth', namespaced: true })
@@ -23,6 +26,7 @@ export default class Auth extends VuexModule<AuthState> {
     public memberWorkplaceInfo: MemberWorkplaceInfo | null = null
     public mainInfo: MainInfo | null = null
     public bizInfo: BizInfo | null = null
+    public logoutInfo: LogoutInfo | null = null
 
     @Mutation
     init() {
@@ -41,7 +45,7 @@ export default class Auth extends VuexModule<AuthState> {
     @MutationAction
     async getLoginInfo() {
         const state = this.state as AuthState
-        const { data } = await AuthService.getLoginInfo(state.kakaoUserInfo)
+        const { data } = await AuthService.getLoginInfo(state.kakaoUserInfo as UserInfo)
 
         return {
             loginInfo: data.data,
@@ -75,6 +79,15 @@ export default class Auth extends VuexModule<AuthState> {
         }
     }
 
+    @MutationAction
+    async getLogoutInfo() {
+        const { data } = await AuthService.getLogoutInfo()
+
+        return {
+            logoutInfo: data,
+        }
+    }
+
     /**
      * @description
      * getMemberWorkplaceInfo 액션을 통해 store에 적재된 가입가능한 사업장 리스트를 반환
@@ -98,6 +111,34 @@ export default class Auth extends VuexModule<AuthState> {
 
         if (memberWorkplaceInfo && memberWorkplaceInfo!.data) {
             return memberWorkplaceInfo!.data.mbrNm || ''
+        } else {
+            return ''
+        }
+    }
+
+    /**
+     * @description
+     * 사업자 정보 입력 등록이 완료된 리스트를 반환
+     */
+    get bizInfoList(): BizInfo['data']['list'] {
+        const { bizInfo } = this
+
+        if (bizInfo && bizInfo.data && bizInfo.data.list) {
+            return bizInfo.data.list
+        } else {
+            return []
+        }
+    }
+
+    /**
+     * @description
+     * 사업자 정보 입력 등록이 완료된 사용자의 성명을 반환
+     */
+    get bizmanName(): string {
+        const { bizInfo } = this
+
+        if (bizInfo && bizInfo.data && bizInfo.data.mbrNm) {
+            return bizInfo.data.mbrNm || ''
         } else {
             return ''
         }

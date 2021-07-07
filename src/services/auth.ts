@@ -104,12 +104,18 @@ export interface AuthResponse {
             }[]
         }
     }
+    logoutInfo: {
+        rc: ResponseCode
+        rsMsg: string
+        data: null
+    }
 }
 
 type LoginInfoRes = Promise<AxiosResponse<AuthResponse['loginInfo']>>
 type MemberWorkplaceInfoRes = Promise<AxiosResponse<AuthResponse['memberWorkplaceInfo']>>
 type MainInfoRes = Promise<AxiosResponse<AuthResponse['mainInfo']>>
 type BizInfoRes = Promise<AxiosResponse<AuthResponse['bizInfo']>>
+type LogoutInfoRes = Promise<AxiosResponse<AuthResponse['logoutInfo']>>
 
 class AuthService extends HttpService {
     // 로그인/카카오최초인입
@@ -133,6 +139,12 @@ class AuthService extends HttpService {
     // my>최초로그인시 사업자정보 입력 내용
     private bizInfoInput: API = {
         url: '/API/MBR/SEMBRAA004',
+        method: 'post',
+    }
+
+    // my>회원정보>로그아웃
+    private logout: API = {
+        url: '/API/MBR/SEMBRBA001',
         method: 'post',
     }
 
@@ -162,6 +174,13 @@ class AuthService extends HttpService {
         const { url, method } = this.bizInfoInput
 
         return await instance.request({ method, url, data })
+    }
+
+    // my>회원정보>로그아웃
+    async getLogoutInfo(): LogoutInfoRes {
+        const { url, method } = this.logout
+
+        return await instance.request({ method, url })
     }
 }
 

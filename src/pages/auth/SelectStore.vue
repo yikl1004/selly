@@ -19,6 +19,8 @@
                         :label="convertBizNoFormatter({ bizNo: item.bzno })"
                         :biz-name="item.bzmanNm"
                         :index="index"
+                        :checked="item.ltRgyn === 'Y'"
+                        :disabled="item.locaMcYn === 'Y'"
                         name="group"
                         @change="onSelectBizNo"
                     />
@@ -44,7 +46,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator'
+import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 import { namespace } from 'vuex-class'
 import { OnSelectValue } from '@components/form/CheckBoxBlock.vue'
 import { BizInfoItem } from '@services/auth'
@@ -62,6 +64,13 @@ export default class SelectStorePage extends Vue {
 
     // 선택된 사업장 정보
     private selectedWorkplace: BizInfoItem[] = []
+
+    /** @category Watch */
+
+    @Watch('workplaceList')
+    changeWorkplaceList(value: BizInfo['data']['list'], oldValue: BizInfo['data']['list']) {
+        this.selectedWorkplace = value.filter(item => item.ltRgyn === 'Y').map(({ bzno, ltRgyn }) => ({ bzno, ltRgyn }))
+    }
 
     /** @category Methods */
 

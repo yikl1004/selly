@@ -12,8 +12,8 @@
                 </button>
             </div>
             <div class="user-info">
-                <strong class="user-name">김로카님</strong>
-                <BasicButton type="textGray">
+                <strong class="user-name">{{ bizmanName }}님</strong>
+                <BasicButton type="textGray" @click="logout">
                     로그아웃
                 </BasicButton>
             </div>
@@ -43,6 +43,9 @@
                     </div>
                 </div>
             </div>
+            <Modal :show.sync="show" :button-text="{ confirm: '확인' }" type="popup" @confirm="onConfirmModal">
+                {{ logoutInfo.rsMsg }}
+            </Modal>
         </section>
     </transition>
 </template>
@@ -57,47 +60,61 @@ interface MenuItem {
 }
 
 const UiModule = namespace('ui')
+const AuthModule = namespace('auth')
 
 @Component
 export default class Gnb extends Vue {
-    /**
-     * @category Props
-     */
+    /** @category Stores */
+    @UiModule.State('gnbList') readonly gnbList!: GnbItem[]
+    @AuthModule.State('loginInfo') readonly loginInfo!: LoginInfo
+    @AuthModule.Getter('bizmanName') readonly bizmanName!: string
+    @AuthModule.State('logoutInfo') readonly logoutInfo!: LogoutInfo
+    @AuthModule.Action('getLogoutInfo') readonly getLogoutInfo!: Function
+
+    /** @category Props */
 
     /** 노출 여부(초기 설정) */
     @Prop({ type: Boolean, default: false, required: true })
     public show!: boolean
 
-    /**
-     * @category Data
-     */
+    /** @category Data */
 
+    /** 메뉴 목록 */
     private menuList: MenuItem[] = [{ name: '매출', path: '' }]
+
+    /** 활성화 된 메뉴의 index */
     private activeIndex: number = 1
 
-    @UiModule.State('gnbList')
-    readonly gnbList!: GnbItem[]
+    /** 모달 노출 */
+    private modalShow: boolean = false
 
-    /**
-     * @category Computed
-     */
+    /** @category Computed */
 
     get currentChildren(): GnbItem[] {
         return this.gnbList[this.activeIndex].children || ([] as GnbItem[])
     }
 
-    /**
-     * @category Watch
-     */
+    /** @category Watch */
 
+    // 주소 변경 감지
     @Watch('$route.path')
-    changeRoute(val: any, old: any) {
+    changeRoute() {
         this.onClose()
     }
 
-    /**
-     * @category Methods
-     */
+    // 로그아웃 API의 결과 값 변경 감지
+    @Watch('logoutInfo')
+    changeLogoutInfo(value: LogoutInfo, oldValue: LogoutInfo) {
+        if (value && value.rc) {
+            this.modalShow = true
+        }
+    }
+
+    /** @category Methods */
+
+    onConfirmModal() {
+        this.modalShow = false
+    }
 
     onClose(event?: PointerEvent) {
         /**
@@ -107,8 +124,11 @@ export default class Gnb extends Vue {
     }
 
     onActive(index: number) {
-        console.log(index)
         this.activeIndex = index
+    }
+
+    logout() {
+        this.getLogoutInfo()
     }
 }
 </script>

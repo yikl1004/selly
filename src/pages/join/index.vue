@@ -12,6 +12,7 @@ import UnableJoin from '@pages/auth/UnableJoin.vue'
 import { RegisterHook } from '@utils/decorators'
 import { namespace } from 'vuex-class'
 import { AuthParameters, BizInfoItem } from '@services/auth'
+import { NavigationGuardNext, Route } from 'vue-router'
 
 const { Action, State } = namespace('auth')
 
@@ -59,10 +60,15 @@ export default class JoinPage extends Vue {
     }
 
     onComplete() {
-        this.$router.push({ name: 'Login' })
+        this.$router.push({ name: 'Main' })
     }
 
     /** @category Life-Cycle */
+
+    @RegisterHook
+    beforeRouteEnter(to: Route, from: Route, next: NavigationGuardNext) {
+        next()
+    }
 
     created() {
         const step = this._.toNumber(this.$route.params.step)
@@ -75,15 +81,10 @@ export default class JoinPage extends Vue {
 
     mounted() {
         if (Number.isNaN(this.step)) {
-            this.$router.push({ name: 'Login' })
+            this.$router.push({ name: 'Main' })
         }
 
         this.$toast.error('추천인 코드 확정 안됨')
-    }
-
-    @RegisterHook
-    beforeRouteEnter(to: any, from: any, next: Function) {
-        next()
     }
 }
 </script>

@@ -27,11 +27,12 @@ const DEFAULT_TRANSITION = 'fade'
 })
 export default class Layout extends Vue {
     private transitionName: string = DEFAULT_TRANSITION
+    private layout: string = 'default-layout'
 
-    get layout(): string {
-        const layout = this.$route.meta.layout as RouteMeta
-        return layout ? `${layout}-layout` : 'default-layout'
-    }
+    // get layout(): string {
+    //     const layout = this.$route.meta.layout as RouteMeta
+    //     return layout ? `${layout}-layout` : 'default-layout'
+    // }
 
     mounted(): void {}
 

@@ -1,5 +1,5 @@
 <template>
-    <div v-if="isMain" class="main">
+    <div v-if="!isLogin" class="main">
         <h2>메인 페이지</h2>
     </div>
     <div v-else class="page-login-wrap">
@@ -13,10 +13,14 @@
 </template>
 
 <script lang="ts">
+import { RegisterHook } from '@utils/decorators'
 import { Component, Vue, Watch } from 'vue-property-decorator'
+import { NavigationGuardNext, Route } from 'vue-router'
 import { namespace } from 'vuex-class'
+import store from '@stores/index'
 
 const { Mutation, Action, State } = namespace('auth')
+const { Mutation: UIMutation } = namespace('ui')
 
 @Component
 export default class Login extends Vue {
@@ -26,6 +30,8 @@ export default class Login extends Vue {
 
     @Mutation('setUserInfo') readonly setUserInfo!: (userInfo: UserInfo) => void
     @Mutation('init') readonly init!: Function
+    @UIMutation('setHeaderType') readonly setHeaderType!: (headerType: HeaderType) => void
+    @UIMutation('setVisibleHeader') readonly setVisibleHeader!: (visible: boolean) => void
     @Action('getLoginInfo') readonly getLoginInfo!: Function
     @Action('getMainInfo') readonly getMainInfo!: Function
     @State('loginInfo') readonly loginInfo!: LoginInfo
@@ -35,6 +41,9 @@ export default class Login extends Vue {
 
     // kakao api
     private kakaoApi!: KakaoCert
+
+    // page 분기
+    private pageName!: 'main' | 'login'
 
     /** @category Watch */
 
@@ -46,7 +55,7 @@ export default class Login extends Vue {
         switch (value?.rspDc) {
             // 메인으로 이동
             case '01':
-                to = { name: 'Login', query: { pageName: 'main' } }
+                to = { name: 'Main', query: { pageName: 'main' } }
                 break
             // 사업자확인으로 이동(가입 절차)
             case '02':
@@ -65,14 +74,15 @@ export default class Login extends Vue {
     @Watch('mainInfo', { deep: true })
     changeMainInfo(value: MainInfo, oldValue: MainInfo) {
         if (value.rc === '8888') {
-            this.$router.push({ name: 'Login' })
+            console.log('로그인 필요한 사용자 > 로그인 페이지로 이동')
+            this.$router.push({ name: 'Main' })
         }
     }
 
     /** @category Computed */
 
-    get isMain(): boolean {
-        return this.$route.query.pageName === 'main'
+    get isLogin(): boolean {
+        return this.mainInfo.rc === '8888'
     }
 
     /** @category Methods */
@@ -193,10 +203,21 @@ export default class Login extends Vue {
 
     /** @category Life-Cycle */
 
+    @RegisterHook
+    async beforeRouteEnter(to: Route, from: Route, next: NavigationGuardNext) {
+        await store.dispatch('auth/getMainInfo')
+        next()
+    }
+
     created() {
-        console.log(this.$route.query)
-        if (this.$route.query.pageName === 'main') {
+        const mainInfo = this.mainInfo
+        if (mainInfo && mainInfo.rc && mainInfo.rc === '8888') {
+            this.pageName = 'login'
+            this.setVisibleHeader(false)
+        } else {
             this.getMainInfo()
+            this.setHeaderType('main')
+            this.setVisibleHeader(true)
         }
     }
 

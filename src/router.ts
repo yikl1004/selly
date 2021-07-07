@@ -2,9 +2,8 @@ import Vue from 'vue'
 import VueRouter, { RouteConfig } from 'vue-router'
 
 import NotFoundPage from '@pages/notFound/index.vue'
-import LoginPage from '@pages/index.vue'
+import MainPage from '@pages/index.vue'
 // import NeedLoginPage from '@pages/needLogin/index.vue'
-// import MainPage from '@pages/main/index.vue'
 import JoinPage from '@pages/join/index.vue'
 
 import SelectStorePage from '@pages/auth/SelectStore.vue'
@@ -70,10 +69,10 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
     /* 로그인 or 메인 */
     {
         path: '/',
-        name: 'Login',
-        component: LoginPage,
+        name: 'Main',
+        component: MainPage,
         meta: {
-            layout: 'none',
+            layout: 'default',
         },
         // beforeEnter(to, from, next) {
         //     console.log('router beforeEnter', { to, from })
@@ -168,7 +167,7 @@ const router = new VueRouter({
 /**
  * navigatoin guard
  */
-const exceptionPages = ['Login', 'NeedLogin', 'NotFound', 'Join']
+const exceptionPages = ['Main', 'NeedLogin', 'NotFound', 'Join']
 router.beforeEach((to, from, next) => {
     /**
      * @description

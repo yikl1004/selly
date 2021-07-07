@@ -1,4 +1,4 @@
-import { RawLocation } from 'vue-router'
+import { NavigationGuard, RawLocation } from 'vue-router'
 
 declare global {
     type VueRouterLocation = RawLocation
