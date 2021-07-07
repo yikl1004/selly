@@ -15,7 +15,7 @@
                             <slot />
                         </div>
                         <div class="popup-btn-bottom">
-                            <FixedBtnBox>
+                            <FixedBtnBox target="modal">
                                 <BasicButton v-if="buttonText.cancel" size="large" @click="onCancel">
                                     {{ buttonText.cancel }}
                                 </BasicButton>
@@ -25,7 +25,6 @@
                             </FixedBtnBox>
                         </div>
                     </div>
-
                     <button type="button" class="btn-popup-close" @click="onCancel">
                         <span class="ir">닫기</span>
                     </button>

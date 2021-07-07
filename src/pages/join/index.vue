@@ -5,15 +5,15 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Vue, Watch } from 'vue-property-decorator'
 import SelectStore from '@pages/auth/SelectStore.vue'
 import CompleteJoin from '@pages/auth/CompleteJoin.vue'
 import UnableJoin from '@pages/auth/UnableJoin.vue'
-import { ResgisterHook } from '@utils/decorators'
+import { RegisterHook } from '@utils/decorators'
 import { namespace } from 'vuex-class'
 import { AuthParameters, BizInfoItem } from '@services/auth'
 
-const AuthModule = namespace('auth')
+const { Action, State } = namespace('auth')
 
 @Component({
     components: {
@@ -33,18 +33,29 @@ export default class JoinPage extends Vue {
     /** @category Stores */
 
     // 사업장 정보
-    @AuthModule.Action('getMemberWorkplaceInfo')
+    @Action('getMemberWorkplaceInfo')
     readonly getMemberWorkplaceInfo!: Function
 
     // 최초로그인시 사업자정보 입력 요청
-    @AuthModule.Action('getBizInfoInput')
+    @Action('getBizInfoInput')
     readonly getBizInfoInput!: (params: AuthParameters['bizInfo']) => Promise<void>
+
+    @State('bizInfo') readonly bizInfo!: BizInfo
+
+    /** @category Watch */
+
+    // 사업자정보가 변경 되면
+    @Watch('bizInfo')
+    changeBizInfo(value: BizInfo, oldValue: BizInfo) {
+        if (value!.rc === '0000') {
+            this.step = 2
+        }
+    }
 
     /** @category Methods */
 
     async onNext(list: BizInfoItem[]) {
         await this.getBizInfoInput({ list })
-        this.step = 2
     }
 
     onComplete() {
@@ -66,9 +77,11 @@ export default class JoinPage extends Vue {
         if (Number.isNaN(this.step)) {
             this.$router.push({ name: 'Login' })
         }
+
+        this.$toast.error('추천인 코드 확정 안됨')
     }
 
-    @ResgisterHook
+    @RegisterHook
     beforeRouteEnter(to: any, from: any, next: Function) {
         next()
     }

@@ -77,44 +77,88 @@ export default class Login extends Vue {
 
     /** @category Methods */
 
-    login() {
+    async login() {
         /**
          * 로그인 창을 띄웁니다.
-         * user-agent가 변경되면 ( ex: chrome 개발자모드>모바일 ) sdk 내부에서 체크하는 모듈이 존재하여 오류가 발생함
-         * 카카오로그인은 개발자모드 > 모바일 변경없이하여야 로그인이 정상적으로 진행됨
          * @reference https://developers.kakao.com/docs/latest/ko/reference/rest-api-reference
          * @path /v2/user/me : 사용자정보 가져오기
          * @path /v2/user/unlink : 연결끊기(탈퇴? 처럼 쓸수 있겠으나 실제로는 앱과의 연관성만 끊어준다고 함)
          */
 
-        // 로그인 요청
-        this.kakaoApi.Auth.login({
-            success: (authObj: KakaoUserInfoRes) => {
-                console.log('kakao login SUCCESS', authObj)
+        // 1. 카카오 로그인 요청
+        const kakaoLoginResponse = await this.kakaoLogin()
+        // 2. 카카오 로그인 사용자 정보 요청
+        const kakaoUserInfoResponse = await this.kakaoUserInfo()
+        // 3. 동의한 약관 항목 요청
+        const kakaoAgreedList = await this.getKakaoAgreedList()
+        // 4. Mutation: Selly 로그인 API 요청 Parameter 세팅
+        this.setUserInfo({
+            ...kakaoUserInfoResponse,
+            ...kakaoAgreedList,
+        })
+        // 5. Action: Selly 로그인 API 요청
+        this.getLoginInfo()
+    }
 
-                // 로그인 성공 시, 유저 정보 요청
-                this.kakaoApi.API.request({
-                    url: '/v2/user/me',
-                    success: res => {
-                        console.log('/v2/user/me, 카카오에 요청한 유저정보', res)
-                        this.setUserInfo({
-                            // ciNo: res.kakao_account.ci,
-                            // ciNo: '8FsPBb/e2PxJLYQv22nQOKFNx7PTJTa6UoPNmx3b5eo94hjVhwc3FIFYsl8lbwKEL3d91h7nbdXl2pBmkFaOcg==',    // 03 (가입불가)
-                            // ciNo: 'ED4YJ80zZDOrVurxQJeQgzze/lkHapSfQlnzHCUUKMtuyy9E+m9zR3oFXMYM/JXuRlDLfOb1YE+PV41q4ec44g==', // 02 (사업자정보 1개)
-                            ciNo: '',
-                            kkoId: `${res.id}`,
-                            cellNo: res.kakao_account.phone_number,
-                            email: res.kakao_account.email,
-                        })
-                        this.getLoginInfo()
-                    },
-                })
-            },
-            fail: (err: any) => {
-                // alert('요청에 실패 하였습니다.');
-                this.kakaoApi.cleanup()
-                console.log('kakao login FAIL', err)
-            },
+    async kakaoLogin(): Promise<AuthSuccessCallbackParamers> {
+        // 로그인 요청
+        return await new Promise((resolve, reject) => {
+            this.kakaoApi.Auth.login({
+                success: authObj => resolve(authObj),
+                fail: reason => {
+                    this.kakaoApi.cleanup()
+                    reject(reason)
+                },
+                throughTalk: false,
+            })
+        })
+    }
+
+    /**
+     * @description
+     * KAKAO: 동의 한 약관 목록을 요청
+     * @return {Promise}
+     */
+    async kakaoUserInfo(): Promise<Omit<UserInfo, 'list'>> {
+        return await new Promise((resolve, reject) => {
+            this.kakaoApi.API.request({
+                url: '/v2/user/me',
+                success: (res: KakaoUserInfoRes) => {
+                    console.log('/v2/user/me, 카카오에 요청한 유저정보', res)
+                    resolve({
+                        // ciNo: res.kakao_account.ci,
+                        // ciNo: '8FsPBb/e2PxJLYQv22nQOKFNx7PTJTa6UoPNmx3b5eo94hjVhwc3FIFYsl8lbwKEL3d91h7nbdXl2pBmkFaOcg==',    // 03 (가입불가)
+                        ciNo: 'ED4YJ80zZDOrVurxQJeQgzze/lkHapSfQlnzHCUUKMtuyy9E+m9zR3oFXMYM/JXuRlDLfOb1YE+PV41q4ec44g==', // 02 (사업자정보 1개)
+                        cellNo: this.cellPhoneFormatter(res.kakao_account.phone_number),
+                        email: res.kakao_account.email,
+                    })
+                },
+                fail: reason => reject(reason),
+            })
+        })
+    }
+
+    /**
+     * @description
+     * KAKAO: 동의 한 약관 목록을 요청
+     * @return {Promise}
+     */
+    async getKakaoAgreedList(): Promise<Pick<UserInfo, 'list'>> {
+        return await new Promise((resolve, reject) => {
+            this.kakaoApi.API.request({
+                url: '/v1/user/service/terms',
+                success: (response: KakaoTermsRes) => {
+                    console.log('KAKAO SERVICE TERMS SUCCESS', response)
+                    resolve({
+                        list: response.allowed_service_terms.map(item => ({ agTag: item.tag })),
+                    })
+                },
+                fail: reason => {
+                    console.log('KAKAO SERVICE TERMS FAIL', reason)
+                    alert('동의한 약관 항목을 불러오는데 실패하였습니다.\n 다시 시도해 주세요')
+                    reject(reason)
+                },
+            })
         })
     }
 

@@ -25,8 +25,9 @@ module.exports = {
      * @description style-resources-loader (vue-cli)
      * pluing 소스가 js인데 ts file에서 실행시 plugin함수에서 매개변수를 잘못받고 있어 오류가 남.
      * 아래 chainWepack 메서드에서 같은 코드를 직접 실행해 주는 것으로 변경
-     * 실제 플러그인 소스도 dependency(tyle-resources-loader) 존재 유무와 관계 없이 아래 chainWebpack 코드처럼 실행만 시켜줌
+     * 실제 플러그인 소스도 dependency(style-resources-loader) 존재 유무와 관계 없이 아래 chainWebpack 코드처럼 실행만 시켜줌
      */
+
     // pluginOptions: {
     //     'style-resources-loader': {
     //         preProcessor: 'scss',
@@ -45,7 +46,7 @@ module.exports = {
             extensions: ['.vue', 'tsx'],
         },
         devServer: {
-            host: 'selly.lottecard.com',
+            // host: 'selly.lottecard.com',
             proxy: {
                 // 프록시 요청을 보낼 api의 시작 부분
                 '/API': {

@@ -99,21 +99,48 @@ declare global {
         synched_at: string
     }
 
+    interface KakaoTermsRes {
+        allowed_service_terms: {
+            tag: string
+            agreed_at: string
+        }[]
+        user_id: number
+    }
+
     interface KakaoUnlinkRes {
         id: number
     }
 
+    interface AuthFailCallback {
+        (params: {
+            // 고정값
+            error: 'access_denied'
+            error_description: string
+        }): void
+    }
+
+    interface AuthSuccessCallbackParamers {
+        access_token: string
+        refresh_token: string
+        token_type: 'bearer'
+        expires_in: number
+        scope: string
+    }
+    interface AuthSuccessCallback {
+        (params: AuthSuccessCallbackParamers): void
+    }
     interface KakaoLoginApi {
-        success(authObj: any): void
-        fail(err: any): void
+        success: AuthSuccessCallback
+        fail: AuthFailCallback
         scope?: string
+        throughTalk?: boolean
     }
 
     interface KakaoAPIRequestParams {
         scopes?: string
         scope?: string
         url?: string
-        success?(res: KakaoUserInfoRes): void
+        success?(res: KakaoUserInfoRes | KakaoTermsRes): void
         fail?(error: any): void
         data?: {
             redirect_uri?: string

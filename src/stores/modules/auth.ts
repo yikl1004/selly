@@ -1,4 +1,4 @@
-import { Module, VuexModule, MutationAction, Action, Mutation } from 'vuex-module-decorators'
+import { Module, VuexModule, MutationAction, Mutation } from 'vuex-module-decorators'
 import AuthService, { AuthResponse, AuthParameters } from '@services/auth'
 
 interface APIResponse {}
@@ -72,6 +72,34 @@ export default class Auth extends VuexModule<AuthState> {
 
         return {
             bizInfo: data,
+        }
+    }
+
+    /**
+     * @description
+     * getMemberWorkplaceInfo 액션을 통해 store에 적재된 가입가능한 사업장 리스트를 반환
+     */
+    get workplaceList(): BizInfo['data']['list'] {
+        const { memberWorkplaceInfo } = this
+
+        if (memberWorkplaceInfo && memberWorkplaceInfo!.data) {
+            return memberWorkplaceInfo!.data.list || []
+        } else {
+            return []
+        }
+    }
+
+    /**
+     * @description
+     * getMemberWorkplaceInfo 액션을 통해 store에 적재된 가입하려는 대상자의 성명을 반환
+     */
+    get workplaceOwnerName(): string {
+        const { memberWorkplaceInfo } = this
+
+        if (memberWorkplaceInfo && memberWorkplaceInfo!.data) {
+            return memberWorkplaceInfo!.data.mbrNm || ''
+        } else {
+            return ''
         }
     }
 }

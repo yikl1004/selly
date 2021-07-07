@@ -26,4 +26,9 @@ export default class Ui extends VuexModule {
             gnbList,
         }
     }
+
+    @Action
+    actionTest() {
+        console.log('action test')
+    }
 }

@@ -1,7 +1,5 @@
 import Vue from 'vue'
 import VueRouter, { RouteConfig } from 'vue-router'
-import isNull from 'lodash/isNull'
-import store from '@stores/index'
 
 import NotFoundPage from '@pages/notFound/index.vue'
 import LoginPage from '@pages/index.vue'
@@ -92,39 +90,6 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
             layout: 'none',
         },
     },
-
-    /* 사업자번호 선택 (단일 / 복수) */
-    // {
-    //     path: '/auth/selectStore',
-    //     name: 'SelectStore',
-    //     component: SelectStorePage,
-    //     meta: {
-    //         layout: 'default',
-    //         auth: true,
-    //     },
-    // },
-
-    // /* 가입완료 */
-    // {
-    //     path: '/auth/completeJoin',
-    //     name: 'CompleteJoin',
-    //     component: CompleteJoinPage,
-    //     meta: {
-    //         layout: 'default',
-    //         auth: true,
-    //     },
-    // },
-
-    // /* 가입불가 */
-    // {
-    //     path: '/auth/unableJoin',
-    //     name: 'UnableJoin',
-    //     component: UnableJoinPage,
-    //     meta: {
-    //         layout: 'default',
-    //         auth: true,
-    //     },
-    // },
 
     /**
      * "로그인이 필요합니다" 페이지

@@ -2,7 +2,15 @@
     <div class="check-box-area">
         <div class="check-box" :class="type">
             <label>
-                <input :id="id" v-model="value" value="sdkj" type="checkbox" :name="_.camelCase(id)" @change="onChange" />
+                <input
+                    :id="id"
+                    v-model="value"
+                    :required="required"
+                    :disabled="disabled"
+                    type="checkbox"
+                    :name="_.camelCase(id)"
+                    @change="onChange"
+                />
                 <i>{{ label }}</i>
                 <span class="store-name">{{ bizName }}</span>
             </label>

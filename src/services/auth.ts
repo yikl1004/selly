@@ -11,7 +11,7 @@ interface API {
 
 export interface BizInfoItem {
     bzno: string
-    rgyn: YN
+    ltRgyn: YN
 }
 export interface AuthParameters {
     /**
@@ -25,11 +25,11 @@ export interface AuthParameters {
         // 카카오로 전달 받은 이메일
         email?: string
         // 카카오 유저 정보 중 id
-        kkoId: string
+        // kkoId: string
         // 약관 동의 항목
         list?: {
             agTag: string
-            agDtti: string
+            agDtti?: string
         }[]
     }
     /**
@@ -137,10 +137,10 @@ class AuthService extends HttpService {
     }
 
     // 로그인 카카오 최초 인입
-    async getLoginInfo(params: AuthParameters['loginInfo']): LoginInfoRes {
+    async getLoginInfo(data: AuthParameters['loginInfo']): LoginInfoRes {
         const { url, method } = this.login
 
-        return await instance.request({ method, url, params })
+        return await instance.request({ method, url, data })
     }
 
     // 회원 사업장 정보(최초 로그인 사업자 정보 요청)
