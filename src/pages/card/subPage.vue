@@ -2,6 +2,16 @@
     <div class="container">
         <div class="box-card-loan">
             <Title title="1. 가맹점 선택" />
+            <AddressField
+                id="a"
+                label="주소"
+                :hidden-label="null"
+                :readonly="false"
+                :disabled="false"
+                :validate="null"
+                :default-value="null"
+            />
+            <Flag text="text" />
             <Tab :list="tabList" :active="0" type="solid">
                 <template slot-scope="{ activeIndex }">
                     <div v-if="activeIndex === 0">
@@ -182,7 +192,6 @@
                 @confirm="onConfirm"
                 @cancel="onCancel"
             >
-                <!-- 줄바꿈은 br 태그를 직접 넣는 걸로.... -->
                 <p>
                     모든 국민은 법 앞에 평등하다. 누구든지 성별·종교 또는 사회적 신분에 의하여 정치적·경제적·사회적·문화적 생활의 모든
                     영역에 영역에 있어서 차별을 받지 아니한다.
@@ -297,14 +306,14 @@
                 </BasicButton>
             </div> -->
         </div>
-        <FixedBtnBox>
+        <!-- <FixedBtnBox>
             <BasicButton size="large">
                 버튼명 large
             </BasicButton>
             <BasicButton size="large">
                 버튼명 large
             </BasicButton>
-        </FixedBtnBox>
+        </FixedBtnBox> -->
     </div>
 </template>
 

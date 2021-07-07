@@ -1,21 +1,22 @@
 .caution-box {
-    padding-top: 96px;
-    .icon-caution {
-        display: block;
-        width: 48px;
-        height: 48px;
-        margin: 0 auto;
-        background-repeat: no-repeat;
-    }   
-    &.caution {
-        .icon-caution {
-            background-image: url('/assets/icon/icon-caution-empty.svg');
+    padding-top: 120px;
+    &.caution,
+    &.complete {
+        &:before {
+            content:'';
+            display: block;
+            width: 48px;
+            height: 48px;
+            margin: 0 auto 24px;
+            background-repeat: no-repeat;
         }
     }
-    &.complete {
-        .icon-caution {
-            background-image: url('/assets/icon/icon-caution-complete.svg');
-        }
+    &.caution:before {
+        background-image: url('/assets/icon/icon-caution-empty.svg');
+     
+    }
+    &.complete:before {
+        background-image: url('/assets/icon/icon-caution-complete.svg');
     }
     .caution-title {
         display: block;
@@ -23,16 +24,20 @@
         color: #222;
         line-height: 1.4;
         font-weight: bold;
+        & + .caution-sub-txt {
+            margin-top: 8px;
+            font-weight: 400;
+            color: #666;
+        }
     }
     .caution-sub-txt {
+        font-weight: 500;
+        color: #222;        
     }
     .caution-text-box {
         max-width: 312px;
-        margin: 24px auto 0;
+        margin: 0 auto;
         text-align: center;
-        .caution-sub-txt {
-            margin-top: 16px;
-        }
     }
     .tel-box {
         margin-top: 48px;

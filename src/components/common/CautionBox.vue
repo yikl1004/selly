@@ -1,8 +1,7 @@
 <template>
     <div class="caution-box" :class="type">
-        <i class="icon-caution"></i>
         <div class="caution-text-box">
-            <strong class="caution-title">{{ title }}</strong>
+            <strong v-if="title" class="caution-title">{{ title }}</strong>
             <p v-if="description" class="caution-sub-txt">
                 {{ description }}
             </p>
@@ -35,11 +34,11 @@ export default class CautionBox extends Vue {
      */
 
     /** 아이콘 타입받음. complete / caution */
-    @Prop({ type: String, default: 'complete' })
+    @Prop({ type: String })
     readonly type!: string
 
     /** 제목 */
-    @Prop({ type: String, required: true })
+    @Prop({ type: String })
     readonly title!: string
 
     /** 설명 글 */

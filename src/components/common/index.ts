@@ -19,6 +19,7 @@ import FormProvider from '@components/form/FormProvider.vue'
 import Radio from '@components/form/Radio.vue'
 import RadioGroup from '@components/form/RadioGroup.vue'
 import EmailForm from '@components/form/EmailForm.vue'
+import AddressField from '@components/form/AddressField.vue'
 
 // common
 import Anchor from '@components/common/Anchor.vue'
@@ -44,6 +45,11 @@ import BulletList from '@components/common/BulletList.vue'
 import Gnb from '@components/common/Gnb.vue'
 import LabelTitle from '@components/common/LabelTitle.vue'
 import FormTextBox from '@components/common/FormTextBox.vue'
+import Flag from '@components/common/Flag.vue'
+import AddressItem from '@components/common/AddressItem.vue'
+
+//common popup
+import PopupAddressFind from '@components/common/PopupAddressFind.vue'
 
 //개발씽크맞추기 전
 import DropdownBox2 from '@components/form/DropdownBox2.vue'
@@ -74,6 +80,7 @@ const componentList: { [key: string]: VueConstructor }[] = [
     { CheckBoxBlock },
     { CheckBoxGroup },
     { SwitchButton },
+    { AddressField },
     // { CreditCardField },
     { FormProvider },
     { Dimmed },
@@ -91,6 +98,11 @@ const componentList: { [key: string]: VueConstructor }[] = [
     { Gnb },
     { LabelTitle },
     { FormTextBox },
+    { Flag },
+    { AddressItem },
+
+    //popup common
+    { PopupAddressFind },
 
     //개발씽크 맞추기 전
     { DropdownBox2 },

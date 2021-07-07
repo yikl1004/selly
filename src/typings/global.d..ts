@@ -213,6 +213,7 @@ declare global {
         | 'textGray' // 텍스트버튼_회색
         | 'dialogBlue' // dialog버튼_파랑
         | 'dialogWhite' // dialog버튼_흰색
+        | 'more' // 더보기
 
     /**
      * @path { @component/form/CheckBox.vue }

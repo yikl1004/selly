@@ -1,34 +1,72 @@
 <template>
-    <div class="search-field">
-        <LabelTitle :id="id" label-type="label" :hidden-label="hiddenLabel" :label="label" />
+    <div class="address-field">
+        <LabelTitle :hidden-label="hiddenLabel" :label="label" />
+        <div class="address-box">
+            <BasicButton size="medium" @click="openPopup">
+                주소 찾기
+            </BasicButton>
+        </div>
         <div class="flex">
-            <div class="input-area" :class="{ focus: focusedClass, readonly: readonly, disabled: disabled }">
+            <!-- readonly 말고 disabled 넣어도되나? -->
+            <div class="input-area readonly">
                 <input
                     :id="id"
                     ref="input"
-                    :value="value"
+                    value="03272"
                     :name="_.camelCase(id)"
                     autocomplete="new-password"
                     :maxlength="maxlength"
-                    :placeholder="placeholder"
                     type="text"
-                    :readonly="readonly"
-                    :disabled="disabled"
+                    readonly="true"
+                    disabled="true"
                     @input="onInput"
-                    @keydown.enter="onKeydownEnter"
-                    @focus="onFocus"
                     @blur="onBlur"
                 />
-                <Timer v-if="cert" class="counter" :count="timer.count" :unit="timer.unit" :format="timer.format" />
-                <button v-if="!readonly && !!value.length" type="button" class="clear" @click="clearValue">
-                    <i />
-                    <span class="ir">전체삭제</span>
-                </button>
             </div>
-            <button class="search-button" :disabled="disabled" type="button" @click="onSearch">
-                <span>{{ buttonText }}</span>
+            <button class="search-button" :disabled="disabled" type="button" @click="openPopup">
+                <span>검색</span>
             </button>
         </div>
+
+        <div class="input-area readonly">
+            <input
+                ref="input"
+                value="서울특별시 종로구 세종대로 175"
+                :name="_.camelCase(id)"
+                autocomplete="new-password"
+                :maxlength="maxlength"
+                type="text"
+                :readonly="true"
+                :disabled="true"
+                @input="onInput"
+                @blur="onBlur"
+            />
+        </div>
+        <div class="input-area" :class="{ focus: focusedClass, readonly: readonly, disabled: disabled }">
+            <input
+                :id="id"
+                ref="input"
+                :value="value"
+                :name="_.camelCase(id)"
+                autocomplete="new-password"
+                :maxlength="maxlength"
+                type="text"
+                :readonly="readonly"
+                :disabled="disabled"
+                @input="onInput"
+                @focus="onFocus"
+                @blur="onBlur"
+            />
+            <button v-if="!readonly && !!value.length" type="button" class="clear" @click="clearValue">
+                <i />
+                <span class="ir">전체삭제</span>
+            </button>
+        </div>
+
+        <!-- popup : 주소찾기 -->
+        <FullPopup :show.sync="show" title="주소 찾기" type="popup">
+            <PopupAddressFind />
+        </FullPopup>
     </div>
 </template>
 
@@ -45,20 +83,8 @@ interface Validate {
     (value: string): boolean
 }
 
-interface Timer {
-    count: number
-    unit: 'minute' | 'second'
-    format?: string
-}
-
-/**
- * TODO:
- * 2. label에 표시될 tooltip이 아직 공통 컴포넌트가 없음, 해야함
- * 3. 단위 표시할 텍스트 노출방식에 대한 논의가 필요함
- */
-
 @Component
-export default class ButtonField extends Mixins(Validates) {
+export default class AddressField extends Mixins(Validates) {
     /**
      * @category Refs
      */
@@ -85,10 +111,6 @@ export default class ButtonField extends Mixins(Validates) {
     @Prop({ type: Number, default: 9999 })
     readonly maxlength!: number
 
-    /** 입력 전 표시될 가이드 텍스트 */
-    @Prop({ type: String, default: '' })
-    readonly placeholder!: string
-
     /** 읽기전용 여부 */
     @Prop({ type: Boolean, default: false })
     readonly readonly!: boolean
@@ -101,17 +123,19 @@ export default class ButtonField extends Mixins(Validates) {
     @Prop(String)
     readonly defaultValue!: string
 
-    /** 버튼에 들어갈 텍스트 */
-    @Prop({ type: String, required: true })
-    readonly buttonText!: string
+    // s: popup
+    private show: boolean = false
+    openPopup() {
+        this.show = true
+    }
+    onConfirm() {
+        this.show = false
+    }
 
-    /** 유형 */
-    @Prop({ type: Boolean, default: false })
-    readonly cert!: boolean
-
-    /** 타이머 */
-    @Prop({ type: Object, default: () => ({ count: 3, unit: 'minute' }) })
-    private timer!: Timer
+    onCancel() {
+        console.log('after close modal')
+    }
+    // e: popup
 
     /**
      * @category DATA(State)
@@ -152,20 +176,8 @@ export default class ButtonField extends Mixins(Validates) {
         this.focusedClass = !this.focusedClass
     }
 
-    onSearch() {
-        /**
-         * keydown 이벤트
-         * @event search
-         */
-        this.$emit('search', this.value)
-    }
-
     onInput(event: InputEvent) {
         this.value = this.$refs.input.value.replace(/\,/g, '')
-    }
-
-    onKeydownEnter(event: KeyboardEvent) {
-        this.onSearch()
     }
 
     onFocus(event: FocusEvent) {
@@ -201,4 +213,4 @@ export default class ButtonField extends Mixins(Validates) {
 }
 </script>
 
-<style lang="scss" scoped src="./ButtonField.scss"></style>
+<style lang="scss" scoped src="./AddressField.scss"></style>

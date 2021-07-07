@@ -14,7 +14,7 @@
                         <div class="popup-inner">
                             <slot />
                         </div>
-                        <div class="popup-btn-bottom">
+                        <div v-if="buttonText" class="popup-btn-bottom">
                             <FixedBtnBox target="modal">
                                 <BasicButton v-if="buttonText.cancel" size="large" @click="onCancel">
                                     {{ buttonText.cancel }}

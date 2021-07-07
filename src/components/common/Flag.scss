@@ -1,0 +1,16 @@
+.flag-box {
+    display: inline-block;
+    height: 24px;
+    padding: 3px 6px;
+    border-radius: 4px;
+    color: #fff;
+    font-size: 12px;
+    line-height: 1.5;
+    vertical-align: top;
+    &.green {background-color: #64caaa;}
+    &.gray {background-color: #f3f3f3;color: #222;}
+    &.blue {background-color: #00437c;}
+    &.brown{background-color: #9c8a80;}
+    &.red {background-color: #ea7869;}
+    &.white {background-color: #fff;color: #666;border: 1px solid #ebebeb; border-radius: 4px;}
+}
