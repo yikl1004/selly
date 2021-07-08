@@ -3,7 +3,7 @@
         <section v-if="show" class="box-gnb-wrap">
             <div class="gnb-header">
                 <h2>
-                    <Anchor href="/main" class="logo">
+                    <Anchor href="/" class="logo">
                         <span class="ir">Selly</span>
                     </Anchor>
                 </h2>
@@ -43,16 +43,17 @@
                     </div>
                 </div>
             </div>
-            <Modal :show.sync="show" :button-text="{ confirm: '확인' }" type="popup" @confirm="onConfirmModal">
-                {{ logoutInfo.rsMsg }}
+            <Modal v-if="modalMessage" :show.sync="modalShow" :button-text="{ confirm: '확인' }" type="popup" @confirm="onConfirmModal">
+                {{ modalMessage }}
             </Modal>
         </section>
     </transition>
 </template>
 
 <script lang="ts">
-import { Component, Prop, PropSync, Vue, Watch } from 'vue-property-decorator'
+import { Component, Mixins, Prop, PropSync, Vue, Watch } from 'vue-property-decorator'
 import { namespace } from 'vuex-class'
+import { KakaoSDK } from '@utils/mixins'
 
 interface MenuItem {
     name: string
@@ -63,7 +64,7 @@ const UiModule = namespace('ui')
 const AuthModule = namespace('auth')
 
 @Component
-export default class Gnb extends Vue {
+export default class Gnb extends Mixins(KakaoSDK) {
     /** @category Stores */
     @UiModule.State('gnbList') readonly gnbList!: GnbItem[]
     @AuthModule.State('loginInfo') readonly loginInfo!: LoginInfo
@@ -94,6 +95,10 @@ export default class Gnb extends Vue {
         return this.gnbList[this.activeIndex].children || ([] as GnbItem[])
     }
 
+    get modalMessage(): string {
+        return this.logoutInfo?.rsMsg ?? ''
+    }
+
     /** @category Watch */
 
     // 주소 변경 감지
@@ -114,6 +119,7 @@ export default class Gnb extends Vue {
 
     onConfirmModal() {
         this.modalShow = false
+        window.location.href = '/'
     }
 
     onClose(event?: PointerEvent) {
@@ -127,8 +133,9 @@ export default class Gnb extends Vue {
         this.activeIndex = index
     }
 
-    logout() {
-        this.getLogoutInfo()
+    async logout() {
+        await this.kakaoLogout()
+        await this.getLogoutInfo()
     }
 }
 </script>

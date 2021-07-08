@@ -13,34 +13,38 @@
 </template>
 
 <script lang="ts">
-import { RegisterHook } from '@utils/decorators'
-import { Component, Vue, Watch } from 'vue-property-decorator'
-import { NavigationGuardNext, Route } from 'vue-router'
+import { Component, Mixins, Vue, Watch } from 'vue-property-decorator'
 import { namespace } from 'vuex-class'
 import store from '@stores/index'
+import { KakaoSDK } from '@utils/mixins'
 
-const { Mutation, Action, State } = namespace('auth')
+const { Mutation: AuthMutation, Action: AuthAction, State: AuthState } = namespace('auth')
 const { Mutation: UIMutation } = namespace('ui')
 
-@Component
-export default class Login extends Vue {
+@Component({
+    beforeRouteEnter: async (to, from, next) => {
+        await store.dispatch('auth/getMainInfo')
+        next()
+    },
+})
+export default class Login extends Mixins(KakaoSDK) {
     /**
      * @category Use store
      */
 
-    @Mutation('setUserInfo') readonly setUserInfo!: (userInfo: UserInfo) => void
-    @Mutation('init') readonly init!: Function
+    // [ store ]: auth
+    @AuthMutation('setUserInfo') readonly setUserInfo!: (userInfo: UserInfo) => void
+    @AuthMutation('init') readonly init!: Function
+    @AuthAction('getLoginInfo') readonly getLoginInfo!: Function
+    @AuthAction('getMainInfo') readonly getMainInfo!: Function
+    @AuthState('loginInfo') readonly loginInfo!: LoginInfo
+    @AuthState('mainInfo') readonly mainInfo!: MainInfo
+
+    // [ store ]: ui
     @UIMutation('setHeaderType') readonly setHeaderType!: (headerType: HeaderType) => void
     @UIMutation('setVisibleHeader') readonly setVisibleHeader!: (visible: boolean) => void
-    @Action('getLoginInfo') readonly getLoginInfo!: Function
-    @Action('getMainInfo') readonly getMainInfo!: Function
-    @State('loginInfo') readonly loginInfo!: LoginInfo
-    @State('mainInfo') readonly mainInfo!: MainInfo
 
     /** @category Data */
-
-    // kakao api
-    private kakaoApi!: KakaoCert
 
     // page 분기
     private pageName!: 'main' | 'login'
@@ -53,13 +57,13 @@ export default class Login extends Vue {
         let to: VueRouterLocation | null = null
 
         switch (value?.rspDc) {
-            // 메인으로 이동
-            case '01':
-                to = { name: 'Main', query: { pageName: 'main' } }
-                break
             // 사업자확인으로 이동(가입 절차)
-            case '02':
+            case '01':
                 to = { name: 'Join', params: { step: '1' } }
+                break
+            // 메인으로 이동
+            case '02':
+                window.location.href = '/'
                 break
             // 가입불가 대상
             case '03':
@@ -100,7 +104,7 @@ export default class Login extends Vue {
         // 2. 카카오 로그인 사용자 정보 요청
         const kakaoUserInfoResponse = await this.kakaoUserInfo()
         // 3. 동의한 약관 항목 요청
-        const kakaoAgreedList = await this.getKakaoAgreedList()
+        const kakaoAgreedList = await this.kakaoAgreedList()
         // 4. Mutation: Selly 로그인 API 요청 Parameter 세팅
         this.setUserInfo({
             ...kakaoUserInfoResponse,
@@ -110,122 +114,14 @@ export default class Login extends Vue {
         this.getLoginInfo()
     }
 
-    async kakaoLogin(): Promise<AuthSuccessCallbackParamers> {
-        // 로그인 요청
-        return await new Promise((resolve, reject) => {
-            this.kakaoApi.Auth.login({
-                success: authObj => resolve(authObj),
-                fail: reason => {
-                    this.kakaoApi.cleanup()
-                    reject(reason)
-                },
-                throughTalk: false,
-            })
-        })
-    }
-
-    /**
-     * @description
-     * KAKAO: 동의 한 약관 목록을 요청
-     * @return {Promise}
-     */
-    async kakaoUserInfo(): Promise<Omit<UserInfo, 'list'>> {
-        return await new Promise((resolve, reject) => {
-            this.kakaoApi.API.request({
-                url: '/v2/user/me',
-                success: (res: KakaoUserInfoRes) => {
-                    console.log('/v2/user/me, 카카오에 요청한 유저정보', res)
-                    resolve({
-                        // ciNo: res.kakao_account.ci,
-                        // ciNo: '8FsPBb/e2PxJLYQv22nQOKFNx7PTJTa6UoPNmx3b5eo94hjVhwc3FIFYsl8lbwKEL3d91h7nbdXl2pBmkFaOcg==',    // 03 (가입불가)
-                        ciNo: 'ED4YJ80zZDOrVurxQJeQgzze/lkHapSfQlnzHCUUKMtuyy9E+m9zR3oFXMYM/JXuRlDLfOb1YE+PV41q4ec44g==', // 02 (사업자정보 1개)
-                        cellNo: this.cellPhoneFormatter(res.kakao_account.phone_number),
-                        email: res.kakao_account.email,
-                    })
-                },
-                fail: reason => reject(reason),
-            })
-        })
-    }
-
-    /**
-     * @description
-     * KAKAO: 동의 한 약관 목록을 요청
-     * @return {Promise}
-     */
-    async getKakaoAgreedList(): Promise<Pick<UserInfo, 'list'>> {
-        return await new Promise((resolve, reject) => {
-            this.kakaoApi.API.request({
-                url: '/v1/user/service/terms',
-                success: (response: KakaoTermsRes) => {
-                    console.log('KAKAO SERVICE TERMS SUCCESS', response)
-                    resolve({
-                        list: response.allowed_service_terms.map(item => ({ agTag: item.tag })),
-                    })
-                },
-                fail: reason => {
-                    console.log('KAKAO SERVICE TERMS FAIL', reason)
-                    alert('동의한 약관 항목을 불러오는데 실패하였습니다.\n 다시 시도해 주세요')
-                    reject(reason)
-                },
-            })
-        })
-    }
-
-    loadScript() {
-        if (document && document.querySelectorAll('#kakao-login-sdk').length === 0) {
-            const script = document.createElement('script')
-            script.id = 'kakao-login-sdk'
-            script.src = 'https://developers.kakao.com/sdk/js/kakao.min.js'
-            document.head.appendChild(script)
-
-            script.onload = () => {
-                this.kakaoApi = window.Kakao
-                this.initialize()
-            }
-        } else {
-            this.kakaoApi = window.Kakao
-        }
-    }
-
-    initialize() {
-        if (!this.kakaoApi) {
-            console.log('kakao object 가 없습니다.')
-            return
-        }
-
-        this.kakaoApi.cleanup()
-
-        if (!this.kakaoApi.isInitialized()) {
-            this.kakaoApi.init(process.env.VUE_APP_KAKAO_API_KEY)
-        }
-    }
-
     /** @category Life-Cycle */
-
-    @RegisterHook
-    async beforeRouteEnter(to: Route, from: Route, next: NavigationGuardNext) {
-        await store.dispatch('auth/getMainInfo')
-        next()
-    }
 
     created() {
         const mainInfo = this.mainInfo
         if (mainInfo && mainInfo.rc && mainInfo.rc === '8888') {
             this.pageName = 'login'
-            this.setVisibleHeader(false)
-        } else {
-            this.getMainInfo()
-            this.setHeaderType('main')
-            this.setVisibleHeader(true)
         }
     }
-
-    mounted() {
-        this.loadScript()
-    }
-
-    beforeDestroy() {}
 }
 </script>
 

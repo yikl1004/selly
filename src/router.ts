@@ -1,4 +1,5 @@
-import Vue from 'vue'
+import store from '@stores/index'
+import { Vue, Component } from 'vue-property-decorator'
 import VueRouter, { RouteConfig } from 'vue-router'
 
 import NotFoundPage from '@pages/notFound/index.vue'
@@ -28,6 +29,7 @@ import ExampleForm from '@pages/example/form/index.vue'
 import ExampleTestbed from '@pages/example/testbed/index.vue'
 
 Vue.use(VueRouter)
+Component.registerHooks(['beforeRouteEnter'])
 
 export type RouteMeta = {
     layout?: 'default' | 'none' | 'floating' | string
@@ -168,7 +170,7 @@ const router = new VueRouter({
  * navigatoin guard
  */
 const exceptionPages = ['Main', 'NeedLogin', 'NotFound', 'Join']
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
     /**
      * @description
      * 1. 모든 API에서 로그인 체크를 기본적으로 함.
@@ -180,6 +182,17 @@ router.beforeEach((to, from, next) => {
      */
 
     // TODO: 세션연장에 대한 구문을 여기다가 넣어야됨
+
+    if (to.path === '/') {
+        await store.dispatch('auth/getMainInfo')
+        const mainInfo = store.state.auth.mainInfo
+        if (mainInfo && mainInfo.rc && mainInfo.rc === '8888') {
+            store.commit('ui/setVisibleHeader', false)
+        } else {
+            store.commit('ui/setHeaderType', 'main')
+            store.commit('ui/setVisibleHeader', true)
+        }
+    }
 
     next()
 })

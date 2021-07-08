@@ -166,6 +166,10 @@ declare global {
             login(params: KakaoLoginApi): void
             /** 카카오 로그인한 유저의 정보 호출 */
             getStatusInfo(params: any): void
+            /** 토큰 삭제 하기 */
+            logout(callback?: Function): void
+            /** 사용 중인 엑세스 토큰 확인 */
+            getAccessToken(): string
         }
         API: {
             request(params: KakaoAPIRequestParams): void

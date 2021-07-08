@@ -9,10 +9,8 @@ import { Component, Vue, Watch } from 'vue-property-decorator'
 import SelectStore from '@pages/auth/SelectStore.vue'
 import CompleteJoin from '@pages/auth/CompleteJoin.vue'
 import UnableJoin from '@pages/auth/UnableJoin.vue'
-import { RegisterHook } from '@utils/decorators'
 import { namespace } from 'vuex-class'
 import { AuthParameters, BizInfoItem } from '@services/auth'
-import { NavigationGuardNext, Route } from 'vue-router'
 
 const { Action, State } = namespace('auth')
 
@@ -21,6 +19,9 @@ const { Action, State } = namespace('auth')
         SelectStore,
         CompleteJoin,
         UnableJoin,
+    },
+    beforeRouteEnter(to, from, next) {
+        next()
     },
 })
 export default class JoinPage extends Vue {
@@ -64,11 +65,6 @@ export default class JoinPage extends Vue {
     }
 
     /** @category Life-Cycle */
-
-    @RegisterHook
-    beforeRouteEnter(to: Route, from: Route, next: NavigationGuardNext) {
-        next()
-    }
 
     created() {
         const step = this._.toNumber(this.$route.params.step)

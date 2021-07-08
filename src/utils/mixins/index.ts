@@ -1,4 +1,6 @@
 import Vue from 'vue'
+export { default as KakaoSDK } from '@utils/mixins/KakaoSDK'
+export { default as Validates } from '@utils/mixins/Validates'
 
 interface ConvertBizNoFormatterParams {
     bizNo: string
@@ -17,6 +19,12 @@ declare module 'vue/types/vue' {
 
 const registerMixins = () => {
     Vue.mixin({
+        data() {
+            // kakao api
+            return {
+                kakaoApi: null,
+            }
+        },
         methods: {
             /**
              * @description
