@@ -38,6 +38,12 @@ export interface AuthParameters {
     bizInfo: {
         list: BizInfoItem[]
     }
+    /**
+     * @description 추천인코드 입력 요청
+     */
+    recommenderCode: {
+        rfnSn: string
+    }
 }
 
 /**
@@ -109,6 +115,11 @@ export interface AuthResponse {
         rsMsg: string
         data: null
     }
+    recommenderCode: {
+        rc: ResponseCode
+        rsMsg: string
+        data: null | object
+    }
 }
 
 type LoginInfoRes = Promise<AxiosResponse<AuthResponse['loginInfo']>>
@@ -116,6 +127,7 @@ type MemberWorkplaceInfoRes = Promise<AxiosResponse<AuthResponse['memberWorkplac
 type MainInfoRes = Promise<AxiosResponse<AuthResponse['mainInfo']>>
 type BizInfoRes = Promise<AxiosResponse<AuthResponse['bizInfo']>>
 type LogoutInfoRes = Promise<AxiosResponse<AuthResponse['logoutInfo']>>
+type RecommenderCodeRes = Promise<AxiosResponse<AuthResponse['recommenderCode']>>
 
 class AuthService extends HttpService {
     // 로그인/카카오최초인입
@@ -145,6 +157,12 @@ class AuthService extends HttpService {
     // my>회원정보>로그아웃
     private logout: API = {
         url: '/API/MBR/SEMBRBA001',
+        method: 'post',
+    }
+
+    // my>사업자정보>추천인코드입력
+    private recommenderCode: API = {
+        url: '/API/MBR/SEMBRAA006',
         method: 'post',
     }
 
@@ -181,6 +199,13 @@ class AuthService extends HttpService {
         const { url, method } = this.logout
 
         return await instance.request({ method, url })
+    }
+
+    // my>사업자정보>추천인코드입력
+    async inputRecommenderCode(params: AuthParameters['recommenderCode']): RecommenderCodeRes {
+        const { url, method } = this.recommenderCode
+
+        return await instance.request({ method, url, params })
     }
 }
 

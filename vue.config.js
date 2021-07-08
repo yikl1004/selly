@@ -51,7 +51,7 @@ module.exports = {
                 // 프록시 요청을 보낼 api의 시작 부분
                 '/API': {
                     // 프록시 요청을 보낼 서버의 주소
-                    target: 'http://124.243.36.222:8080/',
+                    target: 'http://selly.lottecard.co.kr:8080/',
                 },
                 '/addrlink': {
                     target: 'https://www.juso.go.kr',

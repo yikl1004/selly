@@ -68,6 +68,7 @@ interface Parmas {
 const AuthModule = namespace('auth')
 
 /**
+ * TODO: 삭제 예정
  * login process( S: success, F: fail )
  * 1. 카카오 로그인 버튼이 있는 페이지 진입
  * 2. 카카오 SDK javascript 로드
@@ -114,11 +115,6 @@ export default class LoginButton extends Vue {
         login: '/oauth/token',
         logout: '/v1/user/logout',
     }
-
-    /** autorize 공통 파라미터 */
-    // private autorizeCommonParms: KakaoAuthAutorizeParameters = {
-    //     redirectUri: 'http://selly.lottecard.com:8080/example',
-    // }
 
     /**
      * @cateogry Methods

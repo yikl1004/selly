@@ -1,5 +1,5 @@
 import { Meta, Story } from '@storybook/vue'
-import DropdownBox2 from '@components/form/DropdownBox2.vue'
+import DropdownBox2 from '@components/form/DropdownBox.vue'
 import getProps from '../assets/getProps'
 
 export default {

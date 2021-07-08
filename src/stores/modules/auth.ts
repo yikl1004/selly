@@ -17,6 +17,7 @@ declare global {
     type MainInfo = AuthResponse['mainInfo']
     type BizInfo = AuthResponse['bizInfo']
     type LogoutInfo = AuthResponse['logoutInfo']
+    type RecommenderCode = AuthResponse['recommenderCode']
 }
 
 @Module({ name: 'auth', namespaced: true })
@@ -27,6 +28,7 @@ export default class Auth extends VuexModule<AuthState> {
     public mainInfo: MainInfo | null = null
     public bizInfo: BizInfo | null = null
     public logoutInfo: LogoutInfo | null = null
+    public inputRecommenderCodeResult: RecommenderCode | null = null
 
     @Mutation
     init() {
@@ -88,6 +90,15 @@ export default class Auth extends VuexModule<AuthState> {
         }
     }
 
+    @MutationAction
+    async inputRecommenderCode(params: AuthParameters['recommenderCode']) {
+        const { data } = await AuthService.inputRecommenderCode(params)
+
+        return {
+            inputRecommenderCodeResult: data,
+        }
+    }
+
     /**
      * @description
      * getMemberWorkplaceInfo 액션을 통해 store에 적재된 가입가능한 사업장 리스트를 반환
@@ -139,6 +150,20 @@ export default class Auth extends VuexModule<AuthState> {
 
         if (bizInfo && bizInfo.data && bizInfo.data.mbrNm) {
             return bizInfo.data.mbrNm || ''
+        } else {
+            return ''
+        }
+    }
+
+    /**
+     * @description
+     * 추천인 코드 입력 요청 후 결과로 받은 메세지를 반환
+     */
+    get recommenderCodeMessage(): string {
+        const { inputRecommenderCodeResult } = this
+
+        if (inputRecommenderCodeResult && inputRecommenderCodeResult.rsMsg) {
+            return inputRecommenderCodeResult.rsMsg || ''
         } else {
             return ''
         }

@@ -52,9 +52,6 @@ import AddressItem from '@components/common/AddressItem.vue'
 import PopupAddressFind from '@components/common/PopupAddressFind.vue'
 
 //개발씽크맞추기 전
-import DropdownBox2 from '@components/form/DropdownBox2.vue'
-import CheckBoxGroup2 from '@components/form/CheckBoxGroup2.vue'
-import CheckBox2 from '@components/form/CheckBox2.vue'
 
 const componentList: { [key: string]: VueConstructor }[] = [
     { Anchor },
@@ -104,10 +101,7 @@ const componentList: { [key: string]: VueConstructor }[] = [
     //popup common
     { PopupAddressFind },
 
-    //개발씽크 맞추기 전
-    { DropdownBox2 },
-    { CheckBoxGroup2 },
-    { CheckBox2 },
+    //개발씽크 맞추기 전 (씽크 다 맞춤, 또 생기면 추가)
 ]
 
 export const registerCommonComponent = (): void => {

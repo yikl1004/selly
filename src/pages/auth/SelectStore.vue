@@ -34,6 +34,7 @@
                     :disabled="false"
                     button-text="확인"
                     name="cert"
+                    @search="onClickRecommenderCode"
                 />
             </div>
             <portal to="floating">
@@ -49,16 +50,17 @@
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 import { namespace } from 'vuex-class'
 import { OnSelectValue } from '@components/form/CheckBoxBlock.vue'
-import { BizInfoItem } from '@services/auth'
+import { AuthParameters, BizInfoItem } from '@services/auth'
 
-const { State, Getter } = namespace('auth')
+const { Getter, Action } = namespace('auth')
 
 @Component
 export default class SelectStorePage extends Vue {
     /** @category Stores */
-    // @State('memberWorkplaceInfo') readonly memberWorkplaceInfo!: MemberWorkplaceInfo
     @Getter('workplaceList') readonly workplaceList!: BizInfo['data']['list']
     @Getter('workplaceOwnerName') readonly workplaceOwnerName!: BizInfo['data']['mbrNm']
+    @Getter('recommenderCodeMessage') readonly recommenderCodeMessage!: string
+    @Action('inputRecommenderCode') readonly inputRecommenderCode!: (params: AuthParameters['recommenderCode']) => Promise<void>
 
     /** @category Data */
 
@@ -72,8 +74,10 @@ export default class SelectStorePage extends Vue {
         this.selectedWorkplace = value.filter(item => item.ltRgyn === 'Y').map(({ bzno, ltRgyn }) => ({ bzno, ltRgyn }))
     }
 
-    /** @category Methods */
+    @Watch('recommenderCodeMessage')
+    changeRecommenderCodeMessage(value: string, oldValue: string) {}
 
+    /** @category Methods */
     onNext() {
         /**
          * 다음으로 이동
@@ -91,6 +95,16 @@ export default class SelectStorePage extends Vue {
         } else {
             this.selectedWorkplace.splice(data.index, 1)
         }
+    }
+
+    /**
+     * FIXME: 수정 해야 함
+     * 1. 체크박스가 없음 (디자인 추가 되어야 함)
+     * 2. API가 명확하지 않음
+     * 3. 메세징 처리 (Watch: changeRecommenderCodeMessage 메서드 만들다 말았음)
+     */
+    async onClickRecommenderCode(rfnSn: string) {
+        await this.inputRecommenderCode({ rfnSn })
     }
 
     /** @category Life-Cycle */
