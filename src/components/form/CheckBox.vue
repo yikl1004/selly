@@ -1,7 +1,9 @@
 <template>
     <div :class="['check-box', type]">
-        <input :id="id" v-model="value" value="sdkj" type="checkbox" :disabled="disabled" :name="_.camelCase(id)" @change="onChange" />
-        <label :for="id">{{ label }}</label>
+        <label>
+            <input :id="id" v-model="value" value="sdkj" type="checkbox" :name="_.camelCase(id)" :disabled="disabled" @change="onChange" />
+            <i>{{ label }}</i>
+        </label>
     </div>
 </template>
 

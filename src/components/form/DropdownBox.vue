@@ -1,12 +1,11 @@
 <template>
     <div class="dropdown-box">
-        <label :for="id" :class="{ ir: hiddenLabel }">{{ label }}</label>
-        <div class="input-area" :class="{ focus: focusedClass, 'select-type': true }">
-            <input :id="id" type="text" :name="_.camelCase(id)" readonly @focus="onFocus" @blur="onBlur" @click="onClick" />
-            <span class="selected-display-name">
-                {{ selectedDisplayName }}
-            </span>
-            <i class="open" />
+        <!-- id 필요여부에 따라 삭제 -->
+        <LabelTitle id="labelid" :hidden-label="hiddenLabel" :label="label" />
+        <div class="input-area" :class="{ 'select-type': true }">
+            <button type="button" class="btn-input-select" :disabled="disabled" @click="onClick">
+                <span>{{ selectedDisplayName }}</span>
+            </button>
             <portal to="bottomSheet">
                 <BottomSheet
                     :show="bottomSheetVisible"
@@ -17,6 +16,8 @@
                 />
             </portal>
         </div>
+
+        <TextInputMessage :message="errorMessage" message-type="error" />
     </div>
 </template>
 
@@ -30,10 +31,6 @@ export default class DropdownBox extends Vue {
      * @category PROPS
      */
 
-    /** form에 사용될 id */
-    @Prop({ type: String, required: true })
-    readonly id!: string
-
     /** label태그에 들어갈 텍스트 */
     @Prop({ type: String, default: '', required: true })
     readonly label!: string
@@ -41,6 +38,18 @@ export default class DropdownBox extends Vue {
     /** label을 비노출여부 */
     @Prop(Boolean)
     readonly hiddenLabel!: boolean
+
+    /** 비활성화 케이스 */
+    @Prop({ type: Boolean, default: false })
+    readonly disabled!: boolean
+
+    /** 에러 메세지 */
+    @Prop(String)
+    readonly errorMessage!: string
+
+    /** 성공 메세지 */
+    @Prop(String)
+    readonly successMessage!: string
 
     /** 기본 값 */
     @Prop(String)
@@ -123,10 +132,10 @@ export default class DropdownBox extends Vue {
          */
         // this.$emit('update:list', changedList)
 
-        FormBus.$emit(FormUpdateEvent, {
-            value,
-            fieldName: this._.camelCase(this.id),
-        })
+        // FormBus.$emit(FormUpdateEvent, {
+        //     value,
+        //     fieldName: this._.camelCase(this.id),
+        // })
 
         this.closeBottomSheet()
     }

@@ -1,29 +1,38 @@
 <template>
     <div class="check-box-group">
-        <h3 class="title">
-            {{ title }}
-        </h3>
-        <div class="input-area" :class="{ focus: focusedClass }">
-            <input
-                :id="`${id}-all`"
-                :checked="allCheck"
-                type="checkbox"
-                :disabled="disabled"
-                :name="name"
-                @change="onChangeAllCheck"
-                @focus="onFocus"
-                @blur="onBlur"
-            />
-            <label class="display-name" :for="`${id}-all`">전체동의</label>
-            <button type="button" :class="['open', { opened: open }]" @click="toggle">
+        <LabelTitle :hidden-label="hiddenLabel" :label="label" />
+        <div class="check-box-area">
+            <!-- 클래스에 checked 추가시 체크표시 -->
+            <button type="button" class="btn-checkbox" :disabled="disabled">
+                <i>{{ value }}</i>
+            </button>
+            <button v-if="list.length" type="button" :class="['open', { opened: open }]" @click="toggle">
                 <span class="ir">{{ open ? '열림' : '닫힘' }}</span>
             </button>
         </div>
         <div v-if="list.length" :class="['check-list', { opened: open }]">
             <div class="check-list-wrapper">
-                <div v-for="(check, index) in list" :key="`check-box-group-${name}-${index}`" class="check-list-item">
-                    <CheckBox v-bind="getCheckBoxProps(index)" @change="onChangeCheckBox" />
-                    <a class="term" href="#">보기</a>
+                <!-- 동의 리스트가 두개 들어올 경우 동의내용에 대한 타이틀 노출 필요 -->
+                <div class="check-list-title">
+                    <strong>개인(신용)정보 동의</strong>
+                </div>
+                <div class="check-list-box">
+                    <div v-for="(check, index) in list" :key="`check-box-group-${name}-${index}`" class="check-list-item">
+                        <CheckBox2 v-bind="getCheckBoxProps(index)" @change="onChangeCheckBox" />
+                        <BasicButton type="textBlue">
+                            보기
+                        </BasicButton>
+                    </div>
+                </div>
+                <!-- 체크박스가 2줄로 나오는 케이스가 있음. check-list-box에 col 클래스 추가 -->
+                <div class="check-list-title">
+                    <strong>개인(신용)정보 동의</strong>
+                </div>
+
+                <div class="check-list-box col">
+                    <div v-for="(check, index) in list" :key="`check-box-group-${name}-${index}`" class="check-list-item">
+                        <CheckBox2 v-bind="getCheckBoxProps(index)" @change="onChangeCheckBox" />
+                    </div>
                 </div>
             </div>
         </div>
@@ -47,9 +56,9 @@ export default class CheckBoxGroup extends Vue {
      * @category Prop
      */
 
-    /** 제목 */
+    /** 내용(버튼 텍스트) */
     @Prop({ type: String })
-    readonly title!: string
+    readonly value!: string
 
     /** form name */
     @Prop({ type: String, required: true })
@@ -62,6 +71,14 @@ export default class CheckBoxGroup extends Vue {
     /** 비활성화 사용 여부 */
     @Prop({ type: Boolean, default: false })
     readonly disabled!: boolean
+
+    /** label */
+    @Prop({ type: String })
+    readonly label!: string
+
+    /** label을 비노출여부 */
+    @Prop(Boolean)
+    readonly hiddenLabel!: boolean
 
     /** 체크박스 리스트 */
     @Prop({ type: Array, default: () => [], required: true })
