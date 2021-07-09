@@ -26,8 +26,20 @@ interface Args {
 
 const Template: Story<Args> = (args, { argTypes }) => {
     return {
-        props: getProps(argTypes),
-        template: `<DropdownBox v-bind="$props" />`,
+        data() {
+            return {
+                list: [
+                    { displayName: 'KT', value: 'kt', selected: true },
+                    { displayName: 'SKT', value: 'skt' },
+                    { displayName: 'LG U+', value: 'lguplus' },
+                    { displayName: 'KT알뜰폰', value: 'kt_sub' },
+                    { displayName: 'SKT알뜰폰', value: 'skt_sub' },
+                    { displayName: 'LGU+알뜰폰', value: 'lguplus_sub' },
+                ],
+            }
+        },
+        props: getProps(argTypes, ['list']),
+        template: `<DropdownBox v-bind="$props" :list="list" />`,
     }
 }
 
@@ -36,13 +48,5 @@ Primary.args = {
     id: 'phoneNumber',
     label: '휴대폰번호',
     name: 'phone',
-    list: [
-        { displayName: 'KT', value: 'kt', selected: true },
-        { displayName: 'SKT', value: 'skt' },
-        { displayName: 'LG U+', value: 'lguplus' },
-        { displayName: 'KT알뜰폰', value: 'kt_sub' },
-        { displayName: 'SKT알뜰폰', value: 'skt_sub' },
-        { displayName: 'LGU+알뜰폰', value: 'lguplus_sub' },
-    ],
 }
 Primary.decorators = [() => ({ template: '<div><story/><PortalTarget name="bottomSheet" /></div>' })]

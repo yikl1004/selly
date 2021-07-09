@@ -56,7 +56,7 @@ export default class DropdownBox extends Vue {
     readonly defaultValue!: string
 
     /** option list를 주입해함!! */
-    @Prop({ type: Array, default: () => [], required: true })
+    @Prop({ type: Array, default: [], required: true })
     readonly list!: DropdownBoxList
 
     /**
@@ -65,9 +65,6 @@ export default class DropdownBox extends Vue {
 
     /** 실제 값 */
     private value: string = this.defaultValue || ''
-
-    /** focus 상태 */
-    private focusedClass: boolean = false
 
     /** 선택영역 노춣 여부 */
     private bottomSheetVisible: boolean = false
@@ -89,21 +86,7 @@ export default class DropdownBox extends Vue {
      * @category Methods
      */
 
-    onFocus(event: FocusEvent) {
-        /**
-         * focus 이벤트
-         * @event focus
-         */
-        this.$emit('focus', event)
-
-        this.focusedClass = true
-    }
-
-    onBlur(event: FocusEvent) {
-        this.focusedClass = false
-    }
-
-    openBottomSheet(event: FocusEvent) {
+    openBottomSheet() {
         this.bottomSheetVisible = true
     }
 
@@ -140,8 +123,8 @@ export default class DropdownBox extends Vue {
         this.closeBottomSheet()
     }
 
-    onClick(event: FocusEvent) {
-        this.openBottomSheet(event)
+    onClick() {
+        this.openBottomSheet()
     }
 
     init() {

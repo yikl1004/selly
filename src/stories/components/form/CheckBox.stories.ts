@@ -1,15 +1,16 @@
 import { Meta, Story } from '@storybook/vue'
 import CheckBox from '@components/form/CheckBox.vue'
-import _ from 'lodash'
 import getProps from '../../assets/getProps'
 
 export default {
-    title: 'Components/form/CheckBox',
+    title: 'Components/form/CheckBox2',
     component: CheckBox,
-    argTypes: {
-        type: {
-            options: ['normal', 'circle'],
-            control: { type: 'select' },
+    argTypes: {},
+    parameters: {
+        docs: {
+            description: {
+                component: '라디오',
+            },
         },
     },
 } as Meta
@@ -23,20 +24,8 @@ const Template: Story<Args> = (args, { argTypes }) => {
     }
 }
 
-export const Normal = Template.bind({})
-Normal.args = {
-    type: 'normal',
-    id: 'test1',
-    name: 'test1',
-    label: '개인정보 처리방침',
-    defaultValue: false,
-}
-
-export const Circle = Template.bind({})
-Circle.args = {
-    type: 'circle',
-    id: 'test2',
-    name: 'test2',
-    label: '개인정보 처리방침',
-    defaultValue: false,
+export const Primary = Template.bind({})
+Primary.args = {
+    id: 'my-radio',
+    label: '라디오',
 }

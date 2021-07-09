@@ -91,12 +91,14 @@ export default class Gnb extends Mixins(KakaoSDK) {
 
     /** @category Computed */
 
+    /** 현재 활성화된 리스트 아이템 중 children을 반환 */
     get currentChildren(): GnbItem[] {
         return this.gnbList[this.activeIndex].children || ([] as GnbItem[])
     }
 
+    /** 로그아웃 완료 후 안내 팝업의 텍스트 */
     get modalMessage(): string {
-        return this.logoutInfo?.rsMsg ?? ''
+        return this.logoutInfo!.rsMsg || ''
     }
 
     /** @category Watch */

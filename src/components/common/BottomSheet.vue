@@ -1,12 +1,12 @@
 <template>
     <div class="bottom-sheet">
-        <Dimmed :show="show" />
+        <Dimmed :show="show" @click="onClose" />
         <transition
             mode="out-in"
             enter-active-class="animate__animated animate__slideInUp"
             leave-active-class="animate__animated animate__slideOutDown"
         >
-            <div v-show="show" v-click-outside="onClose" class="inner">
+            <div v-show="show" class="inner">
                 <header v-if="!!title || !!subText" class="heading">
                     <h2 v-if="!!title" class="title">
                         {{ title }}
