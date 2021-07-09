@@ -39,7 +39,7 @@
         </div>
         <!-- 드롭박스 라벨이 안없어지넹...라벨없애주세여 -->
         <div class="email-domain-select">
-            <DropdownBox2
+            <DropdownBox
                 id="dropdown-box01"
                 label="이메일 도메인 선택"
                 :hidden-label="true"

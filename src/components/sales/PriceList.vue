@@ -10,7 +10,7 @@
             <span class="avg-tit">최근 4주</span>
             <FormProvider :schema="data" @change="formChange" @submit="onSubmit">
                 <template slot-scope="{ schema }">
-                    <DropdownBox2
+                    <DropdownBox
                         id="dropdown-box01"
                         label="요일 선택"
                         :hidden-label="true"

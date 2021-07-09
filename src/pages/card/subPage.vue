@@ -134,7 +134,7 @@
 
             <FormProvider :schema="data" @change="formChange" @submit="onSubmit">
                 <template slot-scope="{ schema }">
-                    <DropdownBox2
+                    <DropdownBox
                         id="dropdown-box01"
                         label="사업자 등록번호"
                         :list="dropdownBoxList"
@@ -165,9 +165,9 @@
                 success-message="성공메시지"
                 :default-value="null"
             />
-            <CheckBoxGroup2 name="group1" value="버튼내용" label="버튼 체크박스" :disabled="false" />
+            <CheckBoxGroup name="group1" value="버튼내용" label="버튼 체크박스" :disabled="false" />
 
-            <CheckBoxGroup2 name="group2" value="버튼내용" label="버튼체크박스 그룹" :disabled="true" :list="checkList" />
+            <CheckBoxGroup name="group2" value="버튼내용" label="버튼체크박스 그룹" :disabled="true" :list="checkList" />
 
             <RadioGroup name="group3" value="버튼내용" label="체크박스내용" :disabled="false" :list="checkList" />
 

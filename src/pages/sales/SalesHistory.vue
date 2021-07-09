@@ -3,7 +3,7 @@
         <div class="content-inner">
             <FormProvider :schema="data" @change="formChange" @submit="onSubmit">
                 <template slot-scope="{ schema }">
-                    <DropdownBox2
+                    <DropdownBox
                         id="dropdown-box01"
                         label="사업자 선택"
                         :hidden-label="true"

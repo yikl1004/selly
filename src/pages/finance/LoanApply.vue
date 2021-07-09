@@ -10,7 +10,7 @@
                 <template slot-scope="{ schema }">
                     <FormTextBox type="row" label="연령" value="만 41세" />
                     <FormTextBox type="row" label="결제일" value="1일" />
-                    <DropdownBox2
+                    <DropdownBox
                         id="dropdown-box01"
                         label="대출용도"
                         :list="loanUseList"
@@ -20,7 +20,7 @@
                         success-message="없어도 될듯"
                     />
 
-                    <DropdownBox2
+                    <DropdownBox
                         id="dropdown-box02"
                         label="연간소득"
                         :list="annualIncomeList"
@@ -30,7 +30,7 @@
                         success-message="없어도 될듯"
                     />
 
-                    <DropdownBox2
+                    <DropdownBox
                         id="dropdown-box02"
                         label="신용점수"
                         :list="creditScoreList"
@@ -40,7 +40,7 @@
                         success-message="없어도 될듯"
                     />
 
-                    <CheckBoxGroup2 name="agree" value="상품설명서 확인 후 동의" label="금융상품 설명서" :disabled="false" />
+                    <CheckBoxGroup name="agree" value="상품설명서 확인 후 동의" label="금융상품 설명서" :disabled="false" />
 
                     <RadioGroup name="email" label="대출상품 약관동의 내용을 이메일 수령" :disabled="false" :list="checkList" />
                 </template>

@@ -3,7 +3,7 @@ import CheckBox from '@components/form/CheckBox.vue'
 import getProps from '../../assets/getProps'
 
 export default {
-    title: 'Components/form/CheckBox2',
+    title: 'Components/form/CheckBox',
     component: CheckBox,
     argTypes: {},
     parameters: {

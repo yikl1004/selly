@@ -2,7 +2,7 @@
     <div class="container">
         <FormProvider :schema="data" @change="formChange" @submit="onSubmit">
             <template slot-scope="{ schema }">
-                <DropdownBox2
+                <DropdownBox
                     id="dropdown-box01"
                     label="보유카드"
                     :list="dropdownBoxList"

@@ -13,10 +13,17 @@
                         </strong>
 
                         <p>
-                            가입을 원하지 않는 사업자의 경우 <i class="mark"><span class="ir">체크</span></i
-                            >를 해지해주세요.<br />
-                            (정 사업자의 경우는 <i class="mark"><span class="ir">체크</span></i
-                            >해지가 불가합니다.)
+                            가입을 원하지 않는 사업자의 경우
+                            <i class="mark">
+                                <span class="ir">체크</span>
+                            </i>
+                            를 해지해주세요.
+                            <br />
+                            (정 사업자의 경우는
+                            <i class="mark">
+                                <span class="ir">체크</span>
+                            </i>
+                            해지가 불가합니다.)
                         </p>
                     </div>
                     <div class="user-store-list">
@@ -37,7 +44,7 @@
 
                 <div class="recommender-box">
                     <LabelTitle label="추천인 코드(선택)" />
-                    <CheckBox2 label="추천인이 있으시면 체크해주세요." />
+                    <CheckBox label="추천인이 있으시면 체크해주세요." />
                     <ButtonField
                         id="recommenderCode"
                         label="추천인 코드(선택)"
