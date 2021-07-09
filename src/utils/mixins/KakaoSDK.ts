@@ -120,6 +120,25 @@ export default class KakaoSDK extends Vue {
         })
     }
 
+    /**
+     * 연결 끊기: 채널앱과의 연관성을 끊어 줌, 회원탈퇴 API는 별도로 필요함
+     * @param {{Function}} callback 성공시 호출 되는 함수
+     */
+    unlink(callback?: Function) {
+        return new Promise((resolve, reject) => {
+            this.kakaoApi.API.request({
+                url: '/v1/user/unlink',
+                success: res => {
+                    console.log('kakao API UNLINK SUCCESS', res)
+                    callback && callback()
+                },
+                fail: error => {
+                    console.log('kakao API UNLINK FAIL', error)
+                },
+            })
+        })
+    }
+
     /** @category Life-Cycle */
 
     mounted() {

@@ -11,7 +11,6 @@ export default class Validates extends Vue {
     private specialRegExp: RegExp = /^[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]*$/g
     private phoneRegExp: RegExp = /^\d{2,3}-\d{3,4}-\d{4}$/
 
-    // TODO: declare  에 대해서 자세히 알아보자
     declare type: FormInputType
 
     /** 숫자만 입력 받는 타입인지 여부 */

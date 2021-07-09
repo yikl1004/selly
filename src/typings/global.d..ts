@@ -159,7 +159,9 @@ declare global {
         cleanup(): void
         isInitialized(): boolean
         init(clientId: string): void
-        // TODO: 카카오싱크 연동하면서 추가해야 함
+        /**
+         * 카카오싱크 연동하면서 추가해야 함
+         */
         Auth: {
             authorize(params: KakaoAuthAutorizeParameters): void
             /** 토큰 가져오기 */
@@ -262,6 +264,13 @@ declare global {
         value: string
         selected?: boolean
     }
+
+    /**
+     * @path { @component/common/BottomSheet.vue }
+     * @type { BottomSheetDesignType }
+     * @description BottomSheet 의 디자인 타입
+     */
+    type BottomSheetDesignType = 'select' | 'banner' | 'description'
 
     /**
      * @path { @component/form/DropdownBox.vue }

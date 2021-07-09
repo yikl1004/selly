@@ -21,11 +21,6 @@
                 <div class="select-options-box">
                     <ul v-if="!!list.length" class="select-options">
                         <li v-for="(item, index) in list" :key="`list-${index}`" :class="{ selected: item.selected }">
-                            <!-- 
-                                TODO: 텍스트형 이외에 다른 타입이 있을 수 있음
-                                [ ]: 1. slot으로 받을 수 있는 방법
-                                [ ]: 2. slot이 아닌 템를릿 형태를 사용하는 것(디자인 케이스 정리가 필요)
-                            -->
                             <button type="button" @click="onClickOption(index)">
                                 {{ item.displayName }}
                             </button>
@@ -43,9 +38,6 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
-
-// TODO: 아직 디자인 타입에 대한 정의가 상세히 나오지 않음
-type DesignType = 'select' | 'banner' | 'description'
 
 @Component
 export default class BottomSheet extends Vue {
@@ -71,7 +63,7 @@ export default class BottomSheet extends Vue {
 
     /** 디자인 타입 */
     @Prop({ type: String, default: '' })
-    readonly type!: DesignType
+    readonly type!: BottomSheetDesignType
 
     /** 리스트 타입일 경우 */
     @Prop({ type: Array, default: () => ({}) })

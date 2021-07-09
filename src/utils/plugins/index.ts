@@ -5,8 +5,7 @@ import Lodash, { options as LodashOptions } from '@utils/plugins/lodash'
 import Dayjs from '@utils/plugins/dayjs'
 import ClickOutside from 'vue-click-outside'
 
-// TODO: 삭제 해야됨
-import chalk from 'chalk'
+// [개발용]
 import VueToast from 'vue-toast-notification'
 import 'vue-toast-notification/dist/theme-sugar.css'
 
@@ -24,17 +23,6 @@ const registerPlugins = (): void => {
     Vue.use(VueToast, { position: 'bottom', duration: 0 })
     Vue.component('date-picker', DatePicker)
     Vue.directive('click-outside', ClickOutside)
-
-    chalk(
-        {
-            'font-size': '16px',
-            'background-color': 'skyblue',
-            color: 'white',
-            padding: '3px 10px',
-            'border-radius': '10px',
-        },
-        'vue plugins registered...',
-    )
 }
 
 export default registerPlugins
