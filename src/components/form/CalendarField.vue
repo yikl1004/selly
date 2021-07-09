@@ -1,21 +1,21 @@
 <template>
     <div v-click-outside="onBlur" class="calendar-field">
-        <label :for="id" :class="{ ir: hiddenLabel }">{{ label }}</label>
-        <div class="input-area" :class="{ focus: focusedClass }">
-            <input ref="input" type="text" :value="displayValue" :class="{ readonly }" @keydown="onKeydown" @focus="onFocus" />
-            <i class="icon-calendar" />
-            <button v-if="!!displayValue" type="button" class="clear" @click="() => {}">
-                <i />
-                <span class="ir">전체삭제</span>
-            </button>
+        <LabelTitle :id="id" label-type="label" :hidden-label="hiddenLabel" :label="label" />
+        <div class="flex">
+            <div class="input-area" :class="{ focus: focusedClass }">
+                <input ref="input" type="text" :value="displayValue" :class="{ readonly }" @keydown="onKeydown" @focus="onFocus" />
+                <i class="icon-calendar" />
+            </div>
         </div>
-        <Dimmed :show="datepickerVisible" />
         <transition v-bind="transitionProps.datepicker">
             <div v-if="datepickerVisible" class="datepicker-wrapper">
                 <date-picker
                     v-model="value"
                     v-click-outside="hideDatepicker"
-                    :masks="{ title: 'YYYY년 M월', navYears: 'YYYY년' }"
+                    is-expanded
+                    is-range
+                    :attributes="attrs"
+                    :masks="{ title: 'MM월 YYYY', navYears: 'YYYY년' }"
                     @dayclick="onDayClick"
                 ></date-picker>
             </div>
@@ -27,6 +27,8 @@
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 import dayjs from 'dayjs'
 
+const month = new Date().getMonth()
+const year = new Date().getFullYear()
 @Component
 export default class CalendarField extends Vue {
     /**
@@ -83,6 +85,32 @@ export default class CalendarField extends Vue {
         },
     }
 
+    /**  달력 선택된 값 표시 */
+    private attrs: Array<object> = [
+        {
+            highlight: {
+                start: { fillMode: 'light' },
+                base: { fillMode: 'light' },
+                end: { fillMode: 'light' },
+            },
+            // dates: { start: new Date(2019, 0, 14), end: new Date(2019, 0, 18) },
+        },
+    ]
+
+    private selectAttr: object = {
+        highlight: {
+            backgroundColor: 'white',
+            borderColor: 'red',
+            borderWidth: '3px',
+            borderStyle: 'solid',
+            width: '2.4rem',
+            height: '2.4rem',
+        },
+        contentStyle: {
+            color: 'grey',
+        },
+    }
+
     /**
      * @category Computed
      */
@@ -113,7 +141,7 @@ export default class CalendarField extends Vue {
     }
 
     onDayClick(day: { date: Date }) {
-        this.hideDatepicker()
+        // this.hideDatepicker()
     }
 
     onClickIcon() {

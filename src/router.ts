@@ -22,6 +22,8 @@ import SalesHistory from '@pages/sales/SalesHistory.vue'
 // 금융
 import FinancePage from '@pages/finance/index.vue'
 import CreditCardAuth from '@pages/finance/CreditCardAuth.vue'
+import LoanHistory from '@pages/finance/LoanHistory.vue'
+import LoanHistoryDetail from '@pages/finance/LoanHistoryDetail.vue'
 
 //설정
 import NoticePage from '@pages/cs/NoticePage.vue'
@@ -157,12 +159,30 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
         path: '/finance/creditcardauth',
         name: 'CreditCardAuth',
         component: CreditCardAuth,
-
         meta: {
             layout: 'default',
             footer: false,
         },
     },
+    {
+        path: '/finance/loanhistory',
+        name: 'Loan History',
+        component: LoanHistory,
+
+        meta: {
+            layout: 'default',
+        },
+    },
+    {
+        path: '/finance/loandetail',
+        name: 'Loan History Detail',
+        component: LoanHistoryDetail,
+
+        meta: {
+            layout: 'default',
+        },
+    },
+
     //설정
     //공지사항
     {
