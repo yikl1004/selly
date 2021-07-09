@@ -1,5 +1,5 @@
 <template>
-    <div class="tab" :class="type">
+    <div class="tab" :class="[type, { flicking: list.length > 3 }]">
         <div class="tab-item-list">
             <ul>
                 <li

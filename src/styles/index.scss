@@ -17,7 +17,7 @@
     background-color: #fff;
     width: 100%;
     min-height: 100%;
-    padding: 0 24px 60px;
+    padding: 10px 24px 60px;
     &.no-padding {
         padding: 0;
     }
@@ -46,7 +46,7 @@
             .vc-nav-title {
                 // 년도 표시할 때 suffix나 format을 잡아줄 방법이 없음. 그래서 추가함
                 &:after {
-                    content: '년';
+                    // content: '년';
                 }
             }
         }

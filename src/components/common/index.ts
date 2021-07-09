@@ -28,7 +28,6 @@ import Footer from '@components/common/Footer.vue'
 import FixedBtnBox from '@components/common/FixedBtnBox.vue'
 import BottomSheet from '@components/common/BottomSheet.vue'
 import Timer from '@components/common/Timer.vue'
-import LoginButton from '@components/common/LoginButton.vue'
 import Tab from '@components/common/Tab.vue'
 import Dimmed from '@components/common/Dimmed.vue'
 import Modal from '@components/common/Modal.vue'
@@ -47,6 +46,8 @@ import LabelTitle from '@components/common/LabelTitle.vue'
 import FormTextBox from '@components/common/FormTextBox.vue'
 import Flag from '@components/common/Flag.vue'
 import AddressItem from '@components/common/AddressItem.vue'
+import BoardItem from '@components/common/BoardItem.vue'
+import BoardDetail from '@components/common/BoardDetail.vue'
 
 //common popup
 import PopupAddressFind from '@components/common/PopupAddressFind.vue'
@@ -69,7 +70,6 @@ const componentList: { [key: string]: VueConstructor }[] = [
     { BottomSheet },
     { Timer },
     { DropdownBox },
-    { LoginButton },
     { CalendarField },
     { Tab },
     { SingleSelection },
@@ -97,6 +97,8 @@ const componentList: { [key: string]: VueConstructor }[] = [
     { FormTextBox },
     { Flag },
     { AddressItem },
+    { BoardItem },
+    { BoardDetail },
 
     //popup common
     { PopupAddressFind },

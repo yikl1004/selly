@@ -1,7 +1,5 @@
 <template>
     <div class="container">
-        <LoginButton />
-
         <!-- <scroll-container class="flex" @change="updateState">
             <div class="list">
                 <scroll-item v-for="i in 200" :id="i" :key="i" @change="onChange">

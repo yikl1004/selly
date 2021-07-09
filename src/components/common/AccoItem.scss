@@ -1,6 +1,6 @@
 .box-acco-list {
     .box-acco-item {
-        border-top: 1px solid #ebebeb;
+        border-bottom: 1px solid #ebebeb;
         .acco-anchor {
             display: block;
             position: relative;
@@ -13,6 +13,14 @@
             color: #222;
             text-align: left;
             word-break: break-all;
+            .category {
+                display: block;
+                margin-bottom: 5px;
+                font-size: 14px;
+                color: #666;
+                line-height: 1.57;
+                font-weight: 400;
+            }
             &:after {
                 content: '';
                 display: block;
@@ -35,6 +43,21 @@
             }
             .acco-cont {
                 display: block;
+            }
+        }
+    }
+    &.board {
+        .box-acco-item {
+            .acco-anchor {
+                padding: 20px 0;
+                font-size: 14px;
+                line-height: 1.57;
+                &:after {
+                    right: 0;
+                }
+            }
+            .acco-cont {
+                padding: 13px 0 40px;
             }
         }
     }

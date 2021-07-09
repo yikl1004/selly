@@ -23,6 +23,11 @@ import SalesHistory from '@pages/sales/SalesHistory.vue'
 import FinancePage from '@pages/finance/index.vue'
 import CreditCardAuth from '@pages/finance/CreditCardAuth.vue'
 
+//설정
+import NoticePage from '@pages/cs/NoticePage.vue'
+import NoticeDetailPage from '@pages/cs/NoticeDetailPage.vue'
+import FaqPage from '@pages/cs/FaqPage.vue'
+
 // examples
 import ExampleMain from '@pages/example/index.vue'
 import ExampleForm from '@pages/example/form/index.vue'
@@ -156,6 +161,32 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
         meta: {
             layout: 'default',
             footer: false,
+        },
+    },
+    //설정
+    //공지사항
+    {
+        path: '/cs/notice',
+        name: 'Notice',
+        component: NoticePage,
+        meta: {
+            layout: 'default',
+        },
+    },
+    {
+        path: '/cs/noticedetail',
+        name: 'Notice Detail',
+        component: NoticeDetailPage,
+        meta: {
+            layout: 'default',
+        },
+    },
+    {
+        path: '/cs/faq',
+        name: 'FAQ',
+        component: FaqPage,
+        meta: {
+            layout: 'default',
         },
     },
 ]
