@@ -34,10 +34,16 @@
             font-size: 20px;
             color: #222;
             line-height: 1.4;
-            font-weight: 500;
+            font-weight: 700;
         }
         p {
             margin-top: 8px;
+        }
+        .mark {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            background: url('/assets/auth/img-check-mark.svg') 0 2px no-repeat;
         }
     }
     .user-store-list {
@@ -49,8 +55,10 @@
             }
         }
     }
-    .search-field {
-        margin-top: 32px;
+    .recommender-box {
         padding: 0 24px;
+        .search-field{
+            margin-top: 8px;
+        }
     }
 }
