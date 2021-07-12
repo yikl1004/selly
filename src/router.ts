@@ -137,16 +137,18 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
         path: '/sales',
         name: 'Sales',
         component: SalesPage,
-    },
-    {
-        path: '/sales/linkage',
-        name: 'Sales Linkage',
-        component: SalesLinkage,
-    },
-    {
-        path: '/sales/saleshistory',
-        name: 'Sales History',
-        component: SalesHistory,
+        children: [
+            {
+                path: '/linkage',
+                name: 'Sales Linkage',
+                component: SalesLinkage,
+            },
+            {
+                path: '/saleshistory',
+                name: 'Sales History',
+                component: SalesHistory,
+            },
+        ],
     },
     // 금융페이지
     // 금융메인 / 금융 안내페이지
@@ -232,8 +234,6 @@ router.beforeEach(async (to, from, next) => {
      *      3-3. 위 2가지 방법중 한가지를 택해서 사용하는 것이 나을것 같음...(뇌피셜 by CMK)
      */
 
-    // TODO: 세션연장에 대한 구문을 여기다가 넣어야됨
-
     if (to.path === '/') {
         await store.dispatch('auth/getMainInfo')
         const mainInfo = store.state.auth.mainInfo
@@ -244,6 +244,9 @@ router.beforeEach(async (to, from, next) => {
             store.commit('ui/setVisibleHeader', true)
         }
     }
+
+    // 세션 연장
+    await store.dispatch('common/getLoginExtendInfo')
 
     next()
 })

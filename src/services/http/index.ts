@@ -9,6 +9,8 @@ declare global {
     }
 }
 
+const isDev = process.env.NODE_ENV !== 'production'
+
 const getTransformResponse = (): AxiosTransformer => {
     return (data: any) => {
         try {
@@ -23,8 +25,7 @@ const getTransformResponse = (): AxiosTransformer => {
 }
 
 export const axiosInstance = axios.create({
-    baseURL: process.env.VUE_APP_API_DOMAIN,
-    headers: {},
+    baseURL: isDev ? process.env.VUE_APP_API_DOMAIN : '/',
     adapter: throttleAdapterEnhancer(cacheAdapterEnhancer(axios.defaults.adapter as AxiosAdapter)),
     transformResponse: getTransformResponse(),
     withCredentials: true,

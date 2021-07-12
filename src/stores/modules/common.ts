@@ -25,6 +25,7 @@ export default class Auth extends VuexModule<CommonState> {
         const state = this.state as CommonState
         const { data } = await CommonService.getLoginExtend()
 
+        console.log('세션 연장 API 호출 결과', data)
         return {
             loginExtendInfo: data.data,
         }
