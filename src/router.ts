@@ -156,33 +156,35 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
         path: '/finance',
         name: 'Finance',
         component: FinancePage,
-    },
-    {
-        path: '/finance/creditcardauth',
-        name: 'CreditCardAuth',
-        component: CreditCardAuth,
-        meta: {
-            layout: 'default',
-            footer: false,
-        },
-    },
-    {
-        path: '/finance/loanhistory',
-        name: 'Loan History',
-        component: LoanHistory,
+        children: [
+            {
+                path: '/creditcardauth',
+                name: 'CreditCardAuth',
+                component: CreditCardAuth,
+                meta: {
+                    layout: 'default',
+                    footer: false,
+                },
+            },
+            {
+                path: '/loanhistory',
+                name: 'Loan History',
+                component: LoanHistory,
 
-        meta: {
-            layout: 'default',
-        },
-    },
-    {
-        path: '/finance/loandetail',
-        name: 'Loan History Detail',
-        component: LoanHistoryDetail,
+                meta: {
+                    layout: 'default',
+                },
+            },
+            {
+                path: '/loandetail',
+                name: 'Loan History Detail',
+                component: LoanHistoryDetail,
 
-        meta: {
-            layout: 'default',
-        },
+                meta: {
+                    layout: 'default',
+                },
+            },
+        ],
     },
 
     //설정
