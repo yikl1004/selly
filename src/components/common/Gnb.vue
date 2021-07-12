@@ -67,7 +67,6 @@ const AuthModule = namespace('auth')
 export default class Gnb extends Mixins(KakaoSDK) {
     /** @category Stores */
     @UiModule.State('gnbList') readonly gnbList!: GnbItem[]
-    @AuthModule.State('loginInfo') readonly loginInfo!: LoginInfo
     @AuthModule.Getter('bizmanName') readonly bizmanName!: string
     @AuthModule.State('logoutInfo') readonly logoutInfo!: LogoutInfo
     @AuthModule.Action('getLogoutInfo') readonly getLogoutInfo!: Function
@@ -103,7 +102,7 @@ export default class Gnb extends Mixins(KakaoSDK) {
 
     /** @category Watch */
 
-    // 주소 변경 감지
+    // path 변경 감지
     @Watch('$route.path')
     changeRoute() {
         this.onClose()

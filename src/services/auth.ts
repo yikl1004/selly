@@ -1,13 +1,5 @@
-import { instance } from '@services/core/http'
+import { axiosInstance } from '@services/http'
 import { AxiosResponse } from 'axios'
-import { HttpService, SellyServiceResponse } from './core/http'
-import { POST, Query, ResponseAdapter } from './core/decorators'
-import { SEFINAARVO } from './core/response'
-
-interface API {
-    url: string
-    method: 'post' | 'get'
-}
 
 export interface BizInfoItem {
     bzno: string
@@ -129,7 +121,7 @@ type BizInfoRes = Promise<AxiosResponse<AuthResponse['bizInfo']>>
 type LogoutInfoRes = Promise<AxiosResponse<AuthResponse['logoutInfo']>>
 type RecommenderCodeRes = Promise<AxiosResponse<AuthResponse['recommenderCode']>>
 
-class AuthService extends HttpService {
+class AuthService {
     // 로그인/카카오최초인입
     private login: API = {
         url: '/API/LGN/SELGNAA001',
@@ -170,42 +162,42 @@ class AuthService extends HttpService {
     async getLoginInfo(data: AuthParameters['loginInfo']): LoginInfoRes {
         const { url, method } = this.login
 
-        return await instance.request({ method, url, data })
+        return await axiosInstance.request({ method, url, data })
     }
 
     // 회원 사업장 정보(최초 로그인 사업자 정보 요청)
     async getMemberWorkplaceInfo(): MemberWorkplaceInfoRes {
         const { url, method } = this.memberWorkplaceInfo
 
-        return await instance.request({ method, url })
+        return await axiosInstance.request({ method, url })
     }
 
     // 메인화면 정보요청
     async getMainInfo(): MainInfoRes {
         const { url, method } = this.memberWorkplaceInfo
 
-        return await instance.request({ method, url })
+        return await axiosInstance.request({ method, url })
     }
 
     // my>최초로그인시 사업자정보 입력 요청
     async getBizInfoInput(data: AuthParameters['bizInfo']): BizInfoRes {
         const { url, method } = this.bizInfoInput
 
-        return await instance.request({ method, url, data })
+        return await axiosInstance.request({ method, url, data })
     }
 
     // my>회원정보>로그아웃
     async getLogoutInfo(): LogoutInfoRes {
         const { url, method } = this.logout
 
-        return await instance.request({ method, url })
+        return await axiosInstance.request({ method, url })
     }
 
     // my>사업자정보>추천인코드입력
     async inputRecommenderCode(params: AuthParameters['recommenderCode']): RecommenderCodeRes {
         const { url, method } = this.recommenderCode
 
-        return await instance.request({ method, url, params })
+        return await axiosInstance.request({ method, url, params })
     }
 }
 

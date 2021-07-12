@@ -1,13 +1,14 @@
 import { Module, VuexModule, MutationAction, Mutation } from 'vuex-module-decorators'
 import AuthService, { AuthResponse, AuthParameters } from '@services/auth'
 
-interface APIResponse {}
 export interface AuthState {
     loginInfo: LoginInfo | null
     kakaoUserInfo: UserInfo | null
     memberWorkplaceInfo: MemberWorkplaceInfo | null
     mainInfo: MainInfo | null
     bizInfo: BizInfo | null
+    logoutInfo: LogoutInfo | null
+    inputRecommenderCodeResult: RecommenderCode | null
 }
 
 declare global {

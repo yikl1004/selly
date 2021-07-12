@@ -1,5 +1,5 @@
 import { Module, VuexModule, MutationAction, getModule, Action, Mutation } from 'vuex-module-decorators'
-import { axiosInstance } from '@services/core'
+import { axiosInstance } from '@services/http'
 
 declare global {
     type HeaderType = 'main' | 'sub' | 'process'
@@ -7,6 +7,8 @@ declare global {
 export interface UiState {
     gnbOpen: boolean
     gnbList: GnbItem[]
+    headerType: HeaderType
+    visible: boolean
 }
 
 @Module({ name: 'ui', namespaced: true, stateFactory: true })

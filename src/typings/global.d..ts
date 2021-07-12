@@ -19,12 +19,6 @@ declare global {
         | '1000' // 필수정보가 누락되었습니다.
         | '8888' // 로그인 후 이용해 주세요
 
-    // API
-    interface API {
-        url: string
-        method: 'post' | 'get'
-    }
-
     // menu 정보
     interface GnbItem {
         name: string
