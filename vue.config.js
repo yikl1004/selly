@@ -36,7 +36,7 @@ module.exports = {
     // },
 
     // publicPath: '/selly',
-    outputDir: 'docs',
+    outputDir: 'dist',
     configureWebpack: {
         resolve: {
             alias: {
