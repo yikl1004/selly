@@ -1,0 +1,22 @@
+.additional-loan-wrap {
+    padding: 10px 24px 24px;
+    .additional-loan-box {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 20px 24px 20px 20px;
+        border-radius: 10px;
+        background-color: #ffece8;
+        .text {
+            font-size: 16px;
+            color: #413a2f;
+            strong {
+                font-weight: 500;
+                color: $primary-color;
+            }
+        }
+        .btn {
+            min-width: 77px;
+        }
+    }
+}

@@ -1,0 +1,14 @@
+.loan-history-list {
+    padding: 24px 24px 60px;
+    background-color: #f8f8f8;
+}
+.btn-area {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 32px;
+    button {
+        width: calc(50% - 4px);
+        
+    }
+}

@@ -1,5 +1,5 @@
 <template>
-    <div class="box-acco-list">
+    <div class="box-acco-list" :class="type">
         <div v-for="(item, index) in list" :key="`acco-item-${index}`" :class="['box-acco-item', { active: index === currentIndex }]">
             <button
                 type="bubton"
@@ -8,7 +8,8 @@
                 :aria-expanded="index === currentIndex ? 'true' : 'false'"
                 @click="onClick(index)"
             >
-                <span>{{ item.title }}</span>
+                <span v-if="item.category" class="category">{{ item.category }}</span>
+                <strong class="tit">{{ item.title }}</strong>
             </button>
             <div :id="`acco-item-${index}`" class="acco-cont">
                 <div class="acco-cont-inner">
@@ -23,6 +24,7 @@
 import { Component, Prop, Vue } from 'vue-property-decorator'
 
 export interface AccordionListItem {
+    category?: string
     title: string
     desc: string
 }
