@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import PortalVue from 'portal-vue'
-import ImageUploader from 'vue-image-upload-resize'
 import Lodash, { options as LodashOptions } from '@utils/plugins/lodash'
 import Dayjs from '@utils/plugins/dayjs'
 import ClickOutside from 'vue-click-outside'
@@ -14,7 +13,6 @@ const VCalendar = require('v-calendar')
 const DatePicker = require('v-calendar/lib/components/date-picker.umd')
 
 const registerPlugins = (): void => {
-    Vue.use(ImageUploader)
     Vue.use(PortalVue)
     Vue.use(Lodash, LodashOptions)
     Vue.use(Dayjs)

@@ -22,6 +22,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
+import axios from 'axios'
 
 const { ScrollContainer, ScrollItem } = require('vue-scrollmonitor')
 
@@ -58,19 +59,19 @@ export default class LoginPage extends Vue {
 
     onSearchAddress() {
         // 기본 로직...
-        // if (this.addressKeyword) {
-        //     axios.get('/addrlink/addrLinkApi.do', {
-        //         params: {
-        //             currentPage: '1',
-        //             countPerPage: '10',
-        //             keyword: this.addressKeyword,
-        //             resultType: 'json',
-        //             confmKey: 'U01TX0FVVEgyMDE2MDUyMzE1Mzg0ODEyNDk3',
-        //         },
-        //     })
-        // } else {
-        //     alert('검색어를 입력해 주세요.')
-        // }
+        if (this.addressKeyword) {
+            axios.get('https://www.juso.go.kr/addrlink/addrLinkApi.do', {
+                params: {
+                    currentPage: '1',
+                    countPerPage: '10',
+                    keyword: this.addressKeyword,
+                    resultType: 'json',
+                    confmKey: 'U01TX0FVVEgyMDE2MDUyMzE1Mzg0ODEyNDk3',
+                },
+            })
+        } else {
+            alert('검색어를 입력해 주세요.')
+        }
     }
 }
 </script>

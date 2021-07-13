@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div v-if="isMain" class="container">
         <div class="sales-main-box">
             <div class="sale-main-title">
                 <h2>매일 드리는 매출보고<br />카드, 현금, 배달 매출까지</h2>
@@ -20,6 +20,7 @@
             />
         </div>
     </div>
+    <router-view v-else />
 </template>
 
 <script lang="ts">
@@ -34,6 +35,10 @@ export default class SalesPages extends Vue {
      */
     onClick() {
         console.log('다음버튼 클릭')
+    }
+
+    get isMain() {
+        return this.$route.name === 'Sales'
     }
 }
 </script>

@@ -53,10 +53,6 @@ module.exports = {
                     // 프록시 요청을 보낼 서버의 주소
                     target: 'http://selly.lottecard.co.kr:8080/',
                 },
-                '/addrlink': {
-                    target: 'https://www.juso.go.kr',
-                    changeOrigin: true,
-                },
             },
             disableHostCheck: true,
         },

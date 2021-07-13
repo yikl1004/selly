@@ -139,12 +139,12 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
         component: SalesPage,
         children: [
             {
-                path: '/linkage',
+                path: 'linkage',
                 name: 'Sales Linkage',
                 component: SalesLinkage,
             },
             {
-                path: '/saleshistory',
+                path: 'saleshistory',
                 name: 'Sales History',
                 component: SalesHistory,
             },
@@ -158,7 +158,7 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
         component: FinancePage,
         children: [
             {
-                path: '/creditcardauth',
+                path: 'creditcardauth',
                 name: 'CreditCardAuth',
                 component: CreditCardAuth,
                 meta: {
@@ -167,7 +167,7 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
                 },
             },
             {
-                path: '/loanhistory',
+                path: 'loanhistory',
                 name: 'Loan History',
                 component: LoanHistory,
 
@@ -176,7 +176,7 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
                 },
             },
             {
-                path: '/loandetail',
+                path: 'loandetail',
                 name: 'Loan History Detail',
                 component: LoanHistoryDetail,
 

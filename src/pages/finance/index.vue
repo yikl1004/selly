@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div v-if="isMain" class="container">
         <!-- 신용카드 인증 -->
         <!-- <CreditCardAuth :on-click="onClick" /> -->
         <LoanApply />
@@ -7,6 +7,7 @@
         <p>금융 메인 페이지???</p>
         <BasciButton>예상 상환스케줄</BasciButton>
     </div>
+    <router-view v-else />
 </template>
 
 <script lang="ts">
@@ -26,6 +27,10 @@ export default class FinancePage extends Vue {
      */
     onClick() {
         console.log('다음버튼 클릭')
+    }
+
+    get isMain() {
+        return this.$route.name === 'Finance'
     }
 }
 </script>
