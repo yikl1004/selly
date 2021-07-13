@@ -1,0 +1,42 @@
+
+
+## npm search 명령어로 검색이 안되는 모듈
+> 아래 모듈들이 검색이 안되고 있습니다. 설치 요청 또는 왜 검색이 안되는지 피드백 부탁드립니다.
+
+## dependency
+
+"portal-vue": "^2.1.7",
+"v-calendar": "^2.3.0",
+"vue": "^2.6.12",
+"vue-chartjs": "^3.5.1",
+"vue-class-component": "^7.2.3",
+"vue-click-outside": "^1.1.0",
+"vue-lodash": "^2.1.2",
+"vue-property-decorator": "^9.1.2",
+"vue-router": "^3.5.1",
+"vue-scrollmonitor": "^0.1.0",
+"vue-toast-notification": "^0.6.2",
+"vuex": "^3.6.2",
+"vuex-class": "^0.3.2",
+"vuex-module-decorators": "^1.0.1"
+
+
+## devDependency
+"@egoist/vue-to-react": "^1.1.0",
+"dotenv": "^8.2.0",
+"eslint": "^7.26.0",
+"eslint-config-airbnb": "^18.2.1",
+"eslint-config-prettier": "^7.1.0",
+"eslint-plugin-import": "^2.22.1",
+"eslint-plugin-prettier": "^3.1.3",
+"eslint-plugin-vue": "^6.2.2",
+"json-server": "^0.16.3",
+"reflect-metadata": "^0.1.13",
+"sass-loader": "^8.0.2",
+"shelljs": "^0.8.4",
+"style-resources-loader": "^1.4.1",
+"ts-node": "^9.1.1",
+"tsconfig-paths-webpack-plugin": "^3.5.1",
+"vue-template-compiler": "^2.6.12",
+"vue-loader": "^15.9.6",
+"vue-type-check": "^1.1.0"
