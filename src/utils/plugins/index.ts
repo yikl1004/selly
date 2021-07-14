@@ -13,13 +13,23 @@ const VCalendar = require('v-calendar')
 const DatePicker = require('v-calendar/lib/components/date-picker.umd')
 
 const registerPlugins = (): void => {
+    // DOM dynamic append
     Vue.use(PortalVue)
+
+    // lodash in Vue
     Vue.use(Lodash, LodashOptions)
+
+    // instead of "moment"
     Vue.use(Dayjs)
+
+    // calendar
     Vue.use(VCalendar, { componentPrefix: 'vc' })
-    // Vue.component('calendar', Calendar)
-    Vue.use(VueToast, { position: 'bottom', duration: 0 })
     Vue.component('date-picker', DatePicker)
+
+    // DEV: Toast message Template
+    Vue.use(VueToast, { position: 'bottom', duration: 0 })
+
+    // sense outside click
     Vue.directive('click-outside', ClickOutside)
 }
 

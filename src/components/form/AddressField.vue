@@ -17,8 +17,8 @@
                     autocomplete="new-password"
                     :maxlength="maxlength"
                     type="text"
-                    readonly="true"
-                    disabled="true"
+                    readonly
+                    disabled
                     @input="onInput"
                     @blur="onBlur"
                 />
@@ -36,8 +36,8 @@
                 autocomplete="new-password"
                 :maxlength="maxlength"
                 type="text"
-                :readonly="true"
-                :disabled="true"
+                readonly
+                disabled
                 @input="onInput"
                 @blur="onBlur"
             />

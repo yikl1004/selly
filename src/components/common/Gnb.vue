@@ -35,7 +35,7 @@
                     >
                         <ul v-if="depth2.children">
                             <li v-for="(child, childIndex) in depth2.children" :key="`gnb-depth2-child-${childIndex}`">
-                                <Anchor :href="child.path">
+                                <Anchor :href="`${parentPath}${child.path}`">
                                     {{ child.name }}
                                 </Anchor>
                             </li>
@@ -97,7 +97,13 @@ export default class Gnb extends Mixins(KakaoSDK) {
 
     /** 로그아웃 완료 후 안내 팝업의 텍스트 */
     get modalMessage(): string {
-        return this.logoutInfo!.rsMsg || ''
+        return this.logoutInfo ? this.logoutInfo.rsMsg : ''
+    }
+
+    /** 현재 선택된 최상위 메뉴의 path 프로퍼티 */
+    get parentPath(): string {
+        const pathOfActiveMenu = this.gnbList[this.activeIndex].path
+        return pathOfActiveMenu === '*' ? '' : pathOfActiveMenu
     }
 
     /** @category Watch */

@@ -30,7 +30,6 @@ export default class Ui extends VuexModule {
 
     @Mutation
     setGnb(gnbOpen: boolean) {
-        console.log('gnbOpen', gnbOpen)
         this.gnbOpen = gnbOpen
     }
 
@@ -45,7 +44,5 @@ export default class Ui extends VuexModule {
     }
 
     @Action
-    actionTest() {
-        console.log('action test')
-    }
+    actionTest() {}
 }

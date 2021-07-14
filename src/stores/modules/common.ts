@@ -9,8 +9,8 @@ declare global {
     type LoginExtendInfo = CommonResponse['loginExtend']
 }
 
-@Module({ name: 'auth', namespaced: true })
-export default class Auth extends VuexModule<CommonState> {
+@Module({ name: 'common', namespaced: true })
+export default class Common extends VuexModule<CommonState> {
     public loginExtendInfo: LoginExtendInfo | null = null
 
     @Mutation
@@ -25,7 +25,6 @@ export default class Auth extends VuexModule<CommonState> {
         const state = this.state as CommonState
         const { data } = await CommonService.getLoginExtend()
 
-        console.log('세션 연장 API 호출 결과', data)
         return {
             loginExtendInfo: data.data,
         }

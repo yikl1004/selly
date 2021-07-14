@@ -9,15 +9,7 @@
                 매출연동
             </BasicButton>
 
-            <AddressField
-                id="a"
-                label="주소"
-                :hidden-label="null"
-                :readonly="false"
-                :disabled="false"
-                :validate="null"
-                :default-value="null"
-            />
+            <AddressField id="a" label="주소" :hidden-label="''" :readonly="false" :disabled="false" :default-value="''" />
         </div>
     </div>
     <router-view v-else />
