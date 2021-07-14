@@ -8,14 +8,14 @@
                 <LoanCard />
                 <LoanCard />
 
-                <div class="btn-area">
+                <BtnGroup>
                     <BasicButton type="medium">
                         추가상환
                     </BasicButton>
                     <BasicButton type="medium">
                         금리인하권
                     </BasicButton>
-                </div>
+                </BtnGroup>
             </div>
         </div>
     </div>

@@ -1,0 +1,104 @@
+.box-acco-list {
+    .box-acco-item {
+        border-bottom: 1px solid #ddd;
+        .acco-anchor {
+            position: relative;
+            width: 100%;
+            min-height: 56px;
+            padding: 19px 28px 19px 0;
+            font-size: 16px;
+            font-weight: 500;
+            line-height: 1.5;
+            color: #222;
+            text-align: left;
+            word-break: break-all;
+            &:after {
+                content: '';
+                display: block;
+                position: absolute;
+                right: 0;
+                top: 17px;
+                width: 24px;
+                height: 24px;
+                background: url('/assets/icon/icon-arrow-bottom2.svg') no-repeat;
+                transition: transform 250ms ease-in-out;
+            }
+        }
+        .acco-cont {
+            display: none;
+            padding-right: 28px;
+            .acco-cont-inner {
+                padding:16px 0 24px 0;
+                border-top: 1px dotted #999;
+            }
+            &::v-deep .box-info-list {
+                padding: 0;
+                border-top: 0;
+                border-bottom: 0;
+            }
+        }
+        &.active {
+            .acco-anchor:after {
+                transform: rotate(180deg);
+            }
+            .acco-cont {
+                display: block;
+            }
+        }
+    }
+    &.month {
+        .acco-anchor {
+            align-items:baseline;
+            .date-box {
+                strong {
+                    font-size: 16px;
+                    font-weight: 500;
+                }
+                span {
+                    color: #666;
+                    font-size: 12px;
+                }
+            }
+        }
+    }
+}
+.acco-anchor {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    .date-box {
+        font-weight: 400;
+        font-size: 14px;
+        strong {
+            display: block;
+        }
+    }
+    .price {
+        font-weight: 500;
+    }
+}
+
+.billing-amount-box {
+    margin-bottom: 12px;
+    .date {
+        font-size:12px;
+        color: #222;
+        line-height: 1.5;
+        text-align: right;
+    }
+    .billing-amount {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 24px;
+        font-size: 16px;
+        color: #222;
+        strong,
+        em {
+            font-weight: 500;
+        }
+    }
+    & + .box-info-wrap {
+    }
+}
+

@@ -2,13 +2,35 @@
     padding: 24px 24px 60px;
     background-color: #f8f8f8;
 }
-.btn-area {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+.price-round-wrap {
+    position: relative;
     margin-top: 32px;
-    button {
-        width: calc(50% - 4px);
-        
+    padding-top: 8px;
+    &:before {
+        content: '';
+        display: block;
+        position: absolute;
+        left: -24px;
+        right: 0;
+        top: 0;
+        width: calc(100% + 48px);
+        height: 8px;
+        background-color: #f8f8f8;
+    }    
+    .calendar-field {
+        padding-top: 20px;
+        &::v-deep .label-title-box:first-of-type {
+            margin-top: 0;
+        }
     }
+    .btn-area {
+        margin-top: 12px;
+        padding-bottom: 12px;
+        button {
+            margin: 0 auto;
+        }
+    }
+}
+.caution-info-box {
+    margin-top: 60px;
 }
