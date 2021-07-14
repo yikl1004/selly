@@ -84,7 +84,7 @@ export default class SecretNumber extends Mixins(Validates) {
 
     /** type */
     @Prop({ type: String, required: true })
-    readonly type!: SecretNumberType
+    declare readonly type: FormInputType
 
     /** 에러 메세지 */
     @Prop(String)
