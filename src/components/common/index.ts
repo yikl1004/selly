@@ -5,6 +5,7 @@ import _ from 'lodash'
 import FileUploader from '@components/form/FileUploader.vue'
 import TextField from '@components/form/TextField.vue'
 import BasicButton from '@components/common/BasicButton.vue'
+import BtnGroup from '@components/common/BtnGroup.vue'
 import SecretNumber from '@components/form/SecretNumber.vue'
 import ButtonField from '@components/form/ButtonField.vue'
 // import CreditCardField from '@components/form/CreditCardField.vue'
@@ -65,6 +66,7 @@ const componentList: { [key: string]: VueConstructor }[] = [
     { RadioGroup },
     { EmailForm },
     { BasicButton },
+    { BtnGroup },
     { SecretNumber },
     { ButtonField },
     { BottomSheet },

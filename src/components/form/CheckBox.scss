@@ -1,3 +1,10 @@
 .check-box {
-    @include checkbox-style
+    @include checkbox-style;
+    i {
+        color: #222;
+    }
+    .sub-text {
+        display: block;
+        color: #666;
+    }
 }

@@ -145,7 +145,11 @@
                         display: none;
                     }
                 }
-
+                &:last-of-type {
+                    button {
+                        border-right: 0;
+                    }
+                }
             }
             &:first-of-type {
                 &:before {
@@ -174,8 +178,16 @@
                     border-top-right-radius: 10px;
                     border-bottom-right-radius: 10px;
                     border-left: none;
+                    border-right: 1px solid #ebebeb;
                 }
+                
             }
+        }
+    }
+    .tab-cont {
+        padding-top: 20px;
+        .field-box:first-of-type .label-title-box {
+            margin-top: 0;
         }
     }
 }

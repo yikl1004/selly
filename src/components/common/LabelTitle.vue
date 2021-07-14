@@ -18,7 +18,7 @@ export default class LabelTitle extends Vue {
      */
 
     /** form에 사용될 id */
-    @Prop({ type: String, required: true })
+    @Prop({ type: String })
     readonly id!: string
 
     /** label태그에 들어갈 텍스트 */

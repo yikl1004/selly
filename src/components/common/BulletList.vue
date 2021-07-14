@@ -1,9 +1,12 @@
 <template>
-    <ul v-if="list" class="bullet-list">
-        <li v-for="(item, index) in list" :key="`bullet-list-${index}`">
-            {{ item.text }}
-        </li>
-    </ul>
+    <div class="bullet-list">
+        <strong v-if="title" class="bullet-title">{{ title }}</strong>
+        <ul v-if="list">
+            <li v-for="(item, index) in list" :key="`bullet-list-${index}`">
+                {{ item.text }}
+            </li>
+        </ul>
+    </div>
 </template>
 
 <script lang="ts">
@@ -19,8 +22,11 @@ export default class BulletList extends Vue {
      * @category Prop
      */
 
-    /** 안내텍스트 */
+    /** 제목 */
     @Prop({ type: String })
+    readonly title!: string
+    /** 안내텍스트 */
+    @Prop({ type: Array, default: [] })
     readonly list!: List[]
 }
 </script>

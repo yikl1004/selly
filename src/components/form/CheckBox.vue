@@ -1,8 +1,11 @@
 <template>
-    <div :class="['check-box', type]">
+    <div :class="['check-box', { style01: text }]">
         <label>
             <input :id="id" v-model="value" value="sdkj" type="checkbox" :name="_.camelCase(id)" :disabled="disabled" @change="onChange" />
-            <i>{{ label }}</i>
+            <i>
+                {{ label }}
+                <span v-if="text" class="sub-text">{{ text }}</span>
+            </i>
         </label>
     </div>
 </template>
@@ -13,6 +16,7 @@ import { Component, Prop, PropSync, Vue, Watch } from 'vue-property-decorator'
 export interface CheckboxProps {
     id: string
     label: string
+    text?: string
     type: CheckBoxDesignType
     checked?: boolean
     require?: boolean
@@ -37,6 +41,10 @@ export default class CheckBox extends Vue {
     /** label text */
     @Prop({ type: String, required: true })
     readonly label!: string
+
+    /** sub text */
+    @Prop({ type: String })
+    readonly text!: string
 
     /** 활성화 여부 */
     @Prop({ type: Boolean, default: false })

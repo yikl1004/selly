@@ -169,7 +169,7 @@
 
             <CheckBoxGroup name="group2" value="버튼내용" label="버튼체크박스 그룹" :disabled="true" :list="checkList" />
 
-            <RadioGroup name="group3" value="버튼내용" label="체크박스내용" :disabled="false" :list="checkList" />
+            <!-- <RadioGroup name="group3" value="버튼내용" label="체크박스내용" :disabled="false" :list="checkList" /> -->
 
             <FormTextBox type="row" />
             <FormTextBox type="col" />
@@ -197,10 +197,10 @@
                     영역에 영역에 있어서 차별을 받지 아니한다.
                 </p>
             </FullPopup>
-
+            <!-- 
             <Radio label="라벨1" name="radio01" value="value" />
             <Radio label="라벨2" name="radio01" value="value1" />
-            <Radio label="라벨2" name="radio01" value="value1" :disabled="true" />
+            <Radio label="라벨2" name="radio01" value="value1" :disabled="true" /> -->
 
             <AccoItem :list="accordionList" />
 

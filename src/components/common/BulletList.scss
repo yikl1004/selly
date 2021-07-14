@@ -1,10 +1,15 @@
 .bullet-list {
-    margin-top: 16px;
+    margin-top: 12px;
+    .bullet-title {
+        display: block;
+        margin-bottom: 16px;
+        font-weight: 700;
+        color: #222;
+    }
     li {
         position: relative;
         padding-left: 8px;
         font-size: 14px;
-        color: #666;
         line-height: 1.57;
         letter-spacing: -0.5px;
         & + li {

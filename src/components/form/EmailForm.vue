@@ -1,6 +1,6 @@
 <template>
     <div class="email-field" :class="isError">
-        <LabelTitle id="labelid" title-type="label" :hidden-label="hiddenLabel" :label="label" />
+        <LabelTitle :id="id" title-type="label" :hidden-label="hiddenLabel" :label="label" />
 
         <div class="email-input-box">
             <div class="input-area" :class="{ focus: focusedClass, readonly: readonly, disabled: disabled }">

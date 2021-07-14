@@ -1,7 +1,13 @@
 .calendar-field {
     @include form-field(true, false, false, false);
-
+    .flex {
+        align-items: center;    
+    }
     .input-area {
+        width: 100%;
+        input {
+            padding-right: 50px;
+        }
         .icon-calendar {
             display: block;
             width: 24px;
@@ -18,7 +24,6 @@
                 right: 56px;
             }
         }
-
         input.readonly {
             background-color: #f3f3f3;
             border: 0;
@@ -29,12 +34,20 @@
             }
         }
     }
+    .icon {
+        display: block;
+        min-width: 20px;
+        font-size: 16px;
+        line-height: 1.5;
+        text-align: center;
+    }
 
     .datepicker-wrapper {
         position: absolute;
         left: 0;
         top: 106px;
         width: 100%;
+        z-index: 1;
         &::v-deep {
             .vc-container {
                 // width: 100%;

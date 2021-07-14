@@ -1,16 +1,16 @@
 <template>
     <label class="radio-box">
-        <input type="radio" value="radio" :name="name" :disabled="disabled" :checked="checked" />
+        <input type="radio" :value="value" :name="name" :disabled="disabled" :checked="checked" />
         <i>{{ label }}</i>
     </label>
 </template>
 
 <script lang="ts">
-import { Component, Prop, PropSync, Vue, Watch } from 'vue-property-decorator'
+import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 
 export interface RadioProps {
+    value: string
     label: string
-    name: string
     checked?: boolean
     disabled?: boolean
     index?: number
@@ -23,8 +23,8 @@ export default class Radio extends Vue {
      */
 
     /** form id */
-    @Prop({ type: String, required: true })
-    readonly id!: string
+    // @Prop({ type: String, required: true })
+    // readonly id!: string
 
     /** label text */
     @Prop({ type: String, required: true })
