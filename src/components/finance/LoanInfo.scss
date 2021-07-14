@@ -1,0 +1,106 @@
+.loan-info-wrap {
+    
+}
+.loan-info {
+    .loan-title {
+        strong {
+            padding-left: 10px;
+            font-size: 16px;
+            font-weight: 500;
+            color: #222;
+            line-height: 1.5;
+        }
+    }
+    .benefit {
+        margin-top: 10px;
+        strong {
+            font-weight: 500;
+            color: #222;
+        }
+    }      
+}
+.proceeding-loan-box {
+    margin-top: 42px;
+    .title {
+        display: block;
+        margin-bottom: 6px;
+        color: #222;
+    }
+    .btn-more-info {
+        position: relative;
+        padding-right: 32px;
+        color: #222;
+        em {
+            display: block;
+            font-size: 20px;
+            font-weight: 500;
+        }
+        strong {
+            font-size: 32px;
+            font-weight: 700;
+            line-height: 1.25;
+            vertical-align: middle;
+        }
+        &:after {
+            content: '';
+            display: block;
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 24px;
+            height: 24px;
+            background: url('/assets/finance/icon-arrow-fill-bottom.svg') no-repeat;
+            transition: transform 250ms ease-in-out;
+        }
+    }
+    .loan-price-info {
+        display: none;
+        padding-top: 12px;
+    }
+    .price-box {
+        margin-top: 12px;
+        ul {
+            overflow: hidden;
+        }
+        li {
+            position: relative;
+            float: left;
+            margin-right: 8px;
+            color: #222;
+            vertical-align: top;
+            strong {
+                font-weight: 500;
+                vertical-align: top;
+            }
+            &:before {
+                content: '';
+                display: none;
+                position: absolute;
+                left: 0;
+                top: 4px;
+                width: 1px;
+                height: 10px;
+                background-color: #bbb;
+
+            }
+            &:last-of-type {
+                padding-left: 8px;
+                strong {color: $primary-color}
+                &:before {display: block;}
+            }
+        }
+    }
+    &.active {
+        .btn-more-info:after {
+            transform: translate(0, -50%) rotate(180deg);
+        }
+        .loan-price-info {
+            display: block;
+        }
+    }
+}
+
+.btn {
+    margin-top: 32px;
+}

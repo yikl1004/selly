@@ -47,7 +47,8 @@ img {max-width:100%;vertical-align:middle;}
 legend {position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0, 0, 0, 0); border: 0;}
 button, select, input, textarea, label, img {vertical-align:middle;}
 input {-webkit-appearance: none;-webkit-border-radius: 0;}
-button {background:transparent;cursor:pointer;border:0;}
+button {background:transparent;cursor:pointer;border:0;
+    font-family:'Spoqa Han Sans Neo', 'Malgun Gothic','맑은 고딕', '돋음','Dotum','Apple SD Gothic Neo', Arial, Helvetica, sans-serif;}
 button:disabled {cursor: default;}
 address, caption, em, strong, th{font-style:normal; font-weight:normal}
 a{background:transparent; text-decoration:none; color:inherit;}

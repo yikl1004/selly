@@ -1,6 +1,6 @@
 <template>
     <div class="form-text-box" :class="type">
-        <LabelTitle id="labelid" :hidden-label="hiddenLabel" :label="label" />
+        <LabelTitle :hidden-label="hiddenLabel" :label="label" />
         <div class="form-text-area">
             {{ value }}
         </div>

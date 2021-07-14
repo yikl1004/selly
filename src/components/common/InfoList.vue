@@ -1,12 +1,21 @@
 <template>
     <div class="box-info-wrap" :class="type">
-        <div class="info-title">
+        <div v-if="title" class="info-title">
             <h3 class="title">
-                나의 한도
+                {{ title }}
             </h3>
         </div>
         <div class="box-info-list">
-            <div class="info-item">
+            <div v-for="(item, index) in list" :key="`list-${index}`" class="info-item">
+                <div class="info-label">
+                    <span>{{ item.title }}</span>
+                </div>
+                <div class="info-desc">
+                    <span>{{ item.desc }}</span>
+                </div>
+            </div>
+            <!--[D] case -->
+            <!-- <div class="info-item">
                 <div class="info-label">
                     <span>제목</span>
                 </div>
@@ -20,9 +29,13 @@
                     <span>제목</span>
                 </div>
                 <div class="info-desc">
-                    <span>일상환</span>
+                    <span>
+                        <BasicButton size="small">
+                            신청
+                        </BasicButton>
+                    </span>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
 </template>
@@ -30,7 +43,7 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
 
-export interface AccordionListItem {
+interface List {
     title: string
     desc: string
 }
@@ -40,27 +53,15 @@ export default class InfoList extends Vue {
     /**
      * @category Props
      */
+    @Prop({ type: Array })
+    readonly list!: List[]
+
     @Prop({ type: String, default: '' })
     readonly type!: string
 
-    /**
-     * @category Data(State)
-     */
-    /**  */
-    private currentIndex: number = -1
-
-    /**
-     * @category Methods
-     */
-    onClick(index: number) {
-        /**
-         * click 토글이벤트 발생
-         */
-        /**
-         * TODO : 클릭시 포커스 이동(스크롤이동) 액션 여부 확인 필요
-         */
-        this.currentIndex = this.currentIndex === index ? -1 : index
-    }
+    //제목
+    @Prop({ type: String })
+    readonly title!: string
 }
 </script>
 

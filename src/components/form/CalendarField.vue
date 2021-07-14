@@ -1,11 +1,19 @@
 <template>
-    <div v-click-outside="onBlur" class="calendar-field">
-        <LabelTitle :id="id" label-type="label" :hidden-label="hiddenLabel" :label="label" />
+    <div v-click-outside="onBlur" class="calendar-field field-box" :class="type">
+        <LabelTitle :hidden-label="hiddenLabel" :label="label" />
         <div class="flex">
             <div class="input-area" :class="{ focus: focusedClass }">
                 <input ref="input" type="text" :value="displayValue" :class="{ readonly }" @keydown="onKeydown" @focus="onFocus" />
                 <i class="icon-calendar" />
             </div>
+            <template v-if="type">
+                <span class="icon">~</span>
+
+                <div class="input-area" :class="{ focus: focusedClass }">
+                    <input ref="input" type="text" :value="displayValue" :class="{ readonly }" @keydown="onKeydown" @focus="onFocus" />
+                    <i class="icon-calendar" />
+                </div>
+            </template>
         </div>
         <transition v-bind="transitionProps.datepicker">
             <div v-if="datepickerVisible" class="datepicker-wrapper">
@@ -62,6 +70,10 @@ export default class CalendarField extends Vue {
     /** 읽기전용 */
     @Prop({ type: Boolean, default: false })
     readonly readonly!: boolean
+
+    /** 타입 : 인풋한개 (default) / 인풋두개( range ) */
+    @Prop({ type: String })
+    readonly type!: string
 
     /**
      * @category Data(State)

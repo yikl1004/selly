@@ -31,7 +31,7 @@
                     />
 
                     <DropdownBox
-                        id="dropdown-box02"
+                        id="dropdown-box03"
                         label="신용점수"
                         :list="creditScoreList"
                         :default-value="schema.dropdownBox"
@@ -42,7 +42,7 @@
 
                     <CheckBoxGroup name="agree" value="상품설명서 확인 후 동의" label="금융상품 설명서" :disabled="false" />
 
-                    <RadioGroup name="email" label="대출상품 약관동의 내용을 이메일 수령" :disabled="false" :list="checkList" />
+                    <RadioGroup name="email" :disabled="false" :list="agreeRadio" />
                 </template>
             </FormProvider>
         </div>
@@ -51,7 +51,7 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
-import { CheckList } from '@components/form/CheckBoxGroup.vue'
+import { RadioProps } from '@components/form/Radio.vue'
 
 interface Data {
     buttonField: string
@@ -99,10 +99,9 @@ export default class LoanApply extends Vue {
         { displayName: '600점 초과', value: 'value3' },
     ]
 
-    // 동의 라디오버튼 샘플
-    private checkList: CheckList = [
+    private agreeRadio: RadioProps[] = [
         { value: 'y', label: '예', checked: true },
-        { value: 'n', label: '아니요' },
+        { value: 'n', label: '아니요', checked: false },
     ]
 
     private data: { [key: string]: object | number | string | boolean } = {

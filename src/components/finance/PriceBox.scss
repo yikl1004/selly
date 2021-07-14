@@ -1,0 +1,21 @@
+.price-box {
+    .price-title {
+        display: block;
+        margin-bottom: 6px;
+        color: #222;
+    }
+    .price {
+        color: #222;
+        em {
+            display: block;
+            font-size: 20px;
+            font-weight: 500;
+        }
+        strong {
+            font-size: 32px;
+            font-weight: 700;
+            line-height: 1.25;
+            vertical-align: middle;
+        }
+    }
+}

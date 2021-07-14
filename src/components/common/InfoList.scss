@@ -10,7 +10,7 @@
     }
     &.style01 {
         .info-desc {
-            span {
+            & > span {
                 font-size: 16px;
                 font-weight: 700;
             }
@@ -18,26 +18,33 @@
     }
 }
 .box-info-list {
-    padding-bottom: 16px;
+    padding: 20px 0;
     border-top: 1px solid #ddd;
     border-bottom: 1px solid #ddd;
     .info-item {
         overflow: hidden;
-        padding-top: 16px;
+        margin-top: 12px;
+        word-break: keep-all;
+        &:first-of-type {
+            margin-top: 0;
+        }
     }
     .info-label {
         float: left;
-        width: 30%;
+        width: 35%;
     }
     .info-desc {
         float: right;
-        width: 70%;
+        width: 65%;
         font-weight: 500;
         color: #222;
         text-align: right;
         line-height: 1.43;
-        span {
+        & > span {
             display: block;
+            .btn.small{
+                margin-left: auto;
+            }
         }
     }
 }

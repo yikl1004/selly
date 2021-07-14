@@ -1,7 +1,7 @@
 <template>
-    <div class="dropdown-box">
+    <div class="dropdown-box field-box">
         <!-- id 필요여부에 따라 삭제 -->
-        <LabelTitle id="labelid" :hidden-label="hiddenLabel" :label="label" />
+        <LabelTitle :id="id" :hidden-label="hiddenLabel" :label="label" />
         <div class="input-area" :class="{ 'select-type': true }">
             <button type="button" class="btn-input-select" :disabled="disabled" @click="onClick">
                 <span>{{ selectedDisplayName }}</span>
@@ -30,6 +30,10 @@ export default class DropdownBox extends Vue {
     /**
      * @category PROPS
      */
+
+    /** form에 사용될 id */
+    @Prop({ type: String, required: true })
+    readonly id!: string
 
     /** label태그에 들어갈 텍스트 */
     @Prop({ type: String, default: '', required: true })

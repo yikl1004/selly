@@ -1,5 +1,5 @@
 <template>
-    <div class="text-field" :class="isError">
+    <div class="text-field field-box" :class="isError">
         <LabelTitle :id="id" label-type="label" :hidden-label="hiddenLabel" :label="label" />
         <div class="input-area" :class="{ focus: focusedClass, readonly: readonly, disabled: disabled }">
             <template v-if="isSelectType">
