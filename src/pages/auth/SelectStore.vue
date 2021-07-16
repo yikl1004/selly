@@ -3,7 +3,7 @@
         <header class="page-header">
             <h1>사업자 정보</h1>
         </header>
-        <div class="container no-padding">
+        <div class="container">
             <div class="select-store-wrap">
                 <div class="select-store">
                     <div class="store-user-info">

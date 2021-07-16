@@ -1,6 +1,6 @@
 <template>
-    <div class="container no-padding">
-        <div class="content-inner">
+    <div class="container">
+        <div class="select-buisnessman-box">
             <FormProvider :schema="data" @change="formChange" @submit="onSubmit">
                 <template slot-scope="{ schema }">
                     <DropdownBox

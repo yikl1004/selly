@@ -19,7 +19,7 @@
                 <div class="check-list-box">
                     <div v-for="(check, index) in list" :key="`check-box-group-${name}-${index}`" class="check-list-item">
                         <CheckBox v-bind="getCheckBoxProps(index)" @change="onChangeCheckBox" />
-                        <BasicButton type="textBlue">
+                        <BasicButton type="textGray">
                             보기
                         </BasicButton>
                     </div>

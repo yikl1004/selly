@@ -1,16 +1,26 @@
 .price-box {
+    .title-area {
+        display: flex;
+        align-items: center;
+        min-height: 22px;
+        margin-bottom: 6px;
+    }
     .price-title {
         display: block;
-        margin-bottom: 6px;
         color: #222;
     }
-    .price {
+    .date {
+        margin-left: auto;
+        font-size: 12px;
         color: #222;
-        em {
-            display: block;
-            font-size: 20px;
-            font-weight: 500;
-        }
+
+    }
+
+    .price {
+        display: block;
+        font-size: 20px;
+        font-weight: 500;
+        color: #222;
         strong {
             font-size: 32px;
             font-weight: 700;

@@ -1,7 +1,12 @@
 <template>
     <div class="price-box">
-        <strong class="price-title">{{ title }}</strong>
-        <em class="price">
+        <div class="title-area">
+            <strong v-if="title" class="price-title">{{ title }}</strong>
+            <p v-if="date" class="date">
+                {{ date }}
+            </p>
+        </div>
+        <em v-if="price" class="price">
             <strong>{{ price }}</strong> 원
         </em>
     </div>
@@ -20,6 +25,9 @@ export default class PriceBox extends Vue {
 
     @Prop({ type: String })
     readonly price!: string
+
+    @Prop({ type: String })
+    readonly date!: string
 }
 </script>
 

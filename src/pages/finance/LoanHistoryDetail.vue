@@ -1,41 +1,28 @@
 <template>
     <div class="container">
-        <div class="loan-detail-wrap">
-            <LoanInfo />
+        <div class="content">
+            <div class="loan-detail-wrap">
+                <LoanInfo />
 
-            <!--[D] 비즈론/장기카드 -->
-            <div class="price-round-wrap">
-                <AccoReimbursement :list="reimbursementList" />
-                <BasicButton type="more">
-                    더보기
-                </BasicButton>
-            </div>
-
-            <!--[D] 사업자 대출 및 즉시대출_상환중케이스-->
-            <div class="price-round-wrap">
-                <CalendarField
-                    id="calendar"
-                    label="기간 선택"
-                    :hidden-label="true"
-                    :default-value="null"
-                    :readonly="false"
-                    name="date"
-                    type="range"
-                />
-                <div class="btn-area">
-                    <BasicButton size="small">
-                        기간 조회
+                <!--[D] 비즈론/장기카드 -->
+                <div class="price-round-wrap">
+                    <AccoReimbursement :list="reimbursementList" />
+                    <BasicButton type="more">
+                        더보기
                     </BasicButton>
                 </div>
 
-                <AccoReimbursement :list="reimbursementList" type="month" />
-                <BasicButton type="more">
-                    더보기
-                </BasicButton>
-            </div>
+                <!--[D] 사업자 대출 및 즉시대출_상환중케이스-->
+                <div class="price-round-wrap">
+                    <AccoReimbursement :list="reimbursementList" type="month" />
+                    <BasicButton type="more">
+                        더보기
+                    </BasicButton>
+                </div>
 
-            <div class="caution-info-box">
-                <BulletList title="반드시 확인하세요." :list="cautionList"></BulletList>
+                <div class="caution-info-box">
+                    <BulletList title="반드시 확인하세요." :list="cautionList"></BulletList>
+                </div>
             </div>
         </div>
     </div>

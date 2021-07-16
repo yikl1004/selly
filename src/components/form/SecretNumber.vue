@@ -1,5 +1,5 @@
 <template>
-    <div class="secret-number" :class="{ password: !isRegistType }">
+    <div class="secret-number field-box" :class="{ password: !isRegistType }">
         <LabelTitle :hidden-label="hiddenLabel" :label="label" />
         <div class="input-area" :class="{ focus: focusedClass }">
             <template v-if="isRegistType">

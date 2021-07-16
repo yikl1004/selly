@@ -1,6 +1,6 @@
 <template>
-    <div class="container no-padding">
-        <CautionBox description="이용중인 내역이 없습니다" />
+    <div class="container">
+        <CautionBox description="이용중인 내역이 없습니다" type="result" />
 
         <div class="loan-history-wrap">
             <AdditionalLoan />

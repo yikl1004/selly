@@ -97,6 +97,9 @@
             &:first-of-type {
                 margin-top: 0;
             }
+            strong {
+                font-weight: 500;
+            }
         }
         .check-list-box {
             &.col {

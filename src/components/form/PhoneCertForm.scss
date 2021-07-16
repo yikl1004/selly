@@ -1,0 +1,64 @@
+.phone-field {
+    @include form-field();
+    .input-area {
+        display: flex;
+    }
+    .select-button {
+        min-width: 108px;
+        align-items: center;
+        white-space: nowrap;
+        padding-right: 24px;
+        padding-left: 20px;
+        background-image: url('/assets/icon/icon-arrow-bottom2.svg');
+        background-repeat: no-repeat;
+        background-position: right center;
+        background-size: 24px 24px;
+        text-align: left;
+    }
+    .unit {
+        display: block;
+        padding-right: 20px;
+        font-size:16px;
+        font-weight: 500;
+        color: #222;
+        white-space: nowrap;
+        order: 1;
+    }
+
+    .btn-cert {
+        margin: 12px 0 0 0;
+    }
+    .flex {
+        margin: 12px 0 0 0;
+        .input-area {
+            display: inherit;
+            width: 100%;
+            flex-shrink: 1;
+
+            .counter {
+                display: inherit;
+                align-items: center;
+                font-size: 16px;
+                color: #ee1100;
+                padding: 0 20px 0 0;
+
+                & + button.clear {
+                    // right: 62px;
+                    margin-left: -8px
+                }
+            }
+        }
+
+        .input-area + .search-button {
+            margin-left: 8px;
+        }
+    }
+
+    button.search-button {
+        @include button-style(56, $point-color-brown, #201c1b, #ebebeb,#bbb);
+        min-width:72px;
+        padding: 0 14px;
+        text-align: center;
+        color:#fff;        
+    }
+}

@@ -22,6 +22,9 @@ import SalesHistory from '@pages/sales/SalesHistory.vue'
 // 금융
 import FinancePage from '@pages/finance/index.vue'
 import CreditCardAuth from '@pages/finance/CreditCardAuth.vue'
+import SelfAuth from '@pages/finance/SelfAuth.vue'
+import LoanApply from '@pages/finance/LoanApply.vue'
+import LoanReject from '@pages/finance/LoanReject.vue'
 import LoanHistory from '@pages/finance/LoanHistory.vue'
 import LoanHistoryDetail from '@pages/finance/LoanHistoryDetail.vue'
 
@@ -158,6 +161,7 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
         component: FinancePage,
         children: [
             {
+                //신용카드 인증페이지
                 path: 'creditcardauth',
                 name: 'CreditCardAuth',
                 component: CreditCardAuth,
@@ -167,6 +171,37 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
                 },
             },
             {
+                //본인인증 페이지
+                path: 'selfauth',
+                name: 'Self Auth',
+                component: SelfAuth,
+                meta: {
+                    layout: 'default',
+                    footer: false,
+                },
+            },
+            {
+                //금소법 적합성 확인페이지
+                path: 'loanapply',
+                name: 'Loan Apply',
+                component: LoanApply,
+                meta: {
+                    layout: 'default',
+                    footer: false,
+                },
+            },
+            {
+                //이용 거절 페이지
+                path: 'loanreject',
+                name: 'Loan Reject',
+                component: LoanReject,
+                meta: {
+                    layout: 'default',
+                    footer: false,
+                },
+            },
+            {
+                //대출내역
                 path: 'loanhistory',
                 name: 'Loan History',
                 component: LoanHistory,
@@ -176,6 +211,7 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
                 },
             },
             {
+                //대출내역상세
                 path: 'loandetail',
                 name: 'Loan History Detail',
                 component: LoanHistoryDetail,
