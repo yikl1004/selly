@@ -33,7 +33,7 @@ export default class CautionBox extends Vue {
      * @category Props
      */
 
-    /** 아이콘 타입받음. complete / caution */
+    /** complete / caution / result*/
     @Prop({ type: String })
     readonly type!: string
 

@@ -18,12 +18,16 @@
     &.complete:before {
         background-image: url('/assets/icon/icon-caution-complete.svg');
     }
+    &.result {
+        padding-bottom: 204px;
+    }
     .caution-title {
         display: block;
         font-size: 20px;
         color: #222;
         line-height: 1.4;
-        font-weight: bold;
+        font-weight: 700;
+        word-break: keep-all;
         & + .caution-sub-txt {
             margin-top: 8px;
             font-weight: 400;
@@ -51,5 +55,10 @@
             text-decoration: underline;
             color:$point-color-blue
         }
+    }
+}
+.content {
+    .caution-box {
+        padding-top: 110px;
     }
 }

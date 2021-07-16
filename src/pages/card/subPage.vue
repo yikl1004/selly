@@ -14,13 +14,13 @@
             <Flag text="text" />
             <Tab :list="tabList" :active="0" type="solid">
                 <template slot-scope="{ activeIndex }">
-                    <div v-if="activeIndex === 0">
+                    <div v-if="activeIndex === 0" class="tab-cont">
                         <p>1</p>
                     </div>
-                    <div v-if="activeIndex === 1">
+                    <div v-if="activeIndex === 1" class="tab-cont">
                         <p>2</p>
                     </div>
-                    <div v-if="activeIndex === 2">
+                    <div v-if="activeIndex === 2" class="tab-cont">
                         <p>3</p>
                     </div>
                 </template>

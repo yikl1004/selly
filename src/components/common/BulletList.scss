@@ -1,5 +1,4 @@
 .bullet-list {
-    margin-top: 12px;
     .bullet-title {
         display: block;
         margin-bottom: 16px;
@@ -26,4 +25,7 @@
             background-color: #666;
         }
     }
+}
+.field-box + .bullet-list {
+    margin-top: 12px;
 }

@@ -14,19 +14,38 @@
 }
 
 .container {
+    overflow-y: auto;
     background-color: #fff;
     width: 100%;
     min-height: 100%;
-    padding: 10px 24px 60px;
+    // padding: 10px 24px 60px;
+    .content {
+        padding: 10px 24px 60px;
+    }
     &.no-padding {
-        padding: 0;
+        .content {
+            padding: 0;
+        }
         & > .caution-box {
             padding-bottom: 200px;
         }
     }
-}
-.content-inner {
-    padding: 10px 24px 0;
+    &.floating {
+        padding-bottom: 108px;
+        .content {
+            padding-bottom: 36px
+        }
+    }
+
+    .field-box:first-of-type {
+        .label-title-box,
+        .form-text-area {
+            margin-top: 0;
+        }
+    }
+    .caution-box + .box-info-wrap {
+        margin-top: 48px;
+    }
 }
 
 .page-header {

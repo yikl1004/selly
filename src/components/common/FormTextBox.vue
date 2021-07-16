@@ -1,5 +1,5 @@
 <template>
-    <div class="form-text-box" :class="type">
+    <div class="form-text-box field-box" :class="type">
         <LabelTitle :hidden-label="hiddenLabel" :label="label" />
         <div class="form-text-area">
             {{ value }}

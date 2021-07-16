@@ -25,4 +25,4 @@ export default class FixedBtnBox extends Vue {
 }
 </script>
 
-<style lang="scss" scoped src="./FixedBtnBox.scss"></style>
+<style lang="scss" src="./FixedBtnBox.scss"></style>

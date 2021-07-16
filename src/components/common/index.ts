@@ -20,6 +20,7 @@ import FormProvider from '@components/form/FormProvider.vue'
 import Radio from '@components/form/Radio.vue'
 import RadioGroup from '@components/form/RadioGroup.vue'
 import EmailForm from '@components/form/EmailForm.vue'
+import PhoneCertForm from '@components/form/PhoneCertForm.vue'
 import AddressField from '@components/form/AddressField.vue'
 
 // common
@@ -65,6 +66,7 @@ const componentList: { [key: string]: VueConstructor }[] = [
     { Radio },
     { RadioGroup },
     { EmailForm },
+    { PhoneCertForm },
     { BasicButton },
     { BtnGroup },
     { SecretNumber },

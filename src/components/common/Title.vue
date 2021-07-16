@@ -37,6 +37,7 @@ export default class Title extends Vue {
 
 <style lang="scss" scoped>
 .box-title {
+    margin-bottom: 50px;
     .title {
         font-size: 20px;
         color: #222;
