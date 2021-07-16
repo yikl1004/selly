@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="242" height="160" viewBox="0 0 242 160">
+    <g fill="none" fill-rule="evenodd">
+        <g>
+            <g>
+                <g>
+                    <path fill="#FFECE8" d="M4 0h24c2.21 0 4 1.79 4 4v126H0V4c0-2.21 1.79-4 4-4zM56 0h24c2.21 0 4 1.79 4 4v126H52V4c0-2.21 1.79-4 4-4zM108 0h24c2.21 0 4 1.79 4 4v126h-32V4c0-2.21 1.79-4 4-4z" transform="translate(-59.000000, -268.000000) translate(24.000000, 158.000000) translate(36.000000, 110.000000)"/>
+                    <path fill="#FA4123" d="M104 30H136V130H104zM52 40H84V130H52zM0 50H32V130H0z" transform="translate(-59.000000, -268.000000) translate(24.000000, 158.000000) translate(36.000000, 110.000000)"/>
+                    <path fill="#FFECE8" d="M160 0h24c2.21 0 4 1.79 4 4v126h-32V4c0-2.21 1.79-4 4-4z" transform="translate(-59.000000, -268.000000) translate(24.000000, 158.000000) translate(36.000000, 110.000000)"/>
+                    <path fill="#FA4123" d="M156 20H188V130H156z" transform="translate(-59.000000, -268.000000) translate(24.000000, 158.000000) translate(36.000000, 110.000000)"/>
+                    <path fill="#FFECE8" d="M212 0h24c2.21 0 4 1.79 4 4v126h-32V4c0-2.21 1.79-4 4-4z" transform="translate(-59.000000, -268.000000) translate(24.000000, 158.000000) translate(36.000000, 110.000000)"/>
+                    <path fill="#FA4123" d="M208 10H240V130H208z" transform="translate(-59.000000, -268.000000) translate(24.000000, 158.000000) translate(36.000000, 110.000000)"/>
+                    <text fill="#FA4123" font-family="SpoqaHanSansNeo-Medium, Spoqa Han Sans Neo" font-size="12" font-weight="400" letter-spacing="-.5" transform="translate(-59.000000, -268.000000) translate(24.000000, 158.000000) translate(36.000000, 110.000000)">
+                        <tspan x="5" y="30">이자</tspan>
+                    </text>
+                    <text fill="#FFF" font-family="SpoqaHanSansNeo-Medium, Spoqa Han Sans Neo" font-size="12" font-weight="400" letter-spacing="-.5" transform="translate(-59.000000, -268.000000) translate(24.000000, 158.000000) translate(36.000000, 110.000000)">
+                        <tspan x="5" y="95">원금</tspan>
+                    </text>
+                    <text fill="#222" font-family="SpoqaHanSansNeo-Regular, Spoqa Han Sans Neo" font-size="12" letter-spacing="-.5" transform="translate(-59.000000, -268.000000) translate(24.000000, 158.000000) translate(36.000000, 110.000000)">
+                        <tspan x="99" y="156">고정금액</tspan>
+                    </text>
+                    <g stroke="#979797">
+                        <path stroke-linecap="square" d="M1 3.5L79 3.5" transform="translate(-59.000000, -268.000000) translate(24.000000, 158.000000) translate(36.000000, 110.000000) translate(0.000000, 147.000000)"/>
+                        <path d="M3.561 0L0 3.561 3.561 7.122" transform="translate(-59.000000, -268.000000) translate(24.000000, 158.000000) translate(36.000000, 110.000000) translate(0.000000, 147.000000)"/>
+                    </g>
+                    <g stroke="#979797">
+                        <path stroke-linecap="square" d="M1 3.5L79 3.5" transform="translate(-59.000000, -268.000000) translate(24.000000, 158.000000) translate(36.000000, 110.000000) translate(200.500000, 150.560837) scale(-1, 1) translate(-200.500000, -150.560837) translate(161.000000, 147.000000)"/>
+                        <path d="M3.561 0L0 3.561 3.561 7.122" transform="translate(-59.000000, -268.000000) translate(24.000000, 158.000000) translate(36.000000, 110.000000) translate(200.500000, 150.560837) scale(-1, 1) translate(-200.500000, -150.560837) translate(161.000000, 147.000000)"/>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
