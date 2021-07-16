@@ -18,9 +18,7 @@
 <script lang="ts">
 import { Component, Vue, Watch } from 'vue-property-decorator'
 
-@Component({
-    components: {},
-})
+@Component
 export default class SalesPages extends Vue {
     /**
      * @category Data

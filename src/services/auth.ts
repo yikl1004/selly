@@ -174,7 +174,7 @@ class AuthService {
 
     // 메인화면 정보요청
     async getMainInfo(): MainInfoRes {
-        const { url, method } = this.memberWorkplaceInfo
+        const { url, method } = this.mainInfo
 
         return await axiosInstance.request({ method, url })
     }

@@ -1,6 +1,7 @@
 /// <reference path="./component-props.d.ts" />
 /// <reference path="./kakao-sdk.d.ts" />
 /// <reference path="./node.d.ts" />
+/// <reference path="./juso.d.ts" />
 
 import { NavigationGuard, RawLocation } from 'vue-router'
 

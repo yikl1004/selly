@@ -32,7 +32,7 @@ export interface AccordionListItem {
 @Component
 export default class AccoItem extends Vue {
     /**
-     * @category Props
+     * @Props
      */
 
     /** 아코디언 제목과 내용 배열로 받음 */

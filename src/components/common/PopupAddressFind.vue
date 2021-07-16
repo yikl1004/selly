@@ -2,29 +2,32 @@
     <div class="popup-address-find">
         <ButtonField
             id="addressSearch"
-            label="주소 검색"
-            :hidden-label="true"
-            placeholder="도로명, 건물번호, 지번 입력"
-            :readonly="false"
-            :disabled="false"
-            :default-value="null"
-            button-text="검색"
-            :cert="false"
-            :search="null"
             name="search"
+            label="주소 검색"
+            button-text="검색"
+            placeholder="도로명, 건물번호, 지번 입력"
+            hidden-label
+            @search="searchJuso"
         />
         <p class="txt-search-info">
             예시 : 도로명(양녕로 25길), 건물번호(39-1)
         </p>
 
-        <!--[D] 검색결과 없음-->
-        <CautionBox description="검색된 내용이 없습니다." />
-
         <!--[D] 검색결과 리스트-->
-        <div class="address-list">
-            <AddressItem />
+        <div v-if="hasList" class="address-list">
+            <AddressItem
+                v-for="(item, index) in list"
+                :key="`address-item-${index}`"
+                :jibun="item.jibunAddr"
+                :road="item.roadAddr"
+                :zipcode="item.zipNo"
+                @select="onSelect"
+            />
         </div>
-        <BasicButton type="more">
+        <!--[D] 검색결과 없음-->
+        <!-- <CautionBox v-else description="검색된 내용이 없습니다." /> -->
+
+        <BasicButton v-if="visibleMoreButton" type="more" @click="more">
             더보기
         </BasicButton>
     </div>
@@ -32,9 +35,120 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
+import axios from 'axios'
+
+interface Paging {
+    totalCount: number
+    currentPage: number
+    countPerPage: number
+}
+
+interface DefaultParameters {
+    countPerPage: string
+    resultType: string
+    confmKey: string
+}
+
+interface ErrorState {
+    errorCode: string
+    errorMessage: string
+}
 
 @Component
-export default class PopupAddressFind extends Vue {}
+export default class PopupAddressFind extends Vue {
+    /** @Data */
+
+    /** API 호출 상태 */
+    private pending: boolean = false
+
+    /** 주소 목록 */
+    private list: JusoResponse.JusoItem[] = []
+
+    /** 고정 파라미터 */
+    private defaultParameters: DefaultParameters = {
+        countPerPage: '10',
+        resultType: 'json',
+        confmKey: process.env.VUE_APP_JUSO_API_KEY,
+    }
+
+    /** 페이징 */
+    private paging: Paging = {
+        totalCount: 1,
+        currentPage: 1,
+        countPerPage: 1,
+    }
+
+    /** 에러 */
+    private error: ErrorState = {
+        errorCode: '',
+        errorMessage: '',
+    }
+
+    /** 검색 키워드 */
+    private keyword: string = ''
+
+    /** 더보기 버튼 노출여부 */
+    private visibleMoreButton: boolean = false
+
+    /** @Computed */
+    get hasList(): boolean {
+        return !!this.list.length
+    }
+
+    /** @Methods */
+
+    /** 검색 */
+    async search(keyword: string, nextPage?: string): Promise<void> {
+        const { toNumber, isUndefined } = this._
+        this.keyword = keyword
+        this.pending = true
+        const response = await axios.get<JusoResponse>('https://www.juso.go.kr/addrlink/addrLinkApi.do', {
+            params: {
+                keyword,
+                currentPage: nextPage || '1',
+                ...this.defaultParameters,
+            },
+        })
+        this.pending = false
+
+        const common = response.data.results.common
+        const totalCount = toNumber(common.totalCount)
+        const currentPage = toNumber(common.currentPage)
+        const countPerPage = toNumber(common.countPerPage)
+        const jusoList = response.data.results.juso
+
+        this.list = isUndefined(nextPage) ? jusoList : (this.list = this.list.concat(jusoList))
+        this.paging = { totalCount, currentPage, countPerPage }
+
+        // 더보기 버튼 노출 설정
+        this.setVisibleMoreButton(currentPage, totalCount, countPerPage)
+    }
+
+    async searchJuso(keyword: string) {
+        await this.search(keyword)
+    }
+
+    async more() {
+        const nextPage = `${this.paging.currentPage + 1}`
+
+        await this.search(this.keyword, nextPage)
+    }
+
+    setVisibleMoreButton(currentPage: number, totalCount: number, countPerPage: number) {
+        const totalPage = Math.ceil(totalCount / countPerPage)
+
+        this.visibleMoreButton = currentPage < totalPage
+    }
+
+    onSelect({ zipcode, road }: { zipcode: string; road: string }) {
+        /**
+         * @event select
+         * 선택 했을 때
+         */
+        this.$emit('select', { zipcode, road })
+    }
+}
 </script>
 
 <style lang="scss" scoped src="./PopupAddressFind.scss"></style>
+1

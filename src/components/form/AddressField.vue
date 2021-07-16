@@ -7,17 +7,15 @@
             </BasicButton>
         </div>
         <div class="flex">
-            <!-- readonly 말고 disabled 넣어도되나? -->
             <div class="input-area readonly">
                 <input
                     :id="id"
                     ref="input"
-                    value="03272"
+                    :value="zipcode"
                     :name="_.camelCase(id)"
                     autocomplete="new-password"
                     :maxlength="maxlength"
                     type="text"
-                    readonly
                     disabled
                     @input="onInput"
                     @blur="onBlur"
@@ -31,12 +29,11 @@
         <div class="input-area readonly">
             <input
                 ref="input"
-                value="서울특별시 종로구 세종대로 175"
+                :value="road"
                 :name="_.camelCase(id)"
                 autocomplete="new-password"
                 :maxlength="maxlength"
                 type="text"
-                readonly
                 disabled
                 @input="onInput"
                 @blur="onBlur"
@@ -48,11 +45,11 @@
                 ref="input"
                 :value="value"
                 :name="_.camelCase(id)"
-                autocomplete="new-password"
                 :maxlength="maxlength"
+                placeholder="상세주소 입력"
+                required
+                autocomplete="new-password"
                 type="text"
-                :readonly="readonly"
-                :disabled="disabled"
                 @input="onInput"
                 @focus="onFocus"
                 @blur="onBlur"
@@ -65,7 +62,7 @@
 
         <!-- popup : 주소찾기 -->
         <FullPopup :show.sync="show" title="주소 찾기" type="popup">
-            <PopupAddressFind />
+            <PopupAddressFind @select="onJusoSelect" />
         </FullPopup>
     </div>
 </template>
@@ -147,6 +144,12 @@ export default class AddressField extends Mixins(Validates) {
     /** focus 상태 */
     private focusedClass: boolean = false
 
+    /** 우편번호 */
+    private zipcode: string = ''
+
+    /** 도로명 주소 */
+    private road: string = ''
+
     /**
      * @title Watch
      */
@@ -197,6 +200,13 @@ export default class AddressField extends Mixins(Validates) {
     clearValue() {
         this.value = ''
         this.$refs.input.focus()
+    }
+
+    /** 주소를 선택 했을 떄 */
+    onJusoSelect({ zipcode, road }: { zipcode: string; road: string }) {
+        this.zipcode = zipcode
+        this.road = road
+        this.show = false
     }
 
     /**

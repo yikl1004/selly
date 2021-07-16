@@ -36,7 +36,7 @@
 
 <script lang="ts">
 import { VNode } from 'vue'
-import { Component, Prop, PropSync, Vue, Watch } from 'vue-property-decorator'
+import { Component, Prop, PropSync, Ref, Vue, Watch } from 'vue-property-decorator'
 
 interface ButtonText extends Object {
     cancel?: string
@@ -45,10 +45,8 @@ interface ButtonText extends Object {
 
 @Component
 export default class FullPopup extends Vue {
-    $refs!: Vue['$refs'] & {
-        inner: HTMLDivElement
-        modal: HTMLDivElement
-    }
+    @Ref('inner') inner!: HTMLDivElement
+    @Ref('modal') modal!: HTMLDivElement
 
     /**
      * @category Props
@@ -70,16 +68,9 @@ export default class FullPopup extends Vue {
     @Prop({ type: String, default: 'dialog' })
     readonly type!: ModalDesignType
 
-    // @Prop({ type: String })
-    // readonly description!: string
+    /** @Watch */
 
-    /**
-     * @category Watch
-     */
-
-    /**
-     * @category Data
-     */
+    /** @Data */
 
     /** 노출 여부(컴포넌트 내부) */
     // private showState: boolean = this.show || false

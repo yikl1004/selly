@@ -4,6 +4,11 @@
 const path = require('path')
 
 /**
+ * @typedef { import("terser-webpack-plugin") } TerserPlugin
+ */
+const TerserPlugin = require('terser-webpack-plugin')
+
+/**
  * @param {Array<string>} paths
  * @returns
  */
@@ -11,6 +16,7 @@ const getResourceList = paths => {
     return paths.map(res => path.join(__dirname, res))
 }
 
+const isDev = process.env.NODE_ENV !== 'production'
 const styleResourceOptions = {
     preProcessor: 'scss',
     patterns: getResourceList(['./src/styles/_variables.scss', './src/styles/_mixins.scss']),
@@ -55,6 +61,19 @@ module.exports = {
                 },
             },
             disableHostCheck: true,
+        },
+        optimization: {
+            minimizer: isDev
+                ? []
+                : [
+                      new TerserPlugin({
+                          terserOptions: {
+                              compress: {
+                                  drop_console: true, // 콘솔 로그를 제거한다
+                              },
+                          },
+                      }),
+                  ],
         },
     },
     chainWebpack(config) {

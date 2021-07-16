@@ -14,8 +14,8 @@
                     type="text"
                     :readonly="readonly"
                     :disabled="disabled"
+                    @keypress.enter="onKeypressEnter"
                     @input="onInput"
-                    @keydown.enter="onKeydownEnter"
                     @focus="onFocus"
                     @blur="onBlur"
                 />
@@ -36,6 +36,8 @@
 import { Component, Prop, Watch, Mixins } from 'vue-property-decorator'
 import Validates from '@utils/mixins/Validates'
 import { FormBus } from '@components/form/FormProvider.vue'
+import { throttle } from 'lodash'
+import { RegisterHook } from '@utils/decorators'
 
 export interface OnChangeParameters {
     value: string
@@ -160,12 +162,12 @@ export default class ButtonField extends Mixins(Validates) {
         this.$emit('search', this.value)
     }
 
-    onInput(event: InputEvent) {
-        this.value = this.$refs.input.value.replace(/\,/g, '')
+    onKeypressEnter(event: KeyboardEvent) {
+        this.onSearch()
     }
 
-    onKeydownEnter(event: KeyboardEvent) {
-        this.onSearch()
+    onInput(event: InputEvent) {
+        this.value = this.$refs.input.value.replace(/\,/g, '')
     }
 
     onFocus(event: FocusEvent) {
