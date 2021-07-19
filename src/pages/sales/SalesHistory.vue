@@ -1,18 +1,14 @@
 <template>
     <div class="container">
         <div class="select-buisnessman-box">
-            <FormProvider :schema="data" @change="formChange" @submit="onSubmit">
-                <template slot-scope="{ schema }">
-                    <DropdownBox
-                        id="dropdown-box01"
-                        label="사업자 선택"
-                        :hidden-label="true"
-                        :list="dropdownBoxList"
-                        :default-value="schema.dropdownBox"
-                        :disabled="false"
-                    />
-                </template>
-            </FormProvider>
+            <DropdownBox
+                id="dropdown-box01"
+                label="사업자 선택"
+                :hidden-label="true"
+                :list="dropdownBoxList"
+                default-value="전체"
+                :disabled="false"
+            />
         </div>
         <Tab :list="tabList" :active="0" type="solid">
             <template slot-scope="{ activeIndex }">
@@ -58,25 +54,6 @@ export default class SalesHistory extends Vue {
     ]
 
     private tabList = [{ name: '일간' }, { name: '주간' }, { name: '요일별' }]
-
-    private data: { [key: string]: object | number | string | boolean } = {
-        dropdownBox: '전체',
-        buttonField: '확인',
-        calendarField: new Date('2021.06.04'),
-        checkSingle: true,
-        secretNumber: '1234561',
-        singleSelection: 'third',
-        switchButton: true,
-        textfieldPrimary: '테스트',
-    }
-
-    formChange(data: any) {
-        this.data = data
-    }
-
-    onSubmit(data: any) {
-        console.log(data)
-    }
 }
 </script>
 

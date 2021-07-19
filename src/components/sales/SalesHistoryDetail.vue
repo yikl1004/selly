@@ -62,34 +62,7 @@ interface Data {
         DepositHistory,
     },
 })
-export default class SalesHistoryDetail extends Vue {
-    //드롭다운리스트 샘플
-    private dropdownBoxList: DropdownBoxList = [
-        { displayName: '전체', value: 'all', selected: true },
-        { displayName: '이층집 강남점 222-20-2222', value: 'LOCA MONEY:BIZ 7*3*' },
-        { displayName: '이층집 강남점 222-20-2222', value: '가장최근에 받은 카드가 디폴트로 노출' },
-    ]
-
-    private tabList = [{ name: '일간' }, { name: '주간' }, { name: '요일별' }]
-
-    private data: { [key: string]: object | number | string | boolean } = {
-        dropdownBox: 'kt',
-        buttonField: '확인',
-        calendarField: new Date('2021.06.04'),
-        checkSingle: true,
-        secretNumber: '1234561',
-        singleSelection: 'third',
-        switchButton: true,
-        textfieldPrimary: '테스트',
-    }
-    formChange(data: any) {
-        this.data = data
-    }
-
-    onSubmit(data: any) {
-        console.log(data)
-    }
-}
+export default class SalesHistoryDetail extends Vue {}
 </script>
 
 <style lang="scss" src="./SalesHistoryDetail.scss"></style>

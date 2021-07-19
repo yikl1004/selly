@@ -8,20 +8,14 @@
         <div class="sales-week-avg select-type">
             <!--[D] 요일별일때 select-type 클래스 추가-->
             <span class="avg-tit">최근 4주</span>
-            <FormProvider :schema="data" @change="formChange" @submit="onSubmit">
-                <template slot-scope="{ schema }">
-                    <DropdownBox
-                        id="dropdown-box01"
-                        label="요일 선택"
-                        :hidden-label="true"
-                        :list="dropdownBoxList"
-                        :default-value="schema.dropdownBox"
-                        :disabled="false"
-                        error-message="에러메시지가 필요할까"
-                        success-message="없어도 될듯"
-                    />
-                </template>
-            </FormProvider>
+            <DropdownBox
+                id="dropdown-box01"
+                label="요일 선택"
+                :hidden-label="true"
+                :list="dropdownBoxList"
+                default-value="월요일"
+                :disabled="false"
+            />
 
             <em class="price">
                 <span>평균</span>
@@ -67,25 +61,6 @@ export default class PriceList extends Vue {
         { displayName: '토요일', value: 'sat' },
         { displayName: '일요일', value: 'sun' },
     ]
-
-    private data: { [key: string]: object | number | string | boolean } = {
-        dropdownBox: 'mon',
-        buttonField: '확인',
-        calendarField: new Date('2021.06.04'),
-        checkSingle: true,
-        secretNumber: '1234561',
-        singleSelection: 'third',
-        switchButton: true,
-        textfieldPrimary: '테스트',
-    }
-
-    formChange(data: any) {
-        this.data = data
-    }
-
-    onSubmit(data: any) {
-        console.log(data)
-    }
 }
 </script>
 

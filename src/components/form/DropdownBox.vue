@@ -23,7 +23,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator'
+import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 import { MessageType } from '@components/common/TextInputMessage.vue'
 import { FormBus, FormUpdateEvent } from './FormProvider.vue'
 
@@ -77,6 +77,15 @@ export default class DropdownBox extends Vue {
 
     /** props로 받은 리스트 */
     private selectList: DropdownBoxList = this.list || []
+
+    /** @Watch */
+    @Watch('list')
+    changeList(value: DropdownBoxList, oldValue: DropdownBoxList) {
+        console.log('watch', value)
+        if (!this._.isNull(value)) {
+            this.init()
+        }
+    }
 
     /**
      * @category Computed
@@ -143,9 +152,9 @@ export default class DropdownBox extends Vue {
         this.openBottomSheet()
     }
 
-    init(list?: DropdownBoxList) {
+    init() {
         if (this.defaultValue) {
-            this.selectList = (list || this.selectList).map(item => {
+            this.selectList = this.list.map(item => {
                 item.selected = this.defaultValue === item.value
                 return item
             })
@@ -154,11 +163,6 @@ export default class DropdownBox extends Vue {
 
     mounted() {
         this.init()
-    }
-
-    updated() {
-        console.log(this.list)
-        this.init(this.list)
     }
 }
 </script>
