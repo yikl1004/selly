@@ -142,6 +142,7 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
         },
         children: [
             {
+                // TODO: 매출내역 연동 페이지... 기획 수정 중
                 path: 'linkage',
                 name: 'Sales Linkage',
                 component: SalesLinkage,
@@ -149,13 +150,18 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
                     title: '매출 내역',
                 },
             },
-            {
-                path: 'saleshistory',
-                name: 'Sales History',
-                component: SalesHistory,
-            },
         ],
     },
+    // ing: 매출 만드는 중...
+    {
+        path: '/saleshistory',
+        name: 'Sales History',
+        component: SalesHistory,
+        meta: {
+            title: '매출 내역',
+        },
+    },
+
     // 금융페이지
     // 금융메인 / 금융 안내페이지
     {

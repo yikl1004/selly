@@ -10,7 +10,7 @@
             </h1>
 
             <!-- 이전버튼 -->
-            <button v-if="isSub" type="button" class="btn-prev-page">
+            <button v-if="isSub" type="button" class="btn-prev-page" @click="backPressed">
                 <span class="ir">이전</span>
             </button>
 
@@ -97,13 +97,17 @@ export default class Header extends Vue {
     @UiModule.State('headerTitle')
     readonly headerTitle!: string
 
+    @Watch('$route')
+    changeRoute() {
+        this.toggle = false
+    }
+
     onOpenGNB() {
         this.setGnb(true)
     }
 
-    @Watch('$route')
-    changeRoute() {
-        this.toggle = false
+    backPressed() {
+        this.$router.back()
     }
 
     onToggle() {

@@ -2,14 +2,15 @@
     <div :class="['box-text-message', messageType]">
         <i class="icon"></i>
         <p class="text-message">
-            에러 / 성공메시지
-            <!-- {{ message }} -->
+            {{ message }}
         </p>
     </div>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
+
+export type MessageType = 'error' | 'success'
 
 @Component
 export default class TextInputMessage extends Vue {
@@ -18,13 +19,10 @@ export default class TextInputMessage extends Vue {
      */
 
     @Prop({ type: String, default: '' })
-    readonly errorMessage!: string
-
-    @Prop({ type: String, default: '' })
-    readonly successMessage!: string
+    readonly message!: string
 
     @Prop({ type: String })
-    readonly messageType!: string
+    readonly messageType!: MessageType
 }
 </script>
 

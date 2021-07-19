@@ -10,8 +10,6 @@
                         :list="dropdownBoxList"
                         :default-value="schema.dropdownBox"
                         :disabled="false"
-                        error-message="에러메시지가 필요할까"
-                        success-message="없어도 될듯"
                     />
                 </template>
             </FormProvider>
@@ -62,7 +60,7 @@ export default class SalesHistory extends Vue {
     private tabList = [{ name: '일간' }, { name: '주간' }, { name: '요일별' }]
 
     private data: { [key: string]: object | number | string | boolean } = {
-        dropdownBox: 'kt',
+        dropdownBox: '전체',
         buttonField: '확인',
         calendarField: new Date('2021.06.04'),
         checkSingle: true,

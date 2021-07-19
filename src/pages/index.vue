@@ -9,6 +9,9 @@
         <button type="button" class="btn-kakao-login" @click="login">
             <span>카카오톡으로 시작</span>
         </button>
+        <button type="button" class="btn-kakao-login" @click="unlink">
+            <span>연결끊기(탈퇴) - 테스트용</span>
+        </button>
     </div>
 </template>
 
@@ -22,8 +25,17 @@ const { Mutation: AuthMutation, Action: AuthAction, State: AuthState } = namespa
 const { Mutation: UIMutation } = namespace('ui')
 
 @Component({
-    beforeRouteEnter: async (to, from, next) => {
+    async beforeRouteEnter(to, from, next) {
         await store.dispatch('auth/getMainInfo')
+        const mainInfo = store.state.auth.mainInfo
+
+        if (mainInfo && mainInfo.rc && mainInfo.rc === '8888') {
+            store.commit('ui/setVisibleHeader', false)
+        } else {
+            store.commit('ui/setHeaderType', 'main')
+            store.commit('ui/setVisibleHeader', true)
+        }
+
         next()
     },
 })
@@ -57,11 +69,11 @@ export default class Login extends Mixins(KakaoSDK) {
         let to: VueRouterLocation | null = null
 
         switch (value?.rspDc) {
-            // 사업자확인으로 이동(가입 절차)
+            // 최초 회원가입, 사업자확인으로 이동(가입 절차)
             case '01':
                 to = { name: 'Join', params: { step: '1' } }
                 break
-            // 메인으로 이동
+            // 기존가입자: 메인으로 이동
             case '02':
                 window.location.href = '/'
                 break
@@ -86,7 +98,7 @@ export default class Login extends Mixins(KakaoSDK) {
     /** @category Computed */
 
     get isLogin(): boolean {
-        return this.mainInfo.rc === '8888'
+        return this.mainInfo?.rc === '8888'
     }
 
     /** @category Methods */

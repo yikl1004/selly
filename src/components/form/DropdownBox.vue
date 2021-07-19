@@ -17,12 +17,14 @@
             </portal>
         </div>
 
-        <TextInputMessage :message="errorMessage" message-type="error" />
+        <!-- TODO: 에러 / 성공 여부에 따른 메세징 처리 필요 -->
+        <TextInputMessage v-if="message" :message="message" :message-type="messageType" />
     </div>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
+import { MessageType } from '@components/common/TextInputMessage.vue'
 import { FormBus, FormUpdateEvent } from './FormProvider.vue'
 
 @Component
@@ -86,6 +88,16 @@ export default class DropdownBox extends Vue {
         return (name && name.displayName) || this.label
     }
 
+    /** 메세지 타입 (에러, 성공) */
+    get messageType(): MessageType {
+        return this.successMessage ? 'success' : 'error'
+    }
+
+    /** 메세지 반환 */
+    get message(): string {
+        return this.errorMessage || this.successMessage
+    }
+
     /**
      * @category Methods
      */
@@ -131,9 +143,9 @@ export default class DropdownBox extends Vue {
         this.openBottomSheet()
     }
 
-    init() {
+    init(list?: DropdownBoxList) {
         if (this.defaultValue) {
-            this.selectList = this.selectList.map(item => {
+            this.selectList = (list || this.selectList).map(item => {
                 item.selected = this.defaultValue === item.value
                 return item
             })
@@ -142,6 +154,11 @@ export default class DropdownBox extends Vue {
 
     mounted() {
         this.init()
+    }
+
+    updated() {
+        console.log(this.list)
+        this.init(this.list)
     }
 }
 </script>
