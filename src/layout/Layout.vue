@@ -16,31 +16,12 @@
 import { Vue, Component } from 'vue-property-decorator'
 import DefaultLayout from '@layout/DefaultLayout.vue'
 import NoneLayout from '@layout/NoneLayout.vue'
-import { RouteMeta } from 'src/router'
-
-type LayoutType = 'default-layout' | 'none-layout'
-
-const DEFAULT_TRANSITION = 'fade'
 
 @Component({
     components: { DefaultLayout, NoneLayout },
 })
 export default class Layout extends Vue {
-    private transitionName: string = DEFAULT_TRANSITION
     private layout: string = 'default-layout'
-
-    // get layout(): string {
-    //     const layout = this.$route.meta.layout as RouteMeta
-    //     return layout ? `${layout}-layout` : 'default-layout'
-    // }
-
-    mounted(): void {}
-
-    beforeLeave() {}
-
-    enter() {}
-
-    created() {}
 }
 </script>
 

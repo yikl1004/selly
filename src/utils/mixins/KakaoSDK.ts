@@ -76,8 +76,9 @@ export default class KakaoSDK extends Vue {
                     console.log('/v2/user/me, 카카오에 요청한 유저정보', res)
                     resolve({
                         // ciNo: res.kakao_account.ci,
-                        // ciNo: '8FsPBb/e2PxJLYQv22nQOKFNx7PTJTa6UoPNmx3b5eo94hjVhwc3FIFYsl8lbwKEL3d91h7nbdXl2pBmkFaOcg==',    // 03 (가입불가)
-                        ciNo: 'ED4YJ80zZDOrVurxQJeQgzze/lkHapSfQlnzHCUUKMtuyy9E+m9zR3oFXMYM/JXuRlDLfOb1YE+PV41q4ec44g==', // 02 (사업자정보 1개)
+                        ciNo: 'rBEQQb+3pmYqPCNP4YwatvxlgA//fZ57i+RXx2NWrlXaoRWI/Zpo4VALx+eA0drMOTfdYPtDiGmOTHiiWIffTw==',
+                        // ciNo: '8FsPBb/e2PxJLYQv22nQOKFNx7PTJTa6UoPNmx3b5eo94hjVhwc3FIFYsl8lbwKEL3d91h7nbdXl2pBmkFaOcg==', // 03 (가입불가)
+                        // ciNo: 'ED4YJ80zZDOrVurxQJeQgzze/lkHapSfQlnzHCUUKMtuyy9E+m9zR3oFXMYM/JXuRlDLfOb1YE+PV41q4ec44g==', // 02 (사업자정보 1개)
                         cellNo: this.cellPhoneFormatter(res.kakao_account.phone_number),
                         email: res.kakao_account.email,
                     })
@@ -122,7 +123,7 @@ export default class KakaoSDK extends Vue {
 
     /**
      * 연결 끊기: 채널앱과의 연관성을 끊어 줌, 회원탈퇴 API는 별도로 필요함
-     * @param {{Function}} callback 성공시 호출 되는 함수
+     * @param {Function} callback 성공시 호출 되는 함수
      */
     unlink(callback?: Function) {
         return new Promise((resolve, reject) => {
@@ -130,7 +131,7 @@ export default class KakaoSDK extends Vue {
                 url: '/v1/user/unlink',
                 success: res => {
                     console.log('kakao API UNLINK SUCCESS', res)
-                    callback && callback()
+                    typeof callback === 'function' && callback()
                 },
                 fail: error => {
                     console.log('kakao API UNLINK FAIL', error)
@@ -138,6 +139,12 @@ export default class KakaoSDK extends Vue {
             })
         })
     }
+
+    /**
+     * 이용 중 동의 받기
+     * TODO: 아직 결정 안됨(태그명: plusfriends)
+     * Kakao.Auth.authorize({ serviceTerms: "tag1, tag2" })
+     */
 
     /** @category Life-Cycle */
 

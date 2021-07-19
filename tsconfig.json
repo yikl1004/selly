@@ -36,6 +36,9 @@
             ],
             "@layout/*": [
                 "src/layout/*"
+            ],
+            "@router/*": [
+                "src/router/*"
             ]
         },
         "lib": [

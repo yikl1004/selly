@@ -1,15 +1,15 @@
 import { Vue, Component } from 'vue-property-decorator'
 import store from '@stores/index'
 import { initialize } from '@utils/index'
+import router from '@router/index'
 import App from './App.vue'
-import router from './router'
 
 import 'animate.css/animate.css'
 import '@styles/variables.scss'
 import '@styles/index.scss'
 
 Vue.config.productionTip = false
-
+Component.registerHooks(['beforeRouteEnter'])
 console.log(process.env)
 
 /**

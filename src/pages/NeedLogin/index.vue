@@ -13,12 +13,11 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import { PAGE_NAMES } from '../../router'
 
 @Component
 export default class NeedLoginPage extends Vue {
     toLoginPage() {
-        this.$router.push({ name: PAGE_NAMES.Login })
+        this.$router.push({ name: 'Main' })
     }
 }
 </script>

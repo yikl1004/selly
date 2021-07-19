@@ -1,15 +1,12 @@
-import store from '@stores/index'
-import { Vue, Component } from 'vue-property-decorator'
-import VueRouter, { RouteConfig } from 'vue-router'
+import { RouteConfig } from 'vue-router'
 
 import NotFoundPage from '@pages/notFound/index.vue'
 import MainPage from '@pages/index.vue'
 // import NeedLoginPage from '@pages/needLogin/index.vue'
 import JoinPage from '@pages/join/index.vue'
-
-import SelectStorePage from '@pages/auth/SelectStore.vue'
-import CompleteJoinPage from '@pages/auth/CompleteJoin.vue'
-import UnableJoinPage from '@pages/auth/UnableJoin.vue'
+// import SelectStorePage from '@pages/auth/SelectStore.vue'
+// import CompleteJoinPage from '@pages/auth/CompleteJoin.vue'
+// import UnableJoinPage from '@pages/auth/UnableJoin.vue'
 
 import CardPage from '@pages/card/index.vue'
 import CardSubPage from '@pages/card/subPage.vue'
@@ -37,9 +34,6 @@ import FaqPage from '@pages/cs/FaqPage.vue'
 import ExampleMain from '@pages/example/index.vue'
 import ExampleForm from '@pages/example/form/index.vue'
 import ExampleTestbed from '@pages/example/testbed/index.vue'
-
-Vue.use(VueRouter)
-Component.registerHooks(['beforeRouteEnter'])
 
 export type RouteMeta = {
     layout?: 'default' | 'none' | 'floating' | string
@@ -136,15 +130,24 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
 
     //매출페이지
     //매출내역 메인
+    // TODO: 입금, 매출 내역 2개의 페이지로 나눠야함
+    // 매출: salesHistory, 입금: depositHistory
+    // 매출, 입금 에서 가가가 일간, 주간, 요일별 (총 6벌, 3벌씩 탭이 있는 페이지 2개)
     {
         path: '/sales',
         name: 'Sales',
         component: SalesPage,
+        meta: {
+            title: '매출 내역',
+        },
         children: [
             {
                 path: 'linkage',
                 name: 'Sales Linkage',
                 component: SalesLinkage,
+                meta: {
+                    title: '매출 내역',
+                },
             },
             {
                 path: 'saleshistory',
@@ -251,50 +254,4 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
     },
 ]
 
-const router = new VueRouter({
-    mode: 'history',
-    base: process.env.BASE_URL,
-    routes,
-})
-
-/**
- * navigatoin guard
- */
-const exceptionPages = ['Main', 'NeedLogin', 'NotFound', 'Join']
-router.beforeEach(async (to, from, next) => {
-    /**
-     * @description
-     * 1. 모든 API에서 로그인 체크를 기본적으로 함.
-     * 2. 각 페이지에서 필요한 API를 호출 할 떄 결과 값에 따른 페이지 처리가 필요
-     * 3. beforeEach 메서드는 router의 전역 가드 이므로 여기서 공통으로 처리하기보다 각 페이지 router에서 처리하는 것이 낮다고 판단됨
-     *      3-1. 개별 router의 beforeEnter 가드 (params: to, from, next)
-     *      3-2. 컴포넌트 내부의 beforeRouteEnter 가드 (params: to, from, next())
-     *      3-3. 위 2가지 방법중 한가지를 택해서 사용하는 것이 나을것 같음...(뇌피셜 by CMK)
-     */
-
-    if (to.path === '/') {
-        await store.dispatch('auth/getMainInfo')
-        const mainInfo = store.state.auth.mainInfo
-        if (mainInfo && mainInfo.rc && mainInfo.rc === '8888') {
-            store.commit('ui/setVisibleHeader', false)
-        } else {
-            store.commit('ui/setHeaderType', 'main')
-            store.commit('ui/setVisibleHeader', true)
-        }
-    }
-
-    // 세션 연장
-    await store.dispatch('common/getLoginExtendInfo')
-
-    next()
-})
-
-const namespace: { [key: string]: string } = {}
-routes.forEach(route => {
-    if (route.name) {
-        namespace[route.name] = route.name
-    }
-})
-export const PAGE_NAMES = namespace
-
-export default router
+export default routes

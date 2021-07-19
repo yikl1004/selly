@@ -25,4 +25,9 @@ const store = new Vuex.Store<RootStore>({
     plugins: [createLogger()],
 })
 
+if (process.env.NODE_ENV === 'development') {
+    // @ts-ignore
+    window.store = store
+}
+
 export default store

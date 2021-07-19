@@ -16,7 +16,7 @@
 
             <!-- 페이지 타이틀 -->
             <div v-if="!isMain" class="page-title">
-                <strong>페이지이름</strong>
+                <strong>{{ headerTitle }}</strong>
             </div>
 
             <!-- 프로세스 취소버튼 -->
@@ -93,6 +93,9 @@ export default class Header extends Vue {
 
     @UiModule.Action('getGnbList')
     readonly getGnbList!: Function
+
+    @UiModule.State('headerTitle')
+    readonly headerTitle!: string
 
     onOpenGNB() {
         this.setGnb(true)

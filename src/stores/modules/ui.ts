@@ -13,14 +13,20 @@ export interface UiState {
 
 @Module({ name: 'ui', namespaced: true, stateFactory: true })
 export default class Ui extends VuexModule {
-    public gnbOpen: UiState['gnbOpen'] = false
-    public gnbList: UiState['gnbList'] = []
-    public headerType: HeaderType = 'main'
-    public visible: boolean = false
+    gnbOpen: UiState['gnbOpen'] = false
+    gnbList: UiState['gnbList'] = []
+    headerType: HeaderType = 'main'
+    visible: boolean = false
+    headerTitle: string = ''
 
     @Mutation
     setVisibleHeader(visible: boolean) {
         this.visible = visible
+    }
+
+    @Mutation
+    setHeaderTitle(title: string) {
+        this.headerTitle = title
     }
 
     @Mutation

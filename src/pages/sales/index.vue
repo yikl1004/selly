@@ -9,8 +9,6 @@
                 <BasicButton type="large">
                     매출연동
                 </BasicButton>
-
-                <AddressField id="a" label="주소" :hidden-label="''" :readonly="false" :disabled="false" :default-value="''" />
             </div>
         </div>
     </div>
