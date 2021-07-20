@@ -13,6 +13,8 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 
-@Component
-export default class NoticeDetailPage extends Vue {}
+@Component({
+    components: {},
+})
+export default class TermsDetailPage extends Vue {}
 </script>
