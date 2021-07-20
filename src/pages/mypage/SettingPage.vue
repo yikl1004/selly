@@ -26,12 +26,16 @@
                     <ul>
                         <li>
                             <em class="setting-name">SMS</em>
-                            <strong class="setting-cont"> <SwitchButton label="선택하세요" :value="switchValue1"/></strong>
+                            <strong class="setting-cont">
+                                <SwitchButton label="선택하세요" :value="switchValue1" />
+                            </strong>
                         </li>
 
                         <li>
                             <em class="setting-name">친구톡</em>
-                            <strong class="setting-cont"> <SwitchButton label="선택하세요" :value="switchValue1"/></strong>
+                            <strong class="setting-cont">
+                                <SwitchButton label="선택하세요" :value="switchValue1" />
+                            </strong>
                         </li>
                     </ul>
                 </div>

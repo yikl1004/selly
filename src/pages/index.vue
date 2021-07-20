@@ -29,7 +29,7 @@ const { Mutation: UIMutation } = namespace('ui')
         await store.dispatch('auth/getMainInfo')
         const mainInfo = store.state.auth.mainInfo
 
-        if (mainInfo && mainInfo.rc && mainInfo.rc === '8888') {
+        if (mainInfo?.rc === '8888') {
             store.commit('ui/setVisibleHeader', false)
         } else {
             store.commit('ui/setHeaderType', 'main')

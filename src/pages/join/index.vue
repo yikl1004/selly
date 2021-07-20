@@ -1,13 +1,11 @@
 <template>
     <SelectStore v-if="step === 1" @next="onNext" />
-    <CompleteJoin v-else-if="step === 2" @complete="onComplete" />
     <UnableJoin v-else-if="step === -1" />
 </template>
 
 <script lang="ts">
 import { Component, Vue, Watch } from 'vue-property-decorator'
 import SelectStore from '@pages/auth/SelectStore.vue'
-import CompleteJoin from '@pages/auth/CompleteJoin.vue'
 import UnableJoin from '@pages/auth/UnableJoin.vue'
 import { namespace } from 'vuex-class'
 import { AuthParameters, BizInfoItem } from '@services/auth'
@@ -17,7 +15,6 @@ const { Action, State } = namespace('auth')
 @Component({
     components: {
         SelectStore,
-        CompleteJoin,
         UnableJoin,
     },
     beforeRouteEnter(to, from, next) {
@@ -46,14 +43,6 @@ export default class JoinPage extends Vue {
 
     /** @category Watch */
 
-    // 사업자정보가 변경 되면
-    @Watch('bizInfo')
-    changeBizInfo(value: BizInfo, oldValue: BizInfo) {
-        if (value!.rc === '0000') {
-            this.step = 2
-        }
-    }
-
     /** @category Methods */
 
     async onNext(list: BizInfoItem[]) {
@@ -81,6 +70,10 @@ export default class JoinPage extends Vue {
         }
 
         this.$toast.error('추천인 코드 확정 안됨')
+    }
+
+    beforeDestroy() {
+        this.$toast.clear()
     }
 }
 </script>

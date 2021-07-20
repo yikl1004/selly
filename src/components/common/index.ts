@@ -23,6 +23,7 @@ import PhoneCertForm from '@components/form/PhoneCertForm.vue'
 import AddressField from '@components/form/AddressField.vue'
 
 // common
+import Loading from '@components/common/Loading.vue'
 import Anchor from '@components/common/Anchor.vue'
 import Header from '@components/common/Header.vue'
 import Footer from '@components/common/Footer.vue'
@@ -60,6 +61,7 @@ const CalendarField = () => ({
 //개발씽크맞추기 전
 
 const componentList: { [key: string]: VueConstructor | AsyncComponent }[] = [
+    { Loading },
     { Anchor },
     { FileUploader },
     { Header },
