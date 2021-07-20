@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="container floating">
         <CautionBox
             type="caution"
             title="롯데카드 가맹점 또는 제휴사 가맹점 정보 확인이 불가합니다."
