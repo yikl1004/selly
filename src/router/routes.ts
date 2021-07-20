@@ -29,6 +29,11 @@ import LoanHistoryDetail from '@pages/finance/LoanHistoryDetail.vue'
 import NoticePage from '@pages/cs/NoticePage.vue'
 import NoticeDetailPage from '@pages/cs/NoticeDetailPage.vue'
 import FaqPage from '@pages/cs/FaqPage.vue'
+import TermsPage from '@pages/cs/TermsPage.vue'
+import TermsDetailPage from '@pages/cs/TermsDetailPage.vue'
+import SettingPage from '@pages/mypage/SettingPage.vue'
+import SecessionPage from '@pages/mypage/SecessionPage.vue'
+import BusinessPage from '@pages/mypage/BusinessPage.vue'
 
 // examples
 import ExampleMain from '@pages/example/index.vue'
@@ -239,6 +244,7 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
         name: 'Notice',
         component: NoticePage,
         meta: {
+            title: '공지사항',
             layout: 'default',
         },
     },
@@ -247,6 +253,7 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
         name: 'Notice Detail',
         component: NoticeDetailPage,
         meta: {
+            title: '공지사항',
             layout: 'default',
         },
     },
@@ -255,6 +262,57 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
         name: 'FAQ',
         component: FaqPage,
         meta: {
+            title: '자주 묻는 질문',
+            layout: 'default',
+        },
+    },
+
+    {
+        path: '/cs/terms',
+        name: 'Terms',
+        component: TermsPage,
+        meta: {
+            title: '이용약관',
+            layout: 'default',
+        },
+    },
+    {
+        path: '/cs/termsdetail',
+        name: 'Terms Detail',
+        component: TermsDetailPage,
+        meta: {
+            title: '이용약관',
+            layout: 'default',
+        },
+    },
+    //마이페이지
+    {
+        path: '/my/setting',
+        name: 'setting',
+        component: SettingPage,
+        meta: {
+            title: '회원정보',
+            layout: 'default',
+            footer: true,
+        },
+    },
+    {
+        path: '/my/secession',
+        name: 'Secession',
+        component: SecessionPage,
+        meta: {
+            title: '회원탈퇴',
+            layout: 'default',
+            footer: false,
+        },
+    },
+
+    {
+        path: '/my/business',
+        name: 'Business',
+        component: BusinessPage,
+        meta: {
+            title: '사업자 정보',
             layout: 'default',
         },
     },

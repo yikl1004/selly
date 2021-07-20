@@ -29,6 +29,8 @@
                 <span>{{ buttonText }}</span>
             </button>
         </div>
+
+        <TextInputMessage :message="errorMessage" message-type="error" />
     </div>
 </template>
 
@@ -114,6 +116,10 @@ export default class ButtonField extends Mixins(Validates) {
     /** 타이머 */
     @Prop({ type: Object, default: () => ({ count: 3, unit: 'minute' }) })
     private timer!: Timer
+
+    /** 에러 메세지 */
+    @Prop(String)
+    readonly errorMessage!: string
 
     /**
      * @category DATA(State)

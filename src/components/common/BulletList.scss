@@ -11,6 +11,7 @@
         font-size: 14px;
         line-height: 1.57;
         letter-spacing: -0.5px;
+        word-break: keep-all;
         & + li {
             margin-top: 8px;
         }
@@ -19,7 +20,7 @@
             display: block;
             position: absolute;
             left: 0;
-            top: 9px;
+            top: 8px;
             width: 2px;
             height: 2px;
             background-color: #666;
