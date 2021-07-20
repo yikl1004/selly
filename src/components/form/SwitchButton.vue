@@ -1,9 +1,10 @@
 <template>
     <div :class="['switch', type]">
-        <input :id="id" v-model="value" type="checkbox" :name="id" :disabled="disabled" />
-        <label :for="id">
-            <span class="ir">{{ label }}</span>
-            <span class="status" :hidden="isLarge" />
+        <label>
+            <input v-model="value" type="checkbox" :disabled="disabled" />
+            <i>
+                <span class="ir">{{ label }}</span>
+            </i>
         </label>
     </div>
 </template>
@@ -27,10 +28,6 @@ export default class SwitchButton extends Vue {
     @Prop({ type: String, required: true })
     readonly label!: string
 
-    /** id 지정 */
-    @Prop({ type: String, required: true })
-    readonly id!: string
-
     /** value 지정 */
     @Prop(Boolean)
     readonly defaultValue!: boolean
@@ -53,11 +50,6 @@ export default class SwitchButton extends Vue {
     /**
      * @category Computed
      */
-
-    /* large 타입 인지 */
-    get isLarge(): boolean {
-        return this.type === 'large'
-    }
 
     /**
      * @category Watch

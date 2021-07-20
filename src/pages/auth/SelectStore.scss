@@ -38,16 +38,11 @@
         }
         p {
             margin-top: 8px;
-        }
-        .mark {
-            display: inline-block;
-            width: 16px;
-            height: 16px;
-            background: url('/assets/auth/img-check-mark.svg') 0 2px no-repeat;
+            word-break: keep-all;
         }
     }
     .user-store-list {
-        margin-top: 32px;
+        margin-top: 24px;
         .check-box-area {
             margin-top: 12px;
             &:first-of-type {
@@ -56,9 +51,10 @@
         }
     }
     .recommender-box {
+        margin-top: 21px;
         padding: 0 24px;
         .search-field{
-            margin-top: 8px;
+            margin-top: 32px;
         }
     }
 }

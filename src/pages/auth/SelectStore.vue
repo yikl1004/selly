@@ -3,59 +3,49 @@
         <header class="page-header">
             <h1>사업자 정보</h1>
         </header>
-        <div class="container">
-            <div class="select-store-wrap">
-                <div class="select-store">
-                    <div class="store-user-info">
-                        <strong>
-                            {{ workplaceOwnerName }} 사장님<br />
-                            사업자정보를 확인하세요.
-                        </strong>
+        <div class="container floating">
+            <div class="content pd-btm">
+                <div class="select-store-wrap">
+                    <div class="select-store">
+                        <div class="store-user-info">
+                            <strong>
+                                {{ workplaceOwnerName }} 사장님<br />
+                                사업자정보를 확인하세요.
+                            </strong>
 
-                        <p>
-                            가입을 원하지 않는 사업자의 경우
-                            <i class="mark">
-                                <span class="ir">체크</span>
-                            </i>
-                            를 해지해주세요.
-                            <br />
-                            (정 사업자의 경우는
-                            <i class="mark">
-                                <span class="ir">체크</span>
-                            </i>
-                            해지가 불가합니다.)
-                        </p>
+                            <p>가입을 원하지 않는 사업자의 경우 체크를 해지 해주세요.<br />(정 사업자의 경우는 체크해지가 불가 합니다.)</p>
+                        </div>
+                        <div class="user-store-list">
+                            <CheckBoxBlock
+                                v-for="(item, index) in workplaceList"
+                                :id="`userStoreList${index}`"
+                                :key="`user-store-list-item-${index}`"
+                                :label="convertBizNoFormatter({ bizNo: item.bzno })"
+                                :biz-name="item.bzmanNm"
+                                :index="index"
+                                :checked="item.ltRgyn === 'Y'"
+                                :disabled="item.locaMcYn === 'Y'"
+                                name="group"
+                                @change="onSelectBizNo"
+                            />
+                        </div>
                     </div>
-                    <div class="user-store-list">
-                        <CheckBoxBlock
-                            v-for="(item, index) in workplaceList"
-                            :id="`userStoreList${index}`"
-                            :key="`user-store-list-item-${index}`"
-                            :label="convertBizNoFormatter({ bizNo: item.bzno })"
-                            :biz-name="item.bzmanNm"
-                            :index="index"
-                            :checked="item.ltRgyn === 'Y'"
-                            :disabled="item.locaMcYn === 'Y'"
-                            name="group"
-                            @change="onSelectBizNo"
+
+                    <div class="recommender-box">
+                        <CheckBox label="추천인이 있으시면 체크해주세요. (선택)" />
+                        <ButtonField
+                            id="recommenderCode"
+                            label="추천인 코드(선택)"
+                            :maxlength="9999"
+                            placeholder="추천인 코드 입력"
+                            :hidden-label="true"
+                            :readonly="false"
+                            :disabled="false"
+                            button-text="확인"
+                            name="cert"
+                            @search="onClickRecommenderCode"
                         />
                     </div>
-                </div>
-
-                <div class="recommender-box">
-                    <LabelTitle label="추천인 코드(선택)" />
-                    <CheckBox label="추천인이 있으시면 체크해주세요." />
-                    <ButtonField
-                        id="recommenderCode"
-                        label="추천인 코드(선택)"
-                        :maxlength="9999"
-                        placeholder="추천인 코드 입력"
-                        :readonly="false"
-                        :disabled="false"
-                        button-text="확인"
-                        name="cert"
-                        @search="onClickRecommenderCode"
-                    />
                 </div>
             </div>
             <portal to="floating">

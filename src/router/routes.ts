@@ -205,6 +205,7 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
         name: 'Notice',
         component: () => import('@pages/cs/NoticePage.vue'),
         meta: {
+            title: '공지사항',
             layout: 'default',
         },
     },
@@ -213,6 +214,7 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
         name: 'Notice Detail',
         component: () => import('@pages/cs/NoticeDetailPage.vue'),
         meta: {
+            title: '공지사항',
             layout: 'default',
         },
     },
@@ -221,6 +223,57 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
         name: 'FAQ',
         component: () => import('@pages/cs/FaqPage.vue'),
         meta: {
+            title: '자주 묻는 질문',
+            layout: 'default',
+        },
+    },
+
+    {
+        path: '/cs/terms',
+        name: 'Terms',
+        component: () => import('@pages/cs/TermsPage.vue'),
+        meta: {
+            title: '이용약관',
+            layout: 'default',
+        },
+    },
+    {
+        path: '/cs/termsdetail',
+        name: 'Terms Detail',
+        component: () => import('@pages/cs/TermsDetailPage.vue'),
+        meta: {
+            title: '이용약관',
+            layout: 'default',
+        },
+    },
+    //마이페이지
+    {
+        path: '/my/setting',
+        name: 'setting',
+        component: () => import('@pages/mypage/SettingPage.vue'),
+        meta: {
+            title: '회원정보',
+            layout: 'default',
+            footer: true,
+        },
+    },
+    {
+        path: '/my/secession',
+        name: 'Secession',
+        component: () => import('@pages/mypage/SecessionPage.vue'),
+        meta: {
+            title: '회원탈퇴',
+            layout: 'default',
+            footer: false,
+        },
+    },
+
+    {
+        path: '/my/business',
+        name: 'Business',
+        component: () => import('@pages/mypage/BusinessPage.vue'),
+        meta: {
+            title: '사업자 정보',
             layout: 'default',
         },
     },

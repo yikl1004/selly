@@ -1,11 +1,13 @@
 .check-box {
     @include checkbox-style;
-    i {
-        color: #222;
-    }
     .sub-text {
         display: block;
         color: #666;
         word-break: keep-all;
+    }
+    &.style01 {
+        i {
+            color: #222;
+        }
     }
 }

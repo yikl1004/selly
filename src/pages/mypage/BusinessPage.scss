@@ -1,0 +1,34 @@
+.btn-area {
+    margin-top:12px;
+    text-align: right;
+    button + button {
+        margin-left: 12px;
+    }
+}
+.franchisee-list-box {
+    position: relative;
+    margin: 32px 0 0 -24px;
+    padding-top: 8px;
+    width: calc(100% + 48px);
+    &:before {
+        content: '';
+        display: block;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 8px;
+        background-color: #f8f8f8;
+    }
+    .title {
+        display: block;
+        padding: 32px 24px 0;
+        font-weight: 700;
+        color: #222;
+    }
+    .board-item {
+        .board-tit {
+            font-weight: 400;
+        }
+    }
+}

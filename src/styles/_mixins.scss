@@ -139,14 +139,14 @@
         font-size:16px;
         font-weight:500;
         border-radius: 10px;
-        line-height:1.5;
+        line-height:$height + px;
         color:#fff;
     }
     @else if $height >= 48 {
         font-size: 14px;
         font-weight: 700;
         border-radius: 10px;
-        line-height:1.57;
+        line-height:$height + px;
     }
     @else if $height <= 32 {
         width:auto;
@@ -154,7 +154,7 @@
         padding:0 16px;
         font-size: 12px;
         font-weight:700;
-        line-height:1.6;
+        line-height:$height + px;
         border-radius: 32px;
     }
     &:active,

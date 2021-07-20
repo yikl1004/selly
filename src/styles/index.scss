@@ -21,11 +21,11 @@
     // padding: 10px 24px 60px;
     .content {
         padding: 10px 24px 60px;
+        &.pd-btm {
+            padding:0 0 60px;
+        }
     }
     &.no-padding {
-        .content {
-            padding: 0;
-        }
         & > .caution-box {
             padding-bottom: 200px;
         }

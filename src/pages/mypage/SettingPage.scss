@@ -1,0 +1,33 @@
+.setting-wrap {
+    .setting-box {
+        padding: 20px 0;
+        border-bottom: 1px solid #ddd;
+        &:first-of-type {
+            padding-top: 0;
+        }
+        h2 {
+            margin-bottom: 16px;
+            font-weight: 700;
+            color: #222;
+        }
+        ul {
+            li {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                margin-top: 12px;
+                &:first-of-type {
+                    margin-top: 0;
+                }
+            }
+            .setting-cont {
+                color: #222;
+                font-weight: 500;
+            }
+        }
+    }    
+}
+.btn-area {
+    margin-top:32px;
+    text-align: right;
+}
