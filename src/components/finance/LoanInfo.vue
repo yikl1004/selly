@@ -61,11 +61,16 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import PopupModifyLoan from '@components/finance/PopupModifyLoan.vue'
-import PopupPrepayment from '@components/finance/PopupPrepayment.vue'
 
 @Component({
-    components: { PopupModifyLoan, PopupPrepayment },
+    components: {
+        PopupModifyLoan: () => ({
+            component: import('@components/finance/PopupModifyLoan.vue'),
+        }),
+        PopupPrepayment: () => ({
+            component: import('@components/finance/PopupPrepayment.vue'),
+        }),
+    },
 })
 export default class LoanInfo extends Vue {
     private infoList = [

@@ -125,7 +125,11 @@ devDependency
 
 ### TODO List
 
-삭제 예정 dependency(테스트성, 또는 깜박하고 안지운 것들)
+[ ] 삭제 예정 dependency(테스트성, 또는 깜박하고 안지운 것들)정리 하기  
+[ ] 소스 상에 TODO 해결 하기
+[ ] bundle 사이즈 줄이기
+[ ] 코드 스플리팅 하기
+
 
 ### common module
 

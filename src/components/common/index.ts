@@ -1,4 +1,4 @@
-import Vue, { VueConstructor } from 'vue'
+import Vue, { AsyncComponent, VueConstructor } from 'vue'
 import _ from 'lodash'
 
 // form
@@ -9,7 +9,6 @@ import BtnGroup from '@components/common/BtnGroup.vue'
 import SecretNumber from '@components/form/SecretNumber.vue'
 import ButtonField from '@components/form/ButtonField.vue'
 // import CreditCardField from '@components/form/CreditCardField.vue'
-import CalendarField from '@components/form/CalendarField.vue'
 import SingleSelection from '@components/form/SingleSelection.vue'
 import CheckBox from '@components/form/CheckBox.vue'
 import CheckBoxBlock from '@components/form/CheckBoxBlock.vue'
@@ -54,9 +53,13 @@ import BoardDetail from '@components/common/BoardDetail.vue'
 //common popup
 import PopupAddressFind from '@components/common/PopupAddressFind.vue'
 
+const CalendarField = () => ({
+    component: import('@components/form/CalendarField.vue'),
+})
+
 //개발씽크맞추기 전
 
-const componentList: { [key: string]: VueConstructor }[] = [
+const componentList: { [key: string]: VueConstructor | AsyncComponent }[] = [
     { Anchor },
     { FileUploader },
     { Header },

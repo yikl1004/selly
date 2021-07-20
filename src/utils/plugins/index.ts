@@ -10,8 +10,7 @@ import VueToast from 'vue-toast-notification'
 import 'vue-toast-notification/dist/theme-sugar.css'
 
 // datepicker - https://vcalendar.io/
-const VCalendar = require('v-calendar')
-const DatePicker = require('v-calendar/lib/components/date-picker.umd')
+// const VCalendar = require('v-calendar')
 
 const registerPlugins = (): void => {
     // DOM dynamic append
@@ -22,10 +21,6 @@ const registerPlugins = (): void => {
 
     // instead of "moment"
     Vue.use(Dayjs)
-
-    // calendar
-    Vue.use(VCalendar, { componentPrefix: 'vc' })
-    Vue.component('date-picker', DatePicker)
 
     // DEV: Toast message Template
     Vue.use(VueToast, { position: 'bottom', duration: 0 })

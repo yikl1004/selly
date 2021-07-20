@@ -74,17 +74,20 @@
 import { Component, Vue, Watch } from 'vue-property-decorator'
 import CreditCardAuth from '@pages/finance/CreditCardAuth.vue'
 import LoanApply from '@pages/finance/LoanApply.vue'
-import PopupConsent from '@components/finance/PopupConsent.vue'
-import PopupRefusal from '@components/finance/PopupRefusal.vue'
-import PopupRepaySchedule from '@components/finance/PopupRepaySchedule.vue'
 
 @Component({
     components: {
         CreditCardAuth,
         LoanApply,
-        PopupConsent,
-        PopupRefusal,
-        PopupRepaySchedule,
+        PopupConsent: () => ({
+            component: import('@components/finance/PopupConsent.vue'),
+        }),
+        PopupRefusal: () => ({
+            component: import('@components/finance/PopupRefusal.vue'),
+        }),
+        PopupRepaySchedule: () => ({
+            component: import('@components/finance/PopupRepaySchedule.vue'),
+        }),
     },
 })
 export default class FinancePage extends Vue {

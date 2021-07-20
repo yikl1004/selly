@@ -1,40 +1,5 @@
 import { RouteConfig } from 'vue-router'
 
-import NotFoundPage from '@pages/notFound/index.vue'
-import MainPage from '@pages/index.vue'
-// import NeedLoginPage from '@pages/needLogin/index.vue'
-import JoinPage from '@pages/join/index.vue'
-// import SelectStorePage from '@pages/auth/SelectStore.vue'
-// import CompleteJoinPage from '@pages/auth/CompleteJoin.vue'
-// import UnableJoinPage from '@pages/auth/UnableJoin.vue'
-
-import CardPage from '@pages/card/index.vue'
-import CardSubPage from '@pages/card/subPage.vue'
-
-//매출
-import SalesPage from '@pages/sales/index.vue'
-import SalesLinkage from '@pages/sales/SalesLinkage.vue'
-import SalesHistory from '@pages/sales/SalesHistory.vue'
-
-// 금융
-import FinancePage from '@pages/finance/index.vue'
-import CreditCardAuth from '@pages/finance/CreditCardAuth.vue'
-import SelfAuth from '@pages/finance/SelfAuth.vue'
-import LoanApply from '@pages/finance/LoanApply.vue'
-import LoanReject from '@pages/finance/LoanReject.vue'
-import LoanHistory from '@pages/finance/LoanHistory.vue'
-import LoanHistoryDetail from '@pages/finance/LoanHistoryDetail.vue'
-
-//설정
-import NoticePage from '@pages/cs/NoticePage.vue'
-import NoticeDetailPage from '@pages/cs/NoticeDetailPage.vue'
-import FaqPage from '@pages/cs/FaqPage.vue'
-
-// examples
-import ExampleMain from '@pages/example/index.vue'
-import ExampleForm from '@pages/example/form/index.vue'
-import ExampleTestbed from '@pages/example/testbed/index.vue'
-
 export type RouteMeta = {
     layout?: 'default' | 'none' | 'floating' | string
     foolter?: boolean
@@ -45,17 +10,17 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
     {
         path: '/example',
         name: 'Example',
-        component: ExampleMain,
+        component: () => import('@pages/example/index.vue'),
         children: [
             {
                 path: 'form',
                 name: 'ExampleForm',
-                component: ExampleForm,
+                component: () => import('@pages/example/form/index.vue'),
             },
             {
                 path: 'test',
                 name: 'Test',
-                component: ExampleTestbed,
+                component: () => import('@pages/example/testbed/index.vue'),
             },
         ],
         meta: {
@@ -69,14 +34,14 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
     {
         path: '*',
         name: 'NotFound',
-        component: NotFoundPage,
+        component: () => import('@pages/notFound/index.vue'),
     },
 
     /* 로그인 or 메인 */
     {
         path: '/',
         name: 'Main',
-        component: MainPage,
+        component: () => import('@pages/index.vue'),
         meta: {
             layout: 'default',
         },
@@ -89,7 +54,10 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
     {
         path: '/join',
         name: 'Join',
-        component: JoinPage,
+        component: () => import('@pages/join/index.vue'),
+        // import SelectStorePage from '@pages/auth/SelectStore.vue'
+        // import CompleteJoinPage from '@pages/auth/CompleteJoin.vue'
+        // import UnableJoinPage from '@pages/auth/UnableJoin.vue',
         meta: {
             footer: false,
             layout: 'none',
@@ -104,7 +72,7 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
     // {
     //     path: '/needLogin',
     //     name: 'NeedLogin',
-    //     component: NeedLoginPage,
+    //     component: () => import(@pages/needLogin/index.vue),
     //     meta: {
     //         layout: 'none',
     //     },
@@ -114,7 +82,7 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
     {
         path: '/card',
         name: 'Card',
-        component: CardPage,
+        component: () => import('@pages/card/index.vue'),
         meta: {
             layout: 'none',
         },
@@ -122,7 +90,7 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
     {
         path: '/card/subpage',
         name: 'CardSub',
-        component: CardSubPage,
+        component: () => import('@pages/card/subPage.vue'),
         meta: {
             layout: 'default',
         },
@@ -136,7 +104,7 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
     {
         path: '/sales',
         name: 'Sales',
-        component: SalesPage,
+        component: () => import('@pages/sales/index.vue'),
         meta: {
             title: '매출 내역',
         },
@@ -145,7 +113,7 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
                 // TODO: 매출내역 연동 페이지... 기획 수정 중
                 path: 'linkage',
                 name: 'Sales Linkage',
-                component: SalesLinkage,
+                component: () => import('@pages/sales/SalesLinkage.vue'),
                 meta: {
                     title: '매출 내역',
                 },
@@ -156,7 +124,7 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
     {
         path: '/saleshistory',
         name: 'Sales History',
-        component: SalesHistory,
+        component: () => import('@pages/sales/SalesHistory.vue'),
         meta: {
             title: '매출 내역',
         },
@@ -167,13 +135,13 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
     {
         path: '/finance',
         name: 'Finance',
-        component: FinancePage,
+        component: () => import('@pages/finance/index.vue'),
         children: [
             {
                 //신용카드 인증페이지
                 path: 'creditcardauth',
                 name: 'CreditCardAuth',
-                component: CreditCardAuth,
+                component: () => import('@pages/finance/CreditCardAuth.vue'),
                 meta: {
                     layout: 'default',
                     footer: false,
@@ -183,7 +151,7 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
                 //본인인증 페이지
                 path: 'selfauth',
                 name: 'Self Auth',
-                component: SelfAuth,
+                component: () => import('@pages/finance/SelfAuth.vue'),
                 meta: {
                     layout: 'default',
                     footer: false,
@@ -193,7 +161,7 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
                 //금소법 적합성 확인페이지
                 path: 'loanapply',
                 name: 'Loan Apply',
-                component: LoanApply,
+                component: () => import('@pages/finance/LoanApply.vue'),
                 meta: {
                     layout: 'default',
                     footer: false,
@@ -203,7 +171,7 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
                 //이용 거절 페이지
                 path: 'loanreject',
                 name: 'Loan Reject',
-                component: LoanReject,
+                component: () => import('@pages/finance/LoanReject.vue'),
                 meta: {
                     layout: 'default',
                     footer: false,
@@ -213,8 +181,7 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
                 //대출내역
                 path: 'loanhistory',
                 name: 'Loan History',
-                component: LoanHistory,
-
+                component: () => import('@pages/finance/LoanHistory.vue'),
                 meta: {
                     layout: 'default',
                 },
@@ -223,8 +190,7 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
                 //대출내역상세
                 path: 'loandetail',
                 name: 'Loan History Detail',
-                component: LoanHistoryDetail,
-
+                component: () => import('@pages/finance/LoanHistoryDetail.vue'),
                 meta: {
                     layout: 'default',
                 },
@@ -237,7 +203,7 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
     {
         path: '/cs/notice',
         name: 'Notice',
-        component: NoticePage,
+        component: () => import('@pages/cs/NoticePage.vue'),
         meta: {
             layout: 'default',
         },
@@ -245,7 +211,7 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
     {
         path: '/cs/noticedetail',
         name: 'Notice Detail',
-        component: NoticeDetailPage,
+        component: () => import('@pages/cs/NoticeDetailPage.vue'),
         meta: {
             layout: 'default',
         },
@@ -253,7 +219,7 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
     {
         path: '/cs/faq',
         name: 'FAQ',
-        component: FaqPage,
+        component: () => import('@pages/cs/FaqPage.vue'),
         meta: {
             layout: 'default',
         },

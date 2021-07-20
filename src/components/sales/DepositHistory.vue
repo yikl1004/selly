@@ -40,11 +40,12 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import PopupSalesManagement from '@components/sales/PopupSalesManagement.vue'
 
 @Component({
     components: {
-        PopupSalesManagement,
+        PopupSalesManagement: () => ({
+            component: import('@components/sales/PopupSalesManagement.vue'),
+        }),
     },
 })
 export default class DepositHistory extends Vue {

@@ -27,22 +27,9 @@ const styleResourceOptions = {
  * @typedef { import("@vue/cli-service").ProjectOptions }
  */
 module.exports = {
-    /**
-     * @description style-resources-loader (vue-cli)
-     * pluing 소스가 js인데 ts file에서 실행시 plugin함수에서 매개변수를 잘못받고 있어 오류가 남.
-     * 아래 chainWepack 메서드에서 같은 코드를 직접 실행해 주는 것으로 변경
-     * 실제 플러그인 소스도 dependency(style-resources-loader) 존재 유무와 관계 없이 아래 chainWebpack 코드처럼 실행만 시켜줌
-     */
-
-    // pluginOptions: {
-    //     'style-resources-loader': {
-    //         preProcessor: 'scss',
-    //         patterns: getResourceList(resource.scss),
-    //     },
-    // },
-
     // publicPath: '/selly',
     outputDir: 'dist',
+    productionSourceMap: false,
     configureWebpack: {
         resolve: {
             alias: {
@@ -74,7 +61,25 @@ module.exports = {
                           },
                       }),
                   ],
+            splitChunks: {
+                chunks: 'all',
+            },
         },
+    },
+    pluginOptions: {
+        webpackBundleAnalyzer: {
+            openAnalyzer: true,
+        },
+        /**
+         * @description style-resources-loader (vue-cli)
+         * pluing 소스가 js인데 ts file에서 실행시 plugin함수에서 매개변수를 잘못받고 있어 오류가 남.
+         * 아래 chainWepack 메서드에서 같은 코드를 직접 실행해 주는 것으로 변경
+         * 실제 플러그인 소스도 dependency(style-resources-loader) 존재 유무와 관계 없이 아래 chainWebpack 코드처럼 실행만 시켜줌
+         */
+        // 'style-resources-loader': {
+        //     preProcessor: 'scss',
+        //     patterns: getResourceList(resource.scss),
+        // },
     },
     chainWebpack(config) {
         config.resolve.plugin('tsconfig-paths').use(require('tsconfig-paths-webpack-plugin'))

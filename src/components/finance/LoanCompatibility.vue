@@ -81,8 +81,6 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
-import PopupManual from '@components/finance/PopupManual.vue'
-
 import { RadioProps } from '@components/form/Radio.vue'
 
 interface Data {
@@ -96,7 +94,11 @@ interface Data {
 }
 
 @Component({
-    components: { PopupManual },
+    components: {
+        PopupManual: () => ({
+            component: import('@components/finance/PopupManual.vue'),
+        }),
+    },
 })
 export default class LoanCompatibility extends Vue {
     // s: popup 장기카드 이용동의

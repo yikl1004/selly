@@ -16,8 +16,6 @@
                 />
             </portal>
         </div>
-
-        <!-- TODO: 에러 / 성공 여부에 따른 메세징 처리 필요 -->
         <TextInputMessage v-if="message" :message="message" :message-type="messageType" />
     </div>
 </template>

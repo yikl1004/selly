@@ -37,7 +37,15 @@ import dayjs from 'dayjs'
 
 const month = new Date().getMonth()
 const year = new Date().getFullYear()
-@Component
+
+@Component({
+    components: {
+        DatePicker: () => ({
+            // @ts-ignore
+            component: import('v-calendar').then(vCalendar => vCalendar.DatePicker),
+        }),
+    },
+})
 export default class CalendarField extends Vue {
     /**
      * @category Refs

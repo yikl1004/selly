@@ -209,8 +209,6 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
-import PopupPredictionLoan from '@components/finance/PopupPredictionLoan.vue'
-import PopupRepaymentInfo from '@components/finance/PopupRepaymentInfo.vue'
 
 interface Data {
     buttonField: string
@@ -223,7 +221,14 @@ interface Data {
 }
 
 @Component({
-    components: { PopupPredictionLoan, PopupRepaymentInfo },
+    components: {
+        PopupPredictionLoan: () => ({
+            component: import('@components/finance/PopupPredictionLoan.vue'),
+        }),
+        PopupRepaymentInfo: () => ({
+            component: import('@components/finance/PopupRepaymentInfo.vue'),
+        }),
+    },
 })
 export default class LoanApplication extends Vue {
     private infoList = [
