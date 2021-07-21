@@ -1,75 +1,67 @@
 <template>
-    <div>
-        <div class="container floating">
-            <div class="content">
-                <div class="title-banner-box">
-                    <h2>회원확인사항</h2>
-                    <p>장기카드대출 Biz론 신청 적합성 확인과<br />상품설명서를 확인 후 신청이 진행됩니다.</p>
-                </div>
-
-                <div class="loan-apply-wrap">
-                    <FormProvider :schema="data" @change="formChange" @submit="onSubmit">
-                        <template slot-scope="{ schema }">
-                            <FormTextBox type="row" label="연령" value="만 41세" />
-                            <FormTextBox type="row" label="결제일" value="1일" />
-
-                            <DropdownBox
-                                id="dropdown-box04"
-                                label="납부일자"
-                                :list="loanUseList"
-                                :default-value="schema.dropdownBox"
-                                :disabled="false"
-                            />
-                            <DropdownBox
-                                id="dropdown-box01"
-                                label="대출용도"
-                                :list="loanUseList"
-                                :default-value="schema.dropdownBox"
-                                :disabled="false"
-                                error-message="에러메시지가 필요할까"
-                                success-message="없어도 될듯"
-                            />
-
-                            <DropdownBox
-                                id="dropdown-box02"
-                                label="연간소득"
-                                :list="annualIncomeList"
-                                :default-value="schema.dropdownBox"
-                                :disabled="false"
-                                error-message="에러메시지가 필요할까"
-                                success-message="없어도 될듯"
-                            />
-
-                            <DropdownBox
-                                id="dropdown-box03"
-                                label="신용점수"
-                                :list="creditScoreList"
-                                :default-value="schema.dropdownBox"
-                                :disabled="false"
-                                error-message="신용점수가 신용대출 신청 기준에 부합하지 않습니다."
-                                success-message="없어도 될듯"
-                            />
-
-                            <CheckBoxGroup name="agree" value="상품설명서 확인 후 동의" label="금융상품 설명서" :disabled="false" />
-
-                            <RadioGroup name="email" :disabled="false" :list="agreeRadio" label="대출상품 약관동의 내용을 이메일 수정" />
-                        </template>
-                    </FormProvider>
-                </div>
+    <div class="container floating">
+        <div class="content">
+            <div class="title-banner-box">
+                <h2>회원확인사항</h2>
+                <p>장기카드대출 Biz론 신청 적합성 확인과<br />상품설명서를 확인 후 신청이 진행됩니다.</p>
             </div>
 
-            <!--[D] 상품설명서 팝업 -->
-            <FullPopup
-                :show.sync="popManualShow"
-                title="상품설명서"
-                :button-text="{ confirm: '동의' }"
-                type="popup"
-                @confirm="onManualConfirm"
-            >
-                <PopupManual />
-            </FullPopup>
-            <!--//[D] 상품설명서 팝업 -->
+            <div class="loan-apply-wrap">
+                <FormProvider :schema="data" @change="formChange" @submit="onSubmit">
+                    <template slot-scope="{ schema }">
+                        <FormTextBox type="row" label="연령" value="만 41세" />
+                        <FormTextBox type="row" label="결제일" value="1일" />
+
+                        <DropdownBox
+                            id="dropdown-box04"
+                            label="납부일자"
+                            :list="loanUseList"
+                            :default-value="schema.dropdownBox"
+                            :disabled="false"
+                        />
+                        <DropdownBox
+                            id="dropdown-box01"
+                            label="대출용도"
+                            :list="loanUseList"
+                            :default-value="schema.dropdownBox"
+                            :disabled="false"
+                            error-message="에러메시지가 필요할까"
+                            success-message="없어도 될듯"
+                        />
+
+                        <DropdownBox
+                            id="dropdown-box02"
+                            label="연간소득"
+                            :list="annualIncomeList"
+                            :default-value="schema.dropdownBox"
+                            :disabled="false"
+                            error-message="에러메시지가 필요할까"
+                            success-message="없어도 될듯"
+                        />
+
+                        <DropdownBox
+                            id="dropdown-box03"
+                            label="신용점수"
+                            :list="creditScoreList"
+                            :default-value="schema.dropdownBox"
+                            :disabled="false"
+                            error-message="신용점수가 신용대출 신청 기준에 부합하지 않습니다."
+                            success-message="없어도 될듯"
+                        />
+
+                        <CheckBoxGroup name="agree" value="상품설명서 확인 후 동의" label="금융상품 설명서" :disabled="false" />
+
+                        <RadioGroup name="email" :disabled="false" :list="agreeRadio" label="대출상품 약관동의 내용을 이메일 수정" />
+                    </template>
+                </FormProvider>
+            </div>
         </div>
+
+        <!--[D] 상품설명서 팝업 -->
+        <FullPopup :show.sync="popManualShow" title="상품설명서" :button-text="{ confirm: '동의' }" type="popup" @confirm="onManualConfirm">
+            <PopupManual />
+        </FullPopup>
+        <!--//[D] 상품설명서 팝업 -->
 
         <portal to="floating">
             <BasicButton size="large">

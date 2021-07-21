@@ -1,28 +1,7 @@
 <template>
     <div class="container floating">
         <div class="content">
-            <FormProvider :schema="data" @change="formChange" @submit="onSubmit">
-                <template slot-scope="{ schema }">
-                    <DropdownBox
-                        id="dropdown-box01"
-                        label="보유카드"
-                        :list="dropdownBoxList"
-                        :default-value="schema.dropdownBox"
-                        :disabled="false"
-                        error-message="에러메시지가 필요할까"
-                        success-message="없어도 될듯"
-                    />
-
-                    <SecretNumber
-                        id="personal-number-1"
-                        :readonly="false"
-                        label="카드 비밀번호"
-                        type="card2"
-                        error-message="카드비밀번호를 정확히 입력해주세요. (1/3)"
-                    />
-                    <BulletList :list="infoList" />
-                </template>
-            </FormProvider>
+            <CardAuth />
         </div>
         <portal to="floating">
             <BasicButton size="large" @click="onClick">
@@ -34,6 +13,7 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
+import CardAuth from '@components/finance/CardAuth.vue'
 
 interface Data {
     buttonField: string
@@ -45,7 +25,9 @@ interface Data {
     textFieldPrimary: string
 }
 
-@Component
+@Component({
+    components: { CardAuth },
+})
 export default class CreditCardAuth extends Vue {
     //드롭다운리스트 샘플
     private dropdownBoxList: DropdownBoxList = [

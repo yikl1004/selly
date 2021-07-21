@@ -201,7 +201,7 @@ interface Data {
     components: { PopupPredictionLoan },
 })
 export default class LoanAddInfo extends Vue {
-    private tabList = [{ name: '주민등록증' }, { name: '운전명허증' }]
+    private tabList = [{ name: '주민등록증' }, { name: '운전면허증' }]
 
     private infoList = [
         {

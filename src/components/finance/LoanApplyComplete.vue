@@ -1,7 +1,7 @@
 <template>
     <div class="container floating">
         <div class="content">
-            <CautionBox type="complete" :title="`장기카드대출 Biz론 심사 완료되었습니다.`" />
+            <CautionBox type="complete" :title="`장기카드대출 Biz론 심사 완료되었습니다.`" :complete="true" />
 
             <InfoList :list="infoList" />
 

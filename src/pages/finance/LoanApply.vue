@@ -6,13 +6,13 @@
     <!-- <FranchiseeSelect /> -->
 
     <!--신청서-->
-    <LoanApplication />
+    <!-- <LoanApplication /> -->
 
     <!--대출신청 약관동의-->
     <!-- <LoanApplyTerms /> -->
 
     <!-- 부가정보 -->
-    <!-- <LoanAddInfo /> -->
+    <LoanAddInfo />
 
     <!--대출 신청 완료-->
     <!-- <LoanApplyComplete /> -->
