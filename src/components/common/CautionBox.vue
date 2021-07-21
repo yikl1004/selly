@@ -1,5 +1,5 @@
 <template>
-    <div class="caution-box" :class="type">
+    <div class="caution-box" :class="[type, { style01: complete }]">
         <div class="caution-text-box">
             <strong v-if="title" class="caution-title">{{ title }}</strong>
             <p v-if="description" class="caution-sub-txt">
@@ -36,6 +36,10 @@ export default class CautionBox extends Vue {
     /** complete / caution / result*/
     @Prop({ type: String })
     readonly type!: string
+
+    /** 하단에 리스트 들어가는 경우 간격 적용 */
+    @Prop({ type: Boolean, default: false })
+    readonly complete!: boolean
 
     /** 제목 */
     @Prop({ type: String })

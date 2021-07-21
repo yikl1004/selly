@@ -5,7 +5,7 @@
             enter-active-class="animate__animated animate__fadeIn"
             leave-active-class="animate__animated animate__fadeOut"
         >
-            <div v-if="showState" ref="modal" :class="['full-popup-wrap', type]">
+            <div v-if="showState" ref="modal" :class="['full-popup-wrap', type, { 'btn-case': buttonText }]">
                 <div ref="inner" class="full-popup">
                     <div class="popup-header">
                         <strong class="popup-title">{{ title }}</strong>
