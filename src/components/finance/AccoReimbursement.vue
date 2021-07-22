@@ -1,7 +1,11 @@
 <template>
     <!--[D] type month는 케이스용 prop / v-if 바꿔도 됨-->
     <div class="box-acco-list" :class="type">
-        <div v-for="(item, index) in list" :key="`acco-item-${index}`" :class="['box-acco-item', { active: index === currentIndex }]">
+        <div
+            v-for="(item, index) in list"
+            :key="`acco-item-${index}`"
+            :class="['box-acco-item', { active: index === currentIndex }]"
+        >
             <button
                 type="bubton"
                 class="acco-anchor"
@@ -19,9 +23,7 @@
                 <div class="acco-cont-inner">
                     <!--[D] 중도상환케이스-->
                     <div v-if="type" class="billing-amount-box">
-                        <div class="date">
-                            21. 07. 01 가상계좌
-                        </div>
+                        <div class="date">21. 07. 01 가상계좌</div>
                         <div class="billing-amount">
                             <strong class="tit">청구금액</strong>
                             <em>911,500원</em>
@@ -66,7 +68,7 @@ export default class AccoReimbursement extends Vue {
      * @category Data(State)
      */
     /**  */
-    private currentIndex: number = -1
+    private currentIndex = -1
 
     /**
      * @category Methods

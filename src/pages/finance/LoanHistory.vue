@@ -9,12 +9,8 @@
                 <LoanCard />
 
                 <BtnGroup>
-                    <BasicButton type="medium">
-                        추가상환
-                    </BasicButton>
-                    <BasicButton type="medium">
-                        금리인하권
-                    </BasicButton>
+                    <BasicButton type="medium"> 추가상환 </BasicButton>
+                    <BasicButton type="medium"> 금리인하권 </BasicButton>
                 </BtnGroup>
             </div>
         </div>
@@ -22,7 +18,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator'
+import { Component, Vue } from 'vue-property-decorator'
 import LoanCard from '@components/finance/LoanCard.vue'
 import AdditionalLoan from '@components/finance/AdditionalLoan.vue'
 

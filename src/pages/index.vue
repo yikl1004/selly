@@ -3,7 +3,14 @@
         <h2>메인 페이지</h2>
     </div>
     <div v-else class="page-login-wrap">
-        <div style="height:500px; background:#2b2b2b;text-align:center;line-height:500px">
+        <div
+            style="
+                height: 500px;
+                background: #2b2b2b;
+                text-align: center;
+                line-height: 500px;
+            "
+        >
             상단 비주얼 추가 작업 예정
         </div>
         <button type="button" class="btn-kakao-login" @click="login">
@@ -16,12 +23,19 @@
 </template>
 
 <script lang="ts">
-import { Component, Mixins, Vue, Watch } from 'vue-property-decorator'
+import { Component, Mixins, Watch } from 'vue-property-decorator'
 import { namespace } from 'vuex-class'
 import store from '@stores/index'
 import { KakaoSDK } from '@utils/mixins'
+import type { LoginInfo, MainInfo, UserInfo } from '@stores/modules/auth'
+import type { HeaderType } from '@stores/modules/ui'
+import type { RawLocation } from 'vue-router'
 
-const { Mutation: AuthMutation, Action: AuthAction, State: AuthState } = namespace('auth')
+const {
+    Mutation: AuthMutation,
+    Action: AuthAction,
+    State: AuthState,
+} = namespace('auth')
 const { Mutation: UIMutation } = namespace('ui')
 
 @Component({
@@ -45,7 +59,9 @@ export default class Login extends Mixins(KakaoSDK) {
      */
 
     // [ store ]: auth
-    @AuthMutation('setUserInfo') readonly setUserInfo!: (userInfo: UserInfo) => void
+    @AuthMutation('setUserInfo') readonly setUserInfo!: (
+        userInfo: UserInfo,
+    ) => void
     @AuthMutation('init') readonly init!: Function
     @AuthAction('getLoginInfo') readonly getLoginInfo!: Function
     @AuthAction('getMainInfo') readonly getMainInfo!: Function
@@ -53,8 +69,12 @@ export default class Login extends Mixins(KakaoSDK) {
     @AuthState('mainInfo') readonly mainInfo!: MainInfo
 
     // [ store ]: ui
-    @UIMutation('setHeaderType') readonly setHeaderType!: (headerType: HeaderType) => void
-    @UIMutation('setVisibleHeader') readonly setVisibleHeader!: (visible: boolean) => void
+    @UIMutation('setHeaderType') readonly setHeaderType!: (
+        headerType: HeaderType,
+    ) => void
+    @UIMutation('setVisibleHeader') readonly setVisibleHeader!: (
+        visible: boolean,
+    ) => void
 
     /** @category Data */
 
@@ -65,8 +85,8 @@ export default class Login extends Mixins(KakaoSDK) {
 
     // 로그인 정보에 따라 화면을 이동한다
     @Watch('loginInfo')
-    changeLoginInfo(value: LoginInfo, oldValue: LoginInfo | null) {
-        let to: VueRouterLocation | null = null
+    changeLoginInfo(value: LoginInfo /* oldValue: LoginInfo | null */) {
+        let to: RawLocation | null = null
 
         switch (value?.rspDc) {
             // 최초 회원가입, 사업자확인으로 이동(가입 절차)
@@ -80,6 +100,7 @@ export default class Login extends Mixins(KakaoSDK) {
             // 가입불가 대상
             case '03':
                 to = { name: 'Join', params: { step: '-1' } }
+                break
             default:
                 break
         }
@@ -88,7 +109,7 @@ export default class Login extends Mixins(KakaoSDK) {
     }
 
     @Watch('mainInfo', { deep: true })
-    changeMainInfo(value: MainInfo, oldValue: MainInfo) {
+    changeMainInfo(value: MainInfo /* oldValue: MainInfo */) {
         if (value.rc === '8888') {
             console.log('로그인 필요한 사용자 > 로그인 페이지로 이동')
             this.$router.push({ name: 'Main' })
@@ -112,7 +133,7 @@ export default class Login extends Mixins(KakaoSDK) {
          */
 
         // 1. 카카오 로그인 요청
-        const kakaoLoginResponse = await this.kakaoLogin()
+        await this.kakaoLogin()
         // 2. 카카오 로그인 사용자 정보 요청
         const kakaoUserInfoResponse = await this.kakaoUserInfo()
         // 3. 동의한 약관 항목 요청

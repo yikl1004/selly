@@ -9,15 +9,13 @@
             <p>사업자등록번호 123-45-67890</p>
             <p>서울특별시 종로구 새문안로 76 롯데카드 본사</p>
 
-            <p class="copyright">
-                Copyright. LOTTE CARD All rights reserved
-            </p>
+            <p class="copyright">Copyright. LOTTE CARD All rights reserved</p>
         </address>
     </footer>
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator'
+import { Component, Vue } from 'vue-property-decorator'
 
 @Component
 export default class Footer extends Vue {}

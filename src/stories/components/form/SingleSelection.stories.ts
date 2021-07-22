@@ -31,7 +31,15 @@ export default {
     },
 } as Meta
 
-interface Args {}
+interface Args {
+    id: string
+    list: {
+        displayName: string
+        value: string
+    }[]
+    align: string
+    type: string
+}
 
 const list = [
     { displayName: '모바일 문자', value: 'sms' },

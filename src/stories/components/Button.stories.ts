@@ -16,7 +16,14 @@ export default {
             },
         },
         type: {
-            options: ['basic', 'textBlue', 'textGray', 'with', 'dialogBlue', 'dialogWhite'],
+            options: [
+                'basic',
+                'textBlue',
+                'textGray',
+                'with',
+                'dialogBlue',
+                'dialogWhite',
+            ],
             control: {
                 type: 'select',
             },
@@ -40,7 +47,9 @@ interface Args {
 
 const Template: Story<Args> = (args, { argTypes }) => {
     const makeProps = (argTypes: ArgTypes) =>
-        Object.keys(argTypes).filter(type => ['class', 'default'].every(exception => exception !== type))
+        Object.keys(argTypes).filter(type =>
+            ['class', 'default'].every(exception => exception !== type),
+        )
 
     return {
         props: makeProps(argTypes),

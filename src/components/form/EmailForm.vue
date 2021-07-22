@@ -1,9 +1,21 @@
 <template>
     <div class="email-field" :class="isError">
-        <LabelTitle :id="id" title-type="label" :hidden-label="hiddenLabel" :label="label" />
+        <LabelTitle
+            :id="id"
+            title-type="label"
+            :hidden-label="hiddenLabel"
+            :label="label"
+        />
 
         <div class="email-input-box">
-            <div class="input-area" :class="{ focus: focusedClass, readonly: readonly, disabled: disabled }">
+            <div
+                class="input-area"
+                :class="{
+                    focus: focusedClass,
+                    readonly: readonly,
+                    disabled: disabled,
+                }"
+            >
                 <input
                     :id="id"
                     ref="input"
@@ -21,7 +33,14 @@
             </div>
             <span class="icon">@</span>
 
-            <div class="input-area" :class="{ focus: focusedClass, readonly: readonly, disabled: disabled }">
+            <div
+                class="input-area"
+                :class="{
+                    focus: focusedClass,
+                    readonly: readonly,
+                    disabled: disabled,
+                }"
+            >
                 <input
                     ref="input"
                     :name="_.camelCase(id)"
@@ -54,6 +73,8 @@
 <script lang="ts">
 import { Component, Vue, Prop, Mixins, Watch } from 'vue-property-decorator'
 import Validates from '@utils/mixins/Validates'
+import type { BottomSheetOptionItem } from '@components/common/BottomSheet.vue'
+import type { DropdownBoxList } from './DropdownBox.vue'
 
 export interface OnChangeParameters {
     value: string
@@ -122,10 +143,10 @@ export default class EmailForm extends Mixins(Validates) {
     private value: string = this.defaultValue || ''
 
     /** focus 상태 */
-    private focusedClass: boolean = false
+    private focusedClass = false
 
     /** 선택영역 노춣 여부 */
-    private bottomSheetVisible: boolean = false
+    private bottomSheetVisible = false
 
     /** 선택영역에서 선택한 값 */
     private selectedValue: BottomSheetOptionItem = this.list[0]
@@ -152,7 +173,10 @@ export default class EmailForm extends Mixins(Validates) {
 
     /** 타이핑한 값 */
     get displayValue(): string {
-        const conditionsSeperateNumbe = [this.value, this.type === 'seperateNumber']
+        const conditionsSeperateNumbe = [
+            this.value,
+            this.type === 'seperateNumber',
+        ]
         const conditionSelectType = [this.value, this.type === 'select']
         if (conditionsSeperateNumbe.every(condition => condition)) {
             return this._.toNumber(this.value).toLocaleString()
@@ -165,7 +189,10 @@ export default class EmailForm extends Mixins(Validates) {
 
     /** 에러 여부 */
     get isError(): string | undefined {
-        const conditions = [this.value.length, typeof this.validate === 'function']
+        const conditions = [
+            this.value.length,
+            typeof this.validate === 'function',
+        ]
         if (conditions.every(condition => condition)) {
             return this.validate(this.value) ? 'success' : 'error'
         }
@@ -203,7 +230,8 @@ export default class EmailForm extends Mixins(Validates) {
      * @title Custom Methods
      */
 
-    onInput(event: InputEvent) {
+    onInput(/* event: InputEvent */) {
+        // eslint-disable-next-line no-useless-escape
         this.value = this.$refs.input.value.replace(/\,|\-/gi, '')
     }
 
@@ -228,7 +256,7 @@ export default class EmailForm extends Mixins(Validates) {
         this.focusedClass = true
     }
 
-    onBlur(event: FocusEvent) {
+    onBlur(/* event: FocusEvent */) {
         this.focusedClass = false
     }
 
@@ -246,7 +274,9 @@ export default class EmailForm extends Mixins(Validates) {
     }
 
     onSelectOption(value: string) {
-        this.selectedValue = this.list.find(option => option.value === value) as BottomSheetOptionItem
+        this.selectedValue = this.list.find(
+            option => option.value === value,
+        ) as BottomSheetOptionItem
         const changedList = this.list.map(option => {
             option.selected = option.value === value
             return option

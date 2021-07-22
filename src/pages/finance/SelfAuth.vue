@@ -1,7 +1,11 @@
 <template>
     <div class="container floating">
         <div class="content">
-            <FormProvider :schema="data" @change="formChange" @submit="onSubmit">
+            <FormProvider
+                :schema="data"
+                @change="formChange"
+                @submit="onSubmit"
+            >
                 <template slot-scope="{ schema }">
                     <TextField
                         id="text-form01"
@@ -34,7 +38,13 @@
                         :disabled="false"
                     />
 
-                    <CheckBoxGroup name="group3" value="전체 동의" label="휴대폰 인증 약관동의" :disabled="true" :list="checkList" />
+                    <CheckBoxGroup
+                        name="group3"
+                        value="전체 동의"
+                        label="휴대폰 인증 약관동의"
+                        :disabled="true"
+                        :list="checkList"
+                    />
 
                     <PhoneCertForm
                         id="phone-number"
@@ -50,7 +60,11 @@
                         success-message="성공메시지"
                         :default-value="null"
                         :list="[
-                            { displayName: '통신사', value: '', selected: true },
+                            {
+                                displayName: '통신사',
+                                value: '',
+                                selected: true,
+                            },
                             { displayName: 'KT', value: 'kt' },
                             { displayName: 'SKT', value: 'skt' },
                             { displayName: 'LG U+', value: 'lguplus' },
@@ -65,7 +79,13 @@
                         :search="null"
                         name="cert"
                     />
-                    <CheckBoxGroup name="group1" value="전체 동의" label="개인(신용)정보 필수적 동의" :disabled="true" :list="checkList" />
+                    <CheckBoxGroup
+                        name="group1"
+                        value="전체 동의"
+                        label="개인(신용)정보 필수적 동의"
+                        :disabled="true"
+                        :list="checkList"
+                    />
                 </template>
             </FormProvider>
         </div>
@@ -107,31 +127,31 @@
         <!--//popup-->
 
         <portal to="floating">
-            <BasicButton size="large" @click="onClick">
-                다음
-            </BasicButton>
+            <BasicButton size="large" @click="onClick"> 다음 </BasicButton>
         </portal>
     </div>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
-import { CheckList } from '@components/form/CheckBoxGroup.vue'
+import type { CheckList } from '@components/form/CheckBoxGroup.vue'
+import type { Schema } from '@components/form/FormProvider.vue'
+import type { DropdownBoxList } from '@components/form/DropdownBox.vue'
 
-interface Data {
-    buttonField: string
-    calendarField: string
-    checkSingle: boolean
-    secretNumber: string
-    singleSelection: string
-    switchButton: boolean
-    textFieldPrimary: string
-}
+// interface Data {
+//     buttonField: string
+//     calendarField: string
+//     checkSingle: boolean
+//     secretNumber: string
+//     singleSelection: string
+//     switchButton: boolean
+//     textFieldPrimary: string
+// }
 
 @Component
 export default class SelfAuth extends Vue {
     // s: popup
-    private popShow: boolean = false
+    private popShow = false
     openPopup() {
         this.popShow = true
     }
@@ -142,8 +162,15 @@ export default class SelfAuth extends Vue {
 
     //드롭다운리스트 샘플
     private dropdownBoxList: DropdownBoxList = [
-        { displayName: 'LOCA MONEY:BIZ 7*3*', value: 'LOCA MONEY:BIZ 7*3*', selected: true },
-        { displayName: '가장최근에 받은 카드가 디폴트로 노출', value: '가장최근에 받은 카드가 디폴트로 노출' },
+        {
+            displayName: 'LOCA MONEY:BIZ 7*3*',
+            value: 'LOCA MONEY:BIZ 7*3*',
+            selected: true,
+        },
+        {
+            displayName: '가장최근에 받은 카드가 디폴트로 노출',
+            value: '가장최근에 받은 카드가 디폴트로 노출',
+        },
     ]
 
     private checkList: CheckList = [
@@ -157,7 +184,7 @@ export default class SelfAuth extends Vue {
      * @category Data
      */
 
-    @Prop({ type: Function, default: () => {}, required: true })
+    @Prop({ type: Function, default: () => ({}), required: true })
     readonly onClick!: Function
 
     private data: { [key: string]: object | number | string | boolean } = {
@@ -171,11 +198,11 @@ export default class SelfAuth extends Vue {
         textfieldPrimary: '테스트',
     }
 
-    formChange(data: any) {
+    formChange(data: Schema) {
         this.data = data
     }
 
-    onSubmit(data: any) {
+    onSubmit(data: Schema) {
         console.log(data)
     }
 }

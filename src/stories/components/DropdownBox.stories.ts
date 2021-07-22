@@ -21,7 +21,11 @@ interface Args {
     hiddenLabel: boolean
     name: string
     defaultValue: string
-    list: any[]
+    list: {
+        displayName: string
+        value: string
+        selected?: true
+    }[]
 }
 
 const Template: Story<Args> = (args, { argTypes }) => {
@@ -49,4 +53,8 @@ Primary.args = {
     label: '휴대폰번호',
     name: 'phone',
 }
-Primary.decorators = [() => ({ template: '<div><story/><PortalTarget name="bottomSheet" /></div>' })]
+Primary.decorators = [
+    () => ({
+        template: '<div><story/><PortalTarget name="bottomSheet" /></div>',
+    }),
+]

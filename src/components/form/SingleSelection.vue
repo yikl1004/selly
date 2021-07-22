@@ -1,7 +1,11 @@
 <template>
     <div :class="['single-selection', type]">
         <ul :class="['list', align]">
-            <li v-for="(item, index) in list" :key="`single-selection-item-${index}`" class="list-item">
+            <li
+                v-for="(item, index) in list"
+                :key="`single-selection-item-${index}`"
+                class="list-item"
+            >
                 <input
                     :id="getItemId(id, index)"
                     v-model="value"
@@ -11,7 +15,9 @@
                     :disabled="item.disabled"
                     :checked="item.checked"
                 />
-                <label :for="getItemId(id, index)">{{ item.displayName }}</label>
+                <label :for="getItemId(id, index)">{{
+                    item.displayName
+                }}</label>
             </li>
         </ul>
     </div>
@@ -21,6 +27,19 @@
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 
 export type Align = 'col' | 'row'
+/**
+ * @description 디자인타입을 결정합니다.
+ */
+export interface SingleSelectionListItem {
+    displayName: string
+    value: string
+    checked?: boolean
+    disabled?: boolean
+}
+/**
+ * @description 디자인타입을 결정합니다.
+ */
+export type SingleSelectionDesignType = 'button' | 'radio'
 
 @Component
 export default class SingleSelection extends Vue {
@@ -70,7 +89,7 @@ export default class SingleSelection extends Vue {
 
     /** value가 변경될때 만다 change emit을 실행 */
     @Watch('value')
-    changeValue(newValue: string, oldValue: string) {
+    changeValue(newValue: string /* oldValue: string */) {
         /**
          * value가 변경될때 만다 change emit을 실행
          * @event change

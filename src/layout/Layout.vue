@@ -5,23 +5,43 @@
             enter-active-class="animate__animated animate__fadeInRight"
             leave-active-class="animate__animated animate__fadeOutLeft"
         >
-            <component :is="layout">
+            <div class="layout-default">
+                <Header v-if="visibleHeader" :header-type="headerType" />
+                <Gnb :show="gnbOpen" @close="setGnb(false)" />
                 <router-view />
-            </component>
+                <Footer v-if="useFooter" />
+                <FixedBtnBox v-if="useFloating"></FixedBtnBox>
+                <Loading v-if="loading" />
+            </div>
         </transition>
     </div>
 </template>
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
-import DefaultLayout from '@layout/DefaultLayout.vue'
-import NoneLayout from '@layout/NoneLayout.vue'
+import { namespace } from 'vuex-class'
+import type { HeaderType } from '@stores/modules/ui'
 
-@Component({
-    components: { DefaultLayout, NoneLayout },
-})
+const { State, Mutation } = namespace('ui')
+
+@Component
 export default class Layout extends Vue {
-    private layout: string = 'default-layout'
+    /** @category Stores */
+    @State('gnbOpen') readonly gnbOpen!: boolean
+    @State('headerType') readonly headerType!: HeaderType
+    @State('visible') readonly visibleHeader!: boolean
+    @State('loading') readonly loading!: boolean
+    @Mutation('setGnb') readonly setGnb!: (gnbOpen: boolean) => void
+
+    /** footer 사용/노출 여부 */
+    get useFooter(): boolean {
+        return this.$route.meta.footer !== false
+    }
+
+    /** floating 버튼 영역 사용/노출 여부 */
+    get useFloating(): boolean {
+        return this.$route.meta.floating
+    }
 }
 </script>
 

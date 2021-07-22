@@ -58,11 +58,19 @@
         <!--//[D] 예상 상환스케줄 팝업 -->
 
         <!--[D] 최초 장기대출 신청시 알림팝업 -->
-        <Modal :show.sync="modalShow" :button-text="{ confirm: '확인' }" type="popup" @confirm="onConfirmModal">
+        <Modal
+            :show.sync="modalShow"
+            :button-text="{ confirm: '확인' }"
+            type="popup"
+            @confirm="onConfirmModal"
+        >
             <p>
-                당사 장기카드대출을 처음 이용하실 경우, <br />회원님의 안전한 장기카드대출 이용을 위해 일일 3백만원 이상 신청시 대출신청
-                완료 후<br />2시간 지연입금됩니다. <br />단, 은행시스템 점검으로 인해 당일 23:30~00:30까지 입금 건의 경우 점검 완료 후 입금
-                처리 되며 은행 사정에 따라 입금 지연 또는 취소 될 수 있으니 반드시 입금통장을 확인해 주시기 바랍니다.
+                당사 장기카드대출을 처음 이용하실 경우, <br />회원님의 안전한
+                장기카드대출 이용을 위해 일일 3백만원 이상 신청시 대출신청 완료
+                후<br />2시간 지연입금됩니다. <br />단, 은행시스템 점검으로 인해
+                당일 23:30~00:30까지 입금 건의 경우 점검 완료 후 입금 처리 되며
+                은행 사정에 따라 입금 지연 또는 취소 될 수 있으니 반드시
+                입금통장을 확인해 주시기 바랍니다.
             </p>
         </Modal>
         <!--//[D] 최초 장기대출 신청시 알림팝업 -->
@@ -71,7 +79,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Watch } from 'vue-property-decorator'
+import { Component, Vue } from 'vue-property-decorator'
 import CreditCardAuth from '@pages/finance/CreditCardAuth.vue'
 import LoanApply from '@pages/finance/LoanApply.vue'
 
@@ -92,7 +100,7 @@ import LoanApply from '@pages/finance/LoanApply.vue'
 })
 export default class FinancePage extends Vue {
     // s: popup 장기카드 이용동의
-    private popConsentShow: boolean = false
+    private popConsentShow = false
     openConsentPopup() {
         this.popConsentShow = true
     }
@@ -102,7 +110,7 @@ export default class FinancePage extends Vue {
     // e: popup
 
     // s: popup 장기카드 대출 이용거절
-    private popRefusalShow: boolean = false
+    private popRefusalShow = false
     openRefusalPopup() {
         this.popRefusalShow = true
     }
@@ -112,7 +120,7 @@ export default class FinancePage extends Vue {
     // e: popup
 
     // s: popup 장기카드 대출 이용거절
-    private popScheduleShow: boolean = false
+    private popScheduleShow = false
     openSchedulePopup() {
         this.popScheduleShow = true
     }
@@ -122,7 +130,7 @@ export default class FinancePage extends Vue {
     // e: popup
 
     /** 모달 노출 */
-    private modalShow: boolean = false
+    private modalShow = false
     openModal() {
         this.modalShow = true
     }

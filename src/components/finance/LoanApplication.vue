@@ -3,7 +3,11 @@
         <div class="content">
             <Title title="신청서" />
 
-            <FormProvider :schema="data" @change="formChange" @submit="onSubmit">
+            <FormProvider
+                :schema="data"
+                @change="formChange"
+                @submit="onSubmit"
+            >
                 <template slot-scope="{ schema }">
                     <div class="form-col">
                         <div class="field-box">
@@ -128,7 +132,11 @@
                         error-message="계좌번호를 정확하게 입력해 주세요."
                         :default-value="null"
                         :list="[
-                            { displayName: '은행', value: '은행', selected: true },
+                            {
+                                displayName: '은행',
+                                value: '은행',
+                                selected: true,
+                            },
                             { displayName: 'SKT', value: 'skt' },
                             { displayName: 'LG U+', value: 'lguplus' },
                             { displayName: 'KT알뜰폰', value: 'kt_sub' },
@@ -157,7 +165,11 @@
                         error-message="계좌번호를 정확하게 입력해 주세요."
                         :default-value="null"
                         :list="[
-                            { displayName: '은행', value: '은행', selected: true },
+                            {
+                                displayName: '은행',
+                                value: '은행',
+                                selected: true,
+                            },
                             { displayName: 'SKT', value: 'skt' },
                             { displayName: 'LG U+', value: 'lguplus' },
                             { displayName: 'KT알뜰폰', value: 'kt_sub' },
@@ -189,36 +201,48 @@
         <!--popup-->
 
         <!--예상 대금상환금 확인 팝업 -->
-        <FullPopup :show.sync="popShow" title="예상 대금상환금 확인" :button-text="{ confirm: '확인' }" type="popup" @confirm="onConfirm">
+        <FullPopup
+            :show.sync="popShow"
+            title="예상 대금상환금 확인"
+            :button-text="{ confirm: '확인' }"
+            type="popup"
+            @confirm="onConfirm"
+        >
             <PopupPredictionLoan />
         </FullPopup>
 
         <!--상환방법 안내 팝업 -->
-        <FullPopup :show.sync="popShow" title="상환방법 안내" :button-text="{ confirm: '확인' }" type="popup" @confirm="onConfirm">
+        <FullPopup
+            :show.sync="popShow"
+            title="상환방법 안내"
+            :button-text="{ confirm: '확인' }"
+            type="popup"
+            @confirm="onConfirm"
+        >
             <PopupRepaymentInfo />
         </FullPopup>
         <!--//popup-->
 
         <portal to="floating">
-            <BasicButton size="large">
-                다음
-            </BasicButton>
+            <BasicButton size="large"> 다음 </BasicButton>
         </portal>
     </div>
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator'
+import { Component, Vue } from 'vue-property-decorator'
+import type { DropdownBoxList } from '@components/form/DropdownBox.vue'
+import type { Schema } from '@components/form/FormProvider.vue'
 
-interface Data {
-    buttonField: string
-    calendarField: string
-    checkSingle: boolean
-    secretNumber: string
-    singleSelection: string
-    switchButton: boolean
-    textFieldPrimary: string
-}
+// interface Data {
+//     buttonField: string
+//     calendarField: string
+//     checkSingle: boolean
+//     secretNumber: string
+//     singleSelection: string
+//     switchButton: boolean
+//     textFieldPrimary: string
+// }
 
 @Component({
     components: {
@@ -243,7 +267,7 @@ export default class LoanApplication extends Vue {
     ]
 
     // s: popup
-    private popShow: boolean = false
+    private popShow = false
     openPopup() {
         this.popShow = true
     }
@@ -252,13 +276,27 @@ export default class LoanApplication extends Vue {
     }
     // e: popup
 
-    private applyPrice = [{ text: '5천만원 초과금액 이용 시 인지세(255,000원) 제외 후 입금됩니다.' }]
-    private repaymentInfo = [{ text: '잔여금액 존재 하였을 시 결제일에 청구 됩니다.' }]
+    private applyPrice = [
+        {
+            text:
+                '5천만원 초과금액 이용 시 인지세(255,000원) 제외 후 입금됩니다.',
+        },
+    ]
+    private repaymentInfo = [
+        { text: '잔여금액 존재 하였을 시 결제일에 청구 됩니다.' },
+    ]
 
     //드롭다운리스트 샘플
     private dropdownBoxList: DropdownBoxList = [
-        { displayName: 'LOCA MONEY:BIZ 7*3*', value: 'LOCA MONEY:BIZ 7*3*', selected: true },
-        { displayName: '가장최근에 받은 카드가 디폴트로 노출', value: '가장최근에 받은 카드가 디폴트로 노출' },
+        {
+            displayName: 'LOCA MONEY:BIZ 7*3*',
+            value: 'LOCA MONEY:BIZ 7*3*',
+            selected: true,
+        },
+        {
+            displayName: '가장최근에 받은 카드가 디폴트로 노출',
+            value: '가장최근에 받은 카드가 디폴트로 노출',
+        },
     ]
 
     //대출용도
@@ -300,11 +338,11 @@ export default class LoanApplication extends Vue {
         textfieldPrimary: '테스트',
     }
 
-    formChange(data: any) {
+    formChange(data: Schema) {
         this.data = data
     }
 
-    onSubmit(data: any) {
+    onSubmit(data: Schema) {
         console.log(data)
     }
 }

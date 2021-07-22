@@ -2,17 +2,49 @@
     <div class="container">
         <FormProvider :schema="data" @change="formChange" @submit="onSubmit">
             <template slot-scope="{ schema }">
-                <DropdownBox id="dropdown-box" label="select 타입" :list="dropdownBoxList" :default-value="schema.dropdownBox" />
-                <ButtonField id="button-field" label="버튼형 텍스트" button-text="버튼" :default-value="schema.buttonField" />
-                <CalendarField id="calendarField" label="달력" :default-value="schema.calendarField" />
-                <CheckBox id="check-single" label="체크박스 단독" :checked="schema.checkSingle" />
-                <SecretNumber id="secret-number" label="비밀번호 형식" type="regist" />
-                <SingleSelection id="single-selection" :list="singleSelectionList" :default-value="schema.singleSelection" />
-                <SwitchButton id="switch-button" label="스위치 버튼" :default-value="schema.switchButton" />
-                <TextField id="textfield-primary" label="입력" :default-value="schema.textfieldPrimary" />
-                <BasicButton submit>
-                    전송
-                </BasicButton>
+                <DropdownBox
+                    id="dropdown-box"
+                    label="select 타입"
+                    :list="dropdownBoxList"
+                    :default-value="schema.dropdownBox"
+                />
+                <ButtonField
+                    id="button-field"
+                    label="버튼형 텍스트"
+                    button-text="버튼"
+                    :default-value="schema.buttonField"
+                />
+                <CalendarField
+                    id="calendarField"
+                    label="달력"
+                    :default-value="schema.calendarField"
+                />
+                <CheckBox
+                    id="check-single"
+                    label="체크박스 단독"
+                    :checked="schema.checkSingle"
+                />
+                <SecretNumber
+                    id="secret-number"
+                    label="비밀번호 형식"
+                    type="regist"
+                />
+                <SingleSelection
+                    id="single-selection"
+                    :list="singleSelectionList"
+                    :default-value="schema.singleSelection"
+                />
+                <SwitchButton
+                    id="switch-button"
+                    label="스위치 버튼"
+                    :default-value="schema.switchButton"
+                />
+                <TextField
+                    id="textfield-primary"
+                    label="입력"
+                    :default-value="schema.textfieldPrimary"
+                />
+                <BasicButton submit> 전송 </BasicButton>
             </template>
         </FormProvider>
     </div>
@@ -20,16 +52,18 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
+import type { DropdownBoxList } from '@components/form/DropdownBox.vue'
+import type { SingleSelectionListItem } from '@components/form/SingleSelection.vue'
 
-interface Data {
-    buttonField: string
-    calendarField: string
-    checkSingle: boolean
-    secretNumber: string
-    singleSelection: string
-    switchButton: boolean
-    textFieldPrimary: string
-}
+// interface Data {
+//     buttonField: string
+//     calendarField: string
+//     checkSingle: boolean
+//     secretNumber: string
+//     singleSelection: string
+//     switchButton: boolean
+//     textFieldPrimary: string
+// }
 
 @Component
 export default class FormExample extends Vue {

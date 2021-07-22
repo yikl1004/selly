@@ -14,7 +14,24 @@ export default {
     },
 } as Meta
 
-interface Args {}
+interface Args {
+    id?: string
+    label?: string
+    placeholder?: string
+    defaultValue?: string
+    type?: string
+    readonly?: boolean
+    validate?: Function
+    message?: string
+    errorMessage?: string
+    list: {
+        displayName: string
+        value: string
+        selected?: boolean
+    }[]
+    name: string
+    maxlength?: number
+}
 
 const Template: Story<Args> = (args, { argTypes }) => {
     return {
@@ -61,7 +78,7 @@ ErrorStatus.args = {
     defaultValue: '5674',
     type: 'seperateNumber',
     validate: (value: string) => _.toNumber(value) < 3500,
-    Message: '정확히 입력하셨습니다',
+    message: '정확히 입력하셨습니다',
     errorMessage: '한도 초과입니다.',
 }
 
@@ -92,4 +109,8 @@ WithSelect.args = {
     name: 'phoneNumber',
     maxlength: 13,
 }
-WithSelect.decorators = [() => ({ template: '<div><story/><PortalTarget name="bottomSheet" /></div>' })]
+WithSelect.decorators = [
+    () => ({
+        template: '<div><story/><PortalTarget name="bottomSheet" /></div>',
+    }),
+]

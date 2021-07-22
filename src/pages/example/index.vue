@@ -18,8 +18,10 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import { namespace, Action } from 'vuex-class'
+import { namespace } from 'vuex-class'
 import ClickOutside from 'vue-click-outside'
+import type { BottomSheetOptionItem } from '@components/common/BottomSheet.vue'
+import type { DropdownBoxList } from '@components/form/DropdownBox.vue'
 
 const FinanceModule = namespace('finance')
 
@@ -27,7 +29,11 @@ const FinanceModule = namespace('finance')
     directives: { ClickOutside },
 })
 export default class ExamplePage extends Vue {
-    private timer: { [key: string]: any } = { count: 3, unit: 'minute', format: 'm:ss' }
+    private timer: { [key: string]: any } = {
+        count: 3,
+        unit: 'minute',
+        format: 'm:ss',
+    }
     private list: DropdownBoxList = [
         { displayName: 'KT', value: 'kt', selected: true },
         { displayName: 'SKT', value: 'skt' },
@@ -36,8 +42,8 @@ export default class ExamplePage extends Vue {
         { displayName: 'SKT알뜰폰', value: 'skt_sub' },
         { displayName: 'LGU+알뜰폰', value: 'lguplus_sub' },
     ]
-    private value: string = ''
-    private opened: boolean = false
+    private value = ''
+    private opened = false
 
     @FinanceModule.Action('getData')
     readonly getData!: Function
@@ -50,8 +56,6 @@ export default class ExamplePage extends Vue {
             return item
         })
     }
-
-    mounted() {}
 
     callApi() {
         this.getData()

@@ -1,6 +1,10 @@
 <template>
     <div class="box-acco-list" :class="type">
-        <div v-for="(item, index) in list" :key="`acco-item-${index}`" :class="['box-acco-item', { active: index === currentIndex }]">
+        <div
+            v-for="(item, index) in list"
+            :key="`acco-item-${index}`"
+            :class="['box-acco-item', { active: index === currentIndex }]"
+        >
             <button
                 type="bubton"
                 class="acco-anchor"
@@ -8,7 +12,9 @@
                 :aria-expanded="index === currentIndex ? 'true' : 'false'"
                 @click="onClick(index)"
             >
-                <span v-if="item.category" class="category">{{ item.category }}</span>
+                <span v-if="item.category" class="category">{{
+                    item.category
+                }}</span>
                 <strong class="tit">{{ item.title }}</strong>
             </button>
             <div :id="`acco-item-${index}`" class="acco-cont">
@@ -46,7 +52,7 @@ export default class AccoItem extends Vue {
      * @category Data(State)
      */
     /**  */
-    private currentIndex: number = -1
+    private currentIndex = -1
 
     /**
      * @category Methods

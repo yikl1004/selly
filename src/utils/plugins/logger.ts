@@ -1,5 +1,4 @@
-import { Vue } from 'vue-property-decorator'
-import { PluginObject } from 'vue'
+import type { PluginObject } from 'vue'
 
 declare module 'vue/types/vue' {
     interface Vue {
@@ -18,7 +17,7 @@ interface PluginOptions {
     shortname: boolean
     levels: Level[]
     forceLevels: Level[]
-    history: any[]
+    history: string[]
 }
 
 const vLogger: PluginObject<PluginOptions> = {
@@ -27,7 +26,7 @@ const vLogger: PluginObject<PluginOptions> = {
             return
         }
 
-        const { forIn, union, merge } = Vue._
+        const { merge } = Vue._
         const defaultOptions: PluginOptions = {
             dev: true,
             prefix: '',
@@ -37,17 +36,37 @@ const vLogger: PluginObject<PluginOptions> = {
             history: [],
         }
 
-        const mergedOptions: PluginOptions = merge({}, defaultOptions, options || {})
+        const mergedOptions: PluginOptions = merge(
+            {},
+            defaultOptions,
+            options || {},
+        )
         const logger: { [key: string]: Function } = {}
 
         for (const level of mergedOptions.levels) {
-            logger[level] = function(...args: any[]) {
+            logger[level] = function (
+                ...args: (
+                    | string
+                    | number
+                    | symbol
+                    | object
+                    | undefined
+                    | null
+                    | []
+                )[]
+            ) {
                 if (typeof console === 'undefined') {
                     return
                 }
 
-                if (mergedOptions.dev || mergedOptions.forceLevels.includes(level)) {
-                    const prefix = typeof logger.prefix === 'function' ? logger.prefix() : logger.prefix
+                if (
+                    mergedOptions.dev ||
+                    mergedOptions.forceLevels.includes(level)
+                ) {
+                    const prefix =
+                        typeof logger.prefix === 'function'
+                            ? logger.prefix()
+                            : logger.prefix
                     const prefixWithLevel = `[${prefix} :: ${level}]`.toUpperCase()
                     args.unshift(prefixWithLevel)
                     window.console[level](args)

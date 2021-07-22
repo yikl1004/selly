@@ -29,7 +29,17 @@
             </ul>
         </div>
 
-        <div class="chart" style="height:140px;margin-top:30px;color:#000;text-align:center;line-height:140px;background:#ebebeb;">
+        <div
+            class="chart"
+            style="
+                height: 140px;
+                margin-top: 30px;
+                color: #000;
+                text-align: center;
+                line-height: 140px;
+                background: #ebebeb;
+            "
+        >
             차트영역
         </div>
 
@@ -46,15 +56,15 @@ import { Component, Vue } from 'vue-property-decorator'
 import PriceList from '@components/sales/PriceList.vue'
 import DepositHistory from '@components/sales/DepositHistory.vue'
 
-interface Data {
-    buttonField: string
-    calendarField: string
-    checkSingle: boolean
-    secretNumber: string
-    singleSelection: string
-    switchButton: boolean
-    textFieldPrimary: string
-}
+// interface Data {
+//     buttonField: string
+//     calendarField: string
+//     checkSingle: boolean
+//     secretNumber: string
+//     singleSelection: string
+//     switchButton: boolean
+//     textFieldPrimary: string
+// }
 
 @Component({
     components: {

@@ -4,11 +4,12 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Watch } from 'vue-property-decorator'
+import { Component, Vue } from 'vue-property-decorator'
 import SelectStore from '@pages/auth/SelectStore.vue'
 import UnableJoin from '@pages/auth/UnableJoin.vue'
 import { namespace } from 'vuex-class'
-import { AuthParameters, BizInfoItem } from '@services/auth'
+import type { AuthParameters, BizInfoItem } from '@services/auth'
+import type { BizInfo } from '@stores/modules/auth'
 
 const { Action, State } = namespace('auth')
 
@@ -27,7 +28,7 @@ export default class JoinPage extends Vue {
      */
 
     // 현재 단계(1: 사업자정보, 2: 가입완료, 0: 가입불가)
-    private step: number = 1
+    private step = 1
 
     /** @category Stores */
 
@@ -37,7 +38,9 @@ export default class JoinPage extends Vue {
 
     // 최초로그인시 사업자정보 입력 요청
     @Action('getBizInfoInput')
-    readonly getBizInfoInput!: (params: AuthParameters['bizInfo']) => Promise<void>
+    readonly getBizInfoInput!: (
+        params: AuthParameters['bizInfo'],
+    ) => Promise<void>
 
     @State('bizInfo') readonly bizInfo!: BizInfo
 

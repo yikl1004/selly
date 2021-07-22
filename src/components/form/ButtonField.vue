@@ -1,8 +1,20 @@
 <template>
     <div class="search-field">
-        <LabelTitle :id="id" label-type="label" :hidden-label="hiddenLabel" :label="label" />
+        <LabelTitle
+            :id="id"
+            label-type="label"
+            :hidden-label="hiddenLabel"
+            :label="label"
+        />
         <div class="flex">
-            <div class="input-area" :class="{ focus: focusedClass, readonly: readonly, disabled: disabled }">
+            <div
+                class="input-area"
+                :class="{
+                    focus: focusedClass,
+                    readonly: readonly,
+                    disabled: disabled,
+                }"
+            >
                 <input
                     :id="id"
                     ref="input"
@@ -19,13 +31,29 @@
                     @focus="onFocus"
                     @blur="onBlur"
                 />
-                <Timer v-if="cert" class="counter" :count="timer.count" :unit="timer.unit" :format="timer.format" />
-                <button v-if="!readonly && !!value.length" type="button" class="clear" @click="clearValue">
+                <Timer
+                    v-if="cert"
+                    class="counter"
+                    :count="timer.count"
+                    :unit="timer.unit"
+                    :format="timer.format"
+                />
+                <button
+                    v-if="!readonly && !!value.length"
+                    type="button"
+                    class="clear"
+                    @click="clearValue"
+                >
                     <i />
                     <span class="ir">전체삭제</span>
                 </button>
             </div>
-            <button class="search-button" :disabled="disabled" type="button" @click="onSearch">
+            <button
+                class="search-button"
+                :disabled="disabled"
+                type="button"
+                @click="onSearch"
+            >
                 <span>{{ buttonText }}</span>
             </button>
         </div>
@@ -35,19 +63,17 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Watch, Mixins } from 'vue-property-decorator'
+import { Component, Prop, Watch, Mixins, Vue } from 'vue-property-decorator'
 import Validates from '@utils/mixins/Validates'
 import { FormBus } from '@components/form/FormProvider.vue'
-import { throttle } from 'lodash'
-import { RegisterHook } from '@utils/decorators'
 
 export interface OnChangeParameters {
     value: string
 }
 
-interface Validate {
-    (value: string): boolean
-}
+// interface Validate {
+//     (value: string): boolean
+// }
 
 interface Timer {
     count: number
@@ -129,7 +155,7 @@ export default class ButtonField extends Mixins(Validates) {
     private value: string = this.defaultValue || ''
 
     /** focus 상태 */
-    private focusedClass: boolean = false
+    private focusedClass = false
 
     /**
      * @title Watch
@@ -168,11 +194,12 @@ export default class ButtonField extends Mixins(Validates) {
         this.$emit('search', this.value)
     }
 
-    onKeypressEnter(event: KeyboardEvent) {
+    onKeypressEnter(/* event: KeyboardEvent */) {
         this.onSearch()
     }
 
-    onInput(event: InputEvent) {
+    onInput(/* event: InputEvent */) {
+        // eslint-disable-next-line no-useless-escape
         this.value = this.$refs.input.value.replace(/\,/g, '')
     }
 
@@ -186,7 +213,7 @@ export default class ButtonField extends Mixins(Validates) {
         this.toggleFocus()
     }
 
-    onBlur(event: FocusEvent) {
+    onBlur(/* event: FocusEvent */) {
         this.toggleFocus()
     }
 

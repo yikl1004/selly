@@ -15,7 +15,17 @@ export default {
     },
 } as Meta
 
-interface Args {}
+interface Args {
+    label: string
+    name: string
+    buttonText: string
+    cert?: true
+    timer?: {
+        count: 3
+        unit: string
+        format: string
+    }
+}
 
 const Template: Story<Args> = (args, { argTypes }) => {
     return {

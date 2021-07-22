@@ -40,29 +40,39 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
+import type { Schema } from '@components/form/FormProvider.vue'
+import type { DropdownBoxList } from '@components/form/DropdownBox.vue'
 
-interface Data {
-    buttonField: string
-    calendarField: string
-    checkSingle: boolean
-    secretNumber: string
-    singleSelection: string
-    switchButton: boolean
-    textFieldPrimary: string
-}
+// interface Data {
+//     buttonField: string
+//     calendarField: string
+//     checkSingle: boolean
+//     secretNumber: string
+//     singleSelection: string
+//     switchButton: boolean
+//     textFieldPrimary: string
+// }
 
 @Component
 export default class PopupConsent extends Vue {
     //드롭다운리스트 샘플
     private dropdownBoxList: DropdownBoxList = [
-        { displayName: 'LOCA MONEY:BIZ 7*3*', value: 'LOCA MONEY:BIZ 7*3*', selected: true },
-        { displayName: '가장최근에 받은 카드가 디폴트로 노출', value: '가장최근에 받은 카드가 디폴트로 노출' },
+        {
+            displayName: 'LOCA MONEY:BIZ 7*3*',
+            value: 'LOCA MONEY:BIZ 7*3*',
+            selected: true,
+        },
+        {
+            displayName: '가장최근에 받은 카드가 디폴트로 노출',
+            value: '가장최근에 받은 카드가 디폴트로 노출',
+        },
     ]
 
     //블릿리스트 샘플
     private infoList = [
         {
-            text: '비밀번호 및 CVC/4DBC 3회 이상 입력 오류시 서비스 제한을 받을 수 있습니다.',
+            text:
+                '비밀번호 및 CVC/4DBC 3회 이상 입력 오류시 서비스 제한을 받을 수 있습니다.',
         },
     ]
     private data: { [key: string]: object | number | string | boolean } = {
@@ -76,11 +86,11 @@ export default class PopupConsent extends Vue {
         textfieldPrimary: '테스트',
     }
 
-    formChange(data: any) {
+    formChange(data: Schema) {
         this.data = data
     }
 
-    onSubmit(data: any) {
+    onSubmit(data: Schema) {
         console.log(data)
     }
 }

@@ -30,6 +30,12 @@ import FaqView from '@components/cs/FaqView.vue'
     },
 })
 export default class FaqPage extends Vue {
-    private tabList = [{ name: '전체' }, { name: '회원' }, { name: '매출관리' }, { name: '금융상품' }, { name: '마케팅' }]
+    private tabList = [
+        { name: '전체' },
+        { name: '회원' },
+        { name: '매출관리' },
+        { name: '금융상품' },
+        { name: '마케팅' },
+    ]
 }
 </script>

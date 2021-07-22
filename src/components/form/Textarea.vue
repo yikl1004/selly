@@ -1,7 +1,19 @@
 <template>
     <div class="textarea-box" :class="isError">
-        <LabelTitle :id="id" label-type="label" :hidden-label="hiddenLabel" :label="label" />
-        <div class="input-area" :class="{ focus: focusedClass, readonly: readonly, disabled: disabled }">
+        <LabelTitle
+            :id="id"
+            label-type="label"
+            :hidden-label="hiddenLabel"
+            :label="label"
+        />
+        <div
+            class="input-area"
+            :class="{
+                focus: focusedClass,
+                readonly: readonly,
+                disabled: disabled,
+            }"
+        >
             <textarea
                 :id="id"
                 ref="textarea"
@@ -21,7 +33,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Watch, Mixins } from 'vue-property-decorator'
+import { Component, Prop, Vue, Mixins } from 'vue-property-decorator'
 import Validates from '@utils/mixins/Validates'
 
 interface Validate {
@@ -85,7 +97,7 @@ export default class Textarea extends Mixins(Validates) {
      */
 
     /** focus 상태 */
-    private focusedClass: boolean = false
+    private focusedClass = false
 
     /**
      * @category METHOD

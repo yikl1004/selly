@@ -1,6 +1,5 @@
 import { Meta, Story } from '@storybook/vue'
 import SwitchButton from '@components/form/SwitchButton.vue'
-import _ from 'lodash'
 import getProps from '../../assets/getProps'
 
 export default {

@@ -10,7 +10,12 @@
                 <p v-if="linkInfo">
                     {{ linkInfo }}
                 </p>
-                <a v-for="(item, index) in link" :key="`caution-box-link-${index}`" :href="getHref(item)" class="link-tel">
+                <a
+                    v-for="(item, index) in link"
+                    :key="`caution-box-link-${index}`"
+                    :href="getHref(item)"
+                    class="link-tel"
+                >
                     {{ item.text }}
                 </a>
             </div>

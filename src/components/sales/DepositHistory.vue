@@ -50,7 +50,7 @@ import { Component, Vue } from 'vue-property-decorator'
 })
 export default class DepositHistory extends Vue {
     // s: popup
-    private show: boolean = false
+    private show = false
     openPopup() {
         this.show = true
     }

@@ -32,9 +32,7 @@
                     :default-value="null"
                 />
                 <BtnGroup>
-                    <BasicButton size="medium">
-                        계산
-                    </BasicButton>
+                    <BasicButton size="medium"> 계산 </BasicButton>
                 </BtnGroup>
             </template>
         </FormProvider>
@@ -46,21 +44,25 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import PredictionPriceBox from '@components/finance/PredictionPriceBox.vue'
+import type { Schema } from '@components/form/FormProvider.vue'
 
-interface Data {
-    buttonField: string
-    calendarField: string
-    checkSingle: boolean
-    secretNumber: string
-    singleSelection: string
-    switchButton: boolean
-    textFieldPrimary: string
-}
+// interface Data {
+//     buttonField: string
+//     calendarField: string
+//     checkSingle: boolean
+//     secretNumber: string
+//     singleSelection: string
+//     switchButton: boolean
+//     textFieldPrimary: string
+// }
+
 @Component({
     components: { PredictionPriceBox },
 })
 export default class PopupPredictionLoan extends Vue {
-    private priceInfo = [{ text: '롯데카드 매출대금 3개월 평균 실적으로 계산됩니다.' }]
+    private priceInfo = [
+        { text: '롯데카드 매출대금 3개월 평균 실적으로 계산됩니다.' },
+    ]
 
     private data: { [key: string]: object | number | string | boolean } = {
         dropdownBox: 'kt',
@@ -73,11 +75,11 @@ export default class PopupPredictionLoan extends Vue {
         textfieldPrimary: '테스트',
     }
 
-    formChange(data: any) {
+    formChange(data: Schema) {
         this.data = data
     }
 
-    onSubmit(data: any) {
+    onSubmit(data: Schema) {
         console.log(data)
     }
 }

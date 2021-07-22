@@ -49,10 +49,12 @@ const registerMixins = () => {
                 if (!cellphoneNumber) {
                     return ''
                 }
-                const dashRegExp: ReplaceParams = [/\-/g, '']
+                const dashRegExp: ReplaceParams = [/-/g, '']
                 const nationaCodeRegExp: ReplaceParams = [/^\+\d{1,2}\s/g, '0']
                 // 국가 코드를 0으로 치환, dash 삭제(숫자만 남기고 string으로 return)
-                return cellphoneNumber.replace(...dashRegExp).replace(...nationaCodeRegExp)
+                return cellphoneNumber
+                    .replace(...dashRegExp)
+                    .replace(...nationaCodeRegExp)
             },
 
             /**
@@ -62,7 +64,13 @@ const registerMixins = () => {
              */
             getByteLength(text: string): number {
                 let bytes: number, index: number, characters: number // 한글 3byte
-                for (bytes = index = 0; (characters = text.charCodeAt(index++)); bytes += characters >> 11 ? 3 : characters >> 7 ? 2 : 1) {}
+                for (
+                    bytes = index = 0;
+                    (characters = text.charCodeAt(index++));
+                    bytes += characters >> 11 ? 3 : characters >> 7 ? 2 : 1
+                ) {
+                    console.log('getByteLength loop')
+                }
                 return bytes
             },
         },

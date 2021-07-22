@@ -1,6 +1,12 @@
 <template>
     <label class="radio-box">
-        <input type="radio" :value="value" :name="name" :disabled="disabled" :checked="checked" />
+        <input
+            type="radio"
+            :value="value"
+            :name="name"
+            :disabled="disabled"
+            :checked="checked"
+        />
         <i>{{ label }}</i>
     </label>
 </template>
@@ -58,7 +64,7 @@ export default class Radio extends Vue {
      */
 
     @Watch('checked')
-    changeChecked(newValue: boolean, oldValue: boolean) {
+    changeChecked(newValue: boolean /* oldValue: boolean */) {
         this.value = newValue
     }
 
@@ -71,7 +77,7 @@ export default class Radio extends Vue {
         this.value = this.checked || false
     }
 
-    onChange() {}
+    /* onChange() {} */
 }
 </script>
 

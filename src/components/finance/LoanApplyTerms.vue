@@ -5,10 +5,22 @@
 
             <div class="apply-terms-wrap">
                 <InfoList :list="infoList" />
-                <FormProvider :schema="data" @change="formChange" @submit="onSubmit">
+                <FormProvider
+                    :schema="data"
+                    @change="formChange"
+                    @submit="onSubmit"
+                >
                     <template slot-scope="{}">
-                        <FormTextBox type="col" label="이용카드" value="본인  LOCA Classic 7*5*" />
-                        <FormTextBox type="col" label="입금계좌" value="기업은행 5920271*****11" />
+                        <FormTextBox
+                            type="col"
+                            label="이용카드"
+                            value="본인  LOCA Classic 7*5*"
+                        />
+                        <FormTextBox
+                            type="col"
+                            label="입금계좌"
+                            value="기업은행 5920271*****11"
+                        />
 
                         <CheckBoxGroup
                             name="group1"
@@ -18,9 +30,21 @@
                             :list="checkList"
                         />
 
-                        <CheckBoxGroup name="group2" value="전체 동의" label="약관동의" :disabled="true" :list="checkList" />
+                        <CheckBoxGroup
+                            name="group2"
+                            value="전체 동의"
+                            label="약관동의"
+                            :disabled="true"
+                            :list="checkList"
+                        />
 
-                        <CheckBoxGroup name="group3" value="전체 동의" label="휴대폰 인증 약관동의" :disabled="true" :list="checkList" />
+                        <CheckBoxGroup
+                            name="group3"
+                            value="전체 동의"
+                            label="휴대폰 인증 약관동의"
+                            :disabled="true"
+                            :list="checkList"
+                        />
 
                         <PhoneCertForm
                             id="phone-number"
@@ -36,18 +60,29 @@
                             success-message="성공메시지"
                             :default-value="null"
                             :list="[
-                                { displayName: '통신사', value: '', selected: true },
+                                {
+                                    displayName: '통신사',
+                                    value: '',
+                                    selected: true,
+                                },
                                 { displayName: 'KT', value: 'kt' },
                                 { displayName: 'SKT', value: 'skt' },
                                 { displayName: 'LG U+', value: 'lguplus' },
                                 { displayName: 'KT알뜰폰', value: 'kt_sub' },
                                 { displayName: 'SKT알뜰폰', value: 'skt_sub' },
-                                { displayName: 'LGU+알뜰폰', value: 'lguplus_sub' },
+                                {
+                                    displayName: 'LGU+알뜰폰',
+                                    value: 'lguplus_sub',
+                                },
                             ]"
                             :update:list="null"
                             :select="null"
                             button-text="전송"
-                            :timer="{ count: 3, unit: 'minute', format: 'm:ss' }"
+                            :timer="{
+                                count: 3,
+                                unit: 'minute',
+                                format: 'm:ss',
+                            }"
                             :search="null"
                             name="cert"
                         />
@@ -69,7 +104,13 @@
         </FullPopup>
 
         <!--[D] 약관동의 팝업 -->
-        <FullPopup :show.sync="popShow" title="약관 동의 " :button-text="{ confirm: '동의함' }" type="popup" @confirm="onConfirm">
+        <FullPopup
+            :show.sync="popShow"
+            title="약관 동의 "
+            :button-text="{ confirm: '동의함' }"
+            type="popup"
+            @confirm="onConfirm"
+        >
             약관 팝업_내용수급필요
         </FullPopup>
 
@@ -86,30 +127,27 @@
 
         <!--//popup-->
         <portal to="floating">
-            <BasicButton size="large">
-                이전
-            </BasicButton>
-            <BasicButton size="large">
-                다음
-            </BasicButton>
+            <BasicButton size="large"> 이전 </BasicButton>
+            <BasicButton size="large"> 다음 </BasicButton>
         </portal>
     </div>
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator'
+import { Component, Vue } from 'vue-property-decorator'
 import PopupPredictionLoan from '@components/finance/PopupPredictionLoan.vue'
-import { CheckList } from '@components/form/CheckBoxGroup.vue'
+import type { CheckList } from '@components/form/CheckBoxGroup.vue'
+import type { Schema } from '@components/form/FormProvider.vue'
 
-interface Data {
-    buttonField: string
-    calendarField: string
-    checkSingle: boolean
-    secretNumber: string
-    singleSelection: string
-    switchButton: boolean
-    textFieldPrimary: string
-}
+// interface Data {
+//     buttonField: string
+//     calendarField: string
+//     checkSingle: boolean
+//     secretNumber: string
+//     singleSelection: string
+//     switchButton: boolean
+//     textFieldPrimary: string
+// }
 
 @Component({
     components: { PopupPredictionLoan },
@@ -134,7 +172,7 @@ export default class LoanApplyTerms extends Vue {
     ]
 
     // s: popup
-    private popShow: boolean = false
+    private popShow = false
     openPopup() {
         this.popShow = true
     }
@@ -154,11 +192,11 @@ export default class LoanApplyTerms extends Vue {
         textfieldPrimary: '테스트',
     }
 
-    formChange(data: any) {
+    formChange(data: Schema) {
         this.data = data
     }
 
-    onSubmit(data: any) {
+    onSubmit(data: Schema) {
         console.log(data)
     }
 }

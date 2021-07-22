@@ -26,7 +26,6 @@ const store = new Vuex.Store<RootStore>({
 })
 
 if (process.env.NODE_ENV === 'development') {
-    // @ts-ignore
     window.store = store
 }
 

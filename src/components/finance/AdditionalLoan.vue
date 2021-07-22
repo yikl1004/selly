@@ -5,9 +5,7 @@
                 <strong>17,500,000원</strong> 까지<br />
                 추가대출가능합니다.
             </div>
-            <BasicButton type="small">
-                추가 대출
-            </BasicButton>
+            <BasicButton type="small"> 추가 대출 </BasicButton>
         </div>
     </div>
 </template>

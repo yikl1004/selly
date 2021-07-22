@@ -19,7 +19,10 @@ const getResourceList = paths => {
 const isDev = process.env.NODE_ENV !== 'production'
 const styleResourceOptions = {
     preProcessor: 'scss',
-    patterns: getResourceList(['./src/styles/_variables.scss', './src/styles/_mixins.scss']),
+    patterns: getResourceList([
+        './src/styles/_variables.scss',
+        './src/styles/_mixins.scss',
+    ]),
     rules: ['normal', 'normal-modules', 'vue', 'vue-modules'],
 }
 
@@ -72,7 +75,9 @@ module.exports = {
         },
     },
     chainWebpack(config) {
-        config.resolve.plugin('tsconfig-paths').use(require('tsconfig-paths-webpack-plugin'))
+        config.resolve
+            .plugin('tsconfig-paths')
+            .use(require('tsconfig-paths-webpack-plugin'))
         styleResourceOptions.rules.forEach(oneOf => {
             config.module
                 .rule(styleResourceOptions.preProcessor)

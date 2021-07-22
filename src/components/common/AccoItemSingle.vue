@@ -1,7 +1,12 @@
 <template>
     <div class="box-acco-single">
         <div :class="['box-acco-item', { active: toggle }]">
-            <button type="bubton" class="acco-anchor" :aria-expanded="toggle ? 'true' : 'false'" @click="onToggle">
+            <button
+                type="bubton"
+                class="acco-anchor"
+                :aria-expanded="toggle ? 'true' : 'false'"
+                @click="onToggle"
+            >
                 <span>{{ title }}</span>
             </button>
             <div class="acco-cont">
@@ -30,7 +35,7 @@ export default class AccoItemSingle extends Vue {
      * @category Data(State)
      */
 
-    private toggle: boolean = false
+    private toggle = false
 
     /**
      * @category Methods

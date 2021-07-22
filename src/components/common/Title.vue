@@ -1,4 +1,5 @@
-v<template>
+v
+<template>
     <div class="box-title">
         <h2 v-if="!!title" class="title">
             {{ title }}

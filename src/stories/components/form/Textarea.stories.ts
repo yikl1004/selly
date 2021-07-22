@@ -1,6 +1,5 @@
 import { Meta, Story } from '@storybook/vue'
 import Textarea from '@components/form/Textarea.vue'
-import _ from 'lodash'
 import getProps from '../../assets/getProps'
 
 export default {
@@ -9,7 +8,11 @@ export default {
     argTypes: {},
 } as Meta
 
-interface Args {}
+interface Args {
+    id?: string
+    label?: string
+    placeholder?: string
+}
 
 const Template: Story<Args> = (args, { argTypes }) => {
     return {

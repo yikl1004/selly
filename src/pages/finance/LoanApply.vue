@@ -22,7 +22,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator'
+import { Component, Vue } from 'vue-property-decorator'
 import LoanCompatibility from '@components/finance/LoanCompatibility.vue'
 import FranchiseeSelect from '@components/finance/FranchiseeSelect.vue'
 import LoanApplication from '@components/finance/LoanApplication.vue'
@@ -32,7 +32,15 @@ import LoanApplyComplete from '@components/finance/LoanApplyComplete.vue'
 import LoanApplyFail from '@components/finance/LoanApplyFail.vue'
 
 @Component({
-    components: { LoanCompatibility, FranchiseeSelect, LoanApplication, LoanApplyTerms, LoanAddInfo, LoanApplyComplete, LoanApplyFail },
+    components: {
+        LoanCompatibility,
+        FranchiseeSelect,
+        LoanApplication,
+        LoanApplyTerms,
+        LoanAddInfo,
+        LoanApplyComplete,
+        LoanApplyFail,
+    },
 })
 export default class LoanApply extends Vue {}
 </script>

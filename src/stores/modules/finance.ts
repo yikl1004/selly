@@ -1,4 +1,4 @@
-import { Module, VuexModule, MutationAction, getModule } from 'vuex-module-decorators'
+import { Module, VuexModule, MutationAction } from 'vuex-module-decorators'
 import FinacialService from '@services/finance'
 
 export interface FinancialState {

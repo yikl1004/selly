@@ -13,9 +13,7 @@
         <!-- 도로명주소 API 확인용 -->
         <div class="dev-address">
             <input v-model="addressKeyword" type="text" />
-            <BasicButton @click="onSearchAddress">
-                주소 검색
-            </BasicButton>
+            <BasicButton @click="onSearchAddress"> 주소 검색 </BasicButton>
         </div>
     </div>
 </template>
@@ -24,13 +22,14 @@
 import { Component, Vue } from 'vue-property-decorator'
 import axios from 'axios'
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const { ScrollContainer, ScrollItem } = require('vue-scrollmonitor')
 
 @Component({
     components: { ScrollContainer, ScrollItem },
 })
 export default class LoginPage extends Vue {
-    private addressKeyword: string = '동대문'
+    private addressKeyword = '동대문'
 
     state: any[] = []
 
@@ -47,14 +46,12 @@ export default class LoginPage extends Vue {
         }
     }
 
-    getStyle(i: number) {}
-
     updateState(state: any) {
         this.state = state
     }
 
     onChange(state: any) {
-        console.log('change')
+        console.log('change', state)
     }
 
     onSearchAddress() {

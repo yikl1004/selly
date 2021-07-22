@@ -3,7 +3,12 @@
         <!-- id 필요여부에 따라 삭제 -->
         <LabelTitle :id="id" :hidden-label="hiddenLabel" :label="label" />
         <div class="input-area" :class="{ 'select-type': true }">
-            <button type="button" class="btn-input-select" :disabled="disabled" @click="onClick">
+            <button
+                type="button"
+                class="btn-input-select"
+                :disabled="disabled"
+                @click="onClick"
+            >
                 <span>{{ selectedDisplayName }}</span>
             </button>
             <portal to="bottomSheet">
@@ -16,14 +21,24 @@
                 />
             </portal>
         </div>
-        <TextInputMessage v-if="message" :message="message" :message-type="messageType" />
+        <TextInputMessage
+            v-if="message"
+            :message="message"
+            :message-type="messageType"
+        />
     </div>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 import { MessageType } from '@components/common/TextInputMessage.vue'
-import { FormBus, FormUpdateEvent } from './FormProvider.vue'
+// import { FormBus, FormUpdateEvent } from './FormProvider.vue'
+import type { BottomSheetOptionItem } from '@components/common/BottomSheet.vue'
+
+/**
+ * @description "list" props의 타입(DropdownBox의 'list' Props)
+ */
+export type DropdownBoxList = BottomSheetOptionItem[]
 
 @Component
 export default class DropdownBox extends Vue {
@@ -71,14 +86,14 @@ export default class DropdownBox extends Vue {
     private value: string = this.defaultValue || ''
 
     /** 선택영역 노춣 여부 */
-    private bottomSheetVisible: boolean = false
+    private bottomSheetVisible = false
 
     /** props로 받은 리스트 */
     private selectList: DropdownBoxList = this.list || []
 
     /** @Watch */
     @Watch('list')
-    changeList(value: DropdownBoxList, oldValue: DropdownBoxList) {
+    changeList(value: DropdownBoxList /* oldValue: DropdownBoxList */) {
         console.log('watch', value)
         if (!this._.isNull(value)) {
             this.init()

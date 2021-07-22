@@ -6,16 +6,24 @@ import { Component, Vue } from 'vue-property-decorator'
  */
 @Component
 export default class Validates extends Vue {
-    private numberRegExp: RegExp = /^[0-9]*$/g
-    private stringRegExp: RegExp = /^[ㄱ-힇a-zA-Z]*$/g
-    private specialRegExp: RegExp = /^[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]*$/g
-    private phoneRegExp: RegExp = /^\d{2,3}-\d{3,4}-\d{4}$/
+    private numberRegExp = /^[0-9]*$/g
+    private stringRegExp = /^[ㄱ-힇a-zA-Z]*$/g
+    // eslint-disable-next-line no-useless-escape
+    private specialRegExp = /^[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]*$/g
+    private phoneRegExp = /^\d{2,3}-\d{3,4}-\d{4}$/
 
     declare type: FormInputType
 
     /** 숫자만 입력 받는 타입인지 여부 */
     get isNumberType(): boolean {
-        return ['number', 'seperateNumber', 'regist', 'registeGender', 'card', 'card2'].some(type => type === this.type)
+        return [
+            'number',
+            'seperateNumber',
+            'regist',
+            'registeGender',
+            'card',
+            'card2',
+        ].some(type => type === this.type)
     }
 
     /**
@@ -70,7 +78,9 @@ export default class Validates extends Vue {
         const { shiftKey, ctrlKey, metaKey, altKey } = event
         const isBackspace = event.key.toLowerCase() === 'backspace'
 
-        return [shiftKey, ctrlKey, metaKey, altKey, isBackspace].some(key => key)
+        return [shiftKey, ctrlKey, metaKey, altKey, isBackspace].some(
+            key => key,
+        )
     }
 
     /**
@@ -82,9 +92,13 @@ export default class Validates extends Vue {
         const target = event.target as HTMLInputElement
         const value = target.value
         const isMetaKeys = this.isMetaKeys(event)
-        const conditionsNumberType = [value.length >= target.maxLength, !isMetaKeys]
+        const conditionsNumberType = [
+            value.length >= target.maxLength,
+            !isMetaKeys,
+        ]
 
-        conditionsNumberType.every(condition => condition) && event.preventDefault()
+        conditionsNumberType.every(condition => condition) &&
+            event.preventDefault()
     }
 
     /**
@@ -105,7 +119,7 @@ export default class Validates extends Vue {
      * @TODO: 숫자가 아닌 텍스트만 입력 가능하게...
      * @param event
      */
-    onlyText(event: KeyboardEvent) {}
+    // onlyText(event: KeyboardEvent) {}
 
     phoneNumber(value: string) {
         const cloneValue = this._.cloneDeep(value)

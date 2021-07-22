@@ -66,16 +66,19 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import PredictionPriceBox from '@components/finance/PredictionPriceBox.vue'
+import type { Schema } from '@components/form/FormProvider.vue'
+import type { DropdownBoxList } from '@components/form/DropdownBox.vue'
 
-interface Data {
-    buttonField: string
-    calendarField: string
-    checkSingle: boolean
-    secretNumber: string
-    singleSelection: string
-    switchButton: boolean
-    textFieldPrimary: string
-}
+// interface Data {
+//     buttonField: string
+//     calendarField: string
+//     checkSingle: boolean
+//     secretNumber: string
+//     singleSelection: string
+//     switchButton: boolean
+//     textFieldPrimary: string
+// }
+
 @Component({
     components: { PredictionPriceBox },
 })
@@ -86,8 +89,15 @@ export default class PopupModifyLoan extends Vue {
         { displayName: '청구서 상환(월)', value: 'b' },
     ]
 
-    private priceInfo = [{ text: '롯데카드 매출대금 3개월 평균 실적으로 계산됩니다.' }]
-    private repaymentInfo = [{ text: '상환율 정보 변경 09:00 ~ 18:00 1일 1회만 변경 가능하며, 변경 시 실시간 알림톡으로 알림을 드립니다.' }]
+    private priceInfo = [
+        { text: '롯데카드 매출대금 3개월 평균 실적으로 계산됩니다.' },
+    ]
+    private repaymentInfo = [
+        {
+            text:
+                '상환율 정보 변경 09:00 ~ 18:00 1일 1회만 변경 가능하며, 변경 시 실시간 알림톡으로 알림을 드립니다.',
+        },
+    ]
 
     private data: { [key: string]: object | number | string | boolean } = {
         dropdownBox: 'kt',
@@ -100,11 +110,11 @@ export default class PopupModifyLoan extends Vue {
         textfieldPrimary: '테스트',
     }
 
-    formChange(data: any) {
+    formChange(data: Schema) {
         this.data = data
     }
 
-    onSubmit(data: any) {
+    onSubmit(data: Schema) {
         console.log(data)
     }
 }

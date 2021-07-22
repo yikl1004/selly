@@ -1,7 +1,15 @@
 <template>
     <div :class="['check-box', { style01: text }]">
         <label>
-            <input :id="id" v-model="value" value="sdkj" type="checkbox" :name="_.camelCase(id)" :disabled="disabled" @change="onChange" />
+            <input
+                :id="id"
+                v-model="value"
+                value="sdkj"
+                type="checkbox"
+                :name="_.camelCase(id)"
+                :disabled="disabled"
+                @change="onChange"
+            />
             <i>
                 {{ label }}
                 <span v-if="text" class="sub-text">{{ text }}</span>
@@ -11,7 +19,12 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, PropSync, Vue, Watch } from 'vue-property-decorator'
+import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
+
+/**
+ * @description 디자인타입을 결정합니다.
+ */
+export type CheckBoxDesignType = 'normal' | 'square'
 
 export interface CheckboxProps {
     id: string
@@ -74,7 +87,7 @@ export default class CheckBox extends Vue {
      */
 
     @Watch('checked')
-    changeChecked(newValue: boolean, oldValue: boolean) {
+    changeChecked(newValue: boolean /* oldValue: boolean */) {
         this.value = newValue
     }
 

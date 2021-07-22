@@ -1,5 +1,13 @@
-import { Module, VuexModule, MutationAction, Mutation } from 'vuex-module-decorators'
-import CommonService, { CommonResponse, CommonParameters } from '@services/common'
+import {
+    Module,
+    VuexModule,
+    MutationAction,
+    Mutation,
+} from 'vuex-module-decorators'
+import CommonService, {
+    CommonResponse,
+    /* CommonParameters, */
+} from '@services/common'
 
 export interface CommonState {
     loginExtendInfo: LoginExtendInfo | null
@@ -22,7 +30,7 @@ export default class Common extends VuexModule<CommonState> {
 
     @MutationAction
     async getLoginExtendInfo() {
-        const state = this.state as CommonState
+        // const state = this.state as CommonState
         const { data } = await CommonService.getLoginExtend()
 
         return {

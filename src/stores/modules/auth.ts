@@ -1,4 +1,9 @@
-import { Module, VuexModule, MutationAction, Mutation } from 'vuex-module-decorators'
+import {
+    Module,
+    VuexModule,
+    MutationAction,
+    Mutation,
+} from 'vuex-module-decorators'
 import AuthService, { AuthResponse, AuthParameters } from '@services/auth'
 
 export interface AuthState {
@@ -11,15 +16,13 @@ export interface AuthState {
     inputRecommenderCodeResult: RecommenderCode | null
 }
 
-declare global {
-    type UserInfo = AuthParameters['loginInfo']
-    type LoginInfo = AuthResponse['loginInfo']['data']
-    type MemberWorkplaceInfo = AuthResponse['memberWorkplaceInfo']
-    type MainInfo = AuthResponse['mainInfo']
-    type BizInfo = AuthResponse['bizInfo']
-    type LogoutInfo = AuthResponse['logoutInfo']
-    type RecommenderCode = AuthResponse['recommenderCode']
-}
+export type UserInfo = AuthParameters['loginInfo']
+export type LoginInfo = AuthResponse['loginInfo']['data']
+export type MemberWorkplaceInfo = AuthResponse['memberWorkplaceInfo']
+export type MainInfo = AuthResponse['mainInfo']
+export type BizInfo = AuthResponse['bizInfo']
+export type LogoutInfo = AuthResponse['logoutInfo']
+export type RecommenderCode = AuthResponse['recommenderCode']
 
 @Module({ name: 'auth', namespaced: true })
 export default class Auth extends VuexModule<AuthState> {
@@ -48,7 +51,9 @@ export default class Auth extends VuexModule<AuthState> {
     @MutationAction
     async getLoginInfo() {
         const state = this.state as AuthState
-        const { data } = await AuthService.getLoginInfo(state.kakaoUserInfo as UserInfo)
+        const { data } = await AuthService.getLoginInfo(
+            state.kakaoUserInfo as UserInfo,
+        )
 
         return {
             loginInfo: data.data,
@@ -107,8 +112,8 @@ export default class Auth extends VuexModule<AuthState> {
     get workplaceList(): BizInfo['data']['list'] {
         const { memberWorkplaceInfo } = this
 
-        if (memberWorkplaceInfo && memberWorkplaceInfo!.data) {
-            return memberWorkplaceInfo!.data.list || []
+        if (memberWorkplaceInfo && memberWorkplaceInfo.data) {
+            return memberWorkplaceInfo.data.list || []
         } else {
             return []
         }
@@ -121,8 +126,8 @@ export default class Auth extends VuexModule<AuthState> {
     get workplaceOwnerName(): string {
         const { memberWorkplaceInfo } = this
 
-        if (memberWorkplaceInfo && memberWorkplaceInfo!.data) {
-            return memberWorkplaceInfo!.data.mbrNm || ''
+        if (memberWorkplaceInfo && memberWorkplaceInfo.data) {
+            return memberWorkplaceInfo.data.mbrNm || ''
         } else {
             return ''
         }

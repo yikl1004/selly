@@ -13,14 +13,20 @@
                                 사업자정보를 확인하세요.
                             </strong>
 
-                            <p>가입을 원하지 않는 사업자의 경우 체크를 해지 해주세요.<br />(정 사업자의 경우는 체크해지가 불가 합니다.)</p>
+                            <p>
+                                가입을 원하지 않는 사업자의 경우 체크를 해지
+                                해주세요.<br />(정 사업자의 경우는 체크해지가
+                                불가 합니다.)
+                            </p>
                         </div>
                         <div class="user-store-list">
                             <CheckBoxBlock
                                 v-for="(item, index) in workplaceList"
                                 :id="`userStoreList${index}`"
                                 :key="`user-store-list-item-${index}`"
-                                :label="convertBizNoFormatter({ bizNo: item.bzno })"
+                                :label="
+                                    convertBizNoFormatter({ bizNo: item.bzno })
+                                "
                                 :biz-name="item.bzmanNm"
                                 :index="index"
                                 :checked="item.ltRgyn === 'Y'"
@@ -32,7 +38,9 @@
                     </div>
 
                     <div class="recommender-box">
-                        <CheckBox label="추천인이 있으시면 체크해주세요. (선택)" />
+                        <CheckBox
+                            label="추천인이 있으시면 체크해주세요. (선택)"
+                        />
                         <ButtonField
                             id="recommenderCode"
                             label="추천인 코드(선택)"
@@ -49,7 +57,11 @@
                 </div>
             </div>
             <portal to="floating">
-                <BasicButton :disabled="!selectedWorkplace.length" size="large" @click="onNext">
+                <BasicButton
+                    :disabled="!selectedWorkplace.length"
+                    size="large"
+                    @click="onNext"
+                >
                     메인으로
                 </BasicButton>
             </portal>
@@ -58,10 +70,11 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
+import { Component, Vue, Watch } from 'vue-property-decorator'
 import { namespace } from 'vuex-class'
 import { OnSelectValue } from '@components/form/CheckBoxBlock.vue'
-import { AuthParameters, BizInfoItem } from '@services/auth'
+import type { AuthParameters, BizInfoItem } from '@services/auth'
+import type { BizInfo } from '@stores/modules/auth'
 
 const { Getter, Action } = namespace('auth')
 
@@ -69,9 +82,12 @@ const { Getter, Action } = namespace('auth')
 export default class SelectStorePage extends Vue {
     /** @category Stores */
     @Getter('workplaceList') readonly workplaceList!: BizInfo['data']['list']
-    @Getter('workplaceOwnerName') readonly workplaceOwnerName!: BizInfo['data']['mbrNm']
+    @Getter('workplaceOwnerName')
+    readonly workplaceOwnerName!: BizInfo['data']['mbrNm']
     @Getter('recommenderCodeMessage') readonly recommenderCodeMessage!: string
-    @Action('inputRecommenderCode') readonly inputRecommenderCode!: (params: AuthParameters['recommenderCode']) => Promise<void>
+    @Action('inputRecommenderCode') readonly inputRecommenderCode!: (
+        params: AuthParameters['recommenderCode'],
+    ) => Promise<void>
 
     /** @category Data */
 
@@ -81,12 +97,17 @@ export default class SelectStorePage extends Vue {
     /** @category Watch */
 
     @Watch('workplaceList')
-    changeWorkplaceList(value: BizInfo['data']['list'], oldValue: BizInfo['data']['list']) {
-        this.selectedWorkplace = value.filter(item => item.ltRgyn === 'Y').map(({ bzno, ltRgyn }) => ({ bzno, ltRgyn }))
+    changeWorkplaceList(
+        value: BizInfo['data']['list'],
+        /* oldValue: BizInfo['data']['list'], */
+    ) {
+        this.selectedWorkplace = value
+            .filter(item => item.ltRgyn === 'Y')
+            .map(({ bzno, ltRgyn }) => ({ bzno, ltRgyn }))
     }
 
-    @Watch('recommenderCodeMessage')
-    changeRecommenderCodeMessage(value: string, oldValue: string) {}
+    // @Watch('recommenderCodeMessage')
+    // changeRecommenderCodeMessage(value: string, oldValue: string) {}
 
     /** @category Methods */
     onNext() {
@@ -119,8 +140,6 @@ export default class SelectStorePage extends Vue {
     }
 
     /** @category Life-Cycle */
-
-    mounted() {}
 }
 </script>
 <style scoped lang="scss" src="./SelectStore.scss"></style>

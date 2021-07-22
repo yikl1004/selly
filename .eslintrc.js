@@ -2,17 +2,32 @@ module.exports = {
     root: true,
     env: {
         node: true,
+        browser: true,
     },
-    extends: ['@vue/prettier', '@vue/typescript', 'plugin:import/errors', 'plugin:import/warnings', 'plugin:vue/recommended'],
+    extends: [
+        'plugin:vue/essential',
+        'eslint:recommended',
+        'plugin:prettier/recommended',
+        '@vue/typescript/recommended',
+        '@vue/prettier',
+        '@vue/prettier/@typescript-eslint',
+        // '@vue/typescript',
+        // 'plugin:import/errors',
+        // 'plugin:import/warnings',
+        // 'plugin:vue/recommended',
+    ],
+    // parser: "@typescript-eslint/parser",
     parserOptions: {
         ecmaVersion: 2020,
     },
     rules: {
         '@typescript-eslint/ban-types': 'off',
+        '@typescript-eslint/explicit-module-boundary-types': 'off',
         'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
         'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
+        'no-unless-escape': 'off',
 
-        // 'prettier/prettier':
+        // 'prettier/prettier': ['warn', { parser: 'babel-ts' }],
         // [
         //     'warn',
         //     {},
@@ -26,16 +41,16 @@ module.exports = {
         /**********************/
 
         // Enforce import order
-        'import/order': 'error',
+        // 'import/order': 'error',
 
-        // Imports should come first
-        'import/first': 'error',
+        // // Imports should come first
+        // 'import/first': 'error',
 
-        // Other import rules
-        'import/no-mutable-exports': 'error',
+        // // Other import rules
+        // 'import/no-mutable-exports': 'error',
 
-        // Allow unresolved imports
-        'import/no-unresolved': 'off',
+        // // Allow unresolved imports
+        // 'import/no-unresolved': 'off',
 
         // Allow async-await
         'generator-star-spacing': 'off',
@@ -178,6 +193,44 @@ module.exports = {
             files: ['./vue.config.js'],
             rules: {
                 '@typescript-eslint/no-var-requires': 'off',
+            },
+        },
+        {
+            files: ['src/**/*.vue'],
+            globals: {
+                GnbItem: 'readonly',
+                BizInfo: 'readonly',
+                FormInputType: 'readonly',
+                TransitionProps: 'readonly',
+                JusoResponse: 'readonly',
+                JusoResponseResults: 'readonly',
+            },
+        },
+        {
+            files: ['src/typings/node.d.ts'],
+            rules: {
+                '@typescript-eslint/no-unused-vars': 'off',
+            },
+        },
+        {
+            files: ['src/stories/*.stories.ts', 'src/stories/**/*.stories.ts'],
+            rules: {
+                '@typescript-eslint/ban-ts-comment': 'off',
+            },
+        },
+
+        {
+            files: ['src/pages/example/*.vue', 'src/pages/example/**/*.vue'],
+            rules: {
+                '@typescript-eslint/no-explicit-any': 'off',
+            },
+        },
+
+        // TODO: 예외 처리, 금융 store 작업 전이어서 any처리, 개발 할때 수정 필요
+        {
+            files: ['src/stores/modules/finance.ts'],
+            rules: {
+                '@typescript-eslint/no-explicit-any': 'off',
             },
         },
     ],

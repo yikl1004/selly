@@ -37,16 +37,18 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
+import type { DropdownBoxList } from '@components/form/DropdownBox.vue'
 
-interface Data {
-    buttonField: string
-    calendarField: string
-    checkSingle: boolean
-    secretNumber: string
-    singleSelection: string
-    switchButton: boolean
-    textFieldPrimary: string
-}
+// interface Data {
+//     buttonField: string
+//     calendarField: string
+//     checkSingle: boolean
+//     secretNumber: string
+//     singleSelection: string
+//     switchButton: boolean
+//     textFieldPrimary: string
+// }
+
 @Component({
     components: {},
 })

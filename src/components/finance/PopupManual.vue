@@ -1,7 +1,5 @@
 <template>
-    <div class="popup-manual-wrap">
-        내용 수급필요
-    </div>
+    <div class="popup-manual-wrap">내용 수급필요</div>
 </template>
 
 <script lang="ts">

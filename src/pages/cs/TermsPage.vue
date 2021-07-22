@@ -1,10 +1,13 @@
 <template>
     <div class="container">
         <div class="content pd-btm">
-            <BoardItem v-for="(item, index) in termsList" :key="`board-item-${index}`" :index="index" :title="item.title" />
-            <BasicButton type="more">
-                더보기
-            </BasicButton>
+            <BoardItem
+                v-for="(item, index) in termsList"
+                :key="`board-item-${index}`"
+                :index="index"
+                :title="item.title"
+            />
+            <BasicButton type="more"> 더보기 </BasicButton>
         </div>
     </div>
 </template>

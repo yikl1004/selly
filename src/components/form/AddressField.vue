@@ -21,7 +21,12 @@
                     @blur="onBlur"
                 />
             </div>
-            <button class="search-button" :disabled="disabled" type="button" @click="openPopup">
+            <button
+                class="search-button"
+                :disabled="disabled"
+                type="button"
+                @click="openPopup"
+            >
                 <span>검색</span>
             </button>
         </div>
@@ -39,7 +44,14 @@
                 @blur="onBlur"
             />
         </div>
-        <div class="input-area" :class="{ focus: focusedClass, readonly: readonly, disabled: disabled }">
+        <div
+            class="input-area"
+            :class="{
+                focus: focusedClass,
+                readonly: readonly,
+                disabled: disabled,
+            }"
+        >
             <input
                 :id="id"
                 ref="input"
@@ -54,7 +66,12 @@
                 @focus="onFocus"
                 @blur="onBlur"
             />
-            <button v-if="!readonly && !!value.length" type="button" class="clear" @click="clearValue">
+            <button
+                v-if="!readonly && !!value.length"
+                type="button"
+                class="clear"
+                @click="clearValue"
+            >
                 <i />
                 <span class="ir">전체삭제</span>
             </button>
@@ -68,7 +85,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Watch, Mixins } from 'vue-property-decorator'
+import { Component, Prop, Watch, Mixins, Vue } from 'vue-property-decorator'
 import Validates from '@utils/mixins/Validates'
 import { FormBus } from '@components/form/FormProvider.vue'
 
@@ -76,9 +93,9 @@ export interface OnChangeParameters {
     value: string
 }
 
-interface Validate {
-    (value: string): boolean
-}
+// interface Validate {
+//     (value: string): boolean
+// }
 
 @Component
 export default class AddressField extends Mixins(Validates) {
@@ -121,7 +138,7 @@ export default class AddressField extends Mixins(Validates) {
     readonly defaultValue!: string
 
     // s: popup
-    private show: boolean = false
+    private show = false
     openPopup() {
         this.show = true
     }
@@ -142,13 +159,13 @@ export default class AddressField extends Mixins(Validates) {
     private value: string = this.defaultValue || ''
 
     /** focus 상태 */
-    private focusedClass: boolean = false
+    private focusedClass = false
 
     /** 우편번호 */
-    private zipcode: string = ''
+    private zipcode = ''
 
     /** 도로명 주소 */
-    private road: string = ''
+    private road = ''
 
     /**
      * @title Watch
@@ -179,7 +196,8 @@ export default class AddressField extends Mixins(Validates) {
         this.focusedClass = !this.focusedClass
     }
 
-    onInput(event: InputEvent) {
+    onInput(/* event: InputEvent */) {
+        // eslint-disable-next-line no-useless-escape
         this.value = this.$refs.input.value.replace(/\,/g, '')
     }
 
@@ -193,7 +211,7 @@ export default class AddressField extends Mixins(Validates) {
         this.toggleFocus()
     }
 
-    onBlur(event: FocusEvent) {
+    onBlur(/* event: FocusEvent */) {
         this.toggleFocus()
     }
 

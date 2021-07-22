@@ -31,97 +31,100 @@ interface JusoRequestParameters {
     addInfoYn?: YN
 }
 
-interface JusoResponse {
-    results: {
-        common: CommonResponse
-        juso: JusoItemResponse[]
+declare global {
+    interface JusoResponseResults {
+        results: {
+            common: CommonResponse
+            juso: JusoItemResponse[]
+        }
+    }
+    declare namespace JusoResponse {
+        type results = {
+            common: CommonResponse
+            juso: JusoItemResponse[]
+        }
+
+        /** 결과 값의 common */
+        interface Common {
+            /** 총 검색 데이터수 */
+            totalCount: string
+            /** 페이지 번호 */
+            currentPage: string
+            /** 페이지당 출력할 결과 Row 수 */
+            countPerPage: string
+            /** 에러 코드 */
+            errorCode: string
+            /** 에러 메시지 */
+            errorMessage: string
+        }
+
+        /** 결과 값의 juso 리스트 */
+        interface JusoItem {
+            /** 전체 도로명주소 */
+            roadAddr: string
+            /** 도로명주소(참고항목 제외) */
+            roadAddrPart1: string
+            /** 도로명주소 참고항목 */
+            roadAddrPart2?: string
+            /** 지번주소 */
+            jibunAddr: string
+            /** 도로명주소(영문) */
+            engAddr: string
+            /** 우편번호 */
+            zipNo: string
+            /** 행정구역코드 */
+            admCd: string
+            /** 도로명코드 */
+            rnMgtSn: string
+            /** 건물관리번호 */
+            bdMgtSn: string
+            /** 상세건물명 */
+            detBdNmList?: string
+            /** 건물명 */
+            bdNm?: string
+            /** 공동주택여부(1 : 공동주택, 0 : 비공동주택) */
+            bdKdcd: '1' | '0'
+            /** 시도명 */
+            siNm: string
+            /** 시군구명 */
+            sggNm: string
+            /** 읍면동명 */
+            emdNm: string
+            /** 법정리명 */
+            liNm?: string
+            /** 도로명 */
+            rn: string
+            /** 지하여부(0 : 지상, 1 : 지하) */
+            udrtYn: '0' | '1'
+            /** 건물본번 */
+            buldMnnm: number
+            /** 건물부번 */
+            buldSlno: number
+            /** 산여부(0 : 대지, 1 : 산) */
+            mtYn: '0' | '1'
+            /** 지번본번(번지) */
+            lnbrMnnm: number
+            /** 지번부번(호) */
+            lnbrSlno: number
+            /** 읍면동일련번호 */
+            emdNo: string
+            /**
+             * * 2020년12월8일 추가된 항목
+             * 변동이력여부(0: 현행 주소정보, 1: 요청변수의 keyword(검색어)가 변동된 주소정보에서 검색된 정보)
+             */
+            hstryYn: '0' | '1'
+            /**
+             * * 2020년12월8일 추가된 항목
+             * 관련지번
+             */
+            relJibun?: string
+            /**
+             * * 2020년12월8일 추가된 항목
+             * 관할주민센터, ※ 참고정보이며, 실제와 다를 수 있습니다.
+             */
+            hemdNm: string
+        }
     }
 }
 
-declare namespace JusoResponse {
-    type results = {
-        common: CommonResponse
-        juso: JusoItemResponse[]
-    }
-
-    /** 결과 값의 common */
-    interface Common {
-        /** 총 검색 데이터수 */
-        totalCount: string
-        /** 페이지 번호 */
-        currentPage: string
-        /** 페이지당 출력할 결과 Row 수 */
-        countPerPage: string
-        /** 에러 코드 */
-        errorCode: string
-        /** 에러 메시지 */
-        errorMessage: string
-    }
-
-    /** 결과 값의 juso 리스트 */
-    interface JusoItem {
-        /** 전체 도로명주소 */
-        roadAddr: string
-        /** 도로명주소(참고항목 제외) */
-        roadAddrPart1: string
-        /** 도로명주소 참고항목 */
-        roadAddrPart2?: string
-        /** 지번주소 */
-        jibunAddr: string
-        /** 도로명주소(영문) */
-        engAddr: string
-        /** 우편번호 */
-        zipNo: string
-        /** 행정구역코드 */
-        admCd: string
-        /** 도로명코드 */
-        rnMgtSn: string
-        /** 건물관리번호 */
-        bdMgtSn: string
-        /** 상세건물명 */
-        detBdNmList?: string
-        /** 건물명 */
-        bdNm?: string
-        /** 공동주택여부(1 : 공동주택, 0 : 비공동주택) */
-        bdKdcd: '1' | '0'
-        /** 시도명 */
-        siNm: string
-        /** 시군구명 */
-        sggNm: string
-        /** 읍면동명 */
-        emdNm: string
-        /** 법정리명 */
-        liNm?: string
-        /** 도로명 */
-        rn: string
-        /** 지하여부(0 : 지상, 1 : 지하) */
-        udrtYn: '0' | '1'
-        /** 건물본번 */
-        buldMnnm: number
-        /** 건물부번 */
-        buldSlno: number
-        /** 산여부(0 : 대지, 1 : 산) */
-        mtYn: '0' | '1'
-        /** 지번본번(번지) */
-        lnbrMnnm: number
-        /** 지번부번(호) */
-        lnbrSlno: number
-        /** 읍면동일련번호 */
-        emdNo: string
-        /**
-         * * 2020년12월8일 추가된 항목
-         * 변동이력여부(0: 현행 주소정보, 1: 요청변수의 keyword(검색어)가 변동된 주소정보에서 검색된 정보)
-         */
-        hstryYn: '0' | '1'
-        /**
-         * * 2020년12월8일 추가된 항목
-         * 관련지번
-         */
-        relJibun?: string
-        /**
-         * * 2020년12월8일 추가된 항목
-         * 관할주민센터, ※ 참고정보이며, 실제와 다를 수 있습니다.
-         */
-        hemdNm: string
-    }
-}
+export {}

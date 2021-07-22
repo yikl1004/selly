@@ -8,15 +8,13 @@
             />
         </div>
         <portal to="floating">
-            <BasicButton size="large">
-                확인
-            </BasicButton>
+            <BasicButton size="large"> 확인 </BasicButton>
         </portal>
     </div>
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator'
+import { Component, Vue } from 'vue-property-decorator'
 import LoanCard from '@components/finance/LoanCard.vue'
 import AdditionalLoan from '@components/finance/AdditionalLoan.vue'
 

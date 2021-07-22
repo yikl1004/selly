@@ -4,7 +4,7 @@ import { NavigationGuard } from 'vue-router'
 /**
  * navigatoin guard
  */
-const exceptionPages = [' ', 'NeedLogin', 'NotFound', 'Join']
+// const exceptionPages = [' ', 'NeedLogin', 'NotFound', 'Join']
 
 interface SellyNavigationGuard {
     beforeEach: NavigationGuard

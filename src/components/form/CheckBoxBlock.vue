@@ -20,6 +20,7 @@
 
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
+import type { CheckBoxDesignType } from './CheckBox.vue'
 
 export interface CheckboxProps {
     id: string
@@ -87,7 +88,7 @@ export default class CheckBoxBlock extends Vue {
      */
 
     @Watch('checked')
-    changeChecked(newValue: boolean, oldValue: boolean) {
+    changeChecked(newValue: boolean /* oldValue: boolean */) {
         this.value = newValue
     }
 

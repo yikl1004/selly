@@ -1,17 +1,18 @@
-import { RouteConfig } from 'vue-router'
+import type { RouteConfig } from 'vue-router'
 
 export type RouteMeta = {
-    layout?: 'default' | 'none' | 'floating' | string
+    floating?: boolean
     foolter?: boolean
+    title?: string
 }
 
-const createAsyncComponent = (path: string) => {
-    const loading = {
-        template: `<Loading />`,
-    }
+const loading = {
+    template: `<Loading />`,
+}
 
+const createAsyncPage = (component: Promise<object>) => {
     return () => ({
-        component: import(path),
+        component,
         loading,
     })
 }
@@ -21,22 +22,24 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
     {
         path: '/example',
         name: 'Example',
-        component: createAsyncComponent('@pages/example/index.vue'),
+        component: createAsyncPage(import('@pages/example/index.vue')),
         children: [
             {
                 path: 'form',
                 name: 'ExampleForm',
-                component: createAsyncComponent('@pages/example/form/index.vue'),
+                component: createAsyncPage(
+                    import('@pages/example/form/index.vue'),
+                ),
             },
             {
                 path: 'test',
                 name: 'Test',
-                component: createAsyncComponent('@pages/example/testbed/index.vue'),
+                component: createAsyncPage(
+                    import('@pages/example/testbed/index.vue'),
+                ),
             },
         ],
-        meta: {
-            layout: 'none',
-        },
+        meta: {},
     },
 
     // 여기부터 페이지 작성
@@ -45,17 +48,15 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
     {
         path: '*',
         name: 'NotFound',
-        component: createAsyncComponent('@pages/notFound/index.vue'),
+        component: createAsyncPage(import('@pages/notFound/index.vue')),
     },
 
     /* 로그인 or 메인 */
     {
         path: '/',
         name: 'Main',
-        component: createAsyncComponent('@pages/index.vue'),
-        meta: {
-            layout: 'default',
-        },
+        component: createAsyncPage(import('@pages/index.vue')),
+        meta: {},
         // beforeEnter(to, from, next) {
         //     console.log('router beforeEnter', { to, from })
         //     next()
@@ -65,14 +66,13 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
     {
         path: '/join',
         name: 'Join',
-        component: createAsyncComponent('@pages/join/index.vue'),
+        component: createAsyncPage(import('@pages/join/index.vue')),
         /**
          * @pages/auth/SelectStore.vue - 가맹점 선택(단일 사업자인 경우 선택되어서 나옴)
          * @pages/auth/UnableJoin.vue - 가입 불가 처리
          */
         meta: {
             footer: false,
-            layout: 'none',
         },
     },
 
@@ -84,7 +84,7 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
     // {
     //     path: '/needLogin',
     //     name: 'NeedLogin',
-    //     component: createAsyncComponent(@pages/needLogin/index.vue),
+    //     component: createAsyncPage(import(@pages/needLogin/index.vue)),
     //     meta: {
     //         layout: 'none',
     //     },
@@ -94,18 +94,14 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
     {
         path: '/card',
         name: 'Card',
-        component: createAsyncComponent('@pages/card/index.vue'),
-        meta: {
-            layout: 'none',
-        },
+        component: createAsyncPage(import('@pages/card/index.vue')),
+        meta: {},
     },
     {
         path: '/card/subpage',
         name: 'CardSub',
-        component: createAsyncComponent('@pages/card/subPage.vue'),
-        meta: {
-            layout: 'default',
-        },
+        component: createAsyncPage(import('@pages/card/subPage.vue')),
+        meta: {},
     },
 
     //매출페이지
@@ -116,7 +112,7 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
     {
         path: '/sales',
         name: 'Sales',
-        component: createAsyncComponent('@pages/sales/index.vue'),
+        component: createAsyncPage(import('@pages/sales/index.vue')),
         meta: {
             title: '매출 내역',
         },
@@ -125,7 +121,9 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
                 // TODO: 매출내역 연동 페이지... 기획 수정 중
                 path: 'linkage',
                 name: 'Sales Linkage',
-                component: createAsyncComponent('@pages/sales/SalesLinkage.vue'),
+                component: createAsyncPage(
+                    import('@pages/sales/SalesLinkage.vue'),
+                ),
                 meta: {
                     title: '매출 내역',
                 },
@@ -136,7 +134,7 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
     {
         path: '/saleshistory',
         name: 'Sales History',
-        component: createAsyncComponent('@pages/sales/SalesHistory.vue'),
+        component: createAsyncPage(import('@pages/sales/SalesHistory.vue')),
         meta: {
             title: '매출 내역',
         },
@@ -147,13 +145,15 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
     {
         path: '/finance',
         name: 'Finance',
-        component: createAsyncComponent('@pages/finance/index.vue'),
+        component: createAsyncPage(import('@pages/finance/index.vue')),
         children: [
             {
                 //신용카드 인증페이지
                 path: 'creditcardauth',
                 name: 'CreditCardAuth',
-                component: createAsyncComponent('@pages/finance/CreditCardAuth.vue'),
+                component: createAsyncPage(
+                    import('@pages/finance/CreditCardAuth.vue'),
+                ),
                 meta: {
                     layout: 'default',
                     footer: false,
@@ -163,7 +163,9 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
                 //본인인증 페이지
                 path: 'selfauth',
                 name: 'Self Auth',
-                component: createAsyncComponent('@pages/finance/SelfAuth.vue'),
+                component: createAsyncPage(
+                    import('@pages/finance/SelfAuth.vue'),
+                ),
                 meta: {
                     layout: 'default',
                     footer: false,
@@ -173,7 +175,9 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
                 //금소법 적합성 확인페이지
                 path: 'loanapply',
                 name: 'Loan Apply',
-                component: createAsyncComponent('@pages/finance/LoanApply.vue'),
+                component: createAsyncPage(
+                    import('@pages/finance/LoanApply.vue'),
+                ),
                 meta: {
                     layout: 'default',
                     footer: false,
@@ -183,7 +187,9 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
                 //이용 거절 페이지
                 path: 'loanreject',
                 name: 'Loan Reject',
-                component: createAsyncComponent('@pages/finance/LoanReject.vue'),
+                component: createAsyncPage(
+                    import('@pages/finance/LoanReject.vue'),
+                ),
                 meta: {
                     layout: 'default',
                     footer: false,
@@ -193,7 +199,9 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
                 //대출내역
                 path: 'loanhistory',
                 name: 'Loan History',
-                component: createAsyncComponent('@pages/finance/LoanHistory.vue'),
+                component: createAsyncPage(
+                    import('@pages/finance/LoanHistory.vue'),
+                ),
                 meta: {
                     layout: 'default',
                 },
@@ -202,7 +210,9 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
                 //대출내역상세
                 path: 'loandetail',
                 name: 'Loan History Detail',
-                component: createAsyncComponent('@pages/finance/LoanHistoryDetail.vue'),
+                component: createAsyncPage(
+                    import('@pages/finance/LoanHistoryDetail.vue'),
+                ),
                 meta: {
                     layout: 'default',
                 },
@@ -215,7 +225,7 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
     {
         path: '/cs/notice',
         name: 'Notice',
-        component: createAsyncComponent('@pages/cs/NoticePage.vue'),
+        component: createAsyncPage(import('@pages/cs/NoticePage.vue')),
         meta: {
             title: '공지사항',
             layout: 'default',
@@ -224,7 +234,7 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
     {
         path: '/cs/noticedetail',
         name: 'Notice Detail',
-        component: createAsyncComponent('@pages/cs/NoticeDetailPage.vue'),
+        component: createAsyncPage(import('@pages/cs/NoticeDetailPage.vue')),
         meta: {
             title: '공지사항',
             layout: 'default',
@@ -233,7 +243,7 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
     {
         path: '/cs/faq',
         name: 'FAQ',
-        component: createAsyncComponent('@pages/cs/FaqPage.vue'),
+        component: createAsyncPage(import('@pages/cs/FaqPage.vue')),
         meta: {
             title: '자주 묻는 질문',
             layout: 'default',
@@ -243,7 +253,7 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
     {
         path: '/cs/terms',
         name: 'Terms',
-        component: createAsyncComponent('@pages/cs/TermsPage.vue'),
+        component: createAsyncPage(import('@pages/cs/TermsPage.vue')),
         meta: {
             title: '이용약관',
             layout: 'default',
@@ -252,7 +262,7 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
     {
         path: '/cs/termsdetail',
         name: 'Terms Detail',
-        component: createAsyncComponent('@pages/cs/TermsDetailPage.vue'),
+        component: createAsyncPage(import('@pages/cs/TermsDetailPage.vue')),
         meta: {
             title: '이용약관',
             layout: 'default',
@@ -262,7 +272,7 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
     {
         path: '/my/setting',
         name: 'setting',
-        component: createAsyncComponent('@pages/mypage/SettingPage.vue'),
+        component: createAsyncPage(import('@pages/mypage/SettingPage.vue')),
         meta: {
             title: '회원정보',
             layout: 'default',
@@ -272,7 +282,7 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
     {
         path: '/my/secession',
         name: 'Secession',
-        component: createAsyncComponent('@pages/mypage/SecessionPage.vue'),
+        component: createAsyncPage(import('@pages/mypage/SecessionPage.vue')),
         meta: {
             title: '회원탈퇴',
             layout: 'default',
@@ -283,7 +293,7 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
     {
         path: '/my/business',
         name: 'Business',
-        component: createAsyncComponent('@pages/mypage/BusinessPage.vue'),
+        component: createAsyncPage(import('@pages/mypage/BusinessPage.vue')),
         meta: {
             title: '사업자 정보',
             layout: 'default',

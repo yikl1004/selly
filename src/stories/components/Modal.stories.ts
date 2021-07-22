@@ -108,4 +108,6 @@ export default class Sample extends Vue {
         },
     },
 }
-Primary.decorators = [() => ({ template: '<div><story/><PortalTarget name="modal" /></div>' })]
+Primary.decorators = [
+    () => ({ template: '<div><story/><PortalTarget name="modal" /></div>' }),
+]

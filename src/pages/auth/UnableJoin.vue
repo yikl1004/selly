@@ -6,9 +6,7 @@
             description="셀리서비스는 현재 롯데카드 가맹점 또는 제휴 결제대행사를 이용하고 있는 개인사업자 대상으로 가입이 가능합니다."
         />
         <Portal to="floating">
-            <BasicButton type="large" @click="toFirstStep">
-                확인
-            </BasicButton>
+            <BasicButton type="large" @click="toFirstStep"> 확인 </BasicButton>
         </Portal>
     </div>
 </template>

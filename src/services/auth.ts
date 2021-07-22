@@ -75,7 +75,7 @@ export interface AuthResponse {
         data: {
             dgNm: string
             scrapAgYn: YN | null
-            list2: any[] | null
+            list2: string[] | null
             totalSl: string | null
             list1: string | null
             lmBizYn: YN
@@ -115,11 +115,15 @@ export interface AuthResponse {
 }
 
 type LoginInfoRes = Promise<AxiosResponse<AuthResponse['loginInfo']>>
-type MemberWorkplaceInfoRes = Promise<AxiosResponse<AuthResponse['memberWorkplaceInfo']>>
+type MemberWorkplaceInfoRes = Promise<
+    AxiosResponse<AuthResponse['memberWorkplaceInfo']>
+>
 type MainInfoRes = Promise<AxiosResponse<AuthResponse['mainInfo']>>
 type BizInfoRes = Promise<AxiosResponse<AuthResponse['bizInfo']>>
 type LogoutInfoRes = Promise<AxiosResponse<AuthResponse['logoutInfo']>>
-type RecommenderCodeRes = Promise<AxiosResponse<AuthResponse['recommenderCode']>>
+type RecommenderCodeRes = Promise<
+    AxiosResponse<AuthResponse['recommenderCode']>
+>
 
 class AuthService {
     // 로그인/카카오최초인입
@@ -194,7 +198,9 @@ class AuthService {
     }
 
     // my>사업자정보>추천인코드입력
-    async inputRecommenderCode(params: AuthParameters['recommenderCode']): RecommenderCodeRes {
+    async inputRecommenderCode(
+        params: AuthParameters['recommenderCode'],
+    ): RecommenderCodeRes {
         const { url, method } = this.recommenderCode
 
         return await axiosInstance.request({ method, url, params })

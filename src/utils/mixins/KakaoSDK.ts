@@ -1,4 +1,5 @@
 import { Vue, Component } from 'vue-property-decorator'
+import type { UserInfo } from '@stores/modules/auth'
 
 @Component
 export default class KakaoSDK extends Vue {
@@ -11,7 +12,10 @@ export default class KakaoSDK extends Vue {
      * 카카오 SDK 스크립트를 head에 동적으로 추가, 추가 후 'kakaoApi' data에 window.Kakao를 reference합니다.
      */
     loadScript() {
-        if (document && document.querySelectorAll('#kakao-login-sdk').length === 0) {
+        if (
+            document &&
+            document.querySelectorAll('#kakao-login-sdk').length === 0
+        ) {
             const script = document.createElement('script')
             script.id = 'kakao-login-sdk'
             script.src = 'https://developers.kakao.com/sdk/js/kakao.min.js'
@@ -52,12 +56,16 @@ export default class KakaoSDK extends Vue {
                 success: (response: KakaoTermsRes) => {
                     console.log('KAKAO SERVICE TERMS SUCCESS', response)
                     resolve({
-                        list: response.allowed_service_terms.map(item => ({ agTag: item.tag })),
+                        list: response.allowed_service_terms.map(item => ({
+                            agTag: item.tag,
+                        })),
                     })
                 },
                 fail: reason => {
                     console.log('KAKAO SERVICE TERMS FAIL', reason)
-                    alert('동의한 약관 항목을 불러오는데 실패하였습니다.\n 다시 시도해 주세요')
+                    alert(
+                        '동의한 약관 항목을 불러오는데 실패하였습니다.\n 다시 시도해 주세요',
+                    )
                     reject(reason)
                 },
             })
@@ -76,10 +84,13 @@ export default class KakaoSDK extends Vue {
                     console.log('/v2/user/me, 카카오에 요청한 유저정보', res)
                     resolve({
                         // ciNo: res.kakao_account.ci,
-                        ciNo: 'rBEQQb+3pmYqPCNP4YwatvxlgA//fZ57i+RXx2NWrlXaoRWI/Zpo4VALx+eA0drMOTfdYPtDiGmOTHiiWIffTw==',
+                        ciNo:
+                            'rBEQQb+3pmYqPCNP4YwatvxlgA//fZ57i+RXx2NWrlXaoRWI/Zpo4VALx+eA0drMOTfdYPtDiGmOTHiiWIffTw==',
                         // ciNo: '8FsPBb/e2PxJLYQv22nQOKFNx7PTJTa6UoPNmx3b5eo94hjVhwc3FIFYsl8lbwKEL3d91h7nbdXl2pBmkFaOcg==', // 03 (가입불가)
                         // ciNo: 'ED4YJ80zZDOrVurxQJeQgzze/lkHapSfQlnzHCUUKMtuyy9E+m9zR3oFXMYM/JXuRlDLfOb1YE+PV41q4ec44g==', // 02 (사업자정보 1개)
-                        cellNo: this.cellPhoneFormatter(res.kakao_account.phone_number),
+                        cellNo: this.cellPhoneFormatter(
+                            res.kakao_account.phone_number,
+                        ),
                         email: res.kakao_account.email,
                     })
                 },
@@ -126,7 +137,7 @@ export default class KakaoSDK extends Vue {
      * @param {Function} callback 성공시 호출 되는 함수
      */
     unlink(callback?: Function) {
-        return new Promise((resolve, reject) => {
+        return new Promise((/* resolve, reject */) => {
             this.kakaoApi.API.request({
                 url: '/v1/user/unlink',
                 success: res => {

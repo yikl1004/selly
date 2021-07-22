@@ -1,6 +1,9 @@
 <template>
     <div class="popup-repayment-info">
-        <p>회원 개인의 신용상태와 신청금액에 따라 이용 가능한 상환 방법이 다를 수 있습니다.</p>
+        <p>
+            회원 개인의 신용상태와 신청금액에 따라 이용 가능한 상환 방법이 다를
+            수 있습니다.
+        </p>
 
         <div class="repayment-info-box">
             <strong>원리금균등상환</strong>
@@ -32,7 +35,9 @@ import { Component, Vue } from 'vue-property-decorator'
 
 @Component
 export default class PopupRepaymentInfo extends Vue {
-    private commonInfo = [{ text: '회원 개인의 신용에 따라 최대대출기간은 달라질 수 있습니다.' }]
+    private commonInfo = [
+        { text: '회원 개인의 신용에 따라 최대대출기간은 달라질 수 있습니다.' },
+    ]
 }
 </script>
 

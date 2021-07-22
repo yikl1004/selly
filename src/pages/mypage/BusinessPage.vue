@@ -2,7 +2,11 @@
     <div class="container">
         <div class="content">
             <div class="business-wrap">
-                <FormProvider :schema="data" @change="formChange" @submit="onSubmit">
+                <FormProvider
+                    :schema="data"
+                    @change="formChange"
+                    @submit="onSubmit"
+                >
                     <template slot-scope="{ schema }">
                         <DropdownBox
                             id="dropdown-box01"
@@ -53,7 +57,13 @@
         </div>
         <!--popup-->
         <!--[D] 가맹점 정보 팝업 -->
-        <FullPopup :show.sync="popShow" title="가맹점 정보" :button-text="{ confirm: '수정' }" type="popup" @confirm="onConfirm">
+        <FullPopup
+            :show.sync="popShow"
+            title="가맹점 정보"
+            :button-text="{ confirm: '수정' }"
+            type="popup"
+            @confirm="onConfirm"
+        >
             <PopupFranchiseeInfo />
         </FullPopup>
         <!--//popup-->
@@ -61,25 +71,17 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator'
+import { Component, Vue } from 'vue-property-decorator'
 import PopupFranchiseeInfo from '@components/mypage/PopupFranchiseeInfo.vue'
-
-interface Data {
-    buttonField: string
-    calendarField: string
-    checkSingle: boolean
-    secretNumber: string
-    singleSelection: string
-    switchButton: boolean
-    textFieldPrimary: string
-}
+import type { Schema } from '@components/form/FormProvider.vue'
+import type { DropdownBoxList } from '@components/form/DropdownBox.vue'
 
 @Component({
     components: { PopupFranchiseeInfo },
 })
 export default class BusinessPage extends Vue {
     // s: popup
-    private popShow: boolean = false
+    private popShow = false
     openPopup() {
         this.popShow = true
     }
@@ -89,14 +91,24 @@ export default class BusinessPage extends Vue {
     // e: popup
 
     //가맹점 정보 샘플
-    private franchiseeList = [{ title: '이층집 강남점1' }, { title: '이층집 강남점2' }]
+    private franchiseeList = [
+        { title: '이층집 강남점1' },
+        { title: '이층집 강남점2' },
+    ]
     //드롭다운리스트 샘플
     private dropdownBoxList: DropdownBoxList = [
-        { displayName: 'LOCA MONEY:BIZ 7*3*', value: 'LOCA MONEY:BIZ 7*3*', selected: true },
-        { displayName: '가장최근에 받은 카드가 디폴트로 노출', value: '가장최근에 받은 카드가 디폴트로 노출' },
+        {
+            displayName: 'LOCA MONEY:BIZ 7*3*',
+            value: 'LOCA MONEY:BIZ 7*3*',
+            selected: true,
+        },
+        {
+            displayName: '가장최근에 받은 카드가 디폴트로 노출',
+            value: '가장최근에 받은 카드가 디폴트로 노출',
+        },
     ]
 
-    private data: { [key: string]: object | number | string | boolean } = {
+    private data: Schema = {
         dropdownBox: 'kt',
         buttonField: '확인',
         calendarField: new Date('2021.06.04'),
@@ -107,11 +119,11 @@ export default class BusinessPage extends Vue {
         textfieldPrimary: '테스트',
     }
 
-    formChange(data: any) {
+    formChange(data: Schema) {
         this.data = data
     }
 
-    onSubmit(data: any) {
+    onSubmit(data: Schema) {
         console.log(data)
     }
 }

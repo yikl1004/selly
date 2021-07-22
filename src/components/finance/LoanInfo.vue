@@ -7,7 +7,12 @@
                 <strong>LOCA MONEY Biz론</strong>
             </div>
             <div class="benefit">
-                <p>원리금균등방식 상환 대비 <br /><strong>85,745원 이자 감면 효과</strong>를 받고 있습니다.</p>
+                <p>
+                    원리금균등방식 상환 대비
+                    <br />
+                    <strong>85,745원 이자 감면 효과</strong>
+                    를 받고 있습니다.
+                </p>
             </div>
         </div>
 
@@ -84,7 +89,7 @@ export default class LoanInfo extends Vue {
         },
     ]
     // s: popup
-    private popModifyShow: boolean = false
+    private popModifyShow = false
     openModifyPopup() {
         this.popModifyShow = true
     }
@@ -95,7 +100,7 @@ export default class LoanInfo extends Vue {
     // e: popup
 
     // s: popup
-    private popPrepaymentShow: boolean = false
+    private popPrepaymentShow = false
     openPrepaymentPopup() {
         this.popPrepaymentShow = true
     }
@@ -105,7 +110,7 @@ export default class LoanInfo extends Vue {
 
     // e: popup
 
-    private toggle: boolean = false
+    private toggle = false
     /**
      * @category Methods
      */

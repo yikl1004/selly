@@ -2,9 +2,7 @@
     <div class="faq-view-wrap">
         <AccoItem :list="accordionList" type="board" />
 
-        <BasicButton type="more">
-            더보기
-        </BasicButton>
+        <BasicButton type="more"> 더보기 </BasicButton>
     </div>
 </template>
 

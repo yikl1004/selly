@@ -16,7 +16,10 @@ export default {
 } as Meta
 
 interface Args {
-    list: any[]
+    list: {
+        title: string
+        desc: string
+    }[]
 }
 
 const Template: Story<Args> = (args, { argTypes }) => {

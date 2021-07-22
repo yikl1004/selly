@@ -1,5 +1,4 @@
 import Vue, { AsyncComponent, VueConstructor } from 'vue'
-import _ from 'lodash'
 
 // form
 import FileUploader from '@components/form/FileUploader.vue'

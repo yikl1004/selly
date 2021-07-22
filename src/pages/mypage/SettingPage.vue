@@ -12,7 +12,9 @@
 
                         <li>
                             <em class="setting-name">이메일</em>
-                            <strong class="setting-cont">lo******@email.com</strong>
+                            <strong class="setting-cont">
+                                lo******@email.com
+                            </strong>
                         </li>
 
                         <li>
@@ -27,33 +29,38 @@
                         <li>
                             <em class="setting-name">SMS</em>
                             <strong class="setting-cont">
-                                <SwitchButton label="선택하세요" :value="switchValue1" />
+                                <SwitchButton
+                                    label="선택하세요"
+                                    :value="switchValue1"
+                                />
                             </strong>
                         </li>
 
                         <li>
                             <em class="setting-name">친구톡</em>
                             <strong class="setting-cont">
-                                <SwitchButton label="선택하세요" :value="switchValue1" />
+                                <SwitchButton
+                                    label="선택하세요"
+                                    :value="switchValue1"
+                                />
                             </strong>
                         </li>
                     </ul>
                 </div>
             </div>
             <div class="btn-area">
-                <BasicButton type="textGray">
-                    회원탈퇴
-                </BasicButton>
+                <BasicButton type="textGray"> 회원탈퇴 </BasicButton>
             </div>
         </div>
     </div>
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator'
+import { Component, Vue } from 'vue-property-decorator'
+
 @Component
 export default class SettingPage extends Vue {
-    private switchValue1: boolean = true
+    private switchValue1 = true
 }
 </script>
 

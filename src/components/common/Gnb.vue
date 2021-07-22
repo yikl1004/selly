@@ -1,5 +1,8 @@
 <template>
-    <transition enter-active-class="animate__animated animate__slideInRight" leave-active-class="animate__animated animate__slideOutRight">
+    <transition
+        enter-active-class="animate__animated animate__slideInRight"
+        leave-active-class="animate__animated animate__slideOutRight"
+    >
         <section v-if="show" class="box-gnb-wrap">
             <div class="gnb-header">
                 <h2>
@@ -20,7 +23,11 @@
             <div class="box-gnb-list">
                 <div class="gnb-1dep-box">
                     <ul>
-                        <li v-for="(depth1, index) in gnbList" :key="`gnb-depth1-${index}`" :class="{ active: index === activeIndex }">
+                        <li
+                            v-for="(depth1, index) in gnbList"
+                            :key="`gnb-depth1-${index}`"
+                            :class="{ active: index === activeIndex }"
+                        >
                             <button type="button" @click="onActive(index)">
                                 {{ depth1.name }}
                             </button>
@@ -34,7 +41,10 @@
                         :class="['gnb-2dep', { active: index === activeIndex }]"
                     >
                         <ul v-if="depth2.children">
-                            <li v-for="(child, childIndex) in depth2.children" :key="`gnb-depth2-child-${childIndex}`">
+                            <li
+                                v-for="(child, childIndex) in depth2.children"
+                                :key="`gnb-depth2-child-${childIndex}`"
+                            >
                                 <Anchor :href="`${parentPath}${child.path}`">
                                     {{ child.name }}
                                 </Anchor>
@@ -43,7 +53,13 @@
                     </div>
                 </div>
             </div>
-            <Modal v-if="modalMessage" :show.sync="modalShow" :button-text="{ confirm: '확인' }" type="popup" @confirm="onConfirmModal">
+            <Modal
+                v-if="modalMessage"
+                :show.sync="modalShow"
+                :button-text="{ confirm: '확인' }"
+                type="popup"
+                @confirm="onConfirmModal"
+            >
                 {{ modalMessage }}
             </Modal>
         </section>
@@ -51,9 +67,10 @@
 </template>
 
 <script lang="ts">
-import { Component, Mixins, Prop, PropSync, Vue, Watch } from 'vue-property-decorator'
+import { Component, Mixins, Prop, Watch } from 'vue-property-decorator'
 import { namespace } from 'vuex-class'
 import { KakaoSDK } from '@utils/mixins'
+import type { LogoutInfo } from '@stores/modules/auth'
 
 interface MenuItem {
     name: string
@@ -83,10 +100,10 @@ export default class Gnb extends Mixins(KakaoSDK) {
     private menuList: MenuItem[] = [{ name: '매출', path: '' }]
 
     /** 활성화 된 메뉴의 index */
-    private activeIndex: number = 1
+    private activeIndex = 1
 
     /** 모달 노출 */
-    private modalShow: boolean = false
+    private modalShow = false
 
     /** @category Computed */
 
@@ -116,7 +133,7 @@ export default class Gnb extends Mixins(KakaoSDK) {
 
     // 로그아웃 API의 결과 값 변경 감지
     @Watch('logoutInfo')
-    changeLogoutInfo(value: LogoutInfo, oldValue: LogoutInfo) {
+    changeLogoutInfo(value: LogoutInfo /* oldValue: LogoutInfo */) {
         if (value && value.rc) {
             this.modalShow = true
         }

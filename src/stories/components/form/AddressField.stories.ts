@@ -15,7 +15,11 @@ export default {
     },
 } as Meta
 
-interface Args {}
+interface Args {
+    label: string
+    name: string
+    buttonText: string
+}
 
 const Template: Story<Args> = (args, { argTypes }) => {
     return {

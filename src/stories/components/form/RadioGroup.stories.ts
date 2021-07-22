@@ -15,7 +15,15 @@ export default {
     },
 } as Meta
 
-interface Args {}
+interface Args {
+    id: string
+    label: string
+    list: {
+        value: string
+        label: string
+        checked?: boolean
+    }[]
+}
 
 const list = [
     { value: 'policy', label: '개인정보처리방침 동의', checked: true },

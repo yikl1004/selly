@@ -5,7 +5,11 @@
             enter-active-class="animate__animated animate__fadeIn"
             leave-active-class="animate__animated animate__fadeOut"
         >
-            <div v-if="showState" ref="modal" :class="['full-popup-wrap', type]">
+            <div
+                v-if="showState"
+                ref="modal"
+                :class="['full-popup-wrap', type]"
+            >
                 <div ref="inner" class="full-popup">
                     <div class="popup-header">
                         <strong class="popup-title">{{ title }}</strong>
@@ -16,7 +20,11 @@
                         </div>
                         <div v-if="buttonText" class="popup-btn-bottom">
                             <FixedBtnBox target="modal">
-                                <BasicButton v-if="buttonText.cancel" size="large" @click="onCancel">
+                                <BasicButton
+                                    v-if="buttonText.cancel"
+                                    size="large"
+                                    @click="onCancel"
+                                >
                                     {{ buttonText.cancel }}
                                 </BasicButton>
                                 <BasicButton size="large" @click="onConfirm">
@@ -25,7 +33,11 @@
                             </FixedBtnBox>
                         </div>
                     </div>
-                    <button type="button" class="btn-popup-close" @click="onCancel">
+                    <button
+                        type="button"
+                        class="btn-popup-close"
+                        @click="onCancel"
+                    >
                         <span class="ir">닫기</span>
                     </button>
                 </div>
@@ -35,8 +47,8 @@
 </template>
 
 <script lang="ts">
-import { VNode } from 'vue'
-import { Component, Prop, PropSync, Ref, Vue, Watch } from 'vue-property-decorator'
+import { Component, Prop, PropSync, Ref, Vue } from 'vue-property-decorator'
+import type { ModalDesignType } from './Modal.vue'
 
 interface ButtonText extends Object {
     cancel?: string
@@ -83,7 +95,7 @@ export default class FullPopup extends Vue {
      * @category Methods
      */
 
-    onCancel(a?: any) {
+    onCancel(/* a?: any */) {
         this.showState = false
     }
 
@@ -93,14 +105,6 @@ export default class FullPopup extends Vue {
          * @event confirm
          */
         this.$emit('confirm')
-    }
-
-    mounted() {}
-
-    test(event: MouseEvent) {
-        event.stopPropagation()
-        // @ts-ignore
-        console.log(event.target.classList.contains('modal'))
     }
 }
 </script>

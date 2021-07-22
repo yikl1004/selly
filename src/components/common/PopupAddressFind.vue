@@ -34,7 +34,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator'
+import { Component, Vue } from 'vue-property-decorator'
 import axios from 'axios'
 
 interface Paging {
@@ -59,7 +59,7 @@ export default class PopupAddressFind extends Vue {
     /** @Data */
 
     /** API 호출 상태 */
-    private pending: boolean = false
+    private pending = false
 
     /** 주소 목록 */
     private list: JusoResponse.JusoItem[] = []
@@ -85,10 +85,10 @@ export default class PopupAddressFind extends Vue {
     }
 
     /** 검색 키워드 */
-    private keyword: string = ''
+    private keyword = ''
 
     /** 더보기 버튼 노출여부 */
-    private visibleMoreButton: boolean = false
+    private visibleMoreButton = false
 
     /** @Computed */
     get hasList(): boolean {
@@ -102,13 +102,16 @@ export default class PopupAddressFind extends Vue {
         const { toNumber, isUndefined } = this._
         this.keyword = keyword
         this.pending = true
-        const response = await axios.get<JusoResponse>('https://www.juso.go.kr/addrlink/addrLinkApi.do', {
-            params: {
-                keyword,
-                currentPage: nextPage || '1',
-                ...this.defaultParameters,
+        const response = await axios.get<JusoResponseResults>(
+            'https://www.juso.go.kr/addrlink/addrLinkApi.do',
+            {
+                params: {
+                    keyword,
+                    currentPage: nextPage || '1',
+                    ...this.defaultParameters,
+                },
             },
-        })
+        )
         this.pending = false
 
         const common = response.data.results.common
@@ -117,7 +120,9 @@ export default class PopupAddressFind extends Vue {
         const countPerPage = toNumber(common.countPerPage)
         const jusoList = response.data.results.juso
 
-        this.list = isUndefined(nextPage) ? jusoList : (this.list = this.list.concat(jusoList))
+        this.list = isUndefined(nextPage)
+            ? jusoList
+            : (this.list = this.list.concat(jusoList))
         this.paging = { totalCount, currentPage, countPerPage }
 
         // 더보기 버튼 노출 설정
@@ -134,7 +139,11 @@ export default class PopupAddressFind extends Vue {
         await this.search(this.keyword, nextPage)
     }
 
-    setVisibleMoreButton(currentPage: number, totalCount: number, countPerPage: number) {
+    setVisibleMoreButton(
+        currentPage: number,
+        totalCount: number,
+        countPerPage: number,
+    ) {
         const totalPage = Math.ceil(totalCount / countPerPage)
 
         this.visibleMoreButton = currentPage < totalPage

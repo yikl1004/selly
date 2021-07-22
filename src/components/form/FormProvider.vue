@@ -9,8 +9,7 @@ import { Component, Prop, Vue } from 'vue-property-decorator'
 
 export const FormBus = new Vue()
 export const FormUpdateEvent = 'form:update'
-
-type Schema = { [key: string]: object | boolean | number | string }
+export type Schema = { [key: string]: object | boolean | number | string }
 
 @Component
 export default class FormProvider extends Vue {
@@ -24,10 +23,13 @@ export default class FormProvider extends Vue {
     }
 
     init() {
-        FormBus.$on(FormUpdateEvent, (value: any) => {
-            this.data[value.fieldName] = value.value
-            this.$emit('change', this.data)
-        })
+        FormBus.$on(
+            FormUpdateEvent,
+            (value: { [key: string]: string | number }) => {
+                this.data[value.fieldName] = value.value
+                this.$emit('change', this.data)
+            },
+        )
     }
 
     mounted() {

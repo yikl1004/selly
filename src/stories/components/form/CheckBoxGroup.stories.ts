@@ -16,14 +16,27 @@ export default {
     },
 } as Meta
 
-interface Args {}
+interface Args {
+    id: string
+    label: string
+    value: string
+    list?: {
+        value: string
+        label: string
+        checked?: boolean
+    }[]
+}
 
 const Template: Story<Args> = (args, { argTypes }) => {
     return {
         data() {
             return {
                 list: [
-                    { value: 'policy', label: '개인정보처리방침 동의', checked: true },
+                    {
+                        value: 'policy',
+                        label: '개인정보처리방침 동의',
+                        checked: true,
+                    },
                     { value: 'uniq', label: '고유식별정보 처리동의' },
                     { value: 'telecom', label: '통신사 이용약관 동의' },
                     { value: 'cert', label: '본인확인 서비스 약관 동의' },
@@ -34,7 +47,7 @@ const Template: Story<Args> = (args, { argTypes }) => {
         props: getProps(argTypes, ['list']),
         template: `<CheckBoxGroup v-bind="$props" :list="list" @change="change" />`,
         methods: {
-            change(list: any[]) {
+            change(list: Args['list']) {
                 // @ts-ignore
                 this.list = list
                 const onChangeAction = action('change')

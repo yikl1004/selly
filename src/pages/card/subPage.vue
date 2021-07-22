@@ -94,12 +94,8 @@
                         </colgroup>
                         <thead>
                             <tr>
-                                <th scope="col">
-                                    상품명
-                                </th>
-                                <th scope="col">
-                                    이자율
-                                </th>
+                                <th scope="col">상품명</th>
+                                <th scope="col">이자율</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -132,7 +128,11 @@
             />
             <BulletList />
 
-            <FormProvider :schema="data" @change="formChange" @submit="onSubmit">
+            <FormProvider
+                :schema="data"
+                @change="formChange"
+                @submit="onSubmit"
+            >
                 <template slot-scope="{ schema }">
                     <DropdownBox
                         id="dropdown-box01"
@@ -146,9 +146,20 @@
                 </template>
             </FormProvider>
 
-            <SecretNumber id="personal-number" :readonly="false" label="주민등록번호" :hidden-label="null" type="regist" />
+            <SecretNumber
+                id="personal-number"
+                :readonly="false"
+                label="주민등록번호"
+                :hidden-label="null"
+                type="regist"
+            />
 
-            <SecretNumber id="personal-number-1" :readonly="false" label="카드 비밀번호" type="card2" />
+            <SecretNumber
+                id="personal-number-1"
+                :readonly="false"
+                label="카드 비밀번호"
+                type="card2"
+            />
 
             <TextField
                 id="my-text"
@@ -165,9 +176,20 @@
                 success-message="성공메시지"
                 :default-value="null"
             />
-            <CheckBoxGroup name="group1" value="버튼내용" label="버튼 체크박스" :disabled="false" />
+            <CheckBoxGroup
+                name="group1"
+                value="버튼내용"
+                label="버튼 체크박스"
+                :disabled="false"
+            />
 
-            <CheckBoxGroup name="group2" value="버튼내용" label="버튼체크박스 그룹" :disabled="true" :list="checkList" />
+            <CheckBoxGroup
+                name="group2"
+                value="버튼내용"
+                label="버튼체크박스 그룹"
+                :disabled="true"
+                :list="checkList"
+            />
 
             <!-- <RadioGroup name="group3" value="버튼내용" label="체크박스내용" :disabled="false" :list="checkList" /> -->
 
@@ -193,8 +215,9 @@
                 @cancel="onCancel"
             >
                 <p>
-                    모든 국민은 법 앞에 평등하다. 누구든지 성별·종교 또는 사회적 신분에 의하여 정치적·경제적·사회적·문화적 생활의 모든
-                    영역에 영역에 있어서 차별을 받지 아니한다.
+                    모든 국민은 법 앞에 평등하다. 누구든지 성별·종교 또는 사회적
+                    신분에 의하여 정치적·경제적·사회적·문화적 생활의 모든 영역에
+                    영역에 있어서 차별을 받지 아니한다.
                 </p>
             </FullPopup>
             <!-- 
@@ -320,17 +343,19 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import { CheckList } from '@components/form/CheckBoxGroup.vue'
-import { AccordionListItem } from '@components/common/AccoItem.vue'
+import type { AccordionListItem } from '@components/common/AccoItem.vue'
+import type { Schema } from '@components/form/FormProvider.vue'
+import type { DropdownBoxList } from '@components/form/DropdownBox.vue'
 
-interface Data {
-    buttonField: string
-    calendarField: string
-    checkSingle: boolean
-    secretNumber: string
-    singleSelection: string
-    switchButton: boolean
-    textFieldPrimary: string
-}
+// interface Data {
+//     buttonField: string
+//     calendarField: string
+//     checkSingle: boolean
+//     secretNumber: string
+//     singleSelection: string
+//     switchButton: boolean
+//     textFieldPrimary: string
+// }
 
 @Component
 export default class CardSubPage extends Vue {
@@ -379,7 +404,7 @@ export default class CardSubPage extends Vue {
     private tabList = [{ name: 'first' }, { name: 'second' }, { name: 'third' }]
 
     // s: popup
-    private show: boolean = false
+    private show = false
     openPopup() {
         this.show = true
     }
@@ -407,11 +432,11 @@ export default class CardSubPage extends Vue {
         textfieldPrimary: '테스트',
     }
 
-    formChange(data: any) {
+    formChange(data: Schema) {
         this.data = data
     }
 
-    onSubmit(data: any) {
+    onSubmit(data: Schema) {
         console.log(data)
     }
 }

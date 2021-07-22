@@ -1,5 +1,11 @@
 <template>
-    <button :type="buttonType" class="btn" :class="[type, size]" :disabled="disabled" @click="onClick">
+    <button
+        :type="buttonType"
+        class="btn"
+        :class="[type, size]"
+        :disabled="disabled"
+        @click="onClick"
+    >
         <span class="text">
             <slot />
         </span>
@@ -11,6 +17,18 @@ import { Component, Prop, Vue } from 'vue-property-decorator'
 
 type Size = 'large' | 'medium' | 'small'
 type ButtonType = 'button' | 'submit'
+
+/**
+ * @description 디자인타입을 결정합니다.
+ */
+export type BasicButtonDesignType =
+    | 'basic' // 기본
+    | 'with' // 버튼과 함께 쓰이는 형태
+    | 'textBlue' // 텍스트버튼_파랑
+    | 'textGray' // 텍스트버튼_회색
+    | 'dialogBlue' // dialog버튼_파랑
+    | 'dialogWhite' // dialog버튼_흰색
+    | 'more' // 더보기
 
 @Component
 export default class BasicButton extends Vue {

@@ -2,7 +2,11 @@
     <div class="container floating">
         <div class="content">
             <Title title="가맹점 선택" />
-            <FormProvider :schema="data" @change="formChange" @submit="onSubmit">
+            <FormProvider
+                :schema="data"
+                @change="formChange"
+                @submit="onSubmit"
+            >
                 <template slot-scope="{ schema }">
                     <DropdownBox
                         id="dropdown-box01"
@@ -27,32 +31,39 @@
             </FormProvider>
         </div>
         <portal to="floating">
-            <BasicButton size="large">
-                다음
-            </BasicButton>
+            <BasicButton size="large"> 다음 </BasicButton>
         </portal>
     </div>
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator'
+import { Component, Vue } from 'vue-property-decorator'
+import type { DropdownBoxList } from '@components/form/DropdownBox.vue'
+import type { Schema } from '@components/form/FormProvider.vue'
 
-interface Data {
-    buttonField: string
-    calendarField: string
-    checkSingle: boolean
-    secretNumber: string
-    singleSelection: string
-    switchButton: boolean
-    textFieldPrimary: string
-}
+// interface Data {
+//     buttonField: string
+//     calendarField: string
+//     checkSingle: boolean
+//     secretNumber: string
+//     singleSelection: string
+//     switchButton: boolean
+//     textFieldPrimary: string
+// }
 
 @Component
 export default class FranchiseeSelect extends Vue {
     //드롭다운리스트 샘플
     private dropdownBoxList: DropdownBoxList = [
-        { displayName: 'LOCA MONEY:BIZ 7*3*', value: 'LOCA MONEY:BIZ 7*3*', selected: true },
-        { displayName: '가장최근에 받은 카드가 디폴트로 노출', value: '가장최근에 받은 카드가 디폴트로 노출' },
+        {
+            displayName: 'LOCA MONEY:BIZ 7*3*',
+            value: 'LOCA MONEY:BIZ 7*3*',
+            selected: true,
+        },
+        {
+            displayName: '가장최근에 받은 카드가 디폴트로 노출',
+            value: '가장최근에 받은 카드가 디폴트로 노출',
+        },
     ]
 
     private data: { [key: string]: object | number | string | boolean } = {
@@ -66,11 +77,11 @@ export default class FranchiseeSelect extends Vue {
         textfieldPrimary: '테스트',
     }
 
-    formChange(data: any) {
+    formChange(data: Schema) {
         this.data = data
     }
 
-    onSubmit(data: any) {
+    onSubmit(data: Schema) {
         console.log(data)
     }
 }

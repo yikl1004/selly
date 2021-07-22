@@ -10,7 +10,12 @@
             </h1>
 
             <!-- 이전버튼 -->
-            <button v-if="isSub" type="button" class="btn-prev-page" @click="backPressed">
+            <button
+                v-if="isSub"
+                type="button"
+                class="btn-prev-page"
+                @click="backPressed"
+            >
                 <span class="ir">이전</span>
             </button>
 
@@ -25,7 +30,12 @@
             </button>
 
             <!-- 전체메뉴 -->
-            <button v-if="!isProcess" type="button" class="global-navigation" @click="onOpenGNB">
+            <button
+                v-if="!isProcess"
+                type="button"
+                class="global-navigation"
+                @click="onOpenGNB"
+            >
                 <span class="ir">전체 메뉴</span>
             </button>
         </div>
@@ -42,9 +52,6 @@ type HeaderType = 'main' | 'sub' | 'proccess'
 
 @Component
 export default class Header extends Vue {
-    get classes(): string {
-        return true ? 'aa' : 'bb'
-    }
     /**
      * @category Props
      */
@@ -76,7 +83,7 @@ export default class Header extends Vue {
     /**
      * @category Data
      */
-    private toggle: boolean = false
+    private toggle = false
 
     /**
      * @category Methods

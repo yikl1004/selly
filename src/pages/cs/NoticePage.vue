@@ -11,9 +11,7 @@
                     :title="item.title"
                     :date="item.date"
                 />
-                <BasicButton type="more">
-                    더보기
-                </BasicButton>
+                <BasicButton type="more"> 더보기 </BasicButton>
             </div>
         </div>
     </div>

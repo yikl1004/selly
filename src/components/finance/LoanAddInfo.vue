@@ -5,7 +5,11 @@
 
             <div class="apply-terms-wrap">
                 <InfoList :list="infoList" />
-                <FormProvider :schema="data" @change="formChange" @submit="onSubmit">
+                <FormProvider
+                    :schema="data"
+                    @change="formChange"
+                    @submit="onSubmit"
+                >
                     <template slot-scope="{ schema }">
                         <EmailForm
                             id="my-email"
@@ -16,12 +20,19 @@
                             :validate="null"
                             :default-value="null"
                             :list="[
-                                { displayName: 'KT', value: 'kt', selected: true },
+                                {
+                                    displayName: 'KT',
+                                    value: 'kt',
+                                    selected: true,
+                                },
                                 { displayName: 'SKT', value: 'skt' },
                                 { displayName: 'LG U+', value: 'lguplus' },
                                 { displayName: 'KT알뜰폰', value: 'kt_sub' },
                                 { displayName: 'SKT알뜰폰', value: 'skt_sub' },
-                                { displayName: 'LGU+알뜰폰', value: 'lguplus_sub' },
+                                {
+                                    displayName: 'LGU+알뜰폰',
+                                    value: 'lguplus_sub',
+                                },
                             ]"
                             :update:list="null"
                             :select="null"
@@ -100,7 +111,10 @@
                                             :default-value="null"
                                         />
                                         <div class="img-box">
-                                            <img src="/assets/finance/img-id-card.png" alt="주민등록증 이미지" />
+                                            <img
+                                                src="/assets/finance/img-id-card.png"
+                                                alt="주민등록증 이미지"
+                                            />
                                         </div>
                                     </div>
                                 </div>
@@ -133,7 +147,10 @@
                                             :default-value="null"
                                         />
                                         <div class="img-box">
-                                            <img src="/assets/finance/img-license-card.png" alt="운전면허증 이미지" />
+                                            <img
+                                                src="/assets/finance/img-license-card.png"
+                                                alt="운전면허증 이미지"
+                                            />
                                         </div>
                                     </div>
                                 </div>
@@ -148,7 +165,13 @@
                             :list="checkList"
                         />
 
-                        <CheckBoxGroup name="group2" value="전체 동의" label="약관동의" :disabled="true" :list="checkList" />
+                        <CheckBoxGroup
+                            name="group2"
+                            value="전체 동의"
+                            label="약관동의"
+                            :disabled="true"
+                            :list="checkList"
+                        />
                     </template>
                 </FormProvider>
             </div>
@@ -167,35 +190,39 @@
         </FullPopup>
 
         <!--[D] 약관동의 팝업 -->
-        <FullPopup :show.sync="popShow" title="약관 동의 " :button-text="{ confirm: '동의함' }" type="popup" @confirm="onConfirm">
+        <FullPopup
+            :show.sync="popShow"
+            title="약관 동의 "
+            :button-text="{ confirm: '동의함' }"
+            type="popup"
+            @confirm="onConfirm"
+        >
             약관 팝업_내용수급필요
         </FullPopup>
         <!--//popup-->
         <portal to="floating">
-            <BasicButton size="large">
-                이전
-            </BasicButton>
-            <BasicButton size="large">
-                다음
-            </BasicButton>
+            <BasicButton size="large"> 이전 </BasicButton>
+            <BasicButton size="large"> 다음 </BasicButton>
         </portal>
     </div>
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator'
+import { Component, Vue } from 'vue-property-decorator'
 import PopupPredictionLoan from '@components/finance/PopupPredictionLoan.vue'
-import { CheckList } from '@components/form/CheckBoxGroup.vue'
+import type { CheckList } from '@components/form/CheckBoxGroup.vue'
+import type { Schema } from '@components/form/FormProvider.vue'
+import type { DropdownBoxList } from '@components/form/DropdownBox.vue'
 
-interface Data {
-    buttonField: string
-    calendarField: string
-    checkSingle: boolean
-    secretNumber: string
-    singleSelection: string
-    switchButton: boolean
-    textFieldPrimary: string
-}
+// interface Data {
+//     buttonField: string
+//     calendarField: string
+//     checkSingle: boolean
+//     secretNumber: string
+//     singleSelection: string
+//     switchButton: boolean
+//     textFieldPrimary: string
+// }
 
 @Component({
     components: { PopupPredictionLoan },
@@ -216,8 +243,15 @@ export default class LoanAddInfo extends Vue {
 
     //드롭다운리스트 샘플
     private dropdownBoxList: DropdownBoxList = [
-        { displayName: 'LOCA MONEY:BIZ 7*3*', value: 'LOCA MONEY:BIZ 7*3*', selected: true },
-        { displayName: '가장최근에 받은 카드가 디폴트로 노출', value: '가장최근에 받은 카드가 디폴트로 노출' },
+        {
+            displayName: 'LOCA MONEY:BIZ 7*3*',
+            value: 'LOCA MONEY:BIZ 7*3*',
+            selected: true,
+        },
+        {
+            displayName: '가장최근에 받은 카드가 디폴트로 노출',
+            value: '가장최근에 받은 카드가 디폴트로 노출',
+        },
     ]
 
     private checkList: CheckList = [
@@ -228,7 +262,7 @@ export default class LoanAddInfo extends Vue {
     ]
 
     // s: popup
-    private popShow: boolean = false
+    private popShow = false
     openPopup() {
         this.popShow = true
     }
@@ -248,11 +282,11 @@ export default class LoanAddInfo extends Vue {
         textfieldPrimary: '테스트',
     }
 
-    formChange(data: any) {
+    formChange(data: Schema) {
         this.data = data
     }
 
-    onSubmit(data: any) {
+    onSubmit(data: Schema) {
         console.log(data)
     }
 }

@@ -3,9 +3,7 @@
         <div class="content">
             <BoardDetail />
 
-            <BasicButton type="medium">
-                목록
-            </BasicButton>
+            <BasicButton type="medium"> 목록 </BasicButton>
         </div>
     </div>
 </template>

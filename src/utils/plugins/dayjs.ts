@@ -1,4 +1,4 @@
-import Vue, { PluginObject } from 'vue'
+import type { PluginObject } from 'vue'
 import dayjs from 'dayjs'
 import duration from 'dayjs/plugin/duration'
 
@@ -11,10 +11,10 @@ declare module 'vue/types/vue' {
     }
 }
 
-interface DayjsPluginOptions {}
+// interface DayjsPluginOptions {}
 
-const Dyajs: PluginObject<DayjsPluginOptions> = {
-    install(VueApp, options) {
+const Dyajs: PluginObject<{}> = {
+    install(VueApp) {
         // 추가 하고 싶은 기능을 개별적으로 import 해서 extend메서드로 확장해서 사용
         dayjs.extend(duration)
         VueApp.prototype.$dayjs = dayjs

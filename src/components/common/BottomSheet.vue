@@ -20,7 +20,11 @@
                 </p>
                 <div class="select-options-box">
                     <ul v-if="!!list.length" class="select-options">
-                        <li v-for="(item, index) in list" :key="`list-${index}`" :class="{ selected: item.selected }">
+                        <li
+                            v-for="(item, index) in list"
+                            :key="`list-${index}`"
+                            :class="{ selected: item.selected }"
+                        >
                             <button type="button" @click="onClickOption(index)">
                                 {{ item.displayName }}
                             </button>
@@ -38,6 +42,20 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
+
+/**
+ * @description "list" props의 타입
+ */
+export interface BottomSheetOptionItem {
+    displayName: string
+    value: string
+    selected?: boolean
+}
+
+/**
+ * @description BottomSheet 의 디자인 타입
+ */
+export type BottomSheetDesignType = 'select' | 'banner' | 'description'
 
 @Component
 export default class BottomSheet extends Vue {
@@ -72,7 +90,7 @@ export default class BottomSheet extends Vue {
     /**
      * @category Data(State)
      */
-    private transitionBeforeClass: string = ''
+    private transitionBeforeClass = ''
 
     /**
      * @category Computed

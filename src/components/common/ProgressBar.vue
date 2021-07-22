@@ -1,4 +1,5 @@
-v<template>
+v
+<template>
     <div class="box-progress-bar">
         <span class="progress-bar" :style="style"></span>
     </div>

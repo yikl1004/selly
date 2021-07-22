@@ -20,7 +20,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
+import { Component, Prop, Vue } from 'vue-property-decorator'
 
 export interface List {
     active?: boolean
@@ -47,7 +47,7 @@ export default class Tab extends Vue {
      */
 
     /** 선택된 항목의 index */
-    private currentIndex: number = 0
+    private currentIndex = 0
 
     /**
      * @category Methods

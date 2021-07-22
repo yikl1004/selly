@@ -1,5 +1,5 @@
 declare module '*.vue' {
-    import Vue, { VueConstructor, PluginObject, DirectiveOptions } from 'vue'
+    import Vue from 'vue'
     export default Vue
 }
 
@@ -19,11 +19,16 @@ declare module 'vue-click-outside' {
     export default directive
 }
 
-declare module 'vue-image-upload-resize' {
-    interface Options {
-        // 참고: https://www.npmjs.com/package/vue-image-upload-resize
-    }
+// declare module 'vue-image-upload-resize' {
+//     interface Options {
+//         // 참고: https://www.npmjs.com/package/vue-image-upload-resize
+//     }
 
-    const plugin: VueConstructor & PluginObject<Options>
-    export default plugin
+//     const plugin: VueConstructor & PluginObject<Options>
+//     export default plugin
+// }
+
+declare module 'v-calendar' {
+    import type { Component } from 'vue'
+    const DatePicker: Component
 }

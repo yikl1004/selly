@@ -2,15 +2,24 @@
     <div class="radio-group">
         <LabelTitle :hidden-label="hiddenLabel" :label="label" />
         <div class="radio-area">
-            <div v-for="(check, index) in list" :key="`radio-group-${name}-${index}`" class="radio-list-item">
-                <Radio :label="check.label" :name="`radio-group-${name}`" :value="check.value" :checked="check.checked" />
+            <div
+                v-for="(check, index) in list"
+                :key="`radio-group-${name}-${index}`"
+                class="radio-list-item"
+            >
+                <Radio
+                    :label="check.label"
+                    :name="`radio-group-${name}`"
+                    :value="check.value"
+                    :checked="check.checked"
+                />
             </div>
         </div>
     </div>
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
+import { Component, Prop, Vue } from 'vue-property-decorator'
 import { RadioProps } from '@components/form/Radio.vue'
 
 /**

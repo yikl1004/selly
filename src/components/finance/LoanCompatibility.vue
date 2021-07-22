@@ -4,14 +4,29 @@
             <div class="content">
                 <div class="title-banner-box">
                     <h2>회원확인사항</h2>
-                    <p>장기카드대출 Biz론 신청 적합성 확인과<br />상품설명서를 확인 후 신청이 진행됩니다.</p>
+                    <p>
+                        장기카드대출 Biz론 신청 적합성 확인과<br />상품설명서를
+                        확인 후 신청이 진행됩니다.
+                    </p>
                 </div>
 
                 <div class="loan-apply-wrap">
-                    <FormProvider :schema="data" @change="formChange" @submit="onSubmit">
+                    <FormProvider
+                        :schema="data"
+                        @change="formChange"
+                        @submit="onSubmit"
+                    >
                         <template slot-scope="{ schema }">
-                            <FormTextBox type="row" label="연령" value="만 41세" />
-                            <FormTextBox type="row" label="결제일" value="1일" />
+                            <FormTextBox
+                                type="row"
+                                label="연령"
+                                value="만 41세"
+                            />
+                            <FormTextBox
+                                type="row"
+                                label="결제일"
+                                value="1일"
+                            />
 
                             <DropdownBox
                                 id="dropdown-box04"
@@ -50,9 +65,19 @@
                                 success-message="없어도 될듯"
                             />
 
-                            <CheckBoxGroup name="agree" value="상품설명서 확인 후 동의" label="금융상품 설명서" :disabled="false" />
+                            <CheckBoxGroup
+                                name="agree"
+                                value="상품설명서 확인 후 동의"
+                                label="금융상품 설명서"
+                                :disabled="false"
+                            />
 
-                            <RadioGroup name="email" :disabled="false" :list="agreeRadio" label="대출상품 약관동의 내용을 이메일 수정" />
+                            <RadioGroup
+                                name="email"
+                                :disabled="false"
+                                :list="agreeRadio"
+                                label="대출상품 약관동의 내용을 이메일 수정"
+                            />
                         </template>
                     </FormProvider>
                 </div>
@@ -72,26 +97,26 @@
         </div>
 
         <portal to="floating">
-            <BasicButton size="large">
-                다음
-            </BasicButton>
+            <BasicButton size="large"> 다음 </BasicButton>
         </portal>
     </div>
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator'
-import { RadioProps } from '@components/form/Radio.vue'
+import { Component, Vue } from 'vue-property-decorator'
+import type { RadioProps } from '@components/form/Radio.vue'
+import type { Schema } from '@components/form/FormProvider.vue'
+import type { DropdownBoxList } from '@components/form/DropdownBox.vue'
 
-interface Data {
-    buttonField: string
-    calendarField: string
-    checkSingle: boolean
-    secretNumber: string
-    singleSelection: string
-    switchButton: boolean
-    textFieldPrimary: string
-}
+// interface Data {
+//     buttonField: string
+//     calendarField: string
+//     checkSingle: boolean
+//     secretNumber: string
+//     singleSelection: string
+//     switchButton: boolean
+//     textFieldPrimary: string
+// }
 
 @Component({
     components: {
@@ -102,7 +127,7 @@ interface Data {
 })
 export default class LoanCompatibility extends Vue {
     // s: popup 장기카드 이용동의
-    private popManualShow: boolean = false
+    private popManualShow = false
     openManualPopup() {
         this.popManualShow = true
     }
@@ -113,8 +138,15 @@ export default class LoanCompatibility extends Vue {
 
     //드롭다운리스트 샘플
     private dropdownBoxList: DropdownBoxList = [
-        { displayName: 'LOCA MONEY:BIZ 7*3*', value: 'LOCA MONEY:BIZ 7*3*', selected: true },
-        { displayName: '가장최근에 받은 카드가 디폴트로 노출', value: '가장최근에 받은 카드가 디폴트로 노출' },
+        {
+            displayName: 'LOCA MONEY:BIZ 7*3*',
+            value: 'LOCA MONEY:BIZ 7*3*',
+            selected: true,
+        },
+        {
+            displayName: '가장최근에 받은 카드가 디폴트로 노출',
+            value: '가장최근에 받은 카드가 디폴트로 노출',
+        },
     ]
 
     //대출용도
@@ -161,11 +193,11 @@ export default class LoanCompatibility extends Vue {
         textfieldPrimary: '테스트',
     }
 
-    formChange(data: any) {
+    formChange(data: Schema) {
         this.data = data
     }
 
-    onSubmit(data: any) {
+    onSubmit(data: Schema) {
         console.log(data)
     }
 }

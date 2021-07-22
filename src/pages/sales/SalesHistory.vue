@@ -27,18 +27,9 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Watch } from 'vue-property-decorator'
+import { Component, Vue } from 'vue-property-decorator'
 import SalesHistoryDetail from '@components/sales/SalesHistoryDetail.vue'
-
-interface Data {
-    buttonField: string
-    calendarField: string
-    checkSingle: boolean
-    secretNumber: string
-    singleSelection: string
-    switchButton: boolean
-    textFieldPrimary: string
-}
+import type { DropdownBoxList } from '@components/form/DropdownBox.vue'
 
 @Component({
     components: {
@@ -49,8 +40,14 @@ export default class SalesHistory extends Vue {
     //드롭다운리스트 샘플
     private dropdownBoxList: DropdownBoxList = [
         { displayName: '전체', value: 'all', selected: true },
-        { displayName: '이층집 강남점 222-20-2222', value: 'LOCA MONEY:BIZ 7*3*' },
-        { displayName: '이층집 강남점 222-20-2222', value: '가장최근에 받은 카드가 디폴트로 노출' },
+        {
+            displayName: '이층집 강남점 222-20-2222',
+            value: 'LOCA MONEY:BIZ 7*3*',
+        },
+        {
+            displayName: '이층집 강남점 222-20-2222',
+            value: '가장최근에 받은 카드가 디폴트로 노출',
+        },
     ]
 
     private tabList = [{ name: '일간' }, { name: '주간' }, { name: '요일별' }]

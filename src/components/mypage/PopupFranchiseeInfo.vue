@@ -5,7 +5,11 @@
             <strong>이층집 강남점</strong>
         </div>
         <div class="franchisee-modify-box">
-            <FormProvider :schema="data" @change="formChange" @submit="onSubmit">
+            <FormProvider
+                :schema="data"
+                @change="formChange"
+                @submit="onSubmit"
+            >
                 <template slot-scope="{}">
                     <!-- 주소 컴포넌트 사용하면 팝업이 안열림. 확인필요 -->
                     <!-- <AddressField
@@ -51,22 +55,27 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator'
+import { Component, Vue } from 'vue-property-decorator'
+import type { Schema } from '@components/form/FormProvider.vue'
 
-interface Data {
-    buttonField: string
-    calendarField: string
-    checkSingle: boolean
-    secretNumber: string
-    singleSelection: string
-    switchButton: boolean
-    textFieldPrimary: string
-}
+// interface Data {
+//     buttonField: string
+//     calendarField: string
+//     checkSingle: boolean
+//     secretNumber: string
+//     singleSelection: string
+//     switchButton: boolean
+//     textFieldPrimary: string
+// }
+
 @Component
 export default class PopupFranchiseeInfo extends Vue {
     private list = [
         { text: '롯데카드에 등록된 가맹점 정보가 변경됩니다.' },
-        { text: '가맹점 정보를 변경 시 마케팅. 대상 고객 수집에 시간이 소요되며, 변경 후 당일에는 마케팅 신청이 불가합니다.' },
+        {
+            text:
+                '가맹점 정보를 변경 시 마케팅. 대상 고객 수집에 시간이 소요되며, 변경 후 당일에는 마케팅 신청이 불가합니다.',
+        },
     ]
     private data: { [key: string]: object | number | string | boolean } = {
         dropdownBox: 'kt',
@@ -79,11 +88,11 @@ export default class PopupFranchiseeInfo extends Vue {
         textfieldPrimary: '테스트',
     }
 
-    formChange(data: any) {
+    formChange(data: Schema) {
         this.data = data
     }
 
-    onSubmit(data: any) {
+    onSubmit(data: Schema) {
         console.log(data)
     }
 }

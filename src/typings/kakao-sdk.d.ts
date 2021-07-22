@@ -46,12 +46,13 @@ interface KakaoUnlinkRes {
     id: number
 }
 
+interface ErrorStatus {
+    // 고정값
+    error: 'access_denied'
+    error_description: string
+}
 interface AuthFailCallback {
-    (params: {
-        // 고정값
-        error: 'access_denied'
-        error_description: string
-    }): void
+    (params: {}): void
 }
 
 interface AuthSuccessCallbackParamers {
@@ -72,11 +73,11 @@ interface KakaoLoginApi {
 }
 
 interface KakaoAPIRequestParams {
+    url: string
     scopes?: string
     scope?: string
-    url?: string
     success?(res: KakaoUserInfoRes | KakaoTermsRes): void
-    fail?(error: any): void
+    fail?(error: ErrorStatus): void
     data?: {
         redirect_uri?: string
         through_talk?: boolean
@@ -90,6 +91,9 @@ interface KakaoAuthAutorizeParameters {
     throughTalk?: boolean
     serviceTerms?: string
 }
+interface AuthStatusCallback {
+    (status: 'connected' | 'not_connected', user: KakaoUserInfoRes): void
+}
 interface KakaoCert {
     cleanup(): void
     isInitialized(): boolean
@@ -102,7 +106,7 @@ interface KakaoCert {
         /** 토큰 가져오기 */
         login(params: KakaoLoginApi): void
         /** 카카오 로그인한 유저의 정보 호출 */
-        getStatusInfo(params: any): void
+        getStatusInfo(params?: KakaoAuthStatusCallback): void
         /** 토큰 삭제 하기 */
         logout(callback?: Function): void
         /** 사용 중인 엑세스 토큰 확인 */

@@ -1,7 +1,11 @@
 <template>
     <div class="popup-repayment-schedule">
         <!--[D] 장기카드biz론 / 장기카드론-->
-        <PriceBox title="이용가능 금액" price="1,000,000" date="21. 05. 25 14:05 기준" />
+        <PriceBox
+            title="이용가능 금액"
+            price="1,000,000"
+            date="21. 05. 25 14:05 기준"
+        />
         <p class="txt-interest-rate">
             연 이자율
             <strong>4.95%</strong>
@@ -101,7 +105,14 @@
                     :default-value="null"
                 />
 
-                <CalendarField id="calendar02" label="대출일" :hidden-label="false" :default-value="null" :readonly="false" name="date" />
+                <CalendarField
+                    id="calendar02"
+                    label="대출일"
+                    :hidden-label="false"
+                    :default-value="null"
+                    :readonly="false"
+                    name="date"
+                />
 
                 <CalendarField
                     id="calendar03"
@@ -116,13 +127,9 @@
         </FormProvider>
 
         <BtnGroup>
-            <BasicButton size="medium">
-                초기화
-            </BasicButton>
+            <BasicButton size="medium"> 초기화 </BasicButton>
 
-            <BasicButton size="medium">
-                계산하기
-            </BasicButton>
+            <BasicButton size="medium"> 계산하기 </BasicButton>
         </BtnGroup>
         <PredictionPriceBox price-name="총 대출원금" />
     </div>
@@ -132,21 +139,29 @@
 import { Component, Vue } from 'vue-property-decorator'
 import PriceBox from '@components/finance/PriceBox.vue'
 import PredictionPriceBox from '@components/finance/PredictionPriceBox.vue'
+import type { Schema } from '@components/form/FormProvider.vue'
+import { DropdownBoxList } from '@components/form/DropdownBox.vue'
 
-interface Data {
-    buttonField: string
-    calendarField: string
-    checkSingle: boolean
-    secretNumber: string
-    singleSelection: string
-    switchButton: boolean
-    textFieldPrimary: string
-}
+// interface Data {
+//     buttonField: string
+//     calendarField: string
+//     checkSingle: boolean
+//     secretNumber: string
+//     singleSelection: string
+//     switchButton: boolean
+//     textFieldPrimary: string
+// }
+
 @Component({
     components: { PriceBox, PredictionPriceBox },
 })
 export default class PopupRepaySchedule extends Vue {
-    private priceInfo = [{ text: '5천만원 초과금액 이용 시 인지세(255,000원) 제외 후 입금됩니다.' }]
+    private priceInfo = [
+        {
+            text:
+                '5천만원 초과금액 이용 시 인지세(255,000원) 제외 후 입금됩니다.',
+        },
+    ]
 
     //드롭다운리스트 샘플
     private dropdownBoxList: DropdownBoxList = [
@@ -165,11 +180,11 @@ export default class PopupRepaySchedule extends Vue {
         textfieldPrimary: '테스트',
     }
 
-    formChange(data: any) {
+    formChange(data: Schema) {
         this.data = data
     }
 
-    onSubmit(data: any) {
+    onSubmit(data: Schema) {
         console.log(data)
     }
 }

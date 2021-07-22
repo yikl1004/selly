@@ -2,7 +2,7 @@
     <a v-if="external || sameUri" :href="href" :target="anchorTarget">
         <slot />
     </a>
-    <router-link v-else :to="href">
+    <router-link v-else :to="href" :tag="tag">
         <slot />
     </router-link>
 </template>
@@ -18,17 +18,29 @@ const protocolRegExp = /https?/gi
  */
 @Component
 export default class Anchor extends Vue {
-    @Prop({ type: String, default: '/', required: true })
-    public href!: string
+    /** @Props */
 
+    /** 이동할 uri */
+    @Prop({ type: String, default: '/', required: true })
+    readonly href!: string
+
+    /** router-link인 경우 tag 지정 */
+    @Prop({ type: String, default: 'a' })
+    readonly tag!: string
+
+    /** @Computed */
+
+    /** 외부 링크 인지 판단 */
     get external(): boolean {
         return protocolRegExp.test(this.href)
     }
 
+    /** 같은 uri 인지 판단 */
     get sameUri(): boolean {
         return this.$route.path === this.href
     }
 
+    /** a 태그의 target attribute 기능 */
     get anchorTarget(): '_blank' | '' {
         return this.external ? '_blank' : ''
     }

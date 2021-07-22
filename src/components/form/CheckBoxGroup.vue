@@ -6,7 +6,12 @@
             <button type="button" class="btn-checkbox" :disabled="disabled">
                 <i>{{ value }}</i>
             </button>
-            <button v-if="list.length" type="button" :class="['open', { opened: open }]" @click="toggle">
+            <button
+                v-if="list.length"
+                type="button"
+                :class="['open', { opened: open }]"
+                @click="toggle"
+            >
                 <span class="ir">{{ open ? '열림' : '닫힘' }}</span>
             </button>
         </div>
@@ -17,11 +22,16 @@
                     <strong>개인(신용)정보 동의</strong>
                 </div>
                 <div class="check-list-box">
-                    <div v-for="(check, index) in list" :key="`check-box-group-${name}-${index}`" class="check-list-item">
-                        <CheckBox v-bind="getCheckBoxProps(index)" @change="onChangeCheckBox" />
-                        <BasicButton type="textGray">
-                            보기
-                        </BasicButton>
+                    <div
+                        v-for="(check, index) in list"
+                        :key="`check-box-group-${name}-${index}`"
+                        class="check-list-item"
+                    >
+                        <CheckBox
+                            v-bind="getCheckBoxProps(index)"
+                            @change="onChangeCheckBox"
+                        />
+                        <BasicButton type="textGray"> 보기 </BasicButton>
                     </div>
                 </div>
                 <!-- 체크박스가 2줄로 나오는 케이스가 있음. check-list-box에 col 클래스 추가 -->
@@ -30,8 +40,15 @@
                 </div>
 
                 <div class="check-list-box col">
-                    <div v-for="(check, index) in list" :key="`check-box-group-${name}-${index}`" class="check-list-item">
-                        <CheckBox v-bind="getCheckBoxProps(index)" @change="onChangeCheckBox" />
+                    <div
+                        v-for="(check, index) in list"
+                        :key="`check-box-group-${name}-${index}`"
+                        class="check-list-item"
+                    >
+                        <CheckBox
+                            v-bind="getCheckBoxProps(index)"
+                            @change="onChangeCheckBox"
+                        />
                     </div>
                 </div>
             </div>
@@ -43,7 +60,9 @@
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 import { CheckboxProps } from '@components/form/CheckBox.vue'
 
-export type CheckListItem = Omit<CheckboxProps, 'id' | 'name' | 'type'> & { value: string }
+export type CheckListItem = Omit<CheckboxProps, 'id' | 'name' | 'type'> & {
+    value: string
+}
 export type CheckList = CheckListItem[]
 
 /**
@@ -92,13 +111,13 @@ export default class CheckBoxGroup extends Vue {
      */
 
     /** 포커스 상태 관리 */
-    private focusedClass: boolean = false
+    private focusedClass = false
 
     /** 토글 상태 */
-    private open: boolean = false
+    private open = false
 
     /** 전체 체크 여부 */
-    private allCheck: boolean = false
+    private allCheck = false
 
     /**
      * @category Computed
@@ -109,7 +128,7 @@ export default class CheckBoxGroup extends Vue {
      */
 
     @Watch('list')
-    changeList(newValue: CheckListItem[], oldValue: CheckListItem[]) {
+    changeList(newValue: CheckListItem[] /* oldValue: CheckListItem[] */) {
         this.allCheck = newValue.every(item => item.checked)
     }
 
@@ -150,10 +169,12 @@ export default class CheckBoxGroup extends Vue {
     }
 
     onChangeCheckBox({ value, index }: { value: boolean; index: number }) {
-        const checkedList = this._.cloneDeep(this.list).map((item, itemIndex) => {
-            item.checked = index === itemIndex ? value : !!item.checked
-            return item
-        })
+        const checkedList = this._.cloneDeep(this.list).map(
+            (item, itemIndex) => {
+                item.checked = index === itemIndex ? value : !!item.checked
+                return item
+            },
+        )
 
         this.changedValue(checkedList)
     }
@@ -161,7 +182,7 @@ export default class CheckBoxGroup extends Vue {
     onChangeAllCheck(event: InputEvent) {
         const target = event.target as HTMLInputElement
         const checked = target.checked
-        const checkedList = this._.cloneDeep(this.list).map((item, itemIndex) => {
+        const checkedList = this._.cloneDeep(this.list).map(item => {
             item.checked = checked
             return item
         })
