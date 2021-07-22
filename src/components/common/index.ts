@@ -1,7 +1,6 @@
 import Vue, { AsyncComponent, VueConstructor } from 'vue'
 
 // form
-import FileUploader from '@components/form/FileUploader.vue'
 import TextField from '@components/form/TextField.vue'
 import BasicButton from '@components/common/BasicButton.vue'
 import BtnGroup from '@components/common/BtnGroup.vue'
@@ -62,7 +61,6 @@ const CalendarField = () => ({
 const componentList: { [key: string]: VueConstructor | AsyncComponent }[] = [
     { Loading },
     { Anchor },
-    { FileUploader },
     { Header },
     { Footer },
     { FixedBtnBox },

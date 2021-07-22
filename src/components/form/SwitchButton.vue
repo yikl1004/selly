@@ -10,7 +10,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator'
+import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 
 /**
  * @description 디자인타입을 결정합니다.
@@ -58,6 +58,14 @@ export default class SwitchButton extends Vue {
     /**
      * @category Watch
      */
+
+    @Watch('value')
+    changeValue(value: boolean) {
+        /**
+         * @event change
+         */
+        this.$emit('change', value)
+    }
 }
 </script>
 

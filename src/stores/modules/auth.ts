@@ -23,6 +23,7 @@ export type MainInfo = AuthResponse['mainInfo']
 export type BizInfo = AuthResponse['bizInfo']
 export type LogoutInfo = AuthResponse['logoutInfo']
 export type RecommenderCode = AuthResponse['recommenderCode']
+export type MemberInfo = AuthResponse['memberInfo']
 
 @Module({ name: 'auth', namespaced: true })
 export default class Auth extends VuexModule<AuthState> {
@@ -33,6 +34,19 @@ export default class Auth extends VuexModule<AuthState> {
     public bizInfo: BizInfo | null = null
     public logoutInfo: LogoutInfo | null = null
     public inputRecommenderCodeResult: RecommenderCode | null = null
+    public memberInfo: MemberInfo = {
+        rc: '0000',
+        rsMsg: '',
+        data: {
+            mbrNm: '',
+            kkoId: '',
+            cellNo: '',
+            mrktSmsAgDate: '',
+            mrktSmsAgYn: 'N',
+            mrktKkofrndAgDate: 'N',
+            mrktKkofrndAgYn: 'N',
+        },
+    }
 
     @Mutation
     init() {
@@ -105,6 +119,21 @@ export default class Auth extends VuexModule<AuthState> {
         }
     }
 
+    @MutationAction
+    async getMemberInfo() {
+        const { data } = await AuthService.getMemberInfo()
+
+        return {
+            memberInfo: data,
+        }
+    }
+
+    @MutationAction
+    async setMarketingUpdate(params: AuthParameters['marketingUpdate']) {
+        await AuthService.setMarketingUpdate(params)
+        return {}
+    }
+
     /**
      * @description
      * getMemberWorkplaceInfo 액션을 통해 store에 적재된 가입가능한 사업장 리스트를 반환
@@ -173,5 +202,15 @@ export default class Auth extends VuexModule<AuthState> {
         } else {
             return ''
         }
+    }
+
+    /**
+     * @description
+     * 회원정보 데이터를 반환
+     */
+    get memberViewInfo(): MemberInfo['data'] {
+        const { memberInfo } = this
+
+        return memberInfo.data
     }
 }

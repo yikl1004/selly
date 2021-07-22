@@ -57,10 +57,6 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
         name: 'Main',
         component: createAsyncPage(import('@pages/index.vue')),
         meta: {},
-        // beforeEnter(to, from, next) {
-        //     console.log('router beforeEnter', { to, from })
-        //     next()
-        // },
     },
 
     {
@@ -268,11 +264,13 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
             layout: 'default',
         },
     },
-    //마이페이지
+
+    // 마이페이지
     {
-        path: '/my/setting',
+        // FIXME: 개발중...
+        path: '/config/member',
         name: 'setting',
-        component: createAsyncPage(import('@pages/mypage/SettingPage.vue')),
+        component: createAsyncPage(import('@pages/config/member/index.vue')),
         meta: {
             title: '회원정보',
             layout: 'default',
@@ -280,7 +278,7 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
         },
     },
     {
-        path: '/my/secession',
+        path: '/config/secession',
         name: 'Secession',
         component: createAsyncPage(import('@pages/mypage/SecessionPage.vue')),
         meta: {

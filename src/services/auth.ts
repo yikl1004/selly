@@ -36,6 +36,13 @@ export interface AuthParameters {
     recommenderCode: {
         rfnSn: string
     }
+    /**
+     * @description 마케팅 동의 업데이트(카카오 친구톡, 마케팅 SMS)
+     */
+    marketingUpdate: {
+        mrktKkofrndAgYn?: YN
+        mrktSmsAgYn?: YN
+    }
 }
 
 /**
@@ -112,6 +119,19 @@ export interface AuthResponse {
         rsMsg: string
         data: null | object
     }
+    memberInfo: {
+        rc: ResponseCode
+        rsMsg: string
+        data: {
+            mbrNm: string
+            kkoId: string
+            cellNo: string
+            mrktSmsAgDate: string | null
+            mrktSmsAgYn: YN
+            mrktKkofrndAgDate: YN
+            mrktKkofrndAgYn: YN
+        }
+    }
 }
 
 type LoginInfoRes = Promise<AxiosResponse<AuthResponse['loginInfo']>>
@@ -124,6 +144,7 @@ type LogoutInfoRes = Promise<AxiosResponse<AuthResponse['logoutInfo']>>
 type RecommenderCodeRes = Promise<
     AxiosResponse<AuthResponse['recommenderCode']>
 >
+type MemberInfoRes = Promise<AxiosResponse<AuthResponse['memberInfo']>>
 
 class AuthService {
     // 로그인/카카오최초인입
@@ -159,6 +180,18 @@ class AuthService {
     // my>사업자정보>추천인코드입력
     private recommenderCode: API = {
         url: '/API/MBR/SEMBRAA006',
+        method: 'post',
+    }
+
+    // my>회원정보요청
+    private memberInfo: API = {
+        url: '/API/MBR/SEMBRAA001',
+        method: 'post',
+    }
+
+    // my>회원정보>마케팅동의정보업데이트
+    private marketingUpdate: API = {
+        url: '/API/MBR/SEMBRAA008',
         method: 'post',
     }
 
@@ -202,6 +235,20 @@ class AuthService {
         params: AuthParameters['recommenderCode'],
     ): RecommenderCodeRes {
         const { url, method } = this.recommenderCode
+
+        return await axiosInstance.request({ method, url, params })
+    }
+
+    // my>회원정보요청
+    async getMemberInfo(): MemberInfoRes {
+        const { url, method } = this.memberInfo
+
+        return await axiosInstance.request({ method, url })
+    }
+
+    // my>회원정보>마케팅동의정보업데이트
+    async setMarketingUpdate(params: AuthParameters['marketingUpdate']) {
+        const { url, method } = this.marketingUpdate
 
         return await axiosInstance.request({ method, url, params })
     }
