@@ -22,6 +22,10 @@
     &.result {
         padding-bottom: 204px;
     }
+    &.style01 {
+        padding-top: 70px;
+        padding-bottom: 0;
+    }
     .caution-title {
         display: block;
         font-size: 20px;
@@ -58,10 +62,5 @@
             text-decoration: underline;
             color:$point-color-blue
         }
-    }
-}
-.content {
-    .caution-box {
-        padding-top: 70px;
     }
 }

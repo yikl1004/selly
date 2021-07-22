@@ -1,5 +1,5 @@
 <template>
-    <div class="popup-consent-wrap">
+    <div class="card-auth-box">
         <FormProvider :schema="data" @change="formChange" @submit="onSubmit">
             <template slot-scope="{ schema }">
                 <DropdownBox
@@ -19,6 +19,7 @@
                 />
 
                 <TextField
+                    v-if="type === 'cvc'"
                     id="text-form01"
                     type="text"
                     label="CVC/4DBC 번호"
@@ -32,6 +33,7 @@
                     error-message="CVC/4DBC 번호를 정확히 입력해주세요. (1/3)"
                 />
 
+                <!--[D] 비밀번호/ 비밀번호 + cvc 노출 케이스에 따라 뿌려지는 내용이 틀려야함 -->
                 <BulletList :list="infoList" />
             </template>
         </FormProvider>
@@ -39,7 +41,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Prop, Vue } from 'vue-property-decorator'
 import type { Schema } from '@components/form/FormProvider.vue'
 import type { DropdownBoxList } from '@components/form/DropdownBox.vue'
 
@@ -54,7 +56,15 @@ import type { DropdownBoxList } from '@components/form/DropdownBox.vue'
 // }
 
 @Component
-export default class PopupConsent extends Vue {
+export default class CardAuth extends Vue {
+    /**
+     * @Props
+     */
+
+    /** cvc 노출 여부 체크_퍼블 */
+    @Prop({ type: String })
+    readonly type!: string
+
     //드롭다운리스트 샘플
     private dropdownBoxList: DropdownBoxList = [
         {
@@ -70,6 +80,10 @@ export default class PopupConsent extends Vue {
 
     //블릿리스트 샘플
     private infoList = [
+        {
+            text:
+                '비밀번호 3회 이상 입력 오류시 서비스 제한을 받을 수 있습니다.',
+        },
         {
             text:
                 '비밀번호 및 CVC/4DBC 3회 이상 입력 오류시 서비스 제한을 받을 수 있습니다.',

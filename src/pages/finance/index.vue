@@ -22,27 +22,27 @@
             </BasicButton>
         </div>
         <!--[D] 이용동의 팝업 -->
-        <FullPopup
+        <!-- <FullPopup
             :show.sync="popConsentShow"
             title="장기카드 이용동의"
             :button-text="{ confirm: '이용동의' }"
             type="popup"
             @confirm="onConsentConfirm"
         >
-            <PopupConsent />
-        </FullPopup>
+            <CardAuth type="cvc" />
+        </FullPopup> -->
         <!--//[D] 이용동의 팝업 -->
 
         <!--[D] 장기카드 대출 이용거절 팝업 -->
-        <!-- <FullPopup
+        <FullPopup
             :show.sync="popRefusalShow"
             title="장기카드 대출 이용거절"
-            :button-text="{ confirm: '동의' }"
+            :button-text="{ confirm: '이용거절' }"
             type="popup"
             @confirm="onRefusalConfirm"
         >
             <PopupRefusal />
-        </FullPopup> -->
+        </FullPopup>
         <!--//[D] 장기카드 대출 이용거절 팝업 -->
 
         <!--[D] 예상 상환스케줄 팝업 -->
@@ -58,12 +58,7 @@
         <!--//[D] 예상 상환스케줄 팝업 -->
 
         <!--[D] 최초 장기대출 신청시 알림팝업 -->
-        <Modal
-            :show.sync="modalShow"
-            :button-text="{ confirm: '확인' }"
-            type="popup"
-            @confirm="onConfirmModal"
-        >
+        <!-- <Modal :show.sync="modalShow" :button-text="{ confirm: '확인' }" type="popup" @confirm="onConfirmModal">
             <p>
                 당사 장기카드대출을 처음 이용하실 경우, <br />회원님의 안전한
                 장기카드대출 이용을 위해 일일 3백만원 이상 신청시 대출신청 완료
@@ -72,7 +67,7 @@
                 은행 사정에 따라 입금 지연 또는 취소 될 수 있으니 반드시
                 입금통장을 확인해 주시기 바랍니다.
             </p>
-        </Modal>
+        </Modal> -->
         <!--//[D] 최초 장기대출 신청시 알림팝업 -->
     </div>
     <router-view v-else />
@@ -87,8 +82,8 @@ import LoanApply from '@pages/finance/LoanApply.vue'
     components: {
         CreditCardAuth,
         LoanApply,
-        PopupConsent: () => ({
-            component: import('@components/finance/PopupConsent.vue'),
+        CardAuth: () => ({
+            component: import('@components/finance/CardAuth.vue'),
         }),
         PopupRefusal: () => ({
             component: import('@components/finance/PopupRefusal.vue'),

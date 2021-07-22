@@ -135,3 +135,27 @@
 
     }
 }
+
+.check-box {
+    @include checkbox-style;
+    text-align: left;
+    i {
+        word-break: keep-all;
+    }
+    &.checked {
+        i:before {
+            background-color: $primary-color;
+            border-color:$primary-color;
+            background-image: url("/assets/icon/icon-only-check.svg")
+        }
+    }
+    &.disabled {
+        & i:before {
+            background-color: #fafafa;
+        }
+        &.checked i:before {
+            border-color: #ebebeb;
+            background-color: #ebebeb;
+        }
+    }
+}

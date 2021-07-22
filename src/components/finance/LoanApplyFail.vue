@@ -1,6 +1,6 @@
 <template>
     <div class="container floating">
-        <div class="content">
+        <div class="content pd-btm">
             <CautionBox
                 type="caution"
                 :title="`고객님께서는 현재 장기카드대출 Biz론 이용이 어려운 상황입니다.`"

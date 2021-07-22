@@ -3,7 +3,8 @@
         <div class="content">
             <CautionBox
                 type="complete"
-                :title="`장기카드대출 Biz론 심사 완료되었습니다.`"
+                title="장기카드대출 Biz론 심사 완료되었습니다."
+                complete
             />
 
             <InfoList :list="infoList" />

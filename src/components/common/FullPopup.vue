@@ -8,7 +8,7 @@
             <div
                 v-if="showState"
                 ref="modal"
-                :class="['full-popup-wrap', type]"
+                :class="['full-popup-wrap', type, { 'btn-case': buttonText }]"
             >
                 <div ref="inner" class="full-popup">
                     <div class="popup-header">

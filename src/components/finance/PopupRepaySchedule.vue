@@ -30,6 +30,7 @@
                     unit="만원"
                     :validate="null"
                     :default-value="null"
+                    error-message="신청금액을 정확하게 입력해 주세요."
                 />
 
                 <!--[D] 신청금액 5천만원 이상 입력되었을시 노출 -->
@@ -128,8 +129,7 @@
 
         <BtnGroup>
             <BasicButton size="medium"> 초기화 </BasicButton>
-
-            <BasicButton size="medium"> 계산하기 </BasicButton>
+            <BasicButton size="medium"> 계산 </BasicButton>
         </BtnGroup>
         <PredictionPriceBox price-name="총 대출원금" />
     </div>

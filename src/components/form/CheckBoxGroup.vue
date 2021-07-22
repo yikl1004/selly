@@ -27,11 +27,19 @@
                         :key="`check-box-group-${name}-${index}`"
                         class="check-list-item"
                     >
-                        <CheckBox
-                            v-bind="getCheckBoxProps(index)"
-                            @change="onChangeCheckBox"
-                        />
-                        <BasicButton type="textGray"> 보기 </BasicButton>
+                        <!-- 
+                            기존 체크박스 케이스 > 버튼으로 변경하기로 협의함
+                            <CheckBox v-bind="getCheckBoxProps(index)" @change="onChangeCheckBox" /> -->
+                        <button
+                            type="button"
+                            class="check-box"
+                            :class="{
+                                checked: check.checked,
+                                disabled: check.disabled,
+                            }"
+                        >
+                            <i>{{ check.label }}</i>
+                        </button>
                     </div>
                 </div>
                 <!-- 체크박스가 2줄로 나오는 케이스가 있음. check-list-box에 col 클래스 추가 -->
@@ -45,10 +53,16 @@
                         :key="`check-box-group-${name}-${index}`"
                         class="check-list-item"
                     >
-                        <CheckBox
-                            v-bind="getCheckBoxProps(index)"
-                            @change="onChangeCheckBox"
-                        />
+                        <button
+                            type="button"
+                            class="check-box"
+                            :class="{
+                                checked: check.checked,
+                                disabled: check.disabled,
+                            }"
+                        >
+                            <i>{{ check.label }}</i>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -114,7 +128,7 @@ export default class CheckBoxGroup extends Vue {
     private focusedClass = false
 
     /** 토글 상태 */
-    private open = false
+    private open = true
 
     /** 전체 체크 여부 */
     private allCheck = false
