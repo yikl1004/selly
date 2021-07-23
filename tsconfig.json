@@ -3,15 +3,6 @@
     "compilerOptions": {
         "target": "esnext",
         "module": "esnext",
-        "types": [
-            "webpack-env",
-            "vue/types/vue",
-            "react"
-        ],
-        "typeRoots": [
-            "./node_modules/@types",
-            "src/typings"
-        ],
         "paths": {
             "@components/*": [
                 "src/components/*"
@@ -35,7 +26,7 @@
                 "src/assets/*"
             ],
             "@layout/*": [
-                "src/layout/*"
+                "src/layout/*"  
             ],
             "@router/*": [
                 "src/router/*"
@@ -49,13 +40,13 @@
         ]
     },
     "include": [
+        "./src/@types/node.d.ts",
+        "./src/@types/index.d.ts",
+        "./src/@types/shims-vue.d.ts",
+        "./src/@types/kakao-sdk.d.ts",
+        "cli/tsc-staged.ts",
         "src/**/*.ts",
-        "cli/tsc-staged.ts"
+        "src/**/*.vue"
     ],
-    "exclude": ["node_modules"],
-    "files": [
-        "src/typings/shims-vue.d.ts",
-        "src/typings/kakao-sdk.d.ts",
-        "src/typings/node.d.ts",
-    ]
+    "exclude": ["node_modules"]
 }

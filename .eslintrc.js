@@ -15,6 +15,12 @@ module.exports = {
         // 'plugin:import/errors',
         // 'plugin:import/warnings',
         // 'plugin:vue/recommended',
+
+        // "plugin:vue/essential",
+        // "eslint:recommended",
+        // "@vue/typescript/recommended",
+        // "@vue/prettier",
+        // "@vue/prettier/@typescript-eslint",
     ],
     // parser: "@typescript-eslint/parser",
     parserOptions: {
@@ -26,6 +32,7 @@ module.exports = {
         'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
         'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
         'no-unless-escape': 'off',
+        // '@typescript-eslint/no-shadow': ['error', { builtinGlobals: true }],
 
         // 'prettier/prettier': ['warn', { parser: 'babel-ts' }],
         // [
@@ -195,19 +202,19 @@ module.exports = {
                 '@typescript-eslint/no-var-requires': 'off',
             },
         },
+        // {
+        //     files: ['src/**/*.vue'],
+        //     globals: {
+        //         GnbItem: 'readonly',
+        //         BizInfo: 'readonly',
+        //         FormInputType: 'readonly',
+        //         TransitionProps: 'readonly',
+        //         JusoResponse: 'readonly',
+        //         JusoResponseResults: 'readonly',
+        //     },
+        // },
         {
-            files: ['src/**/*.vue'],
-            globals: {
-                GnbItem: 'readonly',
-                BizInfo: 'readonly',
-                FormInputType: 'readonly',
-                TransitionProps: 'readonly',
-                JusoResponse: 'readonly',
-                JusoResponseResults: 'readonly',
-            },
-        },
-        {
-            files: ['src/typings/node.d.ts'],
+            files: ['src/@types/node.d.ts'],
             rules: {
                 '@typescript-eslint/no-unused-vars': 'off',
             },

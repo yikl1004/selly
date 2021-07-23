@@ -71,6 +71,7 @@ import { Component, Mixins, Prop, Watch } from 'vue-property-decorator'
 import { namespace } from 'vuex-class'
 import { KakaoSDK } from '@utils/mixins'
 import type { LogoutInfo } from '@stores/modules/auth'
+import type { GnbItem } from '@stores/modules/ui'
 
 interface MenuItem {
     name: string
@@ -161,6 +162,8 @@ export default class Gnb extends Mixins(KakaoSDK) {
         await this.kakaoLogout()
         await this.getLogoutInfo()
     }
+
+    /** @Lifecycle */
 }
 </script>
 

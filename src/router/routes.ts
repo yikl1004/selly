@@ -267,7 +267,6 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
 
     // 마이페이지
     {
-        // FIXME: 개발중...
         path: '/config/member',
         name: 'setting',
         component: createAsyncPage(import('@pages/config/member/index.vue')),
@@ -278,13 +277,16 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
         },
     },
     {
-        path: '/config/secession',
-        name: 'Secession',
-        component: createAsyncPage(import('@pages/mypage/SecessionPage.vue')),
+        path: '/config/withdrawal',
+        name: 'Withdrawal',
+        component: createAsyncPage(
+            import('@pages/config/withdrawal/index.vue'),
+        ),
         meta: {
             title: '회원탈퇴',
             layout: 'default',
             footer: false,
+            floating: true,
         },
     },
 

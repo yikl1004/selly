@@ -34,7 +34,7 @@ export default class Common extends VuexModule<CommonState> {
         const { data } = await CommonService.getLoginExtend()
 
         return {
-            loginExtendInfo: data.data,
+            loginExtendInfo: data,
         }
     }
 }

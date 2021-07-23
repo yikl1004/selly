@@ -30,8 +30,13 @@ const navigationGuard: SellyNavigationGuard = {
 
         // 세션 연장
         await store.dispatch('common/getLoginExtendInfo')
-
-        next()
+        const isMain = to.name === 'Main'
+        const needLogin = store.state.common.loginExtendInfo?.rc === '8888'
+        next(
+            [!isMain, needLogin].every(item => item)
+                ? { name: 'Main' }
+                : undefined,
+        )
     },
 }
 

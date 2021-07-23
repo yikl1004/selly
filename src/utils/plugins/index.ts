@@ -4,6 +4,7 @@ import Lodash, { options as LodashOptions } from '@utils/plugins/lodash'
 import Dayjs from '@utils/plugins/dayjs'
 import ClickOutside from 'vue-click-outside'
 import vLogger from '@utils/plugins/logger'
+import Modal from '@utils/plugins/modal'
 
 // [개발용]
 import VueToast from 'vue-toast-notification'
@@ -32,6 +33,9 @@ const registerPlugins = (): void => {
     Vue.use(vLogger, {
         dev: process.env.NODE_ENV !== 'production',
     })
+
+    // global modal (alert)
+    Vue.use(Modal)
 }
 
 export default registerPlugins

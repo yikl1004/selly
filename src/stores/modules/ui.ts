@@ -8,6 +8,13 @@ import { axiosInstance } from '@services/http'
 
 export type HeaderType = 'main' | 'sub' | 'process'
 
+// menu 정보
+export interface GnbItem {
+    name: string
+    path: string
+    children?: GnbItem[]
+}
+
 export interface UiState {
     gnbOpen: boolean
     gnbList: GnbItem[]

@@ -55,7 +55,9 @@
                 </div>
             </div>
             <div class="btn-area">
-                <BasicButton type="textGray"> 회원탈퇴 </BasicButton>
+                <BasicButton type="textGray" @click="toWithdrawal">
+                    회원탈퇴
+                </BasicButton>
             </div>
         </div>
     </div>
@@ -70,7 +72,7 @@ import type { AuthParameters } from '@services/auth'
 const { Action, Getter } = namespace('auth')
 
 @Component
-export default class SettingPage extends Vue {
+export default class MemberPage extends Vue {
     /** @Data */
 
     private marketingSMS = false
@@ -110,13 +112,22 @@ export default class SettingPage extends Vue {
         this.marketingKakaoFriend = value
     }
 
+    toWithdrawal() {
+        this.$router.push({ name: 'Withdrawal' })
+    }
+
     /** @Lifecycle */
+
     async mounted() {
         await this.getMemberInfo()
 
         this.$toast.error('마케팅 동의 업데이트가 안됨')
     }
+
+    beforeDestroy() {
+        this.$toast.clear()
+    }
 }
 </script>
 
-<style scoped lang="scss" src="./SettingPage.scss"></style>
+<style scoped lang="scss" src="./MemberPage.scss"></style>

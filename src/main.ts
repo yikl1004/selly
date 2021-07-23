@@ -12,9 +12,6 @@ Vue.config.productionTip = false
 Component.registerHooks(['beforeRouteEnter'])
 console.log(process.env)
 
-const a: GnbItem = { name: 'aa', path: 'aaa' }
-console.log(a)
-
 /**
  * @description 공통컴포넌트 등록, 전역 플러그인 등록
  */

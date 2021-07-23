@@ -33,7 +33,11 @@
                 </div>
             </template>
         </div>
-        <transition v-bind="transitionProps.datepicker">
+        <transition
+            mode="out-in"
+            enter-active-class="animate__animated animate__bounceInUp"
+            leave-active-class="animate__animated animate__bounceOutDown"
+        >
             <div v-if="datepickerVisible" class="datepicker-wrapper">
                 <date-picker
                     v-model="value"
@@ -114,15 +118,6 @@ export default class CalendarField extends Vue {
 
     /** datepicker 노출 여부 */
     private datepickerVisible = false
-
-    /** datepicker 노출 시 transition */
-    private transitionProps: { [key: string]: TransitionProps } = {
-        datepicker: {
-            mode: 'out-in',
-            'enter-active-class': 'animate__animated animate__bounceInUp',
-            'leave-active-class': 'animate__animated animate__bounceOutDown',
-        },
-    }
 
     /**  달력 선택된 값 표시 */
     private attrs: Array<object> = [

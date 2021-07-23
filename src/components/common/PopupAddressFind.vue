@@ -35,18 +35,13 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import axios from 'axios'
+import JusoService from '@services/juso'
+import type { JusoItem } from '@services/juso'
 
 interface Paging {
     totalCount: number
     currentPage: number
     countPerPage: number
-}
-
-interface DefaultParameters {
-    countPerPage: string
-    resultType: string
-    confmKey: string
 }
 
 interface ErrorState {
@@ -62,14 +57,7 @@ export default class PopupAddressFind extends Vue {
     private pending = false
 
     /** 주소 목록 */
-    private list: JusoResponse.JusoItem[] = []
-
-    /** 고정 파라미터 */
-    private defaultParameters: DefaultParameters = {
-        countPerPage: '10',
-        resultType: 'json',
-        confmKey: process.env.VUE_APP_JUSO_API_KEY,
-    }
+    private list: JusoItem[] = []
 
     /** 페이징 */
     private paging: Paging = {
@@ -102,16 +90,7 @@ export default class PopupAddressFind extends Vue {
         const { toNumber, isUndefined } = this._
         this.keyword = keyword
         this.pending = true
-        const response = await axios.get<JusoResponseResults>(
-            'https://www.juso.go.kr/addrlink/addrLinkApi.do',
-            {
-                params: {
-                    keyword,
-                    currentPage: nextPage || '1',
-                    ...this.defaultParameters,
-                },
-            },
-        )
+        const response = await JusoService.search(keyword, nextPage)
         this.pending = false
 
         const common = response.data.results.common
