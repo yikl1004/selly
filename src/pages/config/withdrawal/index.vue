@@ -36,16 +36,6 @@ export default class WithdrawalPage extends Vue {
                 '회원탈퇴 시 유통쇼핑데이터를 통한 콘텐츠 구매내역이 있을 경우 유통쇼핑데이터에서 확인이 불가합니다.',
         },
     ]
-
-    mounted() {
-        this.$modal.open({
-            message: 'wowㄴㅇㄴㅇㄴㅇㄴㅇo',
-            confirm: () => console.log('성공'),
-            buttonText: {
-                confirm: '나이쓰',
-            },
-        })
-    }
 }
 </script>
 

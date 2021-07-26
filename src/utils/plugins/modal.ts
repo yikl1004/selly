@@ -19,6 +19,7 @@ export interface ModalOptions {
         cancel?: string
     }
     confirm: Function
+    cancel?: Function
 }
 
 const Modal: PluginObject<{}> = {

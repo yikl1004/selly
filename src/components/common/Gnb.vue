@@ -53,15 +53,6 @@
                     </div>
                 </div>
             </div>
-            <Modal
-                v-if="modalMessage"
-                :show.sync="modalShow"
-                :button-text="{ confirm: '확인' }"
-                type="popup"
-                @confirm="onConfirmModal"
-            >
-                {{ modalMessage }}
-            </Modal>
         </section>
     </transition>
 </template>
@@ -72,11 +63,6 @@ import { namespace } from 'vuex-class'
 import { KakaoSDK } from '@utils/mixins'
 import type { LogoutInfo } from '@stores/modules/auth'
 import type { GnbItem } from '@stores/modules/ui'
-
-interface MenuItem {
-    name: string
-    path: string
-}
 
 const UiModule = namespace('ui')
 const AuthModule = namespace('auth')
@@ -97,14 +83,8 @@ export default class Gnb extends Mixins(KakaoSDK) {
 
     /** @category Data */
 
-    /** 메뉴 목록 */
-    private menuList: MenuItem[] = [{ name: '매출', path: '' }]
-
     /** 활성화 된 메뉴의 index */
     private activeIndex = 1
-
-    /** 모달 노출 */
-    private modalShow = false
 
     /** @category Computed */
 
@@ -136,16 +116,17 @@ export default class Gnb extends Mixins(KakaoSDK) {
     @Watch('logoutInfo')
     changeLogoutInfo(value: LogoutInfo /* oldValue: LogoutInfo */) {
         if (value && value.rc) {
-            this.modalShow = true
+            this.$modal.open({
+                buttonText: { confirm: '확인' },
+                confirm: () => {
+                    window.location.href = '/'
+                },
+                message: this.modalMessage,
+            })
         }
     }
 
     /** @category Methods */
-
-    onConfirmModal() {
-        this.modalShow = false
-        window.location.href = '/'
-    }
 
     onClose(event?: PointerEvent) {
         /**
