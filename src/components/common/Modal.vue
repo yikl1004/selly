@@ -121,6 +121,7 @@ export default class Modal extends Vue {
          * @event confirm
          */
         this.$emit('confirm')
+        this.showState = false
     }
 }
 </script>

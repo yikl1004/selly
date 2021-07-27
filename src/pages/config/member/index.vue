@@ -27,7 +27,7 @@
                         </li>
                     </ul>
                 </div>
-                <div class="setting-box">
+                <!-- <div class="setting-box">
                     <h2>혜택알림 동의</h2>
                     <ul>
                         <li>
@@ -52,7 +52,7 @@
                             </strong>
                         </li>
                     </ul>
-                </div>
+                </div> -->
             </div>
             <div class="btn-area">
                 <BasicButton type="textGray" @click="toWithdrawal">
@@ -113,7 +113,16 @@ export default class MemberPage extends Vue {
     }
 
     toWithdrawal() {
-        this.$router.push({ name: 'Withdrawal' })
+        // 기획 회원 v1.5, p.16
+        this.$modal.open({
+            message: 'Selly 회원을 탈퇴하시겠습니까?',
+            buttonText: {
+                confirm: '예',
+                cancel: '아니요',
+            },
+            confirm: () => this.$router.push({ name: 'Withdrawal' }),
+        })
+        // this.$router.push({ name: 'Withdrawal' })
     }
 
     /** @Lifecycle */
@@ -121,11 +130,11 @@ export default class MemberPage extends Vue {
     async mounted() {
         await this.getMemberInfo()
 
-        this.$toast.error('마케팅 동의 업데이트가 안됨')
+        // this.$toast.error('마케팅 동의 업데이트가 안됨')
     }
 
     beforeDestroy() {
-        this.$toast.clear()
+        // this.$toast.clear()
     }
 }
 </script>

@@ -1,5 +1,32 @@
 import type { PluginObject } from 'vue'
 
+interface EdkEventListener {
+    (params: Event): void
+}
+
+declare module 'vue/types/vue' {
+    interface Vue {
+        $edkHost: {
+            init: Function
+            signInBznav(params: { dom?: Element; bznavSyncToken: string }): void
+            signUpBznav(params: { dom?: Element; bznavSyncToken: string }): void
+            signOutBznav(params: { dom?: Element }): void
+            openDataSync(params: {
+                dom?: Element
+                eventListener?: EdkEventListener
+            }): void
+            openInsight(params: {
+                dom?: Element
+                eventListener?: EdkEventListener
+            }): void
+            openDevtool(params: {
+                dom?: Element
+                eventListener?: EdkEventListener
+            }): void
+        }
+    }
+}
+
 const load = (url: string) => {
     return new Promise((resolve, reject) => {
         if (typeof document === 'undefined') {
@@ -43,14 +70,19 @@ interface PluginOptions {
 }
 
 const Edk: PluginObject<PluginOptions> = {
-    install: (app, options) => {
+    install: (_Vue, options) => {
         let edkHost
         bootstrap()
             .then(edk => {
                 edk.Host.init(options)
                 edkHost = new edk.Host()
                 window.$edkHost = edkHost
-                app.prototype.$edkHost = edkHost
+
+                Object.defineProperty(_Vue.prototype, '$edkHost', {
+                    enumerable: true,
+                    configurable: true,
+                    value: edkHost,
+                })
             })
             .catch(error => {
                 console.warn('EDK host 초기화에 실패했습니다')

@@ -38,6 +38,20 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
                     import('@pages/example/testbed/index.vue'),
                 ),
             },
+            {
+                path: 'keypadSample',
+                name: 'KeypadSample',
+                component: createAsyncPage(
+                    import('@pages/example/keypadSample/index.vue'),
+                ),
+            },
+            {
+                path: 'edkSample',
+                name: 'EDKSample',
+                component: createAsyncPage(
+                    import('@pages/example/EDKSample/index.vue'),
+                ),
+            },
         ],
         meta: {},
     },
