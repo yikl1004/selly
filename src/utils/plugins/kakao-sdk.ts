@@ -191,7 +191,7 @@ class KakaoSDK {
 }
 
 const KakaoSdkPlugin: PluginObject<PluginOptions> = {
-    async install(_Vue, options) {
+    install(_Vue, options) {
         if (typeof options === 'undefined') {
             throw new Error('[KakaoSdkPlugin]: options을 추가해 주세요.')
         }
@@ -200,12 +200,16 @@ const KakaoSdkPlugin: PluginObject<PluginOptions> = {
             apiKey,
         })
 
-        await sdk.loadScript()
-        sdk.initialize()
+        sdk.loadScript().then(() => {
+            console.log('ksdjkldjflskdj')
+            sdk.initialize()
+            console.log('install 완료', sdk)
 
-        Object.defineProperty(_Vue, '$kakaoSdk', {
-            value: sdk,
-            enumerable: true,
+            Object.defineProperty(_Vue.prototype, '$kakaoSdk', {
+                enumerable: true,
+                configurable: true,
+                value: sdk,
+            })
         })
     },
 }

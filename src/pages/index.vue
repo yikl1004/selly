@@ -13,10 +13,10 @@
         >
             상단 비주얼 추가 작업 예정
         </div>
-        <button type="button" class="btn-kakao-login" @click="login">
+        <button type="button" class="btn-kakao-login" @click="() => login()">
             <span>카카오톡으로 시작</span>
         </button>
-        <button type="button" class="btn-kakao-login" @click="$kakaoSdk.unlink">
+        <button type="button" class="btn-kakao-login" @click="withdraw">
             <span>연결끊기(탈퇴) - 테스트용</span>
         </button>
     </div>
@@ -52,7 +52,7 @@ const { Mutation: UIMutation } = namespace('ui')
         next()
     },
 })
-export default class Login extends Vue {
+export default class MainPage extends Vue {
     /**
      * @category Use store
      */
@@ -144,6 +144,10 @@ export default class Login extends Vue {
         })
         // 5. Action: Selly 로그인 API 요청
         this.getLoginInfo()
+    }
+
+    withdraw() {
+        this.$kakaoSdk && this.$kakaoSdk.unlink()
     }
 
     /** @category Life-Cycle */

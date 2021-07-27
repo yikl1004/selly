@@ -11,16 +11,6 @@ module.exports = {
         '@vue/typescript/recommended',
         '@vue/prettier',
         '@vue/prettier/@typescript-eslint',
-        // '@vue/typescript',
-        // 'plugin:import/errors',
-        // 'plugin:import/warnings',
-        // 'plugin:vue/recommended',
-
-        // "plugin:vue/essential",
-        // "eslint:recommended",
-        // "@vue/typescript/recommended",
-        // "@vue/prettier",
-        // "@vue/prettier/@typescript-eslint",
     ],
     // parser: "@typescript-eslint/parser",
     parserOptions: {
@@ -205,12 +195,6 @@ module.exports = {
         // {
         //     files: ['src/**/*.vue'],
         //     globals: {
-        //         GnbItem: 'readonly',
-        //         BizInfo: 'readonly',
-        //         FormInputType: 'readonly',
-        //         TransitionProps: 'readonly',
-        //         JusoResponse: 'readonly',
-        //         JusoResponseResults: 'readonly',
         //     },
         // },
         {
