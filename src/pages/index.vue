@@ -16,17 +16,16 @@
         <button type="button" class="btn-kakao-login" @click="login">
             <span>카카오톡으로 시작</span>
         </button>
-        <button type="button" class="btn-kakao-login" @click="unlink">
+        <button type="button" class="btn-kakao-login" @click="$kakaoSdk.unlink">
             <span>연결끊기(탈퇴) - 테스트용</span>
         </button>
     </div>
 </template>
 
 <script lang="ts">
-import { Component, Mixins, Watch } from 'vue-property-decorator'
+import { Component, Vue, Watch } from 'vue-property-decorator'
 import { namespace } from 'vuex-class'
 import store from '@stores/index'
-import { KakaoSDK } from '@utils/mixins'
 import type { LoginInfo, MainInfo, UserInfo } from '@stores/modules/auth'
 import type { HeaderType } from '@stores/modules/ui'
 import type { RawLocation } from 'vue-router'
@@ -53,7 +52,7 @@ const { Mutation: UIMutation } = namespace('ui')
         next()
     },
 })
-export default class Login extends Mixins(KakaoSDK) {
+export default class Login extends Vue {
     /**
      * @category Use store
      */
@@ -133,11 +132,11 @@ export default class Login extends Mixins(KakaoSDK) {
          */
 
         // 1. 카카오 로그인 요청
-        await this.kakaoLogin()
+        await this.$kakaoSdk.login()
         // 2. 카카오 로그인 사용자 정보 요청
-        const kakaoUserInfoResponse = await this.kakaoUserInfo()
+        const kakaoUserInfoResponse = await this.$kakaoSdk.userInfo()
         // 3. 동의한 약관 항목 요청
-        const kakaoAgreedList = await this.kakaoAgreedList()
+        const kakaoAgreedList = await this.$kakaoSdk.agreedList()
         // 4. Mutation: Selly 로그인 API 요청 Parameter 세팅
         this.setUserInfo({
             ...kakaoUserInfoResponse,

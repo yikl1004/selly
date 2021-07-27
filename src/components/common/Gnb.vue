@@ -58,9 +58,8 @@
 </template>
 
 <script lang="ts">
-import { Component, Mixins, Prop, Watch } from 'vue-property-decorator'
+import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
 import { namespace } from 'vuex-class'
-import { KakaoSDK } from '@utils/mixins'
 import type { LogoutInfo } from '@stores/modules/auth'
 import type { GnbItem } from '@stores/modules/ui'
 
@@ -68,7 +67,7 @@ const UiModule = namespace('ui')
 const AuthModule = namespace('auth')
 
 @Component
-export default class Gnb extends Mixins(KakaoSDK) {
+export default class Gnb extends Vue {
     /** @category Stores */
     @UiModule.State('gnbList') readonly gnbList!: GnbItem[]
     @AuthModule.Getter('bizmanName') readonly bizmanName!: string
@@ -140,7 +139,7 @@ export default class Gnb extends Mixins(KakaoSDK) {
     }
 
     async logout() {
-        await this.kakaoLogout()
+        await this.$kakaoSdk.logout()
         await this.getLogoutInfo()
     }
 

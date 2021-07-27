@@ -11,5 +11,7 @@ namespace NodeJS {
         VUE_APP_JUSO_API_KEY: string
         // DEV: 로그인절차 생략 처리 플래그
         VUE_APP_SKIP_LOGIN: string
+        // 에메탄 SDK
+        VUE_APP_EDK_CDN: string
     }
 }

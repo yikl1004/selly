@@ -1,6 +1,8 @@
 declare global {
     interface Window {
         store?: object
+        $edkHost?: any
+        edk?: any
     }
 
     // Y 또는 N 문자열

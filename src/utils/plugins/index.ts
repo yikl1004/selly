@@ -5,6 +5,8 @@ import Dayjs from '@utils/plugins/dayjs'
 import ClickOutside from 'vue-click-outside'
 import vLogger from '@utils/plugins/logger'
 import Modal from '@utils/plugins/modal'
+import Edk from '@utils/plugins/Edk'
+import KakaoSdkPlugin from '@utils/plugins/kakao-sdk'
 
 // [개발용]
 import VueToast from 'vue-toast-notification'
@@ -36,6 +38,18 @@ const registerPlugins = (): void => {
 
     // global modal (alert)
     Vue.use(Modal)
+
+    // Biznav 연동
+    Vue.use(Edk, {
+        stage: 'prod',
+        clientId: 'selly',
+        debug: true,
+    })
+
+    // 카카오 sdk 연동
+    Vue.use(KakaoSdkPlugin, {
+        apiKey: process.env.VUE_APP_KAKAO_API_KEY,
+    })
 }
 
 export default registerPlugins
