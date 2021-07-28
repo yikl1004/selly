@@ -37,14 +37,13 @@
             "dom",
             "dom.iterable",
             "scripthost"
+        ],
+        "typeRoots": [
+            "node_modules/@types",
+            "./src/@types"
         ]
     },
     "include": [
-        "./src/@types/node.d.ts",
-        "./src/@types/index.d.ts",
-        "./src/@types/shims-vue.d.ts",
-        "./src/@types/kakao-sdk.d.ts",
-        "./src/@types/edk.d.ts",
         "cli/tsc-staged.ts",
         "src/**/*.ts",
         "src/**/*.vue"

@@ -1,4 +1,5 @@
 import { axiosInstance } from '@services/http'
+import { WithdrawalInfo } from '@stores/modules/auth'
 import { AxiosResponse } from 'axios'
 
 export interface BizInfoItem {
@@ -126,11 +127,16 @@ export interface AuthResponse {
             mbrNm: string
             kkoId: string
             cellNo: string
-            mrktSmsAgDate: string | null
-            mrktSmsAgYn: YN
-            mrktKkofrndAgDate: YN
-            mrktKkofrndAgYn: YN
+            mrktYn: YN
+            loanYn: YN
+            bizLoanYn: YN
+            datusYn: YN
         }
+    }
+    withdrawal: {
+        rc: ResponseCode
+        rsMsg: string
+        data: null
     }
 }
 
@@ -145,6 +151,7 @@ type RecommenderCodeRes = Promise<
     AxiosResponse<AuthResponse['recommenderCode']>
 >
 type MemberInfoRes = Promise<AxiosResponse<AuthResponse['memberInfo']>>
+type WithdrawalInfoRes = Promise<AxiosResponse<AuthResponse['withdrawal']>>
 
 class AuthService {
     // 로그인/카카오최초인입
@@ -192,6 +199,18 @@ class AuthService {
     // my>회원정보>마케팅동의정보업데이트
     private marketingUpdate: API = {
         url: '/API/MBR/SEMBRAA008',
+        method: 'post',
+    }
+
+    // 회원탈퇴
+    private withdrawal: API = {
+        url: '/API/MBR/SEMBRBA002',
+        method: 'post',
+    }
+
+    // my>회원정보>회원탈퇴전 내용확인
+    private beforeWithdrawal: API = {
+        url: '/API/MBR/SEMBRBA003',
         method: 'post',
     }
 
@@ -251,6 +270,20 @@ class AuthService {
         const { url, method } = this.marketingUpdate
 
         return await axiosInstance.request({ method, url, params })
+    }
+
+    // my > 회원탈퇴
+    async setWithdrawal(): WithdrawalInfoRes {
+        const { url, method } = this.withdrawal
+        console.log({ url, method })
+        return await axiosInstance.request({ method, url })
+    }
+
+    // 탈퇴 전 내용확인
+    async checkBeforeWithdrawal() {
+        const { url, method } = this.beforeWithdrawal
+
+        return await axiosInstance.request({ method, url })
     }
 }
 

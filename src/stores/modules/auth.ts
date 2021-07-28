@@ -3,6 +3,7 @@ import {
     VuexModule,
     MutationAction,
     Mutation,
+    Action,
 } from 'vuex-module-decorators'
 import AuthService, { AuthResponse, AuthParameters } from '@services/auth'
 
@@ -14,6 +15,8 @@ export interface AuthState {
     bizInfo: BizInfo | null
     logoutInfo: LogoutInfo | null
     inputRecommenderCodeResult: RecommenderCode | null
+    memberInfo: MemberInfo
+    withdrawalResult: WithdrawalInfo
 }
 
 export type UserInfo = AuthParameters['loginInfo']
@@ -24,6 +27,7 @@ export type BizInfo = AuthResponse['bizInfo']
 export type LogoutInfo = AuthResponse['logoutInfo']
 export type RecommenderCode = AuthResponse['recommenderCode']
 export type MemberInfo = AuthResponse['memberInfo']
+export type WithdrawalInfo = AuthResponse['withdrawal']['data']
 
 @Module({ name: 'auth', namespaced: true })
 export default class Auth extends VuexModule<AuthState> {
@@ -41,12 +45,17 @@ export default class Auth extends VuexModule<AuthState> {
             mbrNm: '',
             kkoId: '',
             cellNo: '',
-            mrktSmsAgDate: '',
-            mrktSmsAgYn: 'N',
-            mrktKkofrndAgDate: 'N',
-            mrktKkofrndAgYn: 'N',
+            // mrktSmsAgDate: '',
+            // mrktSmsAgYn: 'N',
+            // mrktKkofrndAgDate: 'N',
+            // mrktKkofrndAgYn: 'N',
+            mrktYn: 'N',
+            loanYn: 'N',
+            bizLoanYn: 'N',
+            datusYn: 'N',
         },
     }
+    public withdrawalResult: WithdrawalInfo | null = null
 
     @Mutation
     init() {
@@ -134,6 +143,15 @@ export default class Auth extends VuexModule<AuthState> {
         return {}
     }
 
+    @MutationAction
+    async setWithdrawal() {
+        const { data } = await AuthService.setWithdrawal()
+
+        return {
+            withdrawalResult: data,
+        }
+    }
+
     /**
      * @description
      * getMemberWorkplaceInfo 액션을 통해 store에 적재된 가입가능한 사업장 리스트를 반환
@@ -212,5 +230,23 @@ export default class Auth extends VuexModule<AuthState> {
         const { memberInfo } = this
 
         return memberInfo.data
+    }
+
+    /**
+     * @description
+     * 마케팅, 대출, 장기카드biz론, 유쇼데 유무
+     */
+    get cancelGuideParams(): Pick<
+        MemberInfo['data'],
+        'datusYn' | 'loanYn' | 'bizLoanYn' | 'mrktYn'
+    > {
+        const { data } = this.memberInfo
+
+        return {
+            mrktYn: data.mrktYn,
+            datusYn: data.datusYn,
+            bizLoanYn: data.bizLoanYn,
+            loanYn: data.loanYn,
+        }
     }
 }

@@ -70,6 +70,7 @@ import type { MemberInfo } from '@stores/modules/auth'
 import type { AuthParameters } from '@services/auth'
 
 const { Action, Getter } = namespace('auth')
+const { Mutation: UiMutation } = namespace('auth')
 
 @Component
 export default class MemberPage extends Vue {
@@ -80,61 +81,73 @@ export default class MemberPage extends Vue {
 
     /** @Stores */
     @Getter('memberViewInfo') readonly memberViewInfo!: MemberInfo['data']
+    @Getter('cancelGuideParams') readonly cancelGuideParams!: Pick<
+        MemberInfo['data'],
+        'datusYn' | 'mrktYn' | 'bizLoanYn' | 'loanYn'
+    >
     @Action('getMemberInfo') readonly getMemberInfo!: () => Promise<void>
     @Action('setMarketingUpdate') readonly setMarketingUpdate!: (
         params: AuthParameters['marketingUpdate'],
     ) => Promise<void>
+    @Action('setWithdrawal') readonly setWithdrawal!: () => Promise<void>
+    @UiMutation('setLoading') readonly setLoading!: (loading: boolean) => void
 
     /** @Computed */
 
-    get isSMS(): boolean {
-        return this.memberViewInfo.mrktSmsAgYn === 'Y'
-    }
+    // get isSMS(): boolean {
+    //     return this.memberViewInfo.mrktSmsAgYn === 'Y'
+    // }
 
-    get isKakaoFriend(): boolean {
-        return this.memberViewInfo.mrktKkofrndAgYn === 'Y'
-    }
+    // get isKakaoFriend(): boolean {
+    //     return this.memberViewInfo.mrktKkofrndAgYn === 'Y'
+    // }
 
     /** @Methods */
-    async onChangeSMS(value: boolean) {
-        await this.setMarketingUpdate({
-            mrktSmsAgYn: value ? 'Y' : 'N',
-            mrktKkofrndAgYn: this.marketingKakaoFriend ? 'Y' : 'N',
-        })
-        this.marketingSMS = value
-    }
+    // async onChangeSMS(value: boolean) {
+    //     await this.setMarketingUpdate({
+    //         mrktSmsAgYn: value ? 'Y' : 'N',
+    //         mrktKkofrndAgYn: this.marketingKakaoFriend ? 'Y' : 'N',
+    //     })
+    //     this.marketingSMS = value
+    // }
 
-    onChangeKakaoFriend(value: boolean) {
-        this.setMarketingUpdate({
-            mrktKkofrndAgYn: value ? 'Y' : 'N',
-            mrktSmsAgYn: this.marketingSMS ? 'Y' : 'N',
-        })
-        this.marketingKakaoFriend = value
+    // onChangeKakaoFriend(value: boolean) {
+    //     this.setMarketingUpdate({
+    //         mrktKkofrndAgYn: value ? 'Y' : 'N',
+    //         mrktSmsAgYn: this.marketingSMS ? 'Y' : 'N',
+    //     })
+    //     this.marketingKakaoFriend = value
+    // }
+
+    async handleWithdrawal() {
+        this.setLoading(true)
+        await this.setWithdrawal()
+        this.setLoading(false)
+        window.location.href = '/'
     }
 
     toWithdrawal() {
-        // 기획 회원 v1.5, p.16
-        this.$modal.open({
-            message: 'Selly 회원을 탈퇴하시겠습니까?',
-            buttonText: {
-                confirm: '예',
-                cancel: '아니요',
-            },
-            confirm: () => this.$router.push({ name: 'Withdrawal' }),
-        })
-        // this.$router.push({ name: 'Withdrawal' })
+        const condition = Object.values(this.cancelGuideParams).some(
+            item => item === 'Y',
+        )
+        if (condition) {
+            this.$router.push({ name: 'Withdrawal' })
+        } else {
+            this.$modal.open({
+                message: 'Selly 회원을 탈퇴하시겠습니까?',
+                buttonText: {
+                    confirm: '예',
+                    cancel: '아니요',
+                },
+                confirm: this.handleWithdrawal,
+            })
+        }
     }
 
     /** @Lifecycle */
 
     async mounted() {
         await this.getMemberInfo()
-
-        // this.$toast.error('마케팅 동의 업데이트가 안됨')
-    }
-
-    beforeDestroy() {
-        // this.$toast.clear()
     }
 }
 </script>

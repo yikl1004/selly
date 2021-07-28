@@ -1,8 +1,7 @@
 declare global {
     interface Window {
+        // FIXME: 개발용으로 잠시 붙여 놓은 것, 삭제 해야 합니다.
         store?: object
-        $edkHost?: any
-        edk?: any
     }
 
     // Y 또는 N 문자열

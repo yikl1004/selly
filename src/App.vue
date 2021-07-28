@@ -3,6 +3,7 @@
         <Layout />
         <PortalTarget name="bottomSheet" multiple />
         <PortalTarget name="modal" />
+        <Loading v-if="isLoading" />
         <Modal
             v-if="modalProps.message"
             :show.sync="modalProps.show"
@@ -29,6 +30,10 @@ export default class App extends Vue {
         show: false,
         buttonText: { confirm: '확인' },
         confirm: () => console.log('confirm 함수를 넣어 주세요'),
+    }
+
+    get isLoading(): boolean {
+        return this.$store.state.ui.loading
     }
 
     onConfirmModal() {

@@ -1,9 +1,5 @@
 import type { PluginObject } from 'vue'
 
-interface EdkEventListener {
-    (params: Event): void
-}
-
 declare module 'vue/types/vue' {
     interface Vue {
         $edkHost: {

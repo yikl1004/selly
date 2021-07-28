@@ -1,5 +1,13 @@
 import type { RouteConfig } from 'vue-router'
 
+/**
+ * @description vue route 파일 (페이지 관리)
+ * @notice 범례 - 중첩으로 표기 될 수 있습니다.
+ *      - @complete 완료
+ *      - @working 작업중
+ *      - @needFix 수정필요(기획 변경, 디자인 변경 등)
+ */
+
 export type RouteMeta = {
     floating?: boolean
     foolter?: boolean
@@ -281,6 +289,7 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
 
     // 마이페이지
     {
+        /** @complete */
         path: '/config/member',
         name: 'setting',
         component: createAsyncPage(import('@pages/config/member/index.vue')),
@@ -291,6 +300,7 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
         },
     },
     {
+        /** @working */
         path: '/config/withdrawal',
         name: 'Withdrawal',
         component: createAsyncPage(
@@ -305,7 +315,7 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
     },
 
     {
-        path: '/my/business',
+        path: '/config/personalBusinessOwnerInfo',
         name: 'Business',
         component: createAsyncPage(import('@pages/mypage/BusinessPage.vue')),
         meta: {

@@ -20,6 +20,7 @@ export interface UiState {
     gnbList: GnbItem[]
     headerType: HeaderType
     visible: boolean
+    loading: boolean
 }
 
 @Module({ name: 'ui', namespaced: true, stateFactory: true })
@@ -29,6 +30,7 @@ export default class Ui extends VuexModule {
     headerType: HeaderType = 'main'
     visible = false
     headerTitle = ''
+    loading = false
 
     @Mutation
     setVisibleHeader(visible: boolean) {
@@ -48,6 +50,11 @@ export default class Ui extends VuexModule {
     @Mutation
     setGnb(gnbOpen: boolean) {
         this.gnbOpen = gnbOpen
+    }
+
+    @Mutation
+    setLoading(loading: boolean) {
+        this.loading = loading
     }
 
     @MutationAction({ mutate: ['gnbList'] })
