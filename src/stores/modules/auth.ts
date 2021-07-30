@@ -1,10 +1,4 @@
-import {
-    Module,
-    VuexModule,
-    MutationAction,
-    Mutation,
-    Action,
-} from 'vuex-module-decorators'
+import { Module, VuexModule, MutationAction, Mutation } from 'vuex-module-decorators'
 import AuthService, { AuthResponse, AuthParameters } from '@services/auth'
 
 export interface AuthState {
@@ -56,6 +50,7 @@ export default class Auth extends VuexModule<AuthState> {
         },
     }
     public withdrawalResult: WithdrawalInfo | null = null
+    public cacelGuideList: { text: string }[] = []
 
     @Mutation
     init() {
@@ -74,9 +69,7 @@ export default class Auth extends VuexModule<AuthState> {
     @MutationAction
     async getLoginInfo() {
         const state = this.state as AuthState
-        const { data } = await AuthService.getLoginInfo(
-            state.kakaoUserInfo as UserInfo,
-        )
+        const { data } = await AuthService.getLoginInfo(state.kakaoUserInfo as UserInfo)
 
         return {
             loginInfo: data.data,
@@ -133,7 +126,13 @@ export default class Auth extends VuexModule<AuthState> {
         const { data } = await AuthService.getMemberInfo()
 
         return {
-            memberInfo: data,
+            memberInfo: {
+                ...data,
+                data: {
+                    ...data.data,
+                    mrktYn: 'Y',
+                },
+            },
         }
     }
 
@@ -149,6 +148,20 @@ export default class Auth extends VuexModule<AuthState> {
 
         return {
             withdrawalResult: data,
+        }
+    }
+
+    @MutationAction
+    async beforeWithdrawal() {
+        const typedState = this.state as AuthState
+        const { mrktYn, datusYn, loanYn, bizLoanYn } = typedState.memberInfo.data
+        const params = { mrktYn, datusYn, loanYn, bizLoanYn }
+        const { data } = await AuthService.checkBeforeWithdrawal(params)
+
+        return {
+            cacelGuideList: (data.data.list || []).map(item => ({
+                text: item.rsgDesc,
+            })),
         }
     }
 
@@ -234,12 +247,9 @@ export default class Auth extends VuexModule<AuthState> {
 
     /**
      * @description
-     * 마케팅, 대출, 장기카드biz론, 유쇼데 유무
+     * 마케팅, 대출, 장기카드biz론, 유쇼데 유/무
      */
-    get cancelGuideParams(): Pick<
-        MemberInfo['data'],
-        'datusYn' | 'loanYn' | 'bizLoanYn' | 'mrktYn'
-    > {
+    get cancelGuideParams(): Pick<MemberInfo['data'], 'datusYn' | 'loanYn' | 'bizLoanYn' | 'mrktYn'> {
         const { data } = this.memberInfo
 
         return {

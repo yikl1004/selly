@@ -1,9 +1,4 @@
-import {
-    Module,
-    VuexModule,
-    MutationAction,
-    Mutation,
-} from 'vuex-module-decorators'
+import { Module, VuexModule, MutationAction, Mutation } from 'vuex-module-decorators'
 import { axiosInstance } from '@services/http'
 
 export type HeaderType = 'main' | 'sub' | 'process'
@@ -25,12 +20,12 @@ export interface UiState {
 
 @Module({ name: 'ui', namespaced: true, stateFactory: true })
 export default class Ui extends VuexModule {
-    gnbOpen: UiState['gnbOpen'] = false
-    gnbList: UiState['gnbList'] = []
-    headerType: HeaderType = 'main'
-    visible = false
-    headerTitle = ''
-    loading = false
+    public gnbOpen: UiState['gnbOpen'] = false
+    public gnbList: UiState['gnbList'] = []
+    public headerType: HeaderType = 'main'
+    public visible = false
+    public headerTitle = ''
+    public loading = false
 
     @Mutation
     setVisibleHeader(visible: boolean) {
@@ -59,9 +54,7 @@ export default class Ui extends VuexModule {
 
     @MutationAction({ mutate: ['gnbList'] })
     async getGnbList() {
-        const { data } = await axiosInstance.get(
-            '/assets/static/dummy/menu.json',
-        )
+        const { data } = await axiosInstance.get('/assets/static/dummy/menu.json')
         const { gnbList } = data
 
         return {

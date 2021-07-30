@@ -44,6 +44,15 @@ export interface AuthParameters {
         mrktKkofrndAgYn?: YN
         mrktSmsAgYn?: YN
     }
+    /**
+     * @description 회원 탈퇴전 안내문구 요청
+     */
+    checkBeforeWithdrawal: {
+        mrktYn?: YN
+        loadYn?: YN
+        bizLoanYn?: YN
+        datusYn?: YN
+    }
 }
 
 /**
@@ -138,20 +147,24 @@ export interface AuthResponse {
         rsMsg: string
         data: null
     }
+    beforeWithdrawal: {
+        rc: ResponseCode
+        rsMsg: string
+        data: {
+            list: { rsgDesc: string }[]
+        }
+    }
 }
 
 type LoginInfoRes = Promise<AxiosResponse<AuthResponse['loginInfo']>>
-type MemberWorkplaceInfoRes = Promise<
-    AxiosResponse<AuthResponse['memberWorkplaceInfo']>
->
+type MemberWorkplaceInfoRes = Promise<AxiosResponse<AuthResponse['memberWorkplaceInfo']>>
 type MainInfoRes = Promise<AxiosResponse<AuthResponse['mainInfo']>>
 type BizInfoRes = Promise<AxiosResponse<AuthResponse['bizInfo']>>
 type LogoutInfoRes = Promise<AxiosResponse<AuthResponse['logoutInfo']>>
-type RecommenderCodeRes = Promise<
-    AxiosResponse<AuthResponse['recommenderCode']>
->
+type RecommenderCodeRes = Promise<AxiosResponse<AuthResponse['recommenderCode']>>
 type MemberInfoRes = Promise<AxiosResponse<AuthResponse['memberInfo']>>
 type WithdrawalInfoRes = Promise<AxiosResponse<AuthResponse['withdrawal']>>
+type BeforeWithdrawalInfoRes = Promise<AxiosResponse<AuthResponse['beforeWithdrawal']>>
 
 class AuthService {
     // 로그인/카카오최초인입
@@ -250,9 +263,7 @@ class AuthService {
     }
 
     // my>사업자정보>추천인코드입력
-    async inputRecommenderCode(
-        params: AuthParameters['recommenderCode'],
-    ): RecommenderCodeRes {
+    async inputRecommenderCode(params: AuthParameters['recommenderCode']): RecommenderCodeRes {
         const { url, method } = this.recommenderCode
 
         return await axiosInstance.request({ method, url, params })
@@ -280,10 +291,10 @@ class AuthService {
     }
 
     // 탈퇴 전 내용확인
-    async checkBeforeWithdrawal() {
+    async checkBeforeWithdrawal(params: AuthParameters['checkBeforeWithdrawal']): BeforeWithdrawalInfoRes {
         const { url, method } = this.beforeWithdrawal
 
-        return await axiosInstance.request({ method, url })
+        return await axiosInstance.request({ method, url, params })
     }
 }
 
