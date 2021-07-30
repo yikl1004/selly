@@ -69,10 +69,6 @@
                     "path": "/member"
                 },
                 {
-                    "name": "회원탈퇴",
-                    "path": "/withdrawal"
-                },
-                {
                     "name": "사업자 정보",
                     "path": "/personalBusinessOwnerInfo"
                 },

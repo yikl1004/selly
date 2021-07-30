@@ -7,9 +7,7 @@
                     <ul>
                         <li>
                             <em class="setting-name">이름</em>
-                            <strong class="setting-cont">{{
-                                memberViewInfo.mbrNm
-                            }}</strong>
+                            <strong class="setting-cont">{{ memberViewInfo.mbrNm }}</strong>
                         </li>
 
                         <li>
@@ -55,9 +53,7 @@
                 </div> -->
             </div>
             <div class="btn-area">
-                <BasicButton type="textGray" @click="toWithdrawal">
-                    회원탈퇴
-                </BasicButton>
+                <BasicButton type="textGray" @click="toWithdrawal"> 회원탈퇴 </BasicButton>
             </div>
         </div>
     </div>
@@ -76,19 +72,14 @@ const { Mutation: UiMutation } = namespace('auth')
 export default class MemberPage extends Vue {
     /** @Data */
 
-    private marketingSMS = false
-    private marketingKakaoFriend = false
+    // private marketingSMS: boolean = false
+    // private marketingKakaoFriend: boolean = false
 
     /** @Stores */
     @Getter('memberViewInfo') readonly memberViewInfo!: MemberInfo['data']
-    @Getter('cancelGuideParams') readonly cancelGuideParams!: Pick<
-        MemberInfo['data'],
-        'datusYn' | 'mrktYn' | 'bizLoanYn' | 'loanYn'
-    >
+    @Getter('cancelGuideParams') readonly cancelGuideParams!: Pick<MemberInfo['data'], 'datusYn' | 'mrktYn' | 'bizLoanYn' | 'loanYn'>
     @Action('getMemberInfo') readonly getMemberInfo!: () => Promise<void>
-    @Action('setMarketingUpdate') readonly setMarketingUpdate!: (
-        params: AuthParameters['marketingUpdate'],
-    ) => Promise<void>
+    @Action('setMarketingUpdate') readonly setMarketingUpdate!: (params: AuthParameters['marketingUpdate']) => Promise<void>
     @Action('setWithdrawal') readonly setWithdrawal!: () => Promise<void>
     @UiMutation('setLoading') readonly setLoading!: (loading: boolean) => void
 
@@ -101,6 +92,10 @@ export default class MemberPage extends Vue {
     // get isKakaoFriend(): boolean {
     //     return this.memberViewInfo.mrktKkofrndAgYn === 'Y'
     // }
+
+    get beforeCheck(): boolean {
+        return Object.values(this.cancelGuideParams).some(item => item === 'Y')
+    }
 
     /** @Methods */
     // async onChangeSMS(value: boolean) {
@@ -127,10 +122,7 @@ export default class MemberPage extends Vue {
     }
 
     toWithdrawal() {
-        const condition = Object.values(this.cancelGuideParams).some(
-            item => item === 'Y',
-        )
-        if (condition) {
+        if (this.beforeCheck) {
             this.$router.push({ name: 'Withdrawal' })
         } else {
             this.$modal.open({
