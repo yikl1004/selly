@@ -47,6 +47,7 @@
     }
     .box-gnb-list {
         overflow: hidden;
+        overflow-y: auto;
         height: calc(100% - 136px);
         .gnb-1dep-box {
             float: left;
