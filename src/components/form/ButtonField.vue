@@ -1,11 +1,6 @@
 <template>
     <div class="search-field">
-        <LabelTitle
-            :id="id"
-            label-type="label"
-            :hidden-label="hiddenLabel"
-            :label="label"
-        />
+        <LabelTitle :id="id" label-type="label" :hidden-label="hiddenLabel" :label="label" />
         <div class="flex">
             <div
                 class="input-area"
@@ -31,34 +26,18 @@
                     @focus="onFocus"
                     @blur="onBlur"
                 />
-                <Timer
-                    v-if="cert"
-                    class="counter"
-                    :count="timer.count"
-                    :unit="timer.unit"
-                    :format="timer.format"
-                />
-                <button
-                    v-if="!readonly && !!value.length"
-                    type="button"
-                    class="clear"
-                    @click="clearValue"
-                >
+                <Timer v-if="cert" class="counter" :count="timer.count" :unit="timer.unit" :format="timer.format" />
+                <button v-if="!readonly && !!value.length" type="button" class="clear" @click="clearValue">
                     <i />
                     <span class="ir">전체삭제</span>
                 </button>
             </div>
-            <button
-                class="search-button"
-                :disabled="disabled"
-                type="button"
-                @click="onSearch"
-            >
+            <button class="search-button" :disabled="disabled" type="button" @click="onSearch">
                 <span>{{ buttonText }}</span>
             </button>
         </div>
 
-        <TextInputMessage :message="errorMessage" message-type="error" />
+        <TextInputMessage v-if="errorMessage" :message="errorMessage" message-type="error" />
     </div>
 </template>
 

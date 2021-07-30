@@ -112,6 +112,11 @@ export default class CheckBoxBlock extends Vue {
             fieldName: this._.camelCase(this.id),
         } as OnSelectValue)
     }
+
+    /** @Lifecycle */
+    mounted() {
+        this.value = this.checked
+    }
 }
 </script>
 

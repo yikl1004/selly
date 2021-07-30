@@ -24,7 +24,8 @@ module.exports = {
         'no-unless-escape': 'off',
         // '@typescript-eslint/no-shadow': ['error', { builtinGlobals: true }],
 
-        // 'prettier/prettier': ['warn', { parser: 'babel-ts' }],
+        // 'prettier/prettier':
+        // ['warn', { parser: 'babel-ts' }],
         // [
         //     'warn',
         //     {},

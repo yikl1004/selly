@@ -154,6 +154,28 @@ export interface AuthResponse {
             list: { rsgDesc: string }[]
         }
     }
+    businessMainInfo: {
+        rc: ResponseCode
+        rsMsg: string
+        data: {
+            list: Array<{
+                bzno: string
+                bzmanNm: string
+                mbrNm: null | string
+                locaMcYn: YN
+                subList: Array<{
+                    mcno: string
+                    mcNm: string
+                    psno: string
+                    pnadd: string
+                    bpsnoAdd: string
+                    ddd: string
+                    exno: string
+                    tlno: string
+                }>
+            }>
+        }
+    }
 }
 
 type LoginInfoRes = Promise<AxiosResponse<AuthResponse['loginInfo']>>
@@ -165,6 +187,7 @@ type RecommenderCodeRes = Promise<AxiosResponse<AuthResponse['recommenderCode']>
 type MemberInfoRes = Promise<AxiosResponse<AuthResponse['memberInfo']>>
 type WithdrawalInfoRes = Promise<AxiosResponse<AuthResponse['withdrawal']>>
 type BeforeWithdrawalInfoRes = Promise<AxiosResponse<AuthResponse['beforeWithdrawal']>>
+type BusinessManInfoRes = Promise<AxiosResponse<AuthResponse['businessMainInfo']>>
 
 class AuthService {
     // 로그인/카카오최초인입
@@ -173,15 +196,15 @@ class AuthService {
         method: 'post',
     }
 
-    // my>회원사업장정보(최초로그인시 사업자 정보)
-    private memberWorkplaceInfo: API = {
-        url: '/API/MBR/SEMBRAA002',
-        method: 'post',
-    }
-
     // 메인화면 정보
     private mainInfo: API = {
         url: '/API/MAI/SEMAIAA001',
+        method: 'post',
+    }
+
+    // my>회원사업장정보(최초로그인시 사업자 정보)
+    private memberWorkplaceInfo: API = {
+        url: '/API/MBR/SEMBRAA002',
         method: 'post',
     }
 
@@ -224,6 +247,12 @@ class AuthService {
     // my>회원정보>회원탈퇴전 내용확인
     private beforeWithdrawal: API = {
         url: '/API/MBR/SEMBRBA003',
+        method: 'post',
+    }
+
+    // my > 사업자정보 및 가맹점 정보
+    private businessManInfo: API = {
+        url: 'API/MBR/SEMBRAA003',
         method: 'post',
     }
 
@@ -295,6 +324,13 @@ class AuthService {
         const { url, method } = this.beforeWithdrawal
 
         return await axiosInstance.request({ method, url, params })
+    }
+
+    // my > 사업자정보 및 가맹점정보
+    async getBusinessManInfo(): BusinessManInfoRes {
+        const { url, method } = this.businessManInfo
+
+        return await axiosInstance.request({ method, url })
     }
 }
 

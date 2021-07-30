@@ -23,6 +23,7 @@ export default class Ui extends VuexModule {
     public gnbOpen: UiState['gnbOpen'] = false
     public gnbList: UiState['gnbList'] = []
     public headerType: HeaderType = 'main'
+    // header 노출
     public visible = false
     public headerTitle = ''
     public loading = false

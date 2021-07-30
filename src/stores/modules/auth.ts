@@ -1,6 +1,12 @@
 import { Module, VuexModule, MutationAction, Mutation } from 'vuex-module-decorators'
 import AuthService, { AuthResponse, AuthParameters } from '@services/auth'
 
+interface BottomSheetOptionItem {
+    displayName: string
+    value: string
+    selected?: boolean
+}
+
 export interface AuthState {
     loginInfo: LoginInfo | null
     kakaoUserInfo: UserInfo | null
@@ -22,6 +28,7 @@ export type LogoutInfo = AuthResponse['logoutInfo']
 export type RecommenderCode = AuthResponse['recommenderCode']
 export type MemberInfo = AuthResponse['memberInfo']
 export type WithdrawalInfo = AuthResponse['withdrawal']['data']
+export type BusinessManInfo = AuthResponse['businessMainInfo']['data']
 
 @Module({ name: 'auth', namespaced: true })
 export default class Auth extends VuexModule<AuthState> {
@@ -51,6 +58,7 @@ export default class Auth extends VuexModule<AuthState> {
     }
     public withdrawalResult: WithdrawalInfo | null = null
     public cacelGuideList: { text: string }[] = []
+    public businessManInfo: BusinessManInfo | null = null
 
     @Mutation
     init() {
@@ -126,13 +134,14 @@ export default class Auth extends VuexModule<AuthState> {
         const { data } = await AuthService.getMemberInfo()
 
         return {
-            memberInfo: {
-                ...data,
-                data: {
-                    ...data.data,
-                    mrktYn: 'Y',
-                },
-            },
+            memberInfo: data,
+            // {
+            //     ...data,
+            //     data: {
+            //         ...data.data,
+            //         mrktYn: 'Y',
+            //     },
+            // },
         }
     }
 
@@ -162,6 +171,15 @@ export default class Auth extends VuexModule<AuthState> {
             cacelGuideList: (data.data.list || []).map(item => ({
                 text: item.rsgDesc,
             })),
+        }
+    }
+
+    @MutationAction
+    async getBusinessManInfo() {
+        const { data } = await AuthService.getBusinessManInfo()
+
+        return {
+            businessManInfo: data.data,
         }
     }
 
@@ -258,5 +276,21 @@ export default class Auth extends VuexModule<AuthState> {
             bizLoanYn: data.bizLoanYn,
             loanYn: data.loanYn,
         }
+    }
+
+    /**
+     * @description
+     * 사업자정보 리스트
+     */
+    get businessManList(): BottomSheetOptionItem[] {
+        const { list } = this.businessManInfo as BusinessManInfo
+
+        return list
+            ? list.map((item, index) => ({
+                  displayName: `${item.bzmanNm} ${item.bzno}`,
+                  value: item.bzno,
+                  selected: index === 0,
+              }))
+            : []
     }
 }

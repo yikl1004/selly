@@ -1,27 +1,13 @@
 <template>
     <div class="container">
-        <div class="content">
+        <div v-if="businessManInfo" class="content">
             <div class="business-wrap">
-                <FormProvider
-                    :schema="data"
-                    @change="formChange"
-                    @submit="onSubmit"
-                >
-                    <template slot-scope="{ schema }">
-                        <DropdownBox
-                            id="dropdown-box01"
-                            label="사업자 선택"
-                            :list="dropdownBoxList"
-                            :default-value="schema.dropdownBox"
-                            :disabled="false"
-                        />
+                <FormProvider :schema="data" @change="formChange" @submit="onSubmit">
+                    <template slot-scope="{}">
+                        <DropdownBox id="dropdown-box01" label="사업자 선택" :list="businessManList" />
                         <div class="btn-area">
-                            <BasicButton type="textBlue" @click="openPopup">
-                                사업자 추가
-                            </BasicButton>
-                            <BasicButton type="textBlue">
-                                사업자 삭제
-                            </BasicButton>
+                            <BasicButton type="textBlue" @click="openPopup"> 사업자 추가 </BasicButton>
+                            <BasicButton type="textBlue"> 사업자 삭제 </BasicButton>
                         </div>
                         <ButtonField
                             id="name"
@@ -35,9 +21,7 @@
                             error-message="사업자명을 정확하게 입력해주세요."
                         />
                         <BtnGroup>
-                            <BasicButton type="medium">
-                                매출/입금 연동
-                            </BasicButton>
+                            <BasicButton type="medium"> 매출/입금 연동 </BasicButton>
                         </BtnGroup>
                     </template>
                 </FormProvider>
@@ -57,13 +41,7 @@
         </div>
         <!--popup-->
         <!--[D] 가맹점 정보 팝업 -->
-        <FullPopup
-            :show.sync="popShow"
-            title="가맹점 정보"
-            :button-text="{ confirm: '수정' }"
-            type="popup"
-            @confirm="onConfirm"
-        >
+        <FullPopup :show.sync="popShow" title="가맹점 정보" :button-text="{ confirm: '수정' }" type="popup" @confirm="onConfirm">
             <PopupFranchiseeInfo />
         </FullPopup>
         <!--//popup-->
@@ -72,14 +50,38 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import PopupFranchiseeInfo from '@components/mypage/PopupFranchiseeInfo.vue'
+import { namespace } from 'vuex-class'
 import type { Schema } from '@components/form/FormProvider.vue'
 import type { DropdownBoxList } from '@components/form/DropdownBox.vue'
+import type { BusinessManInfo } from '@stores/modules/auth'
+// import type { NavigationGuard } from 'vue-router'
+
+const { Action, State, Getter } = namespace('auth')
+
+// const beforeRouteEnter: NavigationGuard = (to, from, next) => {}
 
 @Component({
-    components: { PopupFranchiseeInfo },
+    components: {
+        PopupFranchiseeInfo: () => import('@components/mypage/PopupFranchiseeInfo.vue'),
+    },
 })
 export default class BusinessPage extends Vue {
+    /** @Stores */
+    @Action('getBusinessManInfo')
+    readonly getBusinessManInfo!: () => Promise<void>
+
+    @State('businessManInfo')
+    readonly businessManInfo!: BusinessManInfo
+
+    @Getter('businessManList')
+    readonly businessManList!: DropdownBoxList
+
+    /** @LifeCycle */
+
+    async created() {
+        await this.getBusinessManInfo()
+    }
+
     // s: popup
     private popShow = false
     openPopup() {
@@ -91,10 +93,7 @@ export default class BusinessPage extends Vue {
     // e: popup
 
     //가맹점 정보 샘플
-    private franchiseeList = [
-        { title: '이층집 강남점1' },
-        { title: '이층집 강남점2' },
-    ]
+    private franchiseeList = [{ title: '이층집 강남점1' }, { title: '이층집 강남점2' }]
     //드롭다운리스트 샘플
     private dropdownBoxList: DropdownBoxList = [
         {

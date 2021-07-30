@@ -278,7 +278,7 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
         },
     },
     {
-        /** @working */
+        /** @complete */
         path: '/config/withdrawal',
         name: 'Withdrawal',
         component: createAsyncPage(import('@pages/config/withdrawal/index.vue')),
@@ -289,10 +289,6 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
             floating: true,
         },
         beforeEnter(to, from, next) {
-            console.log({
-                from,
-                to,
-            })
             next(from.name !== 'Config' ? 'not-found-page' : undefined)
         },
     },

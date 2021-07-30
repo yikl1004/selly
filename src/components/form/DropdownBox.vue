@@ -3,12 +3,7 @@
         <!-- id 필요여부에 따라 삭제 -->
         <LabelTitle :id="id" :hidden-label="hiddenLabel" :label="label" />
         <div class="input-area" :class="{ 'select-type': true }">
-            <button
-                type="button"
-                class="btn-input-select"
-                :disabled="disabled"
-                @click="onClick"
-            >
+            <button type="button" class="btn-input-select" :disabled="disabled" @click="onClick">
                 <span>{{ selectedDisplayName }}</span>
             </button>
             <portal to="bottomSheet">
@@ -21,11 +16,7 @@
                 />
             </portal>
         </div>
-        <TextInputMessage
-            v-if="message"
-            :message="message"
-            :message-type="messageType"
-        />
+        <TextInputMessage v-if="message" :message="message" :message-type="messageType" />
     </div>
 </template>
 
@@ -171,6 +162,8 @@ export default class DropdownBox extends Vue {
                 item.selected = this.defaultValue === item.value
                 return item
             })
+        } else {
+            this.selectList = this.list
         }
     }
 
