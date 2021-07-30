@@ -35,30 +35,22 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
             {
                 path: 'form',
                 name: 'ExampleForm',
-                component: createAsyncPage(
-                    import('@pages/example/form/index.vue'),
-                ),
+                component: createAsyncPage(import('@pages/example/form/index.vue')),
             },
             {
                 path: 'test',
                 name: 'Test',
-                component: createAsyncPage(
-                    import('@pages/example/testbed/index.vue'),
-                ),
+                component: createAsyncPage(import('@pages/example/testbed/index.vue')),
             },
             {
                 path: 'keypadSample',
                 name: 'KeypadSample',
-                component: createAsyncPage(
-                    import('@pages/example/keypadSample/index.vue'),
-                ),
+                component: createAsyncPage(import('@pages/example/keypadSample/index.vue')),
             },
             {
                 path: 'edkSample',
                 name: 'EDKSample',
-                component: createAsyncPage(
-                    import('@pages/example/EDKSample/index.vue'),
-                ),
+                component: createAsyncPage(import('@pages/example/EDKSample/index.vue')),
             },
         ],
         meta: {},
@@ -139,9 +131,7 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
                 // TODO: 매출내역 연동 페이지... 기획 수정 중
                 path: 'linkage',
                 name: 'Sales Linkage',
-                component: createAsyncPage(
-                    import('@pages/sales/SalesLinkage.vue'),
-                ),
+                component: createAsyncPage(import('@pages/sales/SalesLinkage.vue')),
                 meta: {
                     title: '매출 내역',
                 },
@@ -169,9 +159,7 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
                 //신용카드 인증페이지
                 path: 'creditcardauth',
                 name: 'CreditCardAuth',
-                component: createAsyncPage(
-                    import('@pages/finance/CreditCardAuth.vue'),
-                ),
+                component: createAsyncPage(import('@pages/finance/CreditCardAuth.vue')),
                 meta: {
                     layout: 'default',
                     footer: false,
@@ -181,9 +169,7 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
                 //본인인증 페이지
                 path: 'selfauth',
                 name: 'Self Auth',
-                component: createAsyncPage(
-                    import('@pages/finance/SelfAuth.vue'),
-                ),
+                component: createAsyncPage(import('@pages/finance/SelfAuth.vue')),
                 meta: {
                     layout: 'default',
                     footer: false,
@@ -193,9 +179,7 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
                 //금소법 적합성 확인페이지
                 path: 'loanapply',
                 name: 'Loan Apply',
-                component: createAsyncPage(
-                    import('@pages/finance/LoanApply.vue'),
-                ),
+                component: createAsyncPage(import('@pages/finance/LoanApply.vue')),
                 meta: {
                     layout: 'default',
                     footer: false,
@@ -205,9 +189,7 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
                 //이용 거절 페이지
                 path: 'loanreject',
                 name: 'Loan Reject',
-                component: createAsyncPage(
-                    import('@pages/finance/LoanReject.vue'),
-                ),
+                component: createAsyncPage(import('@pages/finance/LoanReject.vue')),
                 meta: {
                     layout: 'default',
                     footer: false,
@@ -217,9 +199,7 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
                 //대출내역
                 path: 'loanhistory',
                 name: 'Loan History',
-                component: createAsyncPage(
-                    import('@pages/finance/LoanHistory.vue'),
-                ),
+                component: createAsyncPage(import('@pages/finance/LoanHistory.vue')),
                 meta: {
                     layout: 'default',
                 },
@@ -228,9 +208,7 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
                 //대출내역상세
                 path: 'loandetail',
                 name: 'Loan History Detail',
-                component: createAsyncPage(
-                    import('@pages/finance/LoanHistoryDetail.vue'),
-                ),
+                component: createAsyncPage(import('@pages/finance/LoanHistoryDetail.vue')),
                 meta: {
                     layout: 'default',
                 },
@@ -291,7 +269,7 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
     {
         /** @complete */
         path: '/config/member',
-        name: 'setting',
+        name: 'Config',
         component: createAsyncPage(import('@pages/config/member/index.vue')),
         meta: {
             title: '회원정보',
@@ -303,17 +281,21 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
         /** @working */
         path: '/config/withdrawal',
         name: 'Withdrawal',
-        component: createAsyncPage(
-            import('@pages/config/withdrawal/index.vue'),
-        ),
+        component: createAsyncPage(import('@pages/config/withdrawal/index.vue')),
         meta: {
             title: '회원탈퇴',
             layout: 'default',
             footer: false,
             floating: true,
         },
+        beforeEnter(to, from, next) {
+            console.log({
+                from,
+                to,
+            })
+            next(from.name !== 'Config' ? 'not-found-page' : undefined)
+        },
     },
-
     {
         path: '/config/personalBusinessOwnerInfo',
         name: 'Business',
