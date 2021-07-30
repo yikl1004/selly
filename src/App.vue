@@ -38,8 +38,7 @@ export default class App extends Vue {
 
     onConfirmModal() {
         console.log('모달 확인 버튼 누를때 실행되는 액션')
-        typeof this.modalProps.confirm === 'function' &&
-            this.modalProps.confirm()
+        typeof this.modalProps.confirm === 'function' && this.modalProps.confirm()
     }
 
     mounted() {
@@ -55,4 +54,8 @@ export default class App extends Vue {
 }
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+.site-wrapper {
+    min-height: 100vh;
+}
+</style>

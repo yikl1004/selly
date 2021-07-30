@@ -1,18 +1,9 @@
 <template>
-    <div v-if="!isLogin" class="main">
+    <div v-if="!isLogin" class="page-main-wrap">
         <h2>메인 페이지</h2>
     </div>
     <div v-else class="page-login-wrap">
-        <div
-            style="
-                height: 500px;
-                background: #2b2b2b;
-                text-align: center;
-                line-height: 500px;
-            "
-        >
-            상단 비주얼 추가 작업 예정
-        </div>
+        <div style="height: 500px; background: #2b2b2b; text-align: center; line-height: 500px">상단 비주얼 추가 작업 예정</div>
         <button type="button" class="btn-kakao-login" @click="() => login()">
             <span>카카오톡으로 시작</span>
         </button>
@@ -30,15 +21,12 @@ import type { LoginInfo, MainInfo, UserInfo } from '@stores/modules/auth'
 import type { HeaderType } from '@stores/modules/ui'
 import type { RawLocation } from 'vue-router'
 
-const {
-    Mutation: AuthMutation,
-    Action: AuthAction,
-    State: AuthState,
-} = namespace('auth')
+const { Mutation: AuthMutation, Action: AuthAction, State: AuthState } = namespace('auth')
 const { Mutation: UIMutation } = namespace('ui')
 
 @Component({
     async beforeRouteEnter(to, from, next) {
+        console.log('main - beforeRouteEnter')
         await store.dispatch('auth/getMainInfo')
         const mainInfo = store.state.auth.mainInfo
 
@@ -58,9 +46,7 @@ export default class MainPage extends Vue {
      */
 
     // [ store ]: auth
-    @AuthMutation('setUserInfo') readonly setUserInfo!: (
-        userInfo: UserInfo,
-    ) => void
+    @AuthMutation('setUserInfo') readonly setUserInfo!: (userInfo: UserInfo) => void
     @AuthMutation('init') readonly init!: Function
     @AuthAction('getLoginInfo') readonly getLoginInfo!: Function
     @AuthAction('getMainInfo') readonly getMainInfo!: Function
@@ -68,12 +54,8 @@ export default class MainPage extends Vue {
     @AuthState('mainInfo') readonly mainInfo!: MainInfo
 
     // [ store ]: ui
-    @UIMutation('setHeaderType') readonly setHeaderType!: (
-        headerType: HeaderType,
-    ) => void
-    @UIMutation('setVisibleHeader') readonly setVisibleHeader!: (
-        visible: boolean,
-    ) => void
+    @UIMutation('setHeaderType') readonly setHeaderType!: (headerType: HeaderType) => void
+    @UIMutation('setVisibleHeader') readonly setVisibleHeader!: (visible: boolean) => void
 
     /** @category Data */
 
@@ -191,5 +173,10 @@ export default class MainPage extends Vue {
             }
         }
     }
+}
+
+.page-main-wrap {
+    padding-top: 56px;
+    min-height: calc(100vh - 216px);
 }
 </style>

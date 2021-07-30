@@ -19,6 +19,9 @@
     width: 100%;
     min-height: 100%;
     // padding: 10px 24px 60px;
+    // 임시로 추가(삭제 예정) - 천명기
+    min-height: calc(100vh - 216px);
+
     .content {
         padding: 10px 24px 60px;
         &.pd-btm {
