@@ -19,26 +19,28 @@ import { namespace } from 'vuex-class'
 import store from '@stores/index'
 import type { LoginInfo, MainInfo, UserInfo } from '@stores/modules/auth'
 import type { HeaderType } from '@stores/modules/ui'
-import type { RawLocation } from 'vue-router'
+import type { NavigationGuard, RawLocation } from 'vue-router'
 
 const { Mutation: AuthMutation, Action: AuthAction, State: AuthState } = namespace('auth')
 const { Mutation: UIMutation } = namespace('ui')
 
+const beforeRouteEnter: NavigationGuard = async (to, from, next) => {
+    console.log('main - beforeRouteEnter')
+    await store.dispatch('auth/getMainInfo')
+    const mainInfo = store.state.auth.mainInfo
+
+    if (mainInfo?.rc === '8888') {
+        store.commit('ui/setVisibleHeader', false)
+    } else {
+        store.commit('ui/setHeaderType', 'main')
+        store.commit('ui/setVisibleHeader', true)
+    }
+
+    next()
+}
+
 @Component({
-    async beforeRouteEnter(to, from, next) {
-        console.log('main - beforeRouteEnter')
-        await store.dispatch('auth/getMainInfo')
-        const mainInfo = store.state.auth.mainInfo
-
-        if (mainInfo?.rc === '8888') {
-            store.commit('ui/setVisibleHeader', false)
-        } else {
-            store.commit('ui/setHeaderType', 'main')
-            store.commit('ui/setVisibleHeader', true)
-        }
-
-        next()
-    },
+    beforeRouteEnter,
 })
 export default class MainPage extends Vue {
     /**
@@ -54,8 +56,10 @@ export default class MainPage extends Vue {
     @AuthState('mainInfo') readonly mainInfo!: MainInfo
 
     // [ store ]: ui
-    @UIMutation('setHeaderType') readonly setHeaderType!: (headerType: HeaderType) => void
-    @UIMutation('setVisibleHeader') readonly setVisibleHeader!: (visible: boolean) => void
+    @UIMutation('setHeaderType')
+    readonly setHeaderType!: (headerType: HeaderType) => void
+    @UIMutation('setVisibleHeader')
+    readonly setVisibleHeader!: (visible: boolean) => void
 
     /** @category Data */
 
