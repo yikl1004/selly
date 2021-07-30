@@ -192,11 +192,19 @@ module.exports = {
                 '@typescript-eslint/no-var-requires': 'off',
             },
         },
-        // {
-        //     files: ['src/**/*.vue'],
-        //     globals: {
-        //     },
-        // },
+        {
+            files: ['src/**/*.vue'],
+            // globals: {
+            // },
+            rules: {
+                'prettier/prettier': [
+                    'error',
+                    {
+                        printWidth: 80,
+                    },
+                ],
+            },
+        },
         {
             files: ['src/@types/node.d.ts'],
             rules: {
