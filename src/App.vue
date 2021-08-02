@@ -37,7 +37,7 @@ export default class App extends Vue {
     }
 
     onConfirmModal() {
-        console.log('모달 확인 버튼 누를때 실행되는 액션')
+        console.log('모달 확인 버튼 누를 때 실행되는 액션')
         typeof this.modalProps.confirm === 'function' && this.modalProps.confirm()
     }
 
