@@ -65,7 +65,7 @@ export default class DropdownBox extends Vue {
     @Prop(String)
     readonly defaultValue!: string
 
-    /** option list를 주입해함!! */
+    /** option list를 주입해함! */
     @Prop({ type: Array, default: [], required: true })
     readonly list!: DropdownBoxList
 

@@ -93,7 +93,7 @@ export default class BusinessPage extends Vue {
     // e: popup
 
     //가맹점정보 샘플
-    private franchiseeList = [{ title: '이층집 강남점1' }, { title: '이층집 강남점2' }]
+    private franchiseeList = [{ title: '이층집강남점1' }, { title: '이층집 강남점2' }]
     //드롭다운리스트 샘플
     private dropdownBoxList: DropdownBoxList = [
         {
