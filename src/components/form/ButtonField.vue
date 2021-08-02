@@ -62,7 +62,7 @@ interface Timer {
 
 /**
  * TODO:
- * 2. label에 표시될 tooltip이 아직 공통 컴포넌트가 없음, 해야함
+ * 2. label에 표시될 tooltip이 아직 공통 컴포넌트가 없음. 해야함
  * 3. 단위 표시할 텍스트 노출방식에 대한 논의가 필요함
  */
 

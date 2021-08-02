@@ -1,6 +1,6 @@
 <template>
     <div class="dropdown-box field-box">
-        <!-- id 필요여부에 따라 삭제 -->
+        <!-- id 필요여부에 따라 삭제 가능-->
         <LabelTitle :id="id" :hidden-label="hiddenLabel" :label="label" />
         <div class="input-area" :class="{ 'select-type': true }">
             <button type="button" class="btn-input-select" :disabled="disabled" @click="onClick">

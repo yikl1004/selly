@@ -115,7 +115,7 @@ export default class SelectStorePage extends Vue {
 
     /**
      * FIXME: 수정 해야 함
-     * 1. 체크박스가 없음 (디자인 추가 되어야 함)
+     * 1. 체크박스가 없음(디자인 추가 되어야 함)
      * 2. API가 명확하지 않음
      * 3. 메세징 처리 (Watch: changeRecommenderCodeMessage 메서드 만들다 말았음)
      */
