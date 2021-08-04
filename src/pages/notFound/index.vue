@@ -15,7 +15,7 @@
 import { Component, Vue } from 'vue-property-decorator'
 
 /**
- * TODO: 404 페이지, 아직 디자인이 없음
+ * TODO: 404 페이지. 아직 디자인이없음
  */
 @Component
 export default class NotFoundPage extends Vue {
