@@ -1,11 +1,45 @@
 import { axiosInstance } from '@services/http'
-import { WithdrawalInfo } from '@stores/modules/auth'
 import { AxiosResponse } from 'axios'
 
 export interface BizInfoItem {
     bzno: string
     ltRgyn: YN
 }
+
+export interface FranchiseItem {
+    mcno: string
+    mcNm: string
+    psno: string
+    pnadd: string
+    bpsnoAdd: string
+    ddd: string
+    exno: string
+    tlno: string
+}
+
+export interface BusinessManInfoListItem {
+    bzno: string
+    bzmanNm: string
+    mbrNm: null | string
+    locaMcYn: YN
+    subList: FranchiseItem[]
+    selected?: boolean // API에는 없는 추가된 필드
+}
+
+export interface BusinessPlaceListItem {
+    // 사업자 번호
+    bzno: string
+    // 사업자 이름
+    bzmanNm: string
+    // 사업자 등록 여부
+    ltRgyn: YN
+    // 로카 가맹점 여부
+    locaMcYn: YN
+}
+
+/**
+ * 회원정보관련 API 요청 파라미터
+ */
 export interface AuthParameters {
     /**
      * @description 로그인 / 카카오 최초 인입자 셀리 가입처리
@@ -52,6 +86,29 @@ export interface AuthParameters {
         loadYn?: YN
         bizLoanYn?: YN
         datusYn?: YN
+    }
+    franchiseDetail: {
+        mcno: string
+    }
+    changeFranchiseDetail: {
+        // 가맹점우편번호외주소
+        bpsnoAdd?: string
+        // 전화지역번호
+        ddd?: string
+        // 국번
+        exno: string
+        // 가맹점번호
+        mcno?: string
+        // 가맹점우편번호주소
+        pnadd?: string
+        // 우편번호
+        psno?: string
+        // 전화개별번호
+        tlno?: string
+    }
+    changeBusinessManName: {
+        bzno: string
+        bzmanNm: string
     }
 }
 
@@ -107,16 +164,7 @@ export interface AuthResponse {
             // 회원 이름
             mbrNm: string
             // 사업자 리스트
-            list: {
-                // 사업자 번호
-                bzno: string
-                // 사업자 이름
-                bzmanNm: string
-                // 사업자 등록 여부
-                ltRgyn: YN
-                // 로카 가맹점 여부
-                locaMcYn: YN
-            }[]
+            list: BusinessPlaceListItem[]
         }
     }
     logoutInfo: {
@@ -158,22 +206,34 @@ export interface AuthResponse {
         rc: ResponseCode
         rsMsg: string
         data: {
-            list: Array<{
+            list: BusinessManInfoListItem[]
+        }
+    }
+    franchiseDetail: {
+        rc: ResponseCode
+        rsMsg: string
+        data: {
+            mcno: string
+            mcNm: string
+            psno: string
+            pnadd: string
+            bpsnoAdd: string
+            ddd: string
+            exno: string
+            tlno: string
+        }
+    }
+    changeBusinessManName: {
+        rc: ResponseCode
+        rsMsg: string
+        data: {
+            list: {
                 bzno: string
                 bzmanNm: string
-                mbrNm: null | string
+                ltRgyn: YN
                 locaMcYn: YN
-                subList: Array<{
-                    mcno: string
-                    mcNm: string
-                    psno: string
-                    pnadd: string
-                    bpsnoAdd: string
-                    ddd: string
-                    exno: string
-                    tlno: string
-                }>
-            }>
+            }[]
+            mbrNm: string
         }
     }
 }
@@ -188,6 +248,8 @@ type MemberInfoRes = Promise<AxiosResponse<AuthResponse['memberInfo']>>
 type WithdrawalInfoRes = Promise<AxiosResponse<AuthResponse['withdrawal']>>
 type BeforeWithdrawalInfoRes = Promise<AxiosResponse<AuthResponse['beforeWithdrawal']>>
 type BusinessManInfoRes = Promise<AxiosResponse<AuthResponse['businessMainInfo']>>
+type FranchiseDetailRes = Promise<AxiosResponse<AuthResponse['franchiseDetail']>>
+type ChangeBusinessManNameRes = Promise<AxiosResponse<AuthResponse['changeBusinessManName']>>
 
 class AuthService {
     // 로그인/카카오최초인입
@@ -256,81 +318,128 @@ class AuthService {
         method: 'post',
     }
 
+    // my>가맹점상세조회
+    private franchiseDetail: API = {
+        url: '/API/MBR/SEMBRAA009',
+        method: 'post',
+    }
+
+    // my>사업자정보>가맹점주소/전화번호변경
+    private changeFranchiseDetail: API = {
+        url: '/API/MBR/SEMBRAA007',
+        method: 'post',
+    }
+
+    // my>사업자정보>사업자명변경
+    private changeBusinessManName: API = {
+        url: '/API/MBR/SEMBRAA005',
+        method: 'post',
+    }
+
     // 로그인 카카오 최초 인입
     async getLoginInfo(data: AuthParameters['loginInfo']): LoginInfoRes {
-        const { url, method } = this.login
-
-        return await axiosInstance.request({ method, url, data })
+        return await axiosInstance.request({
+            ...this.login,
+            data,
+        })
     }
 
     // 회원 사업장 정보(최초 로그인 사업자 정보 요청)
     async getMemberWorkplaceInfo(): MemberWorkplaceInfoRes {
-        const { url, method } = this.memberWorkplaceInfo
-
-        return await axiosInstance.request({ method, url })
+        return await axiosInstance.request({
+            ...this.memberWorkplaceInfo,
+        })
     }
 
     // 메인화면 정보요청
     async getMainInfo(): MainInfoRes {
-        const { url, method } = this.mainInfo
-
-        return await axiosInstance.request({ method, url })
+        return await axiosInstance.request({
+            ...this.mainInfo,
+        })
     }
 
     // my>최초로그인시 사업자정보 입력 요청
     async getBizInfoInput(data: AuthParameters['bizInfo']): BizInfoRes {
-        const { url, method } = this.bizInfoInput
-
-        return await axiosInstance.request({ method, url, data })
+        return await axiosInstance.request({
+            ...this.bizInfoInput,
+            data,
+        })
     }
 
     // my>회원정보>로그아웃
     async getLogoutInfo(): LogoutInfoRes {
-        const { url, method } = this.logout
-
-        return await axiosInstance.request({ method, url })
+        return await axiosInstance.request({
+            ...this.logout,
+        })
     }
 
     // my>사업자정보>추천인코드입력
     async inputRecommenderCode(params: AuthParameters['recommenderCode']): RecommenderCodeRes {
-        const { url, method } = this.recommenderCode
-
-        return await axiosInstance.request({ method, url, params })
+        return await axiosInstance.request({
+            ...this.recommenderCode,
+            params,
+        })
     }
 
     // my>회원정보요청
     async getMemberInfo(): MemberInfoRes {
-        const { url, method } = this.memberInfo
-
-        return await axiosInstance.request({ method, url })
+        return await axiosInstance.request({
+            ...this.memberInfo,
+        })
     }
 
     // my>회원정보>마케팅동의정보업데이트
     async setMarketingUpdate(params: AuthParameters['marketingUpdate']) {
-        const { url, method } = this.marketingUpdate
-
-        return await axiosInstance.request({ method, url, params })
+        return await axiosInstance.request({
+            ...this.marketingUpdate,
+            params,
+        })
     }
 
     // my > 회원탈퇴
     async setWithdrawal(): WithdrawalInfoRes {
-        const { url, method } = this.withdrawal
-        console.log({ url, method })
-        return await axiosInstance.request({ method, url })
+        return await axiosInstance.request({
+            ...this.withdrawal,
+        })
     }
 
     // 탈퇴 전 내용확인
     async checkBeforeWithdrawal(params: AuthParameters['checkBeforeWithdrawal']): BeforeWithdrawalInfoRes {
-        const { url, method } = this.beforeWithdrawal
-
-        return await axiosInstance.request({ method, url, params })
+        return await axiosInstance.request({
+            ...this.beforeWithdrawal,
+            params,
+        })
     }
 
     // my > 사업자정보 및 가맹점정보
     async getBusinessManInfo(): BusinessManInfoRes {
-        const { url, method } = this.businessManInfo
+        return await axiosInstance.request({
+            ...this.businessManInfo,
+        })
+    }
 
-        return await axiosInstance.request({ method, url })
+    // my>가맹점상세조회
+    async getFranchiseDetail(params: AuthParameters['franchiseDetail']): FranchiseDetailRes {
+        return await axiosInstance.request({
+            ...this.franchiseDetail,
+            params,
+        })
+    }
+
+    // my>사업자정보>가맹점주소/전화번호변경
+    async updateFranchiseDetail(params: AuthParameters['changeFranchiseDetail']) {
+        return await axiosInstance.request({
+            ...this.changeFranchiseDetail,
+            params,
+        })
+    }
+
+    // my>사업자정보>사업자명변경
+    async updateBusinessManName(params: AuthParameters['changeBusinessManName']): ChangeBusinessManNameRes {
+        return await axiosInstance.request({
+            ...this.changeBusinessManName,
+            params,
+        })
     }
 }
 

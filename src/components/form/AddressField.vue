@@ -1,11 +1,11 @@
 <template>
     <div class="address-field">
         <LabelTitle :hidden-label="hiddenLabel" :label="label" />
-        <div class="address-box">
+        <!-- <div class="address-box">
             <BasicButton size="medium" @click="openPopup">
                 주소 찾기
             </BasicButton>
-        </div>
+        </div> -->
         <div class="flex">
             <div class="input-area readonly">
                 <input
@@ -21,12 +21,7 @@
                     @blur="onBlur"
                 />
             </div>
-            <button
-                class="search-button"
-                :disabled="disabled"
-                type="button"
-                @click="openPopup"
-            >
+            <button class="search-button" :disabled="disabled" type="button" @click="openPopup">
                 <span>검색</span>
             </button>
         </div>
@@ -34,12 +29,12 @@
         <div class="input-area readonly">
             <input
                 ref="input"
-                :value="road"
-                :name="_.camelCase(id)"
                 autocomplete="new-password"
-                :maxlength="maxlength"
                 type="text"
                 disabled
+                :value="road"
+                :name="_.camelCase(id)"
+                :maxlength="maxlength"
                 @input="onInput"
                 @blur="onBlur"
             />
@@ -55,23 +50,18 @@
             <input
                 :id="id"
                 ref="input"
-                :value="value"
-                :name="_.camelCase(id)"
-                :maxlength="maxlength"
                 placeholder="상세주소 입력"
                 required
                 autocomplete="new-password"
                 type="text"
+                :value="value"
+                :name="_.camelCase(id)"
+                :maxlength="maxlength"
                 @input="onInput"
                 @focus="onFocus"
                 @blur="onBlur"
             />
-            <button
-                v-if="!readonly && !!value.length"
-                type="button"
-                class="clear"
-                @click="clearValue"
-            >
+            <button v-if="!readonly && !!value.length" type="button" class="clear" @click="clearValue">
                 <i />
                 <span class="ir">전체삭제</span>
             </button>
@@ -89,13 +79,16 @@ import { Component, Prop, Watch, Mixins, Vue } from 'vue-property-decorator'
 import Validates from '@utils/mixins/Validates'
 import { FormBus } from '@components/form/FormProvider.vue'
 
-export interface OnChangeParameters {
-    value: string
-}
-
 // interface Validate {
 //     (value: string): boolean
 // }
+
+export interface AddressItem {
+    fieldName: string
+    road: string
+    value: string
+    zipcode: string
+}
 
 @Component
 export default class AddressField extends Mixins(Validates) {
@@ -134,8 +127,12 @@ export default class AddressField extends Mixins(Validates) {
     readonly disabled!: boolean
 
     /** 기본 값 */
-    @Prop(String)
-    readonly defaultValue!: string
+    @Prop(Object)
+    readonly defaultValue!: {
+        zipcode?: string
+        road?: string
+        value?: string
+    }
 
     // s: popup
     private show = false
@@ -156,7 +153,7 @@ export default class AddressField extends Mixins(Validates) {
      */
 
     /** 실제 값 */
-    private value: string = this.defaultValue || ''
+    private value = ''
 
     /** focus 상태 */
     private focusedClass = false
@@ -173,13 +170,7 @@ export default class AddressField extends Mixins(Validates) {
 
     @Watch('value')
     changeValue(newValue: string) {
-        /**
-         * value가 변경 될때 마다 호출되는 callback(value: string, index: number, maxLength: number)
-         */
-        this.$emit('change', {
-            value: newValue,
-            fieldName: this._.camelCase(this.id),
-        })
+        this.changeData({ value: newValue })
 
         FormBus.$emit('form:update', {
             value: newValue,
@@ -187,10 +178,32 @@ export default class AddressField extends Mixins(Validates) {
         })
     }
 
+    @Watch('road')
+    changeRoad(value: string /* oldValue: string */) {
+        this.changeData({ road: value })
+    }
+
+    @Watch('zipcode')
+    changeZipcode(value: string /* oldValue: string */) {
+        this.changeData({ zipcode: value })
+    }
+
     /**
-     * @category METHOD
-     * @title Custom Methods
+     * @Methods
      */
+
+    changeData(data: { zipcode?: string; road?: string; value?: string }) {
+        /**
+         * 주소 변경 감지
+         * @event change
+         */
+        this.$emit('change', {
+            zipcode: data.zipcode || this.zipcode,
+            road: data.road || this.road,
+            value: data.value || this.value,
+            fieldName: this._.camelCase(this.id),
+        })
+    }
 
     toggleFocus() {
         this.focusedClass = !this.focusedClass
@@ -231,12 +244,21 @@ export default class AddressField extends Mixins(Validates) {
      * @category METHODS
      * @title Lifecycle
      */
+
+    created() {
+        console.log('created', JSON.stringify(this.$props))
+    }
+
     mounted() {
         /**
          * mounted 이벤트
          * @event mounted
          */
         this.$emit('mounted', this.$refs.input)
+
+        this.value = this.defaultValue.value || ''
+        this.zipcode = this.defaultValue.zipcode || ''
+        this.road = this.defaultValue.road || ''
     }
 }
 </script>

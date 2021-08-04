@@ -1,5 +1,6 @@
 import { Module, VuexModule, MutationAction, Mutation } from 'vuex-module-decorators'
 import AuthService, { AuthResponse, AuthParameters } from '@services/auth'
+import { basicUtil } from '@utils/mixins'
 
 interface BottomSheetOptionItem {
     displayName: string
@@ -29,6 +30,7 @@ export type RecommenderCode = AuthResponse['recommenderCode']
 export type MemberInfo = AuthResponse['memberInfo']
 export type WithdrawalInfo = AuthResponse['withdrawal']['data']
 export type BusinessManInfo = AuthResponse['businessMainInfo']['data']
+export type FranchiseDetail = AuthResponse['franchiseDetail']['data']
 
 @Module({ name: 'auth', namespaced: true })
 export default class Auth extends VuexModule<AuthState> {
@@ -46,10 +48,6 @@ export default class Auth extends VuexModule<AuthState> {
             mbrNm: '',
             kkoId: '',
             cellNo: '',
-            // mrktSmsAgDate: '',
-            // mrktSmsAgYn: 'N',
-            // mrktKkofrndAgDate: 'N',
-            // mrktKkofrndAgYn: 'N',
             mrktYn: 'N',
             loanYn: 'N',
             bizLoanYn: 'N',
@@ -57,16 +55,33 @@ export default class Auth extends VuexModule<AuthState> {
         },
     }
     public withdrawalResult: WithdrawalInfo | null = null
-    public cacelGuideList: { text: string }[] = []
+    public cancelGuideList: { text: string }[] = []
     public businessManInfo: BusinessManInfo | null = null
+    public franchiseDetail: FranchiseDetail | null = null
+
+    @Mutation
+    selectBusinessMan(bzno: string) {
+        this.businessManInfo = {
+            ...this.businessManInfo,
+            list: this.businessManInfo
+                ? this.businessManInfo.list.map(item => {
+                      item.selected = item.bzno === bzno
+                      return item
+                  })
+                : [],
+        }
+    }
+
+    @Mutation
+    deleteFranchiseDetail() {
+        this.franchiseDetail = null
+    }
 
     @Mutation
     init() {
-        return {
-            loginInfo: null,
-            kakaoUserInfo: null,
-            memberWorkplaceInfo: null,
-        }
+        this.loginInfo = null
+        this.kakaoUserInfo = null
+        this.memberWorkplaceInfo = null
     }
 
     @Mutation
@@ -78,7 +93,6 @@ export default class Auth extends VuexModule<AuthState> {
     async getLoginInfo() {
         const state = this.state as AuthState
         const { data } = await AuthService.getLoginInfo(state.kakaoUserInfo as UserInfo)
-
         return {
             loginInfo: data.data,
         }
@@ -168,7 +182,7 @@ export default class Auth extends VuexModule<AuthState> {
         const { data } = await AuthService.checkBeforeWithdrawal(params)
 
         return {
-            cacelGuideList: (data.data.list || []).map(item => ({
+            cancelGuideList: (data.data.list || []).map(item => ({
                 text: item.rsgDesc,
             })),
         }
@@ -179,9 +193,41 @@ export default class Auth extends VuexModule<AuthState> {
         const { data } = await AuthService.getBusinessManInfo()
 
         return {
-            businessManInfo: data.data,
+            businessManInfo: {
+                ...data.data,
+                list: [
+                    ...data.data.list.map((item, index) => {
+                        if (index === 0) {
+                            item.selected = true
+                        }
+                        return item
+                    }),
+                ],
+            },
         }
     }
+
+    @MutationAction
+    async getFranchiseDetail(mcno: string) {
+        const { data } = await AuthService.getFranchiseDetail({ mcno })
+
+        return {
+            franchiseDetail: data.data,
+        }
+    }
+
+    @MutationAction
+    async updateFranchiseDetail(params: AuthParameters['changeFranchiseDetail']) {
+        await AuthService.updateFranchiseDetail(params)
+        return {}
+    }
+
+    @MutationAction
+    async updateBusinessManName(params: AuthParameters['changeBusinessManName']) {
+        await AuthService.updateBusinessManName(params)
+        return {}
+    }
+    // ChangeBusinessManNameRes {
 
     /**
      * @description
@@ -286,10 +332,10 @@ export default class Auth extends VuexModule<AuthState> {
         const { list } = this.businessManInfo as BusinessManInfo
 
         return list
-            ? list.map((item, index) => ({
-                  displayName: `${item.bzmanNm} ${item.bzno}`,
+            ? list.map(item => ({
+                  displayName: `${item.bzmanNm} (${basicUtil.convertBizNoFormatter({ bizNo: item.bzno })})`,
                   value: item.bzno,
-                  selected: index === 0,
+                  selected: item.selected,
               }))
             : []
     }

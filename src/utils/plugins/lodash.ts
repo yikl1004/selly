@@ -13,6 +13,7 @@ import pickBy from 'lodash/pickBy'
 import toArray from 'lodash/toArray'
 import forIn from 'lodash/forIn'
 import union from 'lodash/union'
+import omit from 'lodash/omit'
 
 export const options = {
     lodash: {
@@ -28,6 +29,7 @@ export const options = {
         toArray,
         forIn,
         union,
+        omit,
     },
 }
 export default VueLodash

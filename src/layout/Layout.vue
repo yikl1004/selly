@@ -1,52 +1,116 @@
 <template>
     <div class="layout">
-        <transition
-            mode="out-in"
-            enter-active-class="animate__animated animate__fadeInRight"
-            leave-active-class="animate__animated animate__fadeOutLeft"
-        >
-            <div class="layout-default">
-                <Header v-if="visibleHeader" :header-type="headerType" />
-                <Gnb :show="gnbOpen" @close="setGnb(false)" />
-                <router-view />
-                <Footer v-if="useFooter" />
-                <FixedBtnBox v-if="useFloating"></FixedBtnBox>
-                <Loading v-if="loading" />
-            </div>
+        <transition :name="transitionName">
+            <router-view>
+                <template slot-scope="{ Component }">
+                    <component :is="Component" />
+                </template>
+            </router-view>
         </transition>
+        <FixedBtnBox v-if="useFloating"></FixedBtnBox>
+        <Loading v-if="loading" />
     </div>
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator'
+import { Vue, Component, Watch } from 'vue-property-decorator'
 import { namespace } from 'vuex-class'
-import type { HeaderType } from '@stores/modules/ui'
+import type { Route } from 'vue-router'
 
-const { State, Mutation } = namespace('ui')
+const { State: UiState } = namespace('ui')
+const { State: CommonState } = namespace('common')
 
 @Component
 export default class Layout extends Vue {
-    /** @category Stores */
-    @State('gnbOpen') readonly gnbOpen!: boolean
-    @State('headerType') readonly headerType!: HeaderType
-    @State('visible') readonly visibleHeader!: boolean
-    @State('loading') readonly loading!: boolean
-    @Mutation('setGnb') readonly setGnb!: (gnbOpen: boolean) => void
+    /** @Stores */
+    @UiState('loading') readonly loading!: boolean
+    @CommonState('referrer') readonly referrer!: string
 
-    /** footer 사용/노출 여부 */
-    get useFooter(): boolean {
-        return this.$route.meta.footer !== false
-    }
+    /** @Data */
+    private transitionName = 'next'
 
+    /** @Computed */
     /** floating 버튼 영역 사용/노출 여부 */
     get useFloating(): boolean {
         return this.$route.meta.floating
+    }
+
+    @Watch('$route')
+    changeRoute(to: Route, from: Route) {
+        console.log('$route change', { to })
+        this.transitionName = from.name === this.referrer ? 'prev' : 'next'
     }
 }
 </script>
 
 <style lang="scss" scoped>
 .layout {
-    --animate-duration: 150ms;
+    display: grid;
+    grid-template: 'main';
+    background-color: #fff;
+}
+
+.layout > * {
+    grid-area: main;
+}
+
+/* Transitions */
+
+.next-leave-to {
+    animation: leaveToLeft 500ms both cubic-bezier(0.165, 0.84, 0.44, 1);
+    z-index: 0;
+}
+
+.next-enter-to {
+    animation: enterFromRight 500ms both cubic-bezier(0.165, 0.84, 0.44, 1);
+    z-index: 1;
+}
+
+.prev-leave-to {
+    animation: leaveToRight 500ms both cubic-bezier(0.165, 0.84, 0.44, 1);
+    z-index: 1;
+}
+
+.prev-enter-to {
+    animation: enterFromLeft 500ms both cubic-bezier(0.165, 0.84, 0.44, 1);
+    z-index: 0;
+}
+
+@keyframes leaveToLeft {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(-25%);
+        filter: brightness(0.5);
+    }
+}
+
+@keyframes enterFromLeft {
+    from {
+        transform: translateX(-25%);
+        filter: brightness(0.5);
+    }
+    to {
+        transform: translateX(0);
+    }
+}
+
+@keyframes leaveToRight {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(100%);
+    }
+}
+
+@keyframes enterFromRight {
+    from {
+        transform: translateX(100%);
+    }
+    to {
+        transform: translateX(0);
+    }
 }
 </style>

@@ -39,7 +39,7 @@ export default class WithdrawalPage extends Vue {
         this.setLoading(true)
         await this.setWithdrawal()
         this.setLoading(false)
-        window.location.href = '/'
+        this.$router.push({ name: 'Main' })
     }
 
     onWithdrawal() {

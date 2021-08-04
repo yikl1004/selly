@@ -156,6 +156,11 @@ export default class ButtonField extends Mixins(Validates) {
         })
     }
 
+    @Watch('defaultValue')
+    changeDefaultValue(value: string /* oldValue: string */) {
+        this.value = value
+    }
+
     /**
      * @category METHOD
      * @title Custom Methods
@@ -211,6 +216,8 @@ export default class ButtonField extends Mixins(Validates) {
          * @event mounted
          */
         this.$emit('mounted', this.$refs.input)
+
+        this.value = this.defaultValue || ''
     }
 }
 </script>

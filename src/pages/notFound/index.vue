@@ -1,10 +1,14 @@
 <template>
-    <div class="container error">
+    <Page class="error">
         <i class="error-icon" />
         <h2 class="error-title">요청하신 페이지를<br />찾을 수 없습니다.</h2>
-        <p class="error-description">서비스 이용에 불편을 드려서 죄송합니다.<br />페이지 주소를 다시 확인해주세요.</p>
+        <p class="error-description">
+            서비스 이용에 불편을 드려서 죄송합니다.
+            <br />
+            페이지 주소를 다시 확인해주세요.
+        </p>
         <BasicButton type="large" @click="() => $router.push({ name: 'Main' })"> 메인으로 가기 </BasicButton>
-    </div>
+    </Page>
 </template>
 
 <script lang="ts">

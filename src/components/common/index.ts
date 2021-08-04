@@ -23,8 +23,6 @@ import AddressField from '@components/form/AddressField.vue'
 // common
 import Loading from '@components/common/Loading.vue'
 import Anchor from '@components/common/Anchor.vue'
-import Header from '@components/common/Header.vue'
-import Footer from '@components/common/Footer.vue'
 import FixedBtnBox from '@components/common/FixedBtnBox.vue'
 import BottomSheet from '@components/common/BottomSheet.vue'
 import Timer from '@components/common/Timer.vue'
@@ -41,7 +39,6 @@ import Textarea from '@components/form/Textarea.vue'
 import FullPopup from '@components/common/FullPopup.vue'
 import CautionBox from '@components/common/CautionBox.vue'
 import BulletList from '@components/common/BulletList.vue'
-import Gnb from '@components/common/Gnb.vue'
 import LabelTitle from '@components/common/LabelTitle.vue'
 import FormTextBox from '@components/common/FormTextBox.vue'
 import Flag from '@components/common/Flag.vue'
@@ -52,6 +49,12 @@ import BoardDetail from '@components/common/BoardDetail.vue'
 //common popup
 import PopupAddressFind from '@components/common/PopupAddressFind.vue'
 
+// layouts
+import Page from '@layout/Page.vue'
+import PageBody from '@layout/PageBody.vue'
+import Header from '@layout/Header.vue'
+import Footer from '@components/common/Footer.vue'
+
 const CalendarField = () => ({
     component: import('@components/form/CalendarField.vue'),
 })
@@ -61,8 +64,6 @@ const CalendarField = () => ({
 const componentList: { [key: string]: VueConstructor | AsyncComponent }[] = [
     { Loading },
     { Anchor },
-    { Header },
-    { Footer },
     { FixedBtnBox },
     { TextField },
     { Radio },
@@ -98,7 +99,6 @@ const componentList: { [key: string]: VueConstructor | AsyncComponent }[] = [
     { FullPopup },
     { CautionBox },
     { BulletList },
-    { Gnb },
     { LabelTitle },
     { FormTextBox },
     { Flag },
@@ -108,6 +108,12 @@ const componentList: { [key: string]: VueConstructor | AsyncComponent }[] = [
 
     //popup common
     { PopupAddressFind },
+
+    // layouts
+    { Page },
+    { PageBody },
+    { Header },
+    { Footer },
 
     //개발씽크 맞추기 전 (씽크 다 맞춤, 또 생기면 추가)
 ]

@@ -44,23 +44,17 @@ export const basicUtil = {
         const dashRegExp: ReplaceParams = [/-/g, '']
         const nationaCodeRegExp: ReplaceParams = [/^\+\d{1,2}\s/g, '0']
         // 국가 코드를 0으로 치환, dash 삭제(숫자만 남기고 string으로 return)
-        return cellphoneNumber
-            .replace(...dashRegExp)
-            .replace(...nationaCodeRegExp)
+        return cellphoneNumber.replace(...dashRegExp).replace(...nationaCodeRegExp)
     },
 
     /**
-     * 사업자등록번호를 양식에 맞게 dash 붙여서 반환
+     * 문자열의 Byte 수를 계산하여 반환
      * @param {string} text 옵션 값
      * @returns {number}
      */
     getByteLength(text: string): number {
         let bytes: number, index: number, characters: number // 한글 3byte
-        for (
-            bytes = index = 0;
-            (characters = text.charCodeAt(index++));
-            bytes += characters >> 11 ? 3 : characters >> 7 ? 2 : 1
-        ) {
+        for (bytes = index = 0; (characters = text.charCodeAt(index++)); bytes += characters >> 11 ? 3 : characters >> 7 ? 2 : 1) {
             console.log('getByteLength loop')
         }
         return bytes
@@ -68,11 +62,7 @@ export const basicUtil = {
 }
 
 const registerMixins = () => {
-    const {
-        convertBizNoFormatter,
-        cellPhoneFormatter,
-        getByteLength,
-    } = basicUtil
+    const { convertBizNoFormatter, cellPhoneFormatter, getByteLength } = basicUtil
 
     Vue.mixin({
         data() {

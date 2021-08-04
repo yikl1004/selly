@@ -13,6 +13,13 @@
     clip: rect(0, 0, 0, 0); 
 }
 
+
+// layout
+.layout, .layout-default {
+    min-height: 100vh;
+}
+
+// page-body
 .container {
     overflow-y: auto;
     background-color: #fff;

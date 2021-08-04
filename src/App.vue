@@ -1,6 +1,6 @@
 <template>
     <div class="site-wrapper">
-        <Layout />
+        <router-view />
         <PortalTarget name="bottomSheet" multiple />
         <PortalTarget name="modal" />
         <Loading v-if="isLoading" />

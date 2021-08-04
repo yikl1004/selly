@@ -1,31 +1,21 @@
 <template>
-    <div class="container">
-        <div class="content">
-            <div class="setting-wrap">
-                <div class="setting-box">
-                    <h2>회원정보</h2>
-                    <ul>
-                        <li>
-                            <em class="setting-name">이름</em>
-                            <strong class="setting-cont">{{ memberViewInfo.mbrNm }}</strong>
-                        </li>
-
-                        <li>
-                            <em class="setting-name">이메일</em>
-                            <strong class="setting-cont">
-                                {{ memberViewInfo.kkoId }}
-                            </strong>
-                        </li>
-
-                        <li>
-                            <em class="setting-name">휴대폰관리</em>
-                            <strong class="setting-cont">
-                                {{ memberViewInfo.cellNo }}
-                            </strong>
-                        </li>
-                    </ul>
-                </div>
-                <!-- <div class="setting-box">
+    <Page>
+        <Header type="sub" title="회원정보" />
+        <PageBody>
+            <div class="content">
+                <div class="setting-wrap">
+                    <div class="setting-box">
+                        <h2>회원정보</h2>
+                        <ul>
+                            <li v-for="(info, index) in memberInfo" :key="`member-infor-list=${index}`">
+                                <em class="setting-name">{{ info.name }}</em>
+                                <strong class="setting-cont">
+                                    {{ info.value }}
+                                </strong>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- <div class="setting-box">
                     <h2>혜택알림 동의</h2>
                     <ul>
                         <li>
@@ -51,12 +41,13 @@
                         </li>
                     </ul>
                 </div> -->
+                </div>
+                <div class="btn-area">
+                    <BasicButton type="textGray" @click="toWithdrawal"> 회원탈퇴 </BasicButton>
+                </div>
             </div>
-            <div class="btn-area">
-                <BasicButton type="textGray" @click="toWithdrawal"> 회원탈퇴 </BasicButton>
-            </div>
-        </div>
-    </div>
+        </PageBody>
+    </Page>
 </template>
 
 <script lang="ts">
@@ -72,6 +63,7 @@ const { Mutation: UiMutation } = namespace('auth')
 export default class MemberPage extends Vue {
     /** @Data */
 
+    private memberInfo: { name: string; value: string }[] = []
     // private marketingSMS: boolean = false
     // private marketingKakaoFriend: boolean = false
 
@@ -118,7 +110,7 @@ export default class MemberPage extends Vue {
         this.setLoading(true)
         await this.setWithdrawal()
         this.setLoading(false)
-        window.location.href = '/'
+        this.$router.push({ name: 'Main' })
     }
 
     toWithdrawal() {
@@ -140,6 +132,12 @@ export default class MemberPage extends Vue {
 
     async mounted() {
         await this.getMemberInfo()
+
+        this.memberInfo = [
+            { name: '이름', value: this.memberViewInfo.mbrNm },
+            { name: '이메일', value: this.memberViewInfo.kkoId },
+            { name: '휴대폰관리', value: this.memberViewInfo.cellNo },
+        ]
     }
 }
 </script>

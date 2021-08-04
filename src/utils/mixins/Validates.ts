@@ -16,14 +16,7 @@ export default class Validates extends Vue {
 
     /** 숫자만 입력 받는 타입인지 여부 */
     get isNumberType(): boolean {
-        return [
-            'number',
-            'seperateNumber',
-            'regist',
-            'registeGender',
-            'card',
-            'card2',
-        ].some(type => type === this.type)
+        return ['number', 'seperateNumber', 'regist', 'registeGender', 'card', 'card2'].some(type => type === this.type)
     }
 
     /**
@@ -78,9 +71,7 @@ export default class Validates extends Vue {
         const { shiftKey, ctrlKey, metaKey, altKey } = event
         const isBackspace = event.key.toLowerCase() === 'backspace'
 
-        return [shiftKey, ctrlKey, metaKey, altKey, isBackspace].some(
-            key => key,
-        )
+        return [shiftKey, ctrlKey, metaKey, altKey, isBackspace].some(key => key)
     }
 
     /**
@@ -92,13 +83,9 @@ export default class Validates extends Vue {
         const target = event.target as HTMLInputElement
         const value = target.value
         const isMetaKeys = this.isMetaKeys(event)
-        const conditionsNumberType = [
-            value.length >= target.maxLength,
-            !isMetaKeys,
-        ]
+        const conditionsNumberType = [value.length >= target.maxLength, !isMetaKeys]
 
-        conditionsNumberType.every(condition => condition) &&
-            event.preventDefault()
+        conditionsNumberType.every(condition => condition) && event.preventDefault()
     }
 
     /**

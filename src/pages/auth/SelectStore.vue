@@ -1,58 +1,55 @@
 <template>
-    <div>
-        <header class="page-header">
-            <h1>사업자 정보</h1>
-        </header>
-        <div class="container floating">
-            <div class="content pd-btm">
-                <div class="select-store-wrap">
-                    <div class="select-store">
-                        <div class="store-user-info">
-                            <strong>
-                                {{ workplaceOwnerName }} 사장님<br />
-                                사업자정보를 확인하세요.
-                            </strong>
+    <div class="content pd-btm">
+        <div class="select-store-wrap">
+            <div class="select-store">
+                <div class="store-user-info">
+                    <strong>
+                        {{ workplaceOwnerName }} 사장님<br />
+                        사업자정보를 확인하세요.
+                    </strong>
 
-                            <p>가입을 원하지 않는 사업자의 경우 체크를 해지 해주세요.<br />(정 사업자의 경우는 체크해지가 불가 합니다.)</p>
-                        </div>
-                        <div class="user-store-list">
-                            <CheckBoxBlock
-                                v-for="(item, index) in workplaceList"
-                                :id="`userStoreList${index}`"
-                                :key="`user-store-list-item-${index}`"
-                                :label="convertBizNoFormatter({ bizNo: item.bzno })"
-                                :biz-name="item.bzmanNm"
-                                :index="index"
-                                :checked="item.ltRgyn === 'Y'"
-                                :disabled="item.locaMcYn === 'Y'"
-                                name="group"
-                                @change="onSelectBizNo"
-                            />
-                        </div>
-                    </div>
-
-                    <div class="recommender-box">
-                        <CheckBox label="추천인이 있으시면 체크해주세요. (선택)" @change="openRecommendArea" />
-                        <ButtonField
-                            v-if="recommendAreaOpen"
-                            id="recommenderCode"
-                            label="추천인 코드(선택)"
-                            placeholder="추천인 코드 입력"
-                            button-text="확인"
-                            name="cert"
-                            :maxlength="9999"
-                            :hidden-label="true"
-                            :readonly="false"
-                            :disabled="false"
-                            @search="onClickRecommenderCode"
-                        />
-                    </div>
+                    <p>
+                        가입을 원하지 않는 사업자의 경우 체크를 해지 해주세요.
+                        <br />
+                        (정 사업자의 경우는 체크해지가 불가 합니다.)
+                    </p>
+                </div>
+                <div class="user-store-list">
+                    <CheckBoxBlock
+                        v-for="(item, index) in workplaceList"
+                        :id="`userStoreList${index}`"
+                        :key="`user-store-list-item-${index}`"
+                        :label="convertBizNoFormatter({ bizNo: item.bzno })"
+                        :biz-name="item.bzmanNm"
+                        :index="index"
+                        :checked="item.ltRgyn === 'Y'"
+                        :disabled="item.locaMcYn === 'Y'"
+                        name="group"
+                        @change="onSelectBizNo"
+                    />
                 </div>
             </div>
-            <portal to="floating">
-                <BasicButton :disabled="!selectedWorkplace.length" size="large" @click="onNext"> 메인으로 </BasicButton>
-            </portal>
+
+            <div v-if="isFirstJoin" class="recommender-box">
+                <CheckBox id="recommenderCheck" label="추천인이 있으시면 체크해주세요. (선택)" @change="openRecommendArea" />
+                <ButtonField
+                    v-if="recommendAreaOpen"
+                    id="recommenderCode"
+                    label="추천인 코드(선택)"
+                    placeholder="추천인 코드 입력"
+                    button-text="확인"
+                    name="cert"
+                    :maxlength="9999"
+                    :hidden-label="true"
+                    :readonly="false"
+                    :disabled="false"
+                    @search="onClickRecommenderCode"
+                />
+            </div>
         </div>
+        <portal to="floating">
+            <BasicButton :disabled="!selectedWorkplace.length" size="large" @click="onNext"> 메인으로 </BasicButton>
+        </portal>
     </div>
 </template>
 
@@ -60,32 +57,41 @@
 import { Component, Vue, Watch } from 'vue-property-decorator'
 import { namespace } from 'vuex-class'
 import { OnSelectValue } from '@components/form/CheckBoxBlock.vue'
-import type { AuthParameters, BizInfoItem } from '@services/auth'
+import type { AuthParameters, BizInfoItem, BusinessPlaceListItem } from '@services/auth'
 import type { BizInfo } from '@stores/modules/auth'
 
 const { Getter, Action } = namespace('auth')
 
 @Component
 export default class SelectStorePage extends Vue {
-    /** @category Stores */
-    @Getter('workplaceList') readonly workplaceList!: BizInfo['data']['list']
+    /** @Props */
+
+    /** @Stores */
     @Getter('workplaceOwnerName')
     readonly workplaceOwnerName!: BizInfo['data']['mbrNm']
-    @Getter('recommenderCodeMessage') readonly recommenderCodeMessage!: string
-    @Action('inputRecommenderCode') readonly inputRecommenderCode!: (params: AuthParameters['recommenderCode']) => Promise<void>
 
-    /** @category Data */
+    @Getter('recommenderCodeMessage')
+    readonly recommenderCodeMessage!: string
+
+    /** 사업장 리스트 */
+    @Getter('workplaceList')
+    readonly workplaceList!: BusinessPlaceListItem[]
+
+    @Action('inputRecommenderCode')
+    readonly inputRecommenderCode!: (params: AuthParameters['recommenderCode']) => Promise<void>
+
+    /** @Data */
     private recommendAreaOpen = false
 
     // 선택된 사업장 정보
     private selectedWorkplace: BizInfoItem[] = []
 
-    /** @category Watch */
+    /** @Watch */
 
     @Watch('workplaceList')
     changeWorkplaceList(
-        value: BizInfo['data']['list'],
-        /* oldValue: BizInfo['data']['list'], */
+        value: BusinessPlaceListItem[],
+        /* oldValue: BusinessPlaceListItem[] */
     ) {
         this.selectedWorkplace = value.filter(item => item.ltRgyn === 'Y').map(({ bzno, ltRgyn }) => ({ bzno, ltRgyn }))
     }
@@ -93,7 +99,12 @@ export default class SelectStorePage extends Vue {
     // @Watch('recommenderCodeMessage')
     // changeRecommenderCodeMessage(value: string, oldValue: string) {}
 
-    /** @category Methods */
+    /** @Computed */
+    get isFirstJoin(): boolean {
+        return this.$route.name === 'Join'
+    }
+
+    /** @Methods */
     onNext() {
         /**
          * 다음으로 이동
@@ -104,12 +115,14 @@ export default class SelectStorePage extends Vue {
 
     onSelectBizNo(data: OnSelectValue) {
         const originList = this.workplaceList
-        const { bzno, ltRgyn } = originList[data.index]
+        if (originList.length) {
+            const { bzno, ltRgyn } = originList[data.index]
 
-        if (data.value) {
-            this.selectedWorkplace.push({ bzno, ltRgyn })
-        } else {
-            this.selectedWorkplace.splice(data.index, 1)
+            if (data.value) {
+                this.selectedWorkplace.push({ bzno, ltRgyn })
+            } else {
+                this.selectedWorkplace.splice(data.index, 1)
+            }
         }
     }
 
@@ -127,7 +140,7 @@ export default class SelectStorePage extends Vue {
         this.recommendAreaOpen = !!event.value
     }
 
-    /** @category Life-Cycle */
+    /** @Lifecycle */
 }
 </script>
 <style scoped lang="scss" src="./SelectStore.scss"></style>

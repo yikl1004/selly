@@ -1,0 +1,90 @@
+{
+    "gnbList": [
+        {
+            "name": "매출/입금",
+            "path": "*",
+            "children": [
+                {
+                    "name": "매출내역",
+                    "path": "/salesHistory"
+                },
+                {
+                    "name": "입금내역",
+                    "path": "/depositHistory"
+                }
+            ]
+        },
+        {
+            "name": "금융상품",
+            "path": "*",
+            "children": [
+                {
+                    "name": "Biz론",
+                    "path": "/bizloan"
+                },
+                {
+                    "name": "장기카드론",
+                    "path": "/longTermCardLoan"
+                },
+                {
+                    "name": "사업자대출",
+                    "path": "/businessLoan"
+                },
+                {
+                    "name": "즉시대출",
+                    "path": "/instantLoan"
+                },
+                {
+                    "name": "대출내역",
+                    "path": "/loanHistory"
+                }
+            ]
+        },
+        {
+            "name": "마케팅",
+            "path": "*",
+            "children": [
+                {
+                    "name": "마케팅 신청",
+                    "path": "/applyMarketing"
+                }
+            ]
+        },
+        {
+            "name": "세무서비스",
+            "path": "*",
+            "children": [
+                {
+                    "name": "세무서비스 안내",
+                    "path": "/taxServiceGuide"
+                }
+            ]
+        },
+        {
+            "name": "설정",
+            "path": "/config",
+            "children": [
+                {
+                    "name": "회원정보",
+                    "path": "/member"
+                },
+                {
+                    "name": "사업자 정보",
+                    "path": "/personalBusinessOwnerInfo"
+                },
+                {
+                    "name": "공지사항",
+                    "path": "/notice"
+                },
+                {
+                    "name": "자주 묻는 질문",
+                    "path": "faq"
+                },
+                {
+                    "name": "이용약관",
+                    "path": "/policy"
+                }
+            ]
+        }
+    ]
+}

@@ -1,11 +1,6 @@
 <template>
-    <div class="text-field field-box" :class="isError">
-        <LabelTitle
-            :id="id"
-            label-type="label"
-            :hidden-label="hiddenLabel"
-            :label="label"
-        />
+    <div class="text-field field-box" :class="isError && errorMessage">
+        <LabelTitle :id="id" label-type="label" :hidden-label="hiddenLabel" :label="label" />
         <div
             class="input-area"
             :class="{
@@ -14,12 +9,8 @@
                 disabled: disabled,
             }"
         >
-            <template v-if="isSelectType">
-                <button
-                    type="button"
-                    class="select-button"
-                    @click="openBottomSheet"
-                >
+            <template v-if="isSelectType && selectedValue">
+                <button type="button" class="select-button" @click="openBottomSheet">
                     {{ selectedValue.displayName }}
                     <i class="open" />
                 </button>
@@ -52,22 +43,13 @@
             <span v-if="unit" class="unit">
                 {{ unit }}
             </span>
-            <button
-                v-if="!readonly && !!value.length"
-                type="button"
-                class="clear"
-                @click="clearValue"
-            >
+            <button v-if="!readonly && !!value.length" type="button" class="clear" @click="clearValue">
                 <i />
                 <span class="ir">전체삭제</span>
             </button>
         </div>
         <!--//유효성 검사가 되어 메시지 노출할때만 보여줌. 에러일때와 성공일때-->
-        <TextInputMessage
-            v-if="isError !== undefined"
-            :error-message="errorMessage"
-            :message-type="isError"
-        />
+        <TextInputMessage v-if="isError && errorMessage" :error-message="errorMessage" :message-type="isError" />
     </div>
 </template>
 
@@ -167,7 +149,7 @@ export default class TextField extends Mixins(Validates) {
      */
 
     /** 실제 값 */
-    private value: string = this.defaultValue || ''
+    private value = ''
 
     /** focus 상태 */
     private focusedClass = false
@@ -176,7 +158,7 @@ export default class TextField extends Mixins(Validates) {
     private bottomSheetVisible = false
 
     /** 선택영역에서 선택한 값 */
-    private selectedValue: BottomSheetOptionItem = this.list[0]
+    private selectedValue: BottomSheetOptionItem | null = null
 
     /**
      * @category COMPUTED
@@ -195,19 +177,20 @@ export default class TextField extends Mixins(Validates) {
     }
 
     get isSelectType(): boolean {
-        return this.type === 'select'
+        return this.type === 'select' || this.type === 'digit'
     }
 
     /** 타이핑한 값 */
     get displayValue(): string {
-        const conditionsSeperateNumbe = [
-            this.value,
-            this.type === 'seperateNumber',
-        ]
+        const conditionsSeperateNumbe = [this.value, this.type === 'seperateNumber']
         const conditionSelectType = [this.value, this.type === 'select']
+        const conditionDigitType = [this.value, this.type === 'digit']
+
         if (conditionsSeperateNumbe.every(condition => condition)) {
             return this._.toNumber(this.value).toLocaleString()
         } else if (conditionSelectType.every(condition => condition)) {
+            return this.value
+        } else if (conditionDigitType.every(condition => condition)) {
             return this.phoneNumber(this.value)
         } else {
             return this.value
@@ -216,10 +199,7 @@ export default class TextField extends Mixins(Validates) {
 
     /** 에러 여부 */
     get isError(): string | undefined {
-        const conditions = [
-            this.value.length,
-            typeof this.validate === 'function',
-        ]
+        const conditions = [this.value.length, typeof this.validate === 'function']
         if (conditions.every(condition => condition)) {
             return this.validate(this.value) ? 'success' : 'error'
         }
@@ -228,14 +208,9 @@ export default class TextField extends Mixins(Validates) {
 
     /** 에러 메세지 */
     get message(): string | undefined {
-        const conditions = [
-            this.value.length,
-            typeof this.validate === 'function',
-        ]
+        const conditions = [this.value.length, typeof this.validate === 'function']
         if (conditions.every(condition => condition)) {
-            return this.validate(this.value)
-                ? this.successMessage
-                : this.errorMessage
+            return this.validate(this.value) ? this.successMessage : this.errorMessage
         }
         return undefined
     }
@@ -315,9 +290,7 @@ export default class TextField extends Mixins(Validates) {
     }
 
     onSelectOption(value: string) {
-        this.selectedValue = this.list.find(
-            option => option.value === value,
-        ) as BottomSheetOptionItem
+        this.selectedValue = this.list.find(option => option.value === value) as BottomSheetOptionItem
         const changedList = this.list.map(option => {
             option.selected = option.value === value
             return option
@@ -346,6 +319,9 @@ export default class TextField extends Mixins(Validates) {
          * @event mounted
          */
         this.$emit('mounted', this.$refs.input)
+
+        this.value = this.defaultValue || ''
+        this.selectedValue = this.list[0]
     }
 }
 </script>

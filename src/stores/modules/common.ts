@@ -1,9 +1,4 @@
-import {
-    Module,
-    VuexModule,
-    MutationAction,
-    Mutation,
-} from 'vuex-module-decorators'
+import { Module, VuexModule, MutationAction, Mutation } from 'vuex-module-decorators'
 import CommonService, {
     CommonResponse,
     /* CommonParameters, */
@@ -11,21 +6,24 @@ import CommonService, {
 
 export interface CommonState {
     loginExtendInfo: LoginExtendInfo | null
+    referrer: string
 }
 
-declare global {
-    type LoginExtendInfo = CommonResponse['loginExtend']
-}
+export type LoginExtendInfo = CommonResponse['loginExtend']
 
 @Module({ name: 'common', namespaced: true })
 export default class Common extends VuexModule<CommonState> {
     public loginExtendInfo: LoginExtendInfo | null = null
+    public referrer = ''
+
+    @Mutation
+    changeReferrer(referrer: string) {
+        this.referrer = referrer
+    }
 
     @Mutation
     init() {
-        return {
-            loginExtendInfo: null,
-        }
+        this.loginExtendInfo = null
     }
 
     @MutationAction

@@ -10,18 +10,13 @@
             </h1>
 
             <!-- 이전버튼 -->
-            <button
-                v-if="isSub"
-                type="button"
-                class="btn-prev-page"
-                @click="backPressed"
-            >
+            <button v-if="isSub" type="button" class="btn-prev-page" @click="backPressed">
                 <span class="ir">이전</span>
             </button>
 
             <!-- 페이지 타이틀 -->
-            <div v-if="!isMain" class="page-title">
-                <strong>{{ headerTitle }}</strong>
+            <div v-if="!isMain || isTitle" class="page-title">
+                <strong>{{ title }}</strong>
             </div>
 
             <!-- 프로세스 취소버튼 -->
@@ -30,12 +25,7 @@
             </button>
 
             <!-- 전체메뉴 -->
-            <button
-                v-if="!isProcess"
-                type="button"
-                class="global-navigation"
-                @click="onOpenGNB"
-            >
+            <button v-if="!isProcess && !isTitle" type="button" class="global-navigation" @click="onOpenGNB">
                 <span class="ir">전체 메뉴</span>
             </button>
         </div>
@@ -44,11 +34,8 @@
 
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
-import { namespace } from 'vuex-class'
 
-const UiModule = namespace('ui')
-
-type HeaderType = 'main' | 'sub' | 'proccess'
+type HeaderType = 'main' | 'sub' | 'proccess' | 'title'
 
 @Component
 export default class Header extends Vue {
@@ -58,26 +45,30 @@ export default class Header extends Vue {
 
     /** 헤더타입 : main / sub / proccess*/
     @Prop({ type: String, default: 'sub' })
-    readonly headerType!: HeaderType
+    readonly type!: HeaderType
 
-    /** gnb 노출 여부 */
-    @Prop({ type: Boolean, default: false })
-    readonly gnbOpen!: boolean
+    /** 타이틀 */
+    @Prop({ type: String, default: '' })
+    readonly title!: string
 
     /**
      * @category Computed
      */
 
     get isProcess(): boolean {
-        return this.headerType === 'proccess'
+        return this.type === 'proccess'
     }
 
     get isMain(): boolean {
-        return this.headerType === 'main'
+        return this.type === 'main'
     }
 
     get isSub(): boolean {
-        return this.headerType === 'sub'
+        return this.type === 'sub'
+    }
+
+    get isTitle(): boolean {
+        return this.type === 'title'
     }
 
     /**
@@ -95,22 +86,13 @@ export default class Header extends Vue {
         this.$emit('click', event)
     }
 
-    @UiModule.Mutation('setGnb')
-    readonly setGnb!: Function
-
-    @UiModule.Action('getGnbList')
-    readonly getGnbList!: Function
-
-    @UiModule.State('headerTitle')
-    readonly headerTitle!: string
-
     @Watch('$route')
     changeRoute() {
         this.toggle = false
     }
 
     onOpenGNB() {
-        this.setGnb(true)
+        this.$router.push({ name: 'Navigation' })
     }
 
     backPressed() {
@@ -123,10 +105,6 @@ export default class Header extends Vue {
 
     onClose() {
         this.toggle = false
-    }
-
-    mounted() {
-        this.getGnbList()
     }
 }
 </script>

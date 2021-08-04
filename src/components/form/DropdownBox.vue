@@ -85,7 +85,6 @@ export default class DropdownBox extends Vue {
     /** @Watch */
     @Watch('list')
     changeList(value: DropdownBoxList /* oldValue: DropdownBoxList */) {
-        console.log('watch', value)
         if (!this._.isNull(value)) {
             this.init()
         }

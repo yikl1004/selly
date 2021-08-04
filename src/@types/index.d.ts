@@ -35,12 +35,7 @@ declare global {
         | 'card' // 카드번호
         | 'card2' // 카드번호 앞 2자리
 
-    type FormInputType =
-        | 'number'
-        | 'seperateNumber'
-        | 'text'
-        | 'select'
-        | SecretType
+    type FormInputType = 'number' | 'seperateNumber' | 'text' | 'select' | 'digit' | SecretType
 }
 
 export {}
