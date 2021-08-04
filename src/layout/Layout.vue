@@ -1,6 +1,6 @@
 <template>
     <div class="layout">
-        <transition :name="transitionName">
+        <transition :name="transitionName" :duration="{ enter: 6000, leave: 6000 }">
             <router-view>
                 <template slot-scope="{ Component }">
                     <component :is="Component" />
@@ -44,6 +44,7 @@ export default class Layout extends Vue {
 </script>
 
 <style lang="scss" scoped>
+$duration: 6000ms;
 .layout {
     display: grid;
     grid-template: 'main';
@@ -57,22 +58,22 @@ export default class Layout extends Vue {
 /* Transitions */
 
 .next-leave-to {
-    animation: leaveToLeft 500ms both cubic-bezier(0.165, 0.84, 0.44, 1);
+    animation: leaveToLeft $duration both cubic-bezier(0.165, 0.84, 0.44, 1);
     z-index: 0;
 }
 
 .next-enter-to {
-    animation: enterFromRight 500ms both cubic-bezier(0.165, 0.84, 0.44, 1);
+    animation: enterFromRight $duration both cubic-bezier(0.165, 0.84, 0.44, 1);
     z-index: 1;
 }
 
 .prev-leave-to {
-    animation: leaveToRight 500ms both cubic-bezier(0.165, 0.84, 0.44, 1);
+    animation: leaveToRight $duration both cubic-bezier(0.165, 0.84, 0.44, 1);
     z-index: 1;
 }
 
 .prev-enter-to {
-    animation: enterFromLeft 500ms both cubic-bezier(0.165, 0.84, 0.44, 1);
+    animation: enterFromLeft $duration both cubic-bezier(0.165, 0.84, 0.44, 1);
     z-index: 0;
 }
 
