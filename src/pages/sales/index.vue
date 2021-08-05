@@ -1,37 +1,57 @@
 <template>
-    <div v-if="isMain" class="container">
-        <div class="content">
-            <div class="sales-main-box">
-                <div class="sale-main-title">
-                    <h2>매일 드리는 매출보고<br />카드, 현금, 배달 매출까지</h2>
-                    <p>
-                        홈택스, 여신금융협회, 배달앱 등 계정연동 한번이면<br />매일
-                        매출, 입금 내역을 셀리에서 확인하실 수 있습니다.
-                    </p>
-                </div>
-                <BasicButton type="large"> 매출연동 </BasicButton>
-            </div>
+    <div class="container">
+        <div class="select-buisnessman-box">
+            <DropdownBox
+                id="dropdown-box01"
+                label="사업자 선택"
+                :hidden-label="true"
+                :list="dropdownBoxList"
+                default-value="전체"
+                :disabled="false"
+            />
         </div>
+        <Tab :list="tabList" :active="0" type="solid">
+            <template slot-scope="{ activeIndex }">
+                <div v-if="activeIndex === 0" class="tab-inner">
+                    <SalesHistoryDetail />
+                </div>
+                <div v-if="activeIndex === 1" class="tab-inner">
+                    <p>주간</p>
+                </div>
+                <div v-if="activeIndex === 2" class="tab-inner">
+                    <p>요일별</p>
+                </div>
+            </template>
+        </Tab>
     </div>
-    <router-view v-else />
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
+import SalesHistoryDetail from '@components/sales/SalesHistoryDetail.vue'
+import type { DropdownBoxList } from '@components/form/DropdownBox.vue'
 
-@Component
-export default class SalesPages extends Vue {
-    /**
-     * @category Data
-     */
-    onClick() {
-        console.log('다음버튼 클릭')
-    }
+@Component({
+    components: {
+        SalesHistoryDetail,
+    },
+})
+export default class SalesHistory extends Vue {
+    //드롭다운리스트 샘플
+    private dropdownBoxList: DropdownBoxList = [
+        { displayName: '전체', value: 'all', selected: true },
+        {
+            displayName: '이층집 강남점 222-20-2222',
+            value: 'LOCA MONEY:BIZ 7*3*',
+        },
+        {
+            displayName: '이층집 강남점 222-20-2222',
+            value: '가장최근에 받은 카드가 디폴트로 노출',
+        },
+    ]
 
-    get isMain() {
-        return this.$route.name === 'Sales'
-    }
+    private tabList = [{ name: '일간' }, { name: '주간' }, { name: '요일별' }]
 }
 </script>
 
-<style scoped lang="scss" src="./defaultStyle.scss" />
+<style lang="scss" scoped src="./SalesHistory.scss"></style>

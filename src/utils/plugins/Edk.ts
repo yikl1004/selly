@@ -7,18 +7,9 @@ declare module 'vue/types/vue' {
             signInBznav(params: { dom?: Element; bznavSyncToken: string }): void
             signUpBznav(params: { dom?: Element; bznavSyncToken: string }): void
             signOutBznav(params: { dom?: Element }): void
-            openDataSync(params: {
-                dom?: Element
-                eventListener?: EdkEventListener
-            }): void
-            openInsight(params: {
-                dom?: Element
-                eventListener?: EdkEventListener
-            }): void
-            openDevtool(params: {
-                dom?: Element
-                eventListener?: EdkEventListener
-            }): void
+            openDataSync(params: { dom?: Element; eventListener?: EdkEventListener }): void
+            openInsight(params: { dom?: Element; eventListener?: EdkEventListener }): void
+            openDevtool(params: { dom?: Element; eventListener?: EdkEventListener }): void
         }
     }
 }

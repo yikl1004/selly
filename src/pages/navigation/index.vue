@@ -33,7 +33,7 @@
                     >
                         <ul v-if="depth2.children">
                             <li v-for="(child, childIndex) in depth2.children" :key="`gnb-depth2-child-${childIndex}`">
-                                <Anchor :href="`${depth2.path}${child.path}`">
+                                <Anchor :href="`${depth2.path === '*' ? '' : depth2.path}${child.path}`">
                                     {{ child.name }}
                                 </Anchor>
                             </li>
@@ -46,8 +46,9 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Watch } from 'vue-property-decorator'
+import { Component, Mixins, Watch } from 'vue-property-decorator'
 import { namespace } from 'vuex-class'
+import PageView from '@utils/mixins/PageView'
 import menu from '@asstes/static/dummy/menu.json'
 import type { LogoutInfo } from '@stores/modules/auth'
 import type { GnbItem } from '@stores/modules/ui'
@@ -55,15 +56,13 @@ import type { GnbItem } from '@stores/modules/ui'
 const AuthModule = namespace('auth')
 
 @Component
-export default class NavigationPage extends Vue {
-    /** @category Stores */
+export default class NavigationPage extends Mixins(PageView) {
+    /** @Stores */
     @AuthModule.Getter('bizmanName') readonly bizmanName!: string
     @AuthModule.State('logoutInfo') readonly logoutInfo!: LogoutInfo
     @AuthModule.Action('getLogoutInfo') readonly getLogoutInfo!: Function
 
-    /** @category Props */
-
-    /** @category Data */
+    /** @Data */
 
     /** 활성화 된 메뉴의 index */
     private activeIndex = -1
@@ -71,14 +70,14 @@ export default class NavigationPage extends Vue {
     /** 메뉴 리스트 */
     private gnbList: GnbItem[] = menu.gnbList
 
-    /** @category Computed */
+    /** @Computed */
 
     /** 로그아웃 완료 후 안내 팝업의 텍스트 */
     get modalMessage(): string {
         return this.logoutInfo ? this.logoutInfo.rsMsg : ''
     }
 
-    /** @category Watch */
+    /** @Watch */
 
     // path 변경 감지
     @Watch('$route.path')
@@ -100,7 +99,7 @@ export default class NavigationPage extends Vue {
         }
     }
 
-    /** @category Methods */
+    /** @Methods */
 
     onClose() {
         this.$router.back()
@@ -114,8 +113,6 @@ export default class NavigationPage extends Vue {
         await this.$kakaoSdk.logout()
         await this.getLogoutInfo()
     }
-
-    /** @Lifecycle */
 }
 </script>
 

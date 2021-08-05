@@ -10,8 +10,6 @@ import type { RouteConfig } from 'vue-router'
 
 export type RouteMeta = {
     floating?: boolean
-    foolter?: boolean
-    title?: string
 }
 
 const loading = {
@@ -132,40 +130,6 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
                 meta: {},
             },
 
-            //매출페이지
-            //매출내역 메인
-            // TODO: 입금, 매출 내역 2개의 페이지로 나눠야함
-            // 매출: salesHistory, 입금: depositHistory
-            // 매출, 입금 에서 가가가 일간, 주간, 요일별 (총 6벌, 3벌씩 탭이 있는 페이지 2개)
-            {
-                path: '/sales',
-                name: 'Sales',
-                component: createAsyncPage(import('@pages/sales/index.vue')),
-                meta: {
-                    title: '매출 내역',
-                },
-                children: [
-                    {
-                        // TODO: 매출내역 연동 페이지... 기획 수정 중
-                        path: 'linkage',
-                        name: 'Sales Linkage',
-                        component: createAsyncPage(import('@pages/sales/SalesLinkage.vue')),
-                        meta: {
-                            title: '매출 내역',
-                        },
-                    },
-                ],
-            },
-            // ing: 매출 만드는 중...
-            {
-                path: '/saleshistory',
-                name: 'Sales History',
-                component: createAsyncPage(import('@pages/sales/SalesHistory.vue')),
-                meta: {
-                    title: '매출 내역',
-                },
-            },
-
             // 금융페이지
             // 금융메인 / 금융 안내페이지
             {
@@ -234,66 +198,12 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
                 ],
             },
 
-            //설정
-            //공지사항
-            {
-                path: '/cs/notice',
-                name: 'Notice',
-                component: createAsyncPage(import('@pages/cs/NoticePage.vue')),
-                meta: {
-                    title: '공지사항',
-                    layout: 'default',
-                },
-            },
-            {
-                path: '/cs/noticedetail',
-                name: 'Notice Detail',
-                component: createAsyncPage(import('@pages/cs/NoticeDetailPage.vue')),
-                meta: {
-                    title: '공지사항',
-                    layout: 'default',
-                },
-            },
-            {
-                path: '/cs/faq',
-                name: 'FAQ',
-                component: createAsyncPage(import('@pages/cs/FaqPage.vue')),
-                meta: {
-                    title: '자주 묻는 질문',
-                    layout: 'default',
-                },
-            },
-
-            {
-                path: '/cs/terms',
-                name: 'Terms',
-                component: createAsyncPage(import('@pages/cs/TermsPage.vue')),
-                meta: {
-                    title: '이용약관',
-                    layout: 'default',
-                },
-            },
-            {
-                path: '/cs/termsdetail',
-                name: 'Terms Detail',
-                component: createAsyncPage(import('@pages/cs/TermsDetailPage.vue')),
-                meta: {
-                    title: '이용약관',
-                    layout: 'default',
-                },
-            },
-
             // 설정
             {
                 /** @complete */
                 path: '/config/member',
                 name: 'Config',
                 component: createAsyncPage(import('@pages/config/member/index.vue')),
-                meta: {
-                    title: '회원정보',
-                    layout: 'default',
-                    footer: true,
-                },
             },
             {
                 /** @complete */
@@ -301,9 +211,6 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
                 name: 'Withdrawal',
                 component: createAsyncPage(import('@pages/config/withdrawal/index.vue')),
                 meta: {
-                    title: '회원탈퇴',
-                    layout: 'default',
-                    footer: false,
                     floating: true,
                 },
                 beforeEnter(to, from, next) {
@@ -311,8 +218,11 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
                 },
             },
             {
-                /** @complete */
-                path: 'config/personalBusinessOwnerInfo',
+                /**
+                 * @complete
+                 * @needFix 사업자 추가, 삭제 기능 제정의 필요
+                 */
+                path: '/config/personalBusinessOwnerInfo',
                 name: 'Business',
                 component: createAsyncPage(import('@pages/config/business/index.vue')),
                 meta: {
@@ -333,6 +243,70 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
                 },
                 beforeEnter(to, from, next) {
                     next(from.name !== 'Business' ? 'not-found-page' : undefined)
+                },
+            },
+            //공지사항
+            {
+                /** @working */
+                path: '/config/notice',
+                name: 'Notice',
+                component: createAsyncPage(import('@pages/config/notice/index.vue')),
+            },
+            // 공지사항 상세
+            {
+                /** @working */
+                path: '/config/notice/detail/:no',
+                name: 'Notice Detail',
+                component: createAsyncPage(import('@pages/config/notice/detail/index.vue')),
+            },
+            // 자주 묻는 질문(faq)
+            {
+                /** @working */
+                path: '/config/faq',
+                name: 'FAQ',
+                component: createAsyncPage(import('@pages/config/faq/index.vue')),
+            },
+
+            // 이용약관
+            {
+                path: '/config/terms',
+                name: 'Terms',
+                component: createAsyncPage(import('@pages/config/terms/index.vue')),
+            },
+
+            // 이용약관 상세
+            {
+                path: '/config/termsdetail/:no',
+                name: 'Terms Detail',
+                component: createAsyncPage(import('@pages/config/terms/detail/index.vue')),
+            },
+
+            //매출페이지
+            //매출내역 메인
+            // TODO: 입금, 매출 내역 2개의 페이지로 나눠야함
+            // 매출, 입금 에서 가가가 일간, 주간, 요일별 (총 6벌, 3벌씩 탭이 있는 페이지 2개)
+            {
+                /** @working */
+                path: '/sales',
+                name: 'Sales',
+                component: createAsyncPage(import('@pages/sales/index.vue')),
+            },
+            // 연동 페이지
+            {
+                /** @working */
+                path: '/salesLiknage',
+                name: 'Sales Linkage',
+                component: createAsyncPage(import('@pages/salesLinkage/index.vue')),
+            },
+
+            // 입금 내역
+            {
+                /** @working */
+                path: '/deposit',
+                name: 'Sales History',
+                component: createAsyncPage(import('@pages/deposit/index.vue')),
+                meta: {
+                    title: '매출 내역',
                 },
             },
         ],

@@ -1,40 +1,43 @@
 <template>
-    <div class="container">
-        <div v-if="!!franchiseDetail" class="content franchisee-info-wrap">
-            <div class="franchisee-info">
-                <p>가맹점 번호 {{ $route.params.mcno }}</p>
-                <strong>{{ franchiseDetail.mcNm }}</strong>
-            </div>
-            <div class="franchisee-modify-box">
-                <!-- 주소 컴포넌트 사용하면 팝업이 안열림. 확인필요 -->
-                <AddressField
-                    v-if="!!addressItem"
-                    id="franchiseAddress"
-                    label="가맹점 주소"
-                    :default-value="addressItem"
-                    @change="onChangeAddress"
-                />
+    <Page floating>
+        <Header type="sub" title="가맹점 정보" />
+        <PageBody class="floating">
+            <div v-if="!!franchiseDetail" class="content franchisee-info-wrap">
+                <div class="franchisee-info">
+                    <p>가맹점 번호 {{ $route.params.mcno }}</p>
+                    <strong>{{ franchiseDetail.mcNm }}</strong>
+                </div>
+                <div class="franchisee-modify-box">
+                    <!-- 주소 컴포넌트 사용하면 팝업이 안열림. 확인필요 -->
+                    <AddressField
+                        v-if="!!addressItem"
+                        id="franchiseAddress"
+                        label="가맹점 주소"
+                        :default-value="addressItem"
+                        @change="onChangeAddress"
+                    />
 
-                <TextField
-                    v-if="!!prefixDigit.length"
-                    id="phoneNumber"
-                    type="select"
-                    label="가맹점 연락처"
-                    name="phoneNumber"
-                    placeholder="가맹점 연락처 입력"
-                    :maxlength="8"
-                    :default-value="digit"
-                    @change="digit = $event.value"
-                />
-                <!-- :list="prefixDigit"
-                            :error-message="digitErrorMessage" -->
-                <BulletList :list="list" />
+                    <TextField
+                        v-if="!!prefixDigit.length"
+                        id="phoneNumber"
+                        type="select"
+                        label="가맹점 연락처"
+                        name="phoneNumber"
+                        placeholder="가맹점 연락처 입력"
+                        :maxlength="8"
+                        :default-value="digit"
+                        @change="digit = $event.value"
+                    />
+                    <!-- :list="prefixDigit"
+                                :error-message="digitErrorMessage" -->
+                    <BulletList :list="list" />
+                </div>
             </div>
-        </div>
-        <portal to="floating">
-            <BasicButton size="large" @click="updateDetail">수정</BasicButton>
-        </portal>
-    </div>
+            <portal to="floating">
+                <BasicButton size="large" @click="updateDetail"> 수정 </BasicButton>
+            </portal>
+        </PageBody>
+    </Page>
 </template>
 
 <script lang="ts">

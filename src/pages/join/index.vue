@@ -1,7 +1,7 @@
 <template>
-    <Page :class="{ floating: step === 1 }">
+    <Page :floating="step === 1">
         <Header type="title" title="사업자 정보" />
-        <PageBody>
+        <PageBody :class="{ floating: step === 1 }">
             <SelectStore v-if="step === 1" :workplace-list="workplaceList" @next="onNext" />
             <UnableJoin v-else-if="step === -1" />
         </PageBody>
@@ -40,8 +40,6 @@ export default class JoinPage extends Vue {
     readonly getBizInfoInput!: (params: AuthParameters['bizInfo']) => Promise<void>
 
     @Getter('workplaceList') workplaceList!: BusinessPlaceListItem[]
-
-    /** @Watch */
 
     /** @Methods */
 

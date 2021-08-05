@@ -1,50 +1,52 @@
 <template>
     <div class="layout">
-        <transition :name="transitionName" :duration="{ enter: 6000, leave: 6000 }">
+        <transition :name="pageDirection" :duration="{ enter: 500, leave: 500 }" @before-enter="beforeEnter">
             <router-view>
                 <template slot-scope="{ Component }">
                     <component :is="Component" />
                 </template>
             </router-view>
         </transition>
-        <FixedBtnBox v-if="useFloating"></FixedBtnBox>
-        <Loading v-if="loading" />
     </div>
 </template>
 
 <script lang="ts">
-import { Vue, Component, Watch } from 'vue-property-decorator'
+import { Vue, Component /* Watch */ } from 'vue-property-decorator'
 import { namespace } from 'vuex-class'
-import type { Route } from 'vue-router'
+// import type { Route } from 'vue-router'
+import type { PageDirection } from '@stores/modules/ui'
 
+const { State } = namespace('common')
 const { State: UiState } = namespace('ui')
-const { State: CommonState } = namespace('common')
 
+/**
+ * @description
+ * router-view 를 스위칭하며, App.vue 컴포넌트 바로 아래에 있는 컴포넌트
+ */
 @Component
 export default class Layout extends Vue {
     /** @Stores */
-    @UiState('loading') readonly loading!: boolean
-    @CommonState('referrer') readonly referrer!: string
+    @State('referrer') readonly referrer!: string
+    @UiState('pageDirection') readonly pageDirection!: PageDirection
 
-    /** @Data */
-    private transitionName = 'next'
+    /** @Watch */
 
-    /** @Computed */
-    /** floating 버튼 영역 사용/노출 여부 */
-    get useFloating(): boolean {
-        return this.$route.meta.floating
-    }
+    /** 라우트 변경 시 */
+    // @Watch('$route')
+    // changeRoute(to: Route /* from: Route */) {
+    //     console.log('$route change', { to })
+    //     this.
+    //     this.transitionName = to.name === this.referrer ? 'prev' : 'next'
+    // }
 
-    @Watch('$route')
-    changeRoute(to: Route, from: Route) {
-        console.log('$route change', { to })
-        this.transitionName = from.name === this.referrer ? 'prev' : 'next'
+    beforeEnter() {
+        console.log('beforeEnter')
     }
 }
 </script>
 
 <style lang="scss" scoped>
-$duration: 6000ms;
+$duration: 500ms;
 .layout {
     display: grid;
     grid-template: 'main';
@@ -53,6 +55,7 @@ $duration: 6000ms;
 
 .layout > * {
     grid-area: main;
+    box-shadow: 0 2px 4px -1px #0003, 0 4px 5px #00000024, 0 1px 10px #0000001f;
 }
 
 /* Transitions */

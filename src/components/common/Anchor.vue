@@ -2,7 +2,7 @@
     <a v-if="external || sameUri" :href="href" :target="anchorTarget">
         <slot />
     </a>
-    <router-link v-else :to="href" :tag="tag">
+    <router-link v-else :to="href">
         <slot />
     </router-link>
 </template>

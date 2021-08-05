@@ -6,11 +6,11 @@
             "children": [
                 {
                     "name": "매출내역",
-                    "path": "/salesHistory"
+                    "path": "/sales"
                 },
                 {
                     "name": "입금내역",
-                    "path": "/depositHistory"
+                    "path": "/deposit"
                 }
             ]
         },
@@ -78,11 +78,11 @@
                 },
                 {
                     "name": "자주 묻는 질문",
-                    "path": "faq"
+                    "path": "/faq"
                 },
                 {
                     "name": "이용약관",
-                    "path": "/policy"
+                    "path": "/terms"
                 }
             ]
         }

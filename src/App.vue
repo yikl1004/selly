@@ -18,13 +18,13 @@
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
-import Layout from '@layout/Layout.vue'
 import type { ModalOptions } from '@utils/plugins/modal'
 
-@Component({
-    components: { Layout },
-})
+@Component
 export default class App extends Vue {
+    /** @Data */
+
+    /** 모달 노출시 컴포넌트에 들어갈 default props */
     private modalProps: ModalOptions & { show: boolean } = {
         message: '',
         show: false,
@@ -32,6 +32,9 @@ export default class App extends Vue {
         confirm: () => console.log('confirm 함수를 넣어 주세요'),
     }
 
+    /** @Computed */
+
+    /** 로딩 여부 */
     get isLoading(): boolean {
         return this.$store.state.ui.loading
     }
@@ -40,6 +43,8 @@ export default class App extends Vue {
         console.log('모달 확인 버튼 누를때 실행되는 액션')
         typeof this.modalProps.confirm === 'function' && this.modalProps.confirm()
     }
+
+    /** @Lifecycle */
 
     mounted() {
         this.$modal.bus.$on('open', (options: ModalOptions) => {

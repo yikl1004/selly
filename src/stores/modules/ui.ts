@@ -14,12 +14,21 @@ export interface GnbItem {
 export interface UiState {
     gnbList: GnbItem[]
     loading: boolean
+    pageDirection: PageDirection
 }
+
+export type PageDirection = 'prev' | 'next'
 
 @Module({ name: 'ui', namespaced: true, stateFactory: true })
 export default class Ui extends VuexModule<UiState, RootStore> {
     public gnbList: UiState['gnbList'] = []
     public loading = false
+    public pageDirection: PageDirection = 'next'
+
+    @Mutation
+    setPageDirection(pageDirection: PageDirection) {
+        this.pageDirection = pageDirection
+    }
 
     @Mutation
     setLoading(loading: boolean) {
@@ -31,20 +40,12 @@ export default class Ui extends VuexModule<UiState, RootStore> {
         const { data } = await axiosInstance.get('/assets/static/dummy/menu.json')
         const { gnbList } = data
 
-        return {
-            gnbList,
-        }
+        return { gnbList }
     }
 
-    // @MutationAction
-    // async getPrefixDigit() {
-    //     const { data } = await axiosInstance.get('/assets/static/dummy/prefixDigit.json')
-    //     const { prefixDigit } = data
-
-    //     return {
-    //         prefixDigit,
-    //     }
-    // }
+    // @MutationAction async getPrefixDigit() {     const { data } = await
+    // axiosInstance.get('/assets/static/dummy/prefixDigit.json')     const {
+    // prefixDigit } = data     return {         prefixDigit,     } }
 }
 
 export {}

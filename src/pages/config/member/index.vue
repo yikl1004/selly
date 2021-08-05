@@ -51,8 +51,9 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Mixins } from 'vue-property-decorator'
 import { namespace } from 'vuex-class'
+import PageView from '@utils/mixins/PageView'
 import type { MemberInfo } from '@stores/modules/auth'
 import type { AuthParameters } from '@services/auth'
 
@@ -60,7 +61,7 @@ const { Action, Getter } = namespace('auth')
 const { Mutation: UiMutation } = namespace('auth')
 
 @Component
-export default class MemberPage extends Vue {
+export default class MemberPage extends Mixins(PageView) {
     /** @Data */
 
     private memberInfo: { name: string; value: string }[] = []

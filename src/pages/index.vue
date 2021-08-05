@@ -1,21 +1,24 @@
 <template>
     <Page>
         <Header type="main" />
-        <div class="page-main-wrap">
-            <h2>메인 페이지</h2>
-        </div>
+        <PageBody>
+            <div class="page-main-wrap">
+                <h2>메인 페이지</h2>
+            </div>
+        </PageBody>
     </Page>
 </template>
 
 <script lang="ts">
-import { Component, Vue, Watch } from 'vue-property-decorator'
+import { Component, Mixins, Watch } from 'vue-property-decorator'
 import { namespace } from 'vuex-class'
+import PageView from '@utils/mixins/PageView'
 import type { MainInfo } from '@stores/modules/auth'
 
 const { Action: AuthAction, State: AuthState } = namespace('auth')
 
 @Component
-export default class MainPage extends Vue {
+export default class MainPage extends Mixins(PageView) {
     /** @Stores */
     @AuthAction('getMainInfo') readonly getMainInfo!: Function
     @AuthState('mainInfo') readonly mainInfo!: MainInfo

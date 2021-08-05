@@ -1,53 +1,57 @@
 <template>
-    <div class="container">
-        <div v-if="businessManInfo" class="content">
-            <div class="business-wrap">
-                <DropdownBox id="dropdown-box01" label="사업자 선택" :list="businessManList" @select="onSelectBusinessMan" />
-                <div class="btn-area">
-                    <BasicButton type="textBlue" @click="openPopupAddBusinessMan"> 사업자 추가 </BasicButton>
-                    <BasicButton type="textBlue"> 사업자 삭제 </BasicButton>
-                </div>
-                <ButtonField
-                    id="name"
-                    label="사업자명"
-                    placeholder="사업자 1"
-                    button-text="입력"
-                    name="cert"
-                    error-message="사업자명을 정확하게 입력해주세요."
-                    :default-value="currentBusinessInfo.bzmanNm"
-                    @search="onChangeBusinessManName"
-                />
-                <BtnGroup>
-                    <BasicButton type="medium"> 매출/입금 연동 </BasicButton>
-                </BtnGroup>
-                <div class="franchisee-list-box">
-                    <strong class="title">가맹점 정보</strong>
-                    <BoardItem
-                        v-for="(item, index) in franchiseList"
-                        :key="`board-item-${index}`"
-                        :index="index"
-                        :title="item.mcNm"
-                        @click="() => toFranchise(index)"
+    <Page>
+        <Header type="sub" title="사업자 정보" />
+        <PageBody>
+            <div v-if="businessManInfo" class="content">
+                <div class="business-wrap">
+                    <DropdownBox id="dropdown-box01" label="사업자 선택" :list="businessManList" @select="onSelectBusinessMan" />
+                    <div class="btn-area">
+                        <BasicButton type="textBlue" @click="openPopupAddBusinessMan"> 사업자 추가 </BasicButton>
+                        <BasicButton type="textBlue"> 사업자 삭제 </BasicButton>
+                    </div>
+                    <ButtonField
+                        id="name"
+                        label="사업자명"
+                        placeholder="사업자 1"
+                        button-text="입력"
+                        name="cert"
+                        error-message="사업자명을 정확하게 입력해주세요."
+                        :default-value="currentBusinessInfo.bzmanNm"
+                        @search="onChangeBusinessManName"
                     />
+                    <BtnGroup>
+                        <BasicButton type="medium"> 매출/입금 연동 </BasicButton>
+                    </BtnGroup>
+                    <div class="franchisee-list-box">
+                        <strong class="title">가맹점 정보</strong>
+                        <BoardItem
+                            v-for="(item, index) in franchiseList"
+                            :key="`board-item-${index}`"
+                            :index="index"
+                            :title="item.mcNm"
+                            @click="() => toFranchise(index)"
+                        />
+                    </div>
                 </div>
             </div>
-        </div>
-        <FullPopup
-            title="사업자추가"
-            type="popup"
-            :show.sync="showAddBusinessManPopup"
-            :button-text="{ confirm: '사업자 추가' }"
-            @confirm="onConfirm"
-        >
-            <SelectStore />
-        </FullPopup>
-    </div>
+            <FullPopup
+                title="사업자추가"
+                type="popup"
+                :show.sync="showAddBusinessManPopup"
+                :button-text="{ confirm: '사업자 추가' }"
+                @confirm="onConfirm"
+            >
+                <SelectStore />
+            </FullPopup>
+        </PageBody>
+    </Page>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Mixins } from 'vue-property-decorator'
 import { namespace } from 'vuex-class'
 import SelectStore from '@pages/auth/SelectStore.vue'
+import PageView from '@utils/mixins/PageView'
 import type { DropdownBoxList } from '@components/form/DropdownBox.vue'
 import type { BusinessManInfo } from '@stores/modules/auth'
 import type { Schema } from '@components/form/FormProvider.vue'
@@ -58,7 +62,7 @@ const { Action, State, Getter, Mutation } = namespace('auth')
 @Component({
     components: { SelectStore },
 })
-export default class BusinessPage extends Vue {
+export default class BusinessPage extends Mixins(PageView) {
     /** @Stores */
     @Action('getBusinessManInfo')
     readonly getBusinessManInfo!: () => Promise<void>
