@@ -14,10 +14,6 @@ export interface ProgressProps {
 
 @Component
 export default class ProgressBar extends Vue {
-    /**
-     * @category Prop
-     */
-
     /** 상태바 진행도 그래프 */
     @Prop({ type: Number, default: 0 })
     readonly progressNumber!: number

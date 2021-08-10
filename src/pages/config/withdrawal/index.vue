@@ -19,7 +19,6 @@ import { Component, Vue } from 'vue-property-decorator'
 import { namespace } from 'vuex-class'
 
 const { Action, State } = namespace('auth')
-const { Mutation: UiMutation } = namespace('ui')
 
 /**
  * @description
@@ -31,16 +30,13 @@ export default class WithdrawalPage extends Vue {
     @Action('setWithdrawal') readonly setWithdrawal!: () => Promise<void>
     @Action('beforeWithdrawal') readonly beforeWithdrawal!: () => Promise<void>
     @State('cacelGuideList') readonly cacelGuideList!: Array<{ text: string }>
-    @UiMutation('setLoading') readonly setLoading!: (loading: boolean) => void
 
     /** @Data */
 
     /** @Methods */
 
     async handelWithdrawal() {
-        this.setLoading(true)
         await this.setWithdrawal()
-        this.setLoading(false)
         this.$router.push({ name: 'Main' })
     }
 

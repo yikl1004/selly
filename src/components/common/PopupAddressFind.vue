@@ -9,9 +9,7 @@
             hidden-label
             @search="searchJuso"
         />
-        <p class="txt-search-info">
-            예시 : 도로명(양녕로 25길), 건물번호(39-1)
-        </p>
+        <p class="txt-search-info">예시 : 도로명(양녕로 25길), 건물번호(39-1)</p>
 
         <!--[D] 검색결과 리스트-->
         <div v-if="hasList" class="address-list">
@@ -27,9 +25,7 @@
         <!--[D] 검색결과 없음-->
         <!-- <CautionBox v-else description="검색된 내용이 없습니다." /> -->
 
-        <BasicButton v-if="visibleMoreButton" type="more" @click="more">
-            더보기
-        </BasicButton>
+        <BasicButton v-if="visibleMoreButton" type="more" @click="more"> 더보기 </BasicButton>
     </div>
 </template>
 
@@ -51,8 +47,6 @@ interface ErrorState {
 
 @Component
 export default class PopupAddressFind extends Vue {
-    /** @Data */
-
     /** API 호출 상태 */
     private pending = false
 
@@ -99,9 +93,7 @@ export default class PopupAddressFind extends Vue {
         const countPerPage = toNumber(common.countPerPage)
         const jusoList = response.data.results.juso
 
-        this.list = isUndefined(nextPage)
-            ? jusoList
-            : (this.list = this.list.concat(jusoList))
+        this.list = isUndefined(nextPage) ? jusoList : (this.list = this.list.concat(jusoList))
         this.paging = { totalCount, currentPage, countPerPage }
 
         // 더보기 버튼 노출 설정
@@ -118,11 +110,7 @@ export default class PopupAddressFind extends Vue {
         await this.search(this.keyword, nextPage)
     }
 
-    setVisibleMoreButton(
-        currentPage: number,
-        totalCount: number,
-        countPerPage: number,
-    ) {
+    setVisibleMoreButton(currentPage: number, totalCount: number, countPerPage: number) {
         const totalPage = Math.ceil(totalCount / countPerPage)
 
         this.visibleMoreButton = currentPage < totalPage

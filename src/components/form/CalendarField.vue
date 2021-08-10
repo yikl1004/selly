@@ -1,34 +1,16 @@
 <template>
-    <div
-        v-click-outside="onBlur"
-        class="calendar-field field-box"
-        :class="type"
-    >
+    <div v-click-outside="onBlur" class="calendar-field field-box" :class="type">
         <LabelTitle :hidden-label="hiddenLabel" :label="label" />
         <div class="flex">
             <div class="input-area" :class="{ focus: focusedClass }">
-                <input
-                    ref="input"
-                    type="text"
-                    :value="displayValue"
-                    :class="{ readonly }"
-                    @keydown="onKeydown"
-                    @focus="onFocus"
-                />
+                <input ref="input" type="text" :value="displayValue" :class="{ readonly }" @keydown="onKeydown" @focus="onFocus" />
                 <i class="icon-calendar" />
             </div>
             <template v-if="type">
                 <span class="icon">~</span>
 
                 <div class="input-area" :class="{ focus: focusedClass }">
-                    <input
-                        ref="input"
-                        type="text"
-                        :value="displayValue"
-                        :class="{ readonly }"
-                        @keydown="onKeydown"
-                        @focus="onFocus"
-                    />
+                    <input ref="input" type="text" :value="displayValue" :class="{ readonly }" @keydown="onKeydown" @focus="onFocus" />
                     <i class="icon-calendar" />
                 </div>
             </template>
@@ -54,7 +36,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
+import { Component, Prop, Ref, Vue, Watch } from 'vue-property-decorator'
 import dayjs from 'dayjs'
 
 // const month = new Date().getMonth()
@@ -63,23 +45,19 @@ import dayjs from 'dayjs'
 @Component({
     components: {
         DatePicker: () => ({
-            component: import('v-calendar').then(
-                vCalendar => vCalendar.DatePicker,
-            ),
+            component: import('v-calendar').then(vCalendar => vCalendar.DatePicker),
         }),
     },
 })
 export default class CalendarField extends Vue {
     /**
-     * @category Refs
+     * @Refs
      */
 
-    $refs!: Vue['$refs'] & {
-        input: HTMLInputElement
-    }
+    @Ref('input') readonly input!: HTMLInputElement
 
     /**
-     * @category Props
+     * @Props
      */
 
     /** form에 사용될 id */
@@ -107,7 +85,7 @@ export default class CalendarField extends Vue {
     readonly type!: string
 
     /**
-     * @category Data(State)
+     * @Data (State)
      */
 
     /** focus 상태 */
@@ -146,7 +124,7 @@ export default class CalendarField extends Vue {
     }
 
     /**
-     * @category Computed
+     * @Computed
      */
 
     /** 화면에 보여질 value */
@@ -167,7 +145,7 @@ export default class CalendarField extends Vue {
     }
 
     /**
-     * @category Methods
+     * @Methods
      */
 
     onKeydown(event: KeyboardEvent) {
@@ -179,7 +157,7 @@ export default class CalendarField extends Vue {
     }
 
     onClickIcon() {
-        this.$refs.input.focus()
+        this.input.focus()
     }
 
     onFocus(event: FocusEvent) {

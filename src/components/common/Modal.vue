@@ -5,12 +5,7 @@
             enter-active-class="animate__animated animate__fadeIn"
             leave-active-class="animate__animated animate__fadeOut"
         >
-            <div
-                v-if="showState"
-                ref="modal"
-                :class="['modal', type]"
-                @click="outsideClick"
-            >
+            <div v-if="showState" ref="modal" :class="['modal', type]" @click="outsideClick">
                 <div ref="inner" class="inner">
                     <!-- <header class="modal-header">
                         <h2 v-if="title" class="title">
@@ -23,11 +18,7 @@
                         </div>
                     </div>
                     <div class="button-group">
-                        <BasicButton
-                            v-if="buttonText.cancel"
-                            type="dialogWhite"
-                            @click="onCancel"
-                        >
+                        <BasicButton v-if="buttonText.cancel" type="dialogWhite" @click="onCancel">
                             {{ buttonText.cancel }}
                         </BasicButton>
                         <BasicButton type="dialogBlue" @click="onConfirm">
@@ -42,7 +33,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, PropSync, Vue } from 'vue-property-decorator'
+import { Component, Prop, PropSync, Ref, Vue } from 'vue-property-decorator'
 
 interface ButtonText extends Object {
     cancel?: string
@@ -56,10 +47,9 @@ export type ModalDesignType = 'dialog' | 'popup'
 
 @Component
 export default class Modal extends Vue {
-    $refs!: Vue['$refs'] & {
-        inner: HTMLDivElement
-        modal: HTMLDivElement
-    }
+    /** @Refs */
+    @Ref() readonly inner!: HTMLDivElement
+    @Ref() readonly modal!: HTMLDivElement
 
     /**
      * @category Props

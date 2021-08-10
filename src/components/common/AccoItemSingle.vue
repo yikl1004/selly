@@ -1,12 +1,7 @@
 <template>
     <div class="box-acco-single">
         <div :class="['box-acco-item', { active: toggle }]">
-            <button
-                type="bubton"
-                class="acco-anchor"
-                :aria-expanded="toggle ? 'true' : 'false'"
-                @click="onToggle"
-            >
+            <button type="bubton" class="acco-anchor" :aria-expanded="toggle ? 'true' : 'false'" @click="onToggle">
                 <span>{{ title }}</span>
             </button>
             <div class="acco-cont">
@@ -23,11 +18,7 @@ import { Component, Prop, Vue } from 'vue-property-decorator'
 
 @Component
 export default class AccoItemSingle extends Vue {
-    /**
-     * @category Props
-     */
-
-    // 메뉴 타이틀명
+    /* 메뉴 타이틀명 */
     @Prop({ type: String, default: '' })
     readonly title!: string
 

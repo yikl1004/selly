@@ -10,11 +10,11 @@
             <span class="avg-tit">최근 4주</span>
             <DropdownBox
                 id="dropdown-box01"
-                label="요일 선택"
                 :hidden-label="true"
                 :list="dropdownBoxList"
-                default-value="월요일"
                 :disabled="false"
+                label="요일 선택"
+                default-value="월요일"
             />
 
             <em class="price">

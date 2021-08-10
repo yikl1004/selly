@@ -39,11 +39,7 @@ type HeaderType = 'main' | 'sub' | 'proccess' | 'title'
 
 @Component
 export default class Header extends Vue {
-    /**
-     * @category Props
-     */
-
-    /** 헤더타입 : main / sub / proccess*/
+    /** 헤더타입 : main, sub, proccess */
     @Prop({ type: String, default: 'sub' })
     readonly type!: HeaderType
 

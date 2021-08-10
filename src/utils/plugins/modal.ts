@@ -1,7 +1,5 @@
 import { Vue } from 'vue-property-decorator'
-import type { PluginObject } from 'vue'
-
-const ModalBus = new Vue()
+import type { PluginFunction, PluginObject } from 'vue'
 
 declare module 'vue/types/vue' {
     interface Vue {
@@ -22,15 +20,20 @@ export interface ModalOptions {
     cancel?: Function
 }
 
-const Modal: PluginObject<{}> = {
-    install(_Vue /* options */) {
-        _Vue.prototype.$modal = {
-            open(option: ModalOptions) {
-                ModalBus.$emit('open', option)
+const ModalBus = new Vue()
+const install: PluginFunction<{}> = _Vue => {
+    Object.defineProperties(_Vue.prototype, {
+        $modal: {
+            value: {
+                open(option: ModalOptions) {
+                    ModalBus.$emit('open', option)
+                },
+                bus: ModalBus,
             },
-            bus: ModalBus,
-        }
-    },
+        },
+    })
 }
+
+const Modal: PluginObject<{}> = { install }
 
 export default Modal

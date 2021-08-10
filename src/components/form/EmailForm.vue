@@ -1,11 +1,6 @@
 <template>
     <div class="email-field" :class="isError">
-        <LabelTitle
-            :id="id"
-            title-type="label"
-            :hidden-label="hiddenLabel"
-            :label="label"
-        />
+        <LabelTitle :id="id" title-type="label" :hidden-label="hiddenLabel" :label="label" />
 
         <div class="email-input-box">
             <div
@@ -71,7 +66,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop, Mixins, Watch } from 'vue-property-decorator'
+import { Component, Prop, Mixins, Watch, Ref } from 'vue-property-decorator'
 import Validates from '@utils/mixins/Validates'
 import type { BottomSheetOptionItem } from '@components/common/BottomSheet.vue'
 import type { DropdownBoxList } from './DropdownBox.vue'
@@ -88,16 +83,7 @@ interface Validate {
 
 @Component
 export default class EmailForm extends Mixins(Validates) {
-    /**
-     * @category Refs
-     */
-    $refs!: Vue['$refs'] & {
-        input: HTMLInputElement
-    }
-
-    /**
-     * @category PROPS
-     */
+    @Ref() readonly input!: HTMLInputElement
 
     /** type 속성 */
     @Prop({ type: String, default: 'text' })
@@ -136,7 +122,7 @@ export default class EmailForm extends Mixins(Validates) {
     readonly list!: DropdownBoxList
 
     /**
-     * @category DATA(State)
+     * @DATA (State)
      */
 
     /** 실제 값 */
@@ -152,7 +138,7 @@ export default class EmailForm extends Mixins(Validates) {
     private selectedValue: BottomSheetOptionItem = this.list[0]
 
     /**
-     * @category COMPUTED
+     * @Computed
      */
     get pattern(): string {
         return this.inputType === 'number' ? '\\d*' : ''
@@ -173,10 +159,7 @@ export default class EmailForm extends Mixins(Validates) {
 
     /** 타이핑한 값 */
     get displayValue(): string {
-        const conditionsSeperateNumbe = [
-            this.value,
-            this.type === 'seperateNumber',
-        ]
+        const conditionsSeperateNumbe = [this.value, this.type === 'seperateNumber']
         const conditionSelectType = [this.value, this.type === 'select']
         if (conditionsSeperateNumbe.every(condition => condition)) {
             return this._.toNumber(this.value).toLocaleString()
@@ -189,10 +172,7 @@ export default class EmailForm extends Mixins(Validates) {
 
     /** 에러 여부 */
     get isError(): string | undefined {
-        const conditions = [
-            this.value.length,
-            typeof this.validate === 'function',
-        ]
+        const conditions = [this.value.length, typeof this.validate === 'function']
         if (conditions.every(condition => condition)) {
             return this.validate(this.value) ? 'success' : 'error'
         }
@@ -211,7 +191,7 @@ export default class EmailForm extends Mixins(Validates) {
     }
 
     /**
-     * @title WATCH
+     * @Watch
      */
 
     @Watch('value')
@@ -225,14 +205,11 @@ export default class EmailForm extends Mixins(Validates) {
         })
     }
 
-    /**
-     * @category METHOD
-     * @title Custom Methods
-     */
+    /** @Methods */
 
     onInput(/* event: InputEvent */) {
         // eslint-disable-next-line no-useless-escape
-        this.value = this.$refs.input.value.replace(/\,|\-/gi, '')
+        this.value = this.input.value.replace(/\,|\-/gi, '')
     }
 
     onKeydown(event: KeyboardEvent) {
@@ -262,7 +239,7 @@ export default class EmailForm extends Mixins(Validates) {
 
     clearValue() {
         this.value = ''
-        this.$refs.input.focus()
+        this.input.focus()
     }
 
     openBottomSheet() {
@@ -274,9 +251,7 @@ export default class EmailForm extends Mixins(Validates) {
     }
 
     onSelectOption(value: string) {
-        this.selectedValue = this.list.find(
-            option => option.value === value,
-        ) as BottomSheetOptionItem
+        this.selectedValue = this.list.find(option => option.value === value) as BottomSheetOptionItem
         const changedList = this.list.map(option => {
             option.selected = option.value === value
             return option
@@ -295,16 +270,13 @@ export default class EmailForm extends Mixins(Validates) {
         this.$emit('update:list', changedList)
     }
 
-    /**
-     * @category METHODS
-     * @title Lifecycle
-     */
+    /** @Lifecycle */
     mounted() {
         /**
          * mounted 이벤트
          * @event mounted
          */
-        this.$emit('mounted', this.$refs.input)
+        this.$emit('mounted', this.input)
     }
 }
 </script>

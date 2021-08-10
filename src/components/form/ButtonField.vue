@@ -42,7 +42,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Watch, Mixins, Vue } from 'vue-property-decorator'
+import { Component, Prop, Watch, Mixins, Ref } from 'vue-property-decorator'
 import Validates from '@utils/mixins/Validates'
 import { FormBus } from '@components/form/FormProvider.vue'
 
@@ -69,11 +69,10 @@ interface Timer {
 @Component
 export default class ButtonField extends Mixins(Validates) {
     /**
-     * @category Refs
+     * @Refs
      */
-    $refs!: Vue['$refs'] & {
-        input: HTMLInputElement
-    }
+    @Ref() readonly input!: HTMLInputElement
+
     /**
      * @category PROPS
      */
@@ -184,7 +183,7 @@ export default class ButtonField extends Mixins(Validates) {
 
     onInput(/* event: InputEvent */) {
         // eslint-disable-next-line no-useless-escape
-        this.value = this.$refs.input.value.replace(/\,/g, '')
+        this.value = this.input.value.replace(/\,/g, '')
     }
 
     onFocus(event: FocusEvent) {
@@ -203,7 +202,7 @@ export default class ButtonField extends Mixins(Validates) {
 
     clearValue() {
         this.value = ''
-        this.$refs.input.focus()
+        this.input.focus()
     }
 
     /**
@@ -215,7 +214,7 @@ export default class ButtonField extends Mixins(Validates) {
          * mounted 이벤트
          * @event mounted
          */
-        this.$emit('mounted', this.$refs.input)
+        this.$emit('mounted', this.input)
 
         this.value = this.defaultValue || ''
     }

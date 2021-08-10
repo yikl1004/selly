@@ -17,9 +17,6 @@ import { Component, Prop, Vue } from 'vue-property-decorator'
 
 @Component
 export default class BoardItem extends Vue {
-    /**
-     * @category PROPS
-     */
     /** 제목말줄임 케이스 :  ellipsis (2줄 말줄임) */
     @Prop({ type: String })
     readonly type!: string

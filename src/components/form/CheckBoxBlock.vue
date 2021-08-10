@@ -40,10 +40,6 @@ export interface OnSelectValue {
 
 @Component
 export default class CheckBoxBlock extends Vue {
-    /**
-     * @category Prop
-     */
-
     /** 디자인 타입 */
     @Prop({ type: String, default: 'normal' })
     readonly type!: CheckBoxDesignType

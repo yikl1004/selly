@@ -2,7 +2,7 @@
     "gnbList": [
         {
             "name": "매출/입금",
-            "path": "*",
+            "path": "/salesAndPurchases",
             "children": [
                 {
                     "name": "매출내역",

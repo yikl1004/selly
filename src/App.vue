@@ -48,7 +48,6 @@ export default class App extends Vue {
 
     mounted() {
         this.$modal.bus.$on('open', (options: ModalOptions) => {
-            console.log(11111, options)
             this.modalProps = {
                 ...this.modalProps,
                 ...options,

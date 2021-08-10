@@ -1,11 +1,5 @@
 <template>
-    <button
-        :type="buttonType"
-        class="btn"
-        :class="[type, size]"
-        :disabled="disabled"
-        @click="onClick"
-    >
+    <button :type="buttonType" class="btn" :class="[type, size]" :disabled="disabled" @click="onClick">
         <span class="text">
             <slot />
         </span>
@@ -32,9 +26,6 @@ export type BasicButtonDesignType =
 
 @Component
 export default class BasicButton extends Vue {
-    /**
-     * @category Props
-     */
     /** 디자인 타입 */
     @Prop({ type: String, default: 'basic' })
     readonly type!: BasicButtonDesignType

@@ -9,9 +9,6 @@ type Color = 'green' | 'red' | 'brown' | 'gray' | 'blue' | 'white'
 
 @Component
 export default class Flag extends Vue {
-    /**
-     * @category Props
-     */
     /** 입력텍스트 */
     @Prop({ type: String })
     readonly text!: string

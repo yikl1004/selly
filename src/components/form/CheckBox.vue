@@ -1,15 +1,7 @@
 <template>
     <div :class="['check-box', { style01: text }]">
         <label>
-            <input
-                :id="id"
-                v-model="value"
-                value="sdkj"
-                type="checkbox"
-                :name="_.camelCase(id)"
-                :disabled="disabled"
-                @change="onChange"
-            />
+            <input :id="id" v-model="value" value="sdkj" type="checkbox" :name="_.camelCase(id)" :disabled="disabled" @change="onChange" />
             <i>
                 {{ label }}
                 <span v-if="text" class="sub-text">{{ text }}</span>
@@ -39,10 +31,6 @@ export interface CheckboxProps {
 
 @Component
 export default class CheckBox extends Vue {
-    /**
-     * @category Prop
-     */
-
     /** 디자인 타입 */
     @Prop({ type: String, default: 'normal' })
     readonly type!: CheckBoxDesignType

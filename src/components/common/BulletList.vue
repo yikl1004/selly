@@ -18,10 +18,6 @@ interface List {
 
 @Component
 export default class BulletList extends Vue {
-    /**
-     * @category Prop
-     */
-
     /** 제목 */
     @Prop({ type: String })
     readonly title!: string

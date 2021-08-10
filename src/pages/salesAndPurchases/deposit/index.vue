@@ -13,7 +13,7 @@
         <Tab :list="tabList" :active="0" type="solid">
             <template slot-scope="{ activeIndex }">
                 <div v-if="activeIndex === 0" class="tab-inner">
-                    <SalesHistoryDetail />
+                    <!-- <SalesHistoryDetail /> -->
                 </div>
                 <div v-if="activeIndex === 1" class="tab-inner">
                     <p>주간</p>
@@ -28,12 +28,12 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import SalesHistoryDetail from '@components/sales/SalesHistoryDetail.vue'
+// import SalesHistoryDetail from '@components/sales/SalesHistoryDetail.vue'
 import type { DropdownBoxList } from '@components/form/DropdownBox.vue'
 
 @Component({
     components: {
-        SalesHistoryDetail,
+        // SalesHistoryDetail,
     },
 })
 export default class SalesHistory extends Vue {

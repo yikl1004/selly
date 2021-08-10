@@ -1,13 +1,12 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
+// import Vue from 'vue'
+// import Vuex from 'vuex'
 import { addParameters } from '@storybook/vue'
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport'
-import { initialize } from '@utils/index'
+// import { initialize } from '@utils/index'
 
 import 'animate.css/animate.css'
 
-Vue.use(Vuex)
-initialize()
+// Vue.use(Vuex)
 
 addParameters({
     actions: { argTypesRegex: '^on[A-Z].*' },
@@ -23,7 +22,7 @@ addParameters({
     },
     docs: {
         source: {
-            language: 'html'
-        }
-    }
+            language: 'html',
+        },
+    },
 })

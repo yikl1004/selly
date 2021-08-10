@@ -1,11 +1,7 @@
 <template>
     <div :class="['single-selection', type]">
         <ul :class="['list', align]">
-            <li
-                v-for="(item, index) in list"
-                :key="`single-selection-item-${index}`"
-                class="list-item"
-            >
+            <li v-for="(item, index) in list" :key="`single-selection-item-${index}`" class="list-item">
                 <input
                     :id="getItemId(id, index)"
                     v-model="value"
@@ -15,9 +11,7 @@
                     :disabled="item.disabled"
                     :checked="item.checked"
                 />
-                <label :for="getItemId(id, index)">{{
-                    item.displayName
-                }}</label>
+                <label :for="getItemId(id, index)">{{ item.displayName }}</label>
             </li>
         </ul>
     </div>
@@ -43,10 +37,6 @@ export type SingleSelectionDesignType = 'button' | 'radio'
 
 @Component
 export default class SingleSelection extends Vue {
-    /**
-     * @category Props
-     */
-
     /** 선택 할 리스트 */
     @Prop({ type: Array, required: true })
     readonly list!: SingleSelectionListItem[]

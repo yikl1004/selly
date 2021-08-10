@@ -1,11 +1,6 @@
 <template>
     <div class="textarea-box" :class="isError">
-        <LabelTitle
-            :id="id"
-            label-type="label"
-            :hidden-label="hiddenLabel"
-            :label="label"
-        />
+        <LabelTitle :id="id" label-type="label" :hidden-label="hiddenLabel" :label="label" />
         <div
             class="input-area"
             :class="{
@@ -33,7 +28,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue, Mixins } from 'vue-property-decorator'
+import { Component, Prop, Mixins, Ref } from 'vue-property-decorator'
 import Validates from '@utils/mixins/Validates'
 
 interface Validate {
@@ -42,16 +37,8 @@ interface Validate {
 
 @Component
 export default class Textarea extends Mixins(Validates) {
-    /**
-     * @category Refs
-     */
-    $refs!: Vue['$refs'] & {
-        input: HTMLInputElement
-    }
+    @Ref() readonly input!: HTMLInputElement
 
-    /**
-     * @category PROPS
-     */
     /** form에 사용될 id */
     @Prop({ type: String, required: true })
     readonly id!: string

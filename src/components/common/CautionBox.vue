@@ -10,12 +10,7 @@
                 <p v-if="linkInfo">
                     {{ linkInfo }}
                 </p>
-                <a
-                    v-for="(item, index) in link"
-                    :key="`caution-box-link-${index}`"
-                    :href="getHref(item)"
-                    class="link-tel"
-                >
+                <a v-for="(item, index) in link" :key="`caution-box-link-${index}`" :href="getHref(item)" class="link-tel">
                     {{ item.text }}
                 </a>
             </div>
@@ -32,15 +27,13 @@ interface Link {
     type?: 'tel'
 }
 
+export type CautionBoxType = 'complete' | 'caution' | 'result'
+
 @Component
 export default class CautionBox extends Vue {
-    /**
-     * @category Props
-     */
-
-    /** complete / caution / result*/
+    /** complete, caution, result */
     @Prop({ type: String })
-    readonly type!: string
+    readonly type!: CautionBoxType
 
     /** 하단에 리스트 들어가는 경우 간격 적용 */
     @Prop({ type: Boolean, default: false })

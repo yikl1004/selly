@@ -12,10 +12,6 @@ import { Component, Prop, Vue } from 'vue-property-decorator'
 
 @Component
 export default class FormTextBox extends Vue {
-    /**
-     * @category Props
-     */
-
     /** label */
     @Prop({ type: String })
     readonly label!: string

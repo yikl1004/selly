@@ -1,10 +1,6 @@
 <template>
     <div class="box-acco-list" :class="type">
-        <div
-            v-for="(item, index) in list"
-            :key="`acco-item-${index}`"
-            :class="['box-acco-item', { active: index === currentIndex }]"
-        >
+        <div v-for="(item, index) in list" :key="`acco-item-${index}`" :class="['box-acco-item', { active: index === currentIndex }]">
             <button
                 type="bubton"
                 class="acco-anchor"
@@ -12,9 +8,7 @@
                 :aria-expanded="index === currentIndex ? 'true' : 'false'"
                 @click="onClick(index)"
             >
-                <span v-if="item.category" class="category">{{
-                    item.category
-                }}</span>
+                <span v-if="item.category" class="category">{{ item.category }}</span>
                 <strong class="tit">{{ item.title }}</strong>
             </button>
             <div :id="`acco-item-${index}`" class="acco-cont">
@@ -37,14 +31,15 @@ export interface AccordionListItem {
 
 @Component
 export default class AccoItem extends Vue {
-    /**
-     * @Props
-     */
-
     /** 아코디언 제목과 내용 배열로 받음 */
-    @Prop({ type: Array, default: () => [], required: true })
-    readonly list!: AccordionListItem[]
+    @Prop({ type: Array, default: () => [] })
+    readonly list!: {
+        category?: string
+        title: string
+        desc: string
+    }[]
 
+    /** 디자인 타입 */
     @Prop({ type: String, default: '' })
     readonly type!: string
 

@@ -11,11 +11,7 @@
             }"
         >
             <template v-if="isSelectType">
-                <button
-                    type="button"
-                    class="select-button"
-                    @click="openBottomSheet"
-                >
+                <button type="button" class="select-button" @click="openBottomSheet">
                     {{ selectedValue.displayName }}
                     <i class="open" />
                 </button>
@@ -45,22 +41,13 @@
                 @focus="onFocus"
                 @blur="onBlur"
             />
-            <button
-                v-if="!readonly && !!value.length"
-                type="button"
-                class="clear"
-                @click="clearValue"
-            >
+            <button v-if="!readonly && !!value.length" type="button" class="clear" @click="clearValue">
                 <i />
                 <span class="ir">전체삭제</span>
             </button>
         </div>
         <!--//유효성 검사가 되어 메시지 노출할때만 보여줌. 에러일때와 성공일때-->
-        <TextInputMessage
-            v-if="isError !== undefined"
-            :error-message="errorMessage"
-            :message-type="isError"
-        />
+        <TextInputMessage v-if="isError !== undefined" :error-message="errorMessage" :message-type="isError" />
 
         <BasicButton size="medium" class="btn-cert"> 인증번호 </BasicButton>
 
@@ -88,18 +75,8 @@
                     @focus="onFocus"
                     @blur="onBlur"
                 />
-                <Timer
-                    class="counter"
-                    :count="timer.count"
-                    :unit="timer.unit"
-                    :format="timer.format"
-                />
-                <button
-                    v-if="!readonly && !!value.length"
-                    type="button"
-                    class="clear"
-                    @click="clearValue"
-                >
+                <Timer class="counter" :count="timer.count" :unit="timer.unit" :format="timer.format" />
+                <button v-if="!readonly && !!value.length" type="button" class="clear" @click="clearValue">
                     <i />
                     <span class="ir">전체삭제</span>
                 </button>
@@ -109,16 +86,12 @@
             </button>
         </div>
 
-        <TextInputMessage
-            v-if="isError !== undefined"
-            error-message="인증번호를 정확하게 입력해 주세요/"
-            :message-type="isError"
-        />
+        <TextInputMessage v-if="isError !== undefined" error-message="인증번호를 정확하게 입력해 주세요/" :message-type="isError" />
     </div>
 </template>
 
 <script lang="ts">
-import { Component, Prop, Watch, Mixins, Vue } from 'vue-property-decorator'
+import { Component, Prop, Watch, Mixins, Ref } from 'vue-property-decorator'
 import Validates from '@utils/mixins/Validates'
 import type { BottomSheetOptionItem } from '@components/common/BottomSheet.vue'
 import type { DropdownBoxList } from '@components/form/DropdownBox.vue'
@@ -147,11 +120,10 @@ interface Timer {
 @Component
 export default class TextField extends Mixins(Validates) {
     /**
-     * @category Refs
+     * @Refs
      */
-    $refs!: Vue['$refs'] & {
-        input: HTMLInputElement
-    }
+
+    @Ref() readonly input!: HTMLInputElement
 
     /**
      * @category PROPS
@@ -259,10 +231,7 @@ export default class TextField extends Mixins(Validates) {
 
     /** 타이핑한 값 */
     get displayValue(): string {
-        const conditionsSeperateNumbe = [
-            this.value,
-            this.type === 'seperateNumber',
-        ]
+        const conditionsSeperateNumbe = [this.value, this.type === 'seperateNumber']
         const conditionSelectType = [this.value, this.type === 'select']
         if (conditionsSeperateNumbe.every(condition => condition)) {
             return this._.toNumber(this.value).toLocaleString()
@@ -275,10 +244,7 @@ export default class TextField extends Mixins(Validates) {
 
     /** 에러 여부 */
     get isError(): string | undefined {
-        const conditions = [
-            this.value.length,
-            typeof this.validate === 'function',
-        ]
+        const conditions = [this.value.length, typeof this.validate === 'function']
         if (conditions.every(condition => condition)) {
             return this.validate(this.value) ? 'success' : 'error'
         }
@@ -287,14 +253,9 @@ export default class TextField extends Mixins(Validates) {
 
     /** 에러 메세지 */
     get message(): string | undefined {
-        const conditions = [
-            this.value.length,
-            typeof this.validate === 'function',
-        ]
+        const conditions = [this.value.length, typeof this.validate === 'function']
         if (conditions.every(condition => condition)) {
-            return this.validate(this.value)
-                ? this.successMessage
-                : this.errorMessage
+            return this.validate(this.value) ? this.successMessage : this.errorMessage
         }
         return undefined
     }
@@ -332,7 +293,7 @@ export default class TextField extends Mixins(Validates) {
 
     onInput(/* event: InputEvent */) {
         // eslint-disable-next-line no-useless-escape
-        this.value = this.$refs.input.value.replace(/\,|\-/gi, '')
+        this.value = this.input.value.replace(/\,|\-/gi, '')
     }
 
     onKeydown(event: KeyboardEvent) {
@@ -370,7 +331,7 @@ export default class TextField extends Mixins(Validates) {
 
     clearValue() {
         this.value = ''
-        this.$refs.input.focus()
+        this.input.focus()
     }
 
     openBottomSheet() {
@@ -382,9 +343,7 @@ export default class TextField extends Mixins(Validates) {
     }
 
     onSelectOption(value: string) {
-        this.selectedValue = this.list.find(
-            option => option.value === value,
-        ) as BottomSheetOptionItem
+        this.selectedValue = this.list.find(option => option.value === value) as BottomSheetOptionItem
         const changedList = this.list.map(option => {
             option.selected = option.value === value
             return option
@@ -412,7 +371,7 @@ export default class TextField extends Mixins(Validates) {
          * mounted 이벤트
          * @event mounted
          */
-        this.$emit('mounted', this.$refs.input)
+        this.$emit('mounted', this.input)
     }
 }
 </script>

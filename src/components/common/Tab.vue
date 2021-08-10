@@ -29,16 +29,15 @@ export interface List {
 
 @Component
 export default class Tab extends Vue {
-    /**
-     * @category Props
-     */
-
+    /** 활성화 index */
     @Prop({ type: Number, default: 0 })
     readonly active!: number
 
+    /** tab 리스트 */
     @Prop({ type: Array, required: true })
     readonly list!: List[]
 
+    /** 디자인 타입 */
     @Prop({ type: String, default: '' })
     readonly type!: string
 

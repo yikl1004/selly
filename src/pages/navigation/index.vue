@@ -92,7 +92,7 @@ export default class NavigationPage extends Mixins(PageView) {
             this.$modal.open({
                 buttonText: { confirm: '확인' },
                 confirm: () => {
-                    this.$router.push({ name: 'Main' })
+                    this.$router.push({ name: 'Login' })
                 },
                 message: this.modalMessage,
             })

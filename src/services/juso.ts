@@ -144,20 +144,14 @@ class JusoService {
     }
 
     /** 검색 */
-    async search(
-        keyword: string,
-        nextPage?: string,
-    ): Promise<AxiosResponse<JusoResponse>> {
-        return await axios.get<JusoResponse>(
-            'https://www.juso.go.kr/addrlink/addrLinkApi.do',
-            {
-                params: {
-                    keyword,
-                    currentPage: nextPage || '1',
-                    ...this.defaultParameters,
-                },
+    async search(keyword: string, nextPage?: string): Promise<AxiosResponse<JusoResponse>> {
+        return await axios.get<JusoResponse>('https://www.juso.go.kr/addrlink/addrLinkApi.do', {
+            params: {
+                keyword,
+                currentPage: nextPage || '1',
+                ...this.defaultParameters,
             },
-        )
+        })
     }
 }
 

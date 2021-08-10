@@ -58,7 +58,6 @@ import type { MemberInfo } from '@stores/modules/auth'
 import type { AuthParameters } from '@services/auth'
 
 const { Action, Getter } = namespace('auth')
-const { Mutation: UiMutation } = namespace('auth')
 
 @Component
 export default class MemberPage extends Mixins(PageView) {
@@ -74,7 +73,6 @@ export default class MemberPage extends Mixins(PageView) {
     @Action('getMemberInfo') readonly getMemberInfo!: () => Promise<void>
     @Action('setMarketingUpdate') readonly setMarketingUpdate!: (params: AuthParameters['marketingUpdate']) => Promise<void>
     @Action('setWithdrawal') readonly setWithdrawal!: () => Promise<void>
-    @UiMutation('setLoading') readonly setLoading!: (loading: boolean) => void
 
     /** @Computed */
 
@@ -108,10 +106,8 @@ export default class MemberPage extends Mixins(PageView) {
     // }
 
     async handleWithdrawal() {
-        this.setLoading(true)
         await this.setWithdrawal()
-        this.setLoading(false)
-        this.$router.push({ name: 'Main' })
+        this.$router.push({ name: 'Login' })
     }
 
     toWithdrawal() {

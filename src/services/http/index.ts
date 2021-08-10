@@ -1,5 +1,7 @@
-import axios, { AxiosTransformer, AxiosAdapter } from 'axios'
+import axios, { AxiosTransformer, AxiosAdapter, AxiosResponse } from 'axios'
 import { cacheAdapterEnhancer, throttleAdapterEnhancer } from 'axios-extensions'
+import store from '@stores/index'
+import router from '@router/index'
 
 declare global {
     type HttpMethod = 'post' | 'get'
@@ -26,9 +28,51 @@ const getTransformResponse = (): AxiosTransformer => {
 
 export const axiosInstance = axios.create({
     baseURL: isDev ? process.env.VUE_APP_API_DOMAIN : '/',
-    adapter: throttleAdapterEnhancer(
-        cacheAdapterEnhancer(axios.defaults.adapter as AxiosAdapter),
-    ),
+    adapter: throttleAdapterEnhancer(cacheAdapterEnhancer(axios.defaults.adapter as AxiosAdapter)),
     transformResponse: getTransformResponse(),
     withCredentials: true,
 })
+
+axiosInstance.interceptors.request.use(
+    requestConfig => {
+        console.log('interceptors - request - onFullfiled')
+        store.commit('ui/setLoading', true)
+        return requestConfig
+    },
+    error => {
+        store.commit('ui/setLoading', false)
+        console.log('interceptors - request - onReject', error)
+    },
+)
+
+axiosInstance.interceptors.response.use(
+    (response): AxiosResponse => {
+        const data = response.data
+
+        // 시스템 에러
+        if (data.rc === '9999') {
+            router.app.$modal.open({
+                message: data.rsMsg,
+                buttonText: {
+                    confirm: '확인',
+                },
+                confirm: () => {
+                    // nothing
+                },
+            })
+        }
+
+        // 로그인 후 이용해 주세요
+        if (data.rc === '8888' && response.config.url !== '/API/CMN/SECMNFA001') {
+            router.push({ name: 'Login' })
+            // console.log('@@@@@', response)
+        }
+
+        store.commit('ui/setLoading', false)
+        return response
+    },
+    error => {
+        store.commit('ui/setLoading', false)
+        console.log('interceptors - response - onReject', error)
+    },
+)

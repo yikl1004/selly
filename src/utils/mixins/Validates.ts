@@ -6,11 +6,11 @@ import { Component, Vue } from 'vue-property-decorator'
  */
 @Component
 export default class Validates extends Vue {
-    private numberRegExp = /^[0-9]*$/g
-    private stringRegExp = /^[ㄱ-힇a-zA-Z]*$/g
+    private numberRegExp = new RegExp(/^[0-9]*$/, 'g')
+    private stringRegExp = new RegExp(/^[ㄱ-힇a-zA-Z]*$/, 'g')
     // eslint-disable-next-line no-useless-escape
-    private specialRegExp = /^[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]*$/g
-    private phoneRegExp = /^\d{2,3}-\d{3,4}-\d{4}$/
+    private specialRegExp = new RegExp(/^[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]*$/, 'g')
+    private phoneRegExp = new RegExp(/^\d{2,3}-\d{3,4}-\d{4}$/)
 
     declare type: FormInputType
 

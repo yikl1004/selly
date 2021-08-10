@@ -1,8 +1,6 @@
 <template>
     <div class="label-title-box" :class="{ ir: hiddenLabel }">
-        <label v-if="labelType === 'label'" :for="id" class="label">{{
-            label
-        }}</label>
+        <label v-if="labelType === 'label'" :for="id" class="label">{{ label }}</label>
         <strong v-else class="label">
             {{ label }}
         </strong>
@@ -15,10 +13,6 @@ import { Component, Prop, Vue } from 'vue-property-decorator'
 
 @Component
 export default class LabelTitle extends Vue {
-    /**
-     * @category PROPS
-     */
-
     /** form에 사용될 id */
     @Prop({ type: String })
     readonly id!: string

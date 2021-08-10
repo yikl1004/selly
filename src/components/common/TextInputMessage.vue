@@ -14,13 +14,11 @@ export type MessageType = 'error' | 'success'
 
 @Component
 export default class TextInputMessage extends Vue {
-    /**
-     * @category Props
-     */
-
+    /** 메세지 내용 */
     @Prop({ type: String, default: '' })
     readonly message!: string
 
+    /** 메세지 디자인 타입 */
     @Prop({ type: String })
     readonly messageType!: MessageType
 }

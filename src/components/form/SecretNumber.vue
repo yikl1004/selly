@@ -23,16 +23,8 @@
             </template>
             <div class="fake-input">
                 <div class="fake" @click="onClickFake">
-                    <span
-                        v-for="index in digit.blank"
-                        :key="`regist-blank-${index}`"
-                        :class="{ on: index <= secretValue.length }"
-                    />
-                    <span
-                        v-for="index in digit.fill"
-                        :key="`regist-fill-${index}`"
-                        class="on"
-                    />
+                    <span v-for="index in digit.blank" :key="`regist-blank-${index}`" :class="{ on: index <= secretValue.length }" />
+                    <span v-for="index in digit.fill" :key="`regist-fill-${index}`" class="on" />
                 </div>
                 <input
                     :id="`${id}-back`"
@@ -43,11 +35,7 @@
                     :maxlength="digit.blank"
                     type="tel"
                     :readonly="readonly"
-                    :title="
-                        isRegistType
-                            ? '주민등록번호 뒷자리'
-                            : '카드 비밀번호 입력'
-                    "
+                    :title="isRegistType ? '주민등록번호 뒷자리' : '카드 비밀번호 입력'"
                     @input="onInputSecret"
                     @keydown="onKeydownBack"
                     @focus="onFocus"
@@ -61,18 +49,13 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop, Mixins, Watch } from 'vue-property-decorator'
+import { Component, Prop, Mixins, Watch, Ref } from 'vue-property-decorator'
 import Validates from '@utils/mixins/Validates'
 
 @Component
 export default class SecretNumber extends Mixins(Validates) {
-    /**
-     * @category Types
-     */
-    $refs!: Vue['$refs'] & {
-        front: HTMLInputElement
-        back: HTMLInputElement
-    }
+    @Ref() front!: HTMLInputElement
+    @Ref() back!: HTMLInputElement
 
     /**
      * @category Props
@@ -162,15 +145,15 @@ export default class SecretNumber extends Mixins(Validates) {
      */
 
     private onInputFront(/* event: InputEvent */) {
-        const { value, maxLength } = this.$refs.front
+        const { value, maxLength } = this.front
         const conditions = [value.length === maxLength]
 
         this.frontValue = value
-        conditions.every(condition => condition) && this.$refs.back.focus()
+        conditions.every(condition => condition) && this.back.focus()
     }
 
     private onInputSecret(/* event: InputEvent */) {
-        const { value } = this.$refs.back
+        const { value } = this.back
         this.secretValue = value
     }
 
@@ -179,15 +162,11 @@ export default class SecretNumber extends Mixins(Validates) {
     }
 
     private onKeydownBack(event: KeyboardEvent) {
-        const { value } = this.$refs.back
-        const conditions = [
-            value.length === 0,
-            event.key.toLowerCase() === 'backspace',
-            this.$refs.front,
-        ]
+        const { value } = this.back
+        const conditions = [value.length === 0, event.key.toLowerCase() === 'backspace', this.front]
 
         this.onlyNumber(event)
-        conditions.every(condition => condition) && this.$refs.front.focus()
+        conditions.every(condition => condition) && this.front.focus()
     }
 
     private onFocus(event: FocusEvent) {
@@ -204,7 +183,7 @@ export default class SecretNumber extends Mixins(Validates) {
     }
 
     private onClickFake() {
-        this.$refs.back.focus()
+        this.back.focus()
     }
 }
 </script>

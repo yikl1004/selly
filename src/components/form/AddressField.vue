@@ -75,7 +75,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Watch, Mixins, Vue } from 'vue-property-decorator'
+import { Component, Prop, Watch, Mixins, Ref } from 'vue-property-decorator'
 import Validates from '@utils/mixins/Validates'
 import { FormBus } from '@components/form/FormProvider.vue'
 
@@ -92,15 +92,7 @@ export interface AddressItem {
 
 @Component
 export default class AddressField extends Mixins(Validates) {
-    /**
-     * @category Refs
-     */
-    $refs!: Vue['$refs'] & {
-        input: HTMLInputElement
-    }
-    /**
-     * @category PROPS
-     */
+    @Ref() readonly input!: HTMLInputElement
 
     /** form에 사용될 id */
     @Prop({ type: String, required: true })
@@ -211,7 +203,7 @@ export default class AddressField extends Mixins(Validates) {
 
     onInput(/* event: InputEvent */) {
         // eslint-disable-next-line no-useless-escape
-        this.value = this.$refs.input.value.replace(/\,/g, '')
+        this.value = this.input.value.replace(/\,/g, '')
     }
 
     onFocus(event: FocusEvent) {
@@ -230,7 +222,7 @@ export default class AddressField extends Mixins(Validates) {
 
     clearValue() {
         this.value = ''
-        this.$refs.input.focus()
+        this.input.focus()
     }
 
     /** 주소를 선택 했을 떄 */
@@ -254,7 +246,7 @@ export default class AddressField extends Mixins(Validates) {
          * mounted 이벤트
          * @event mounted
          */
-        this.$emit('mounted', this.$refs.input)
+        this.$emit('mounted', this.input)
 
         this.value = this.defaultValue.value || ''
         this.zipcode = this.defaultValue.zipcode || ''

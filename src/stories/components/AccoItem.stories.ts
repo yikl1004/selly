@@ -1,6 +1,6 @@
-import { Meta, Story } from '@storybook/vue'
+import type { Meta, Story } from '@storybook/vue'
 import AccoItem from '@components/common/AccoItem.vue'
-import getProps from '../assets/getProps'
+// import getProps from '../assets/getProps'
 
 export default {
     title: 'Components/AccoItem',
@@ -24,7 +24,8 @@ interface Args {
 
 const Template: Story<Args> = (args, { argTypes }) => {
     return {
-        props: getProps(argTypes),
+        props: Object.keys(argTypes),
+        components: { AccoItem },
         template: `<AccoItem v-bind="$props" />`,
     }
 }

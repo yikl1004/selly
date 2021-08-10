@@ -20,11 +20,7 @@
                 </p>
                 <div class="select-options-box">
                     <ul v-if="!!list.length" class="select-options">
-                        <li
-                            v-for="(item, index) in list"
-                            :key="`list-${index}`"
-                            :class="{ selected: item.selected }"
-                        >
+                        <li v-for="(item, index) in list" :key="`list-${index}`" :class="{ selected: item.selected }">
                             <button type="button" @click="onClickOption(index)">
                                 {{ item.displayName }}
                             </button>
@@ -59,10 +55,6 @@ export type BottomSheetDesignType = 'select' | 'banner' | 'description'
 
 @Component
 export default class BottomSheet extends Vue {
-    /**
-     * @category Props
-     */
-
     /** 제목 */
     @Prop(String)
     readonly title!: string

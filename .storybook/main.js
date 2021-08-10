@@ -11,11 +11,15 @@ const resource = {
 }
 
 module.exports = {
-    stories: ['../src/**/*.stories.mdx', '../src/**/*.stories.@(js|jsx|ts|tsx)'],
+    // src/stories/components/AccoItem.stories.ts
+    stories: [
+        // '../src/stories/**/*.stories.mdx',
+        // '../src/stories/**/*.stories.@(js|jsx|ts|tsx)',
+        '../src/stories/components/AccoItem.stories.ts',
+    ],
     addons: resource.addons,
     typescript: {
         check: true,
-        checkOptions: {},
     },
     // babel: async options => {
     //     return options

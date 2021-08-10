@@ -6,11 +6,7 @@
             </h3>
         </div>
         <div class="box-info-list">
-            <div
-                v-for="(item, index) in list"
-                :key="`list-${index}`"
-                class="info-item"
-            >
+            <div v-for="(item, index) in list" :key="`list-${index}`" class="info-item">
                 <div class="info-label">
                     <span>{{ item.title }}</span>
                 </div>
@@ -54,16 +50,15 @@ interface List {
 
 @Component
 export default class InfoList extends Vue {
-    /**
-     * @category Props
-     */
+    /** 리스트 배열 */
     @Prop({ type: Array })
     readonly list!: List[]
 
+    /** 디자인 타입 */
     @Prop({ type: String, default: '' })
     readonly type!: string
 
-    //제목
+    /** 제목 */
     @Prop({ type: String })
     readonly title!: string
 }

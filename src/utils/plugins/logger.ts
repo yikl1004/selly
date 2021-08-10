@@ -36,37 +36,17 @@ const vLogger: PluginObject<PluginOptions> = {
             history: [],
         }
 
-        const mergedOptions: PluginOptions = merge(
-            {},
-            defaultOptions,
-            options || {},
-        )
+        const mergedOptions: PluginOptions = merge({}, defaultOptions, options || {})
         const logger: { [key: string]: Function } = {}
 
         for (const level of mergedOptions.levels) {
-            logger[level] = function (
-                ...args: (
-                    | string
-                    | number
-                    | symbol
-                    | object
-                    | undefined
-                    | null
-                    | []
-                )[]
-            ) {
+            logger[level] = function (...args: (string | number | symbol | object | undefined | null | [])[]) {
                 if (typeof console === 'undefined') {
                     return
                 }
 
-                if (
-                    mergedOptions.dev ||
-                    mergedOptions.forceLevels.includes(level)
-                ) {
-                    const prefix =
-                        typeof logger.prefix === 'function'
-                            ? logger.prefix()
-                            : logger.prefix
+                if (mergedOptions.dev || mergedOptions.forceLevels.includes(level)) {
+                    const prefix = typeof logger.prefix === 'function' ? logger.prefix() : logger.prefix
                     const prefixWithLevel = `[${prefix} :: ${level}]`.toUpperCase()
                     args.unshift(prefixWithLevel)
                     window.console[level](args)

@@ -4,13 +4,14 @@
         <PageBody>
             <div class="page-main-wrap">
                 <h2>메인 페이지</h2>
+                <div>{{ info }}</div>
             </div>
         </PageBody>
     </Page>
 </template>
 
 <script lang="ts">
-import { Component, Mixins, Watch } from 'vue-property-decorator'
+import { Component, Mixins } from 'vue-property-decorator'
 import { namespace } from 'vuex-class'
 import PageView from '@utils/mixins/PageView'
 import type { MainInfo } from '@stores/modules/auth'
@@ -23,14 +24,13 @@ export default class MainPage extends Mixins(PageView) {
     @AuthAction('getMainInfo') readonly getMainInfo!: Function
     @AuthState('mainInfo') readonly mainInfo!: MainInfo
 
-    /** @Watch */
+    /** @Computed */
+    get info() {
+        return JSON.stringify(this.mainInfo, null, 4)
+    }
 
-    @Watch('mainInfo', { deep: true })
-    changeMainInfo(value: MainInfo /* oldValue: MainInfo */) {
-        if (value.rc === '8888') {
-            console.log('로그인 필요한 사용자 > 로그인 페이지로 이동')
-            this.$router.push({ name: 'Main' })
-        }
+    created() {
+        this.getMainInfo()
     }
 }
 </script>

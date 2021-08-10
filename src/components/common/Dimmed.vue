@@ -14,10 +14,6 @@ import { Component, Prop, Vue } from 'vue-property-decorator'
 
 @Component
 export default class Dimmed extends Vue {
-    /**
-     * @category Props
-     */
-
     /** 노출 여부 */
     @Prop({ type: Boolean, default: false, required: true })
     readonly show!: boolean

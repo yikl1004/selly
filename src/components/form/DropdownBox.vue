@@ -33,10 +33,6 @@ export type DropdownBoxList = BottomSheetOptionItem[]
 
 @Component
 export default class DropdownBox extends Vue {
-    /**
-     * @category PROPS
-     */
-
     /** form에 사용될 id */
     @Prop({ type: String, required: true })
     readonly id!: string

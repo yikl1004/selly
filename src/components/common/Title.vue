@@ -22,10 +22,6 @@ export interface TitleProps {
 
 @Component
 export default class Title extends Vue {
-    /**
-     * @category Prop
-     */
-
     /** 페이지 제목 */
     @Prop({ type: String })
     readonly title!: string

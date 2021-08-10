@@ -280,34 +280,32 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
                 name: 'Terms Detail',
                 component: createAsyncPage(import('@pages/config/terms/detail/index.vue')),
             },
-
-            //매출페이지
-            //매출내역 메인
-            // TODO: 입금, 매출 내역 2개의 페이지로 나눠야함
-            // 매출, 입금 에서 가가가 일간, 주간, 요일별 (총 6벌, 3벌씩 탭이 있는 페이지 2개)
-            {
-                /** @working */
-                path: '/sales',
-                name: 'Sales',
-                component: createAsyncPage(import('@pages/sales/index.vue')),
-            },
             // 연동 페이지
             {
                 /** @working */
-                path: '/salesLiknage',
+                // 비즈넵 연동 확인 API 요청 후 결과에 따라 처리
+                path: '/salesAndPurchases',
                 name: 'Sales Linkage',
-                component: createAsyncPage(import('@pages/salesLinkage/index.vue')),
-            },
-
-            // 입금 내역
-            {
-                /** @working */
-                path: '/deposit',
-                name: 'Sales History',
-                component: createAsyncPage(import('@pages/deposit/index.vue')),
-                meta: {
-                    title: '매출 내역',
-                },
+                component: createAsyncPage(import('@pages/salesAndPurchases/index.vue')),
+                children: [
+                    //매출페이지
+                    //매출내역 메인
+                    // TODO: 입금, 매출 내역 2개의 페이지로 나눠야함
+                    // 매출, 입금 에서 가가가 일간, 주간, 요일별 (총 6벌, 3벌씩 탭이 있는 페이지 2개)
+                    {
+                        /** @working */
+                        path: '/salesAndPurchases/sales',
+                        name: 'Sales',
+                        component: createAsyncPage(import('@pages/salesAndPurchases/sales/index.vue')),
+                    },
+                    // 입금 내역
+                    {
+                        /** @working */
+                        path: '/salesAndPurchases/deposit',
+                        name: 'Deposit',
+                        component: createAsyncPage(import('@pages/salesAndPurchases/deposit/index.vue')),
+                    },
+                ],
             },
         ],
     },
