@@ -46,7 +46,7 @@ export default class BannerSwiper extends Vue {
         type: Object,
         default: () => ({
             slidesPerView: 1,
-            spaceBetween: 20,
+            spaceBetween: 24,
             pagination: {
                 el: '.swiper-pagination',
             },
