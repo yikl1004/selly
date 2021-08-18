@@ -24,6 +24,7 @@
         border-radius: 8px;
         font-size:14px;
         font-weighT:500;
+        line-height: 40px;
     }
     &.dialogBlue {        
         @include button-style(40, $point-color-blue, #003950, #ebebeb,#bbb);

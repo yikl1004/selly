@@ -45,6 +45,7 @@ import Flag from '@components/common/Flag.vue'
 import AddressItem from '@components/common/AddressItem.vue'
 import BoardItem from '@components/common/BoardItem.vue'
 import BoardDetail from '@components/common/BoardDetail.vue'
+import BannerSwiper from '@components/common/BannerSwiper.vue'
 
 //common popup
 import PopupAddressFind from '@components/common/PopupAddressFind.vue'
@@ -105,6 +106,7 @@ const componentList: { [key: string]: VueConstructor | AsyncComponent }[] = [
     { AddressItem },
     { BoardItem },
     { BoardDetail },
+    { BannerSwiper },
 
     //popup common
     { PopupAddressFind },
