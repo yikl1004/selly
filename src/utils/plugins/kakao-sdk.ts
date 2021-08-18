@@ -194,9 +194,7 @@ const KakaoSdkPlugin: PluginObject<PluginOptions> = {
         })
 
         sdk.loadScript().then(() => {
-            console.log('ksdjkldjflskdj')
             sdk.initialize()
-            console.log('install 완료', sdk)
 
             Object.defineProperty(_Vue.prototype, '$kakaoSdk', {
                 enumerable: true,

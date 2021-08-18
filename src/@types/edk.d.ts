@@ -112,28 +112,17 @@ declare global {
     /**
      * 요청 이벤트
      */
-    export declare type EdkRequestEvent =
-        | EdkRequestHandShakeEvent
-        | EdkRequestSsoEvent
-        | EdkRequestSigninEvent
+    export declare type EdkRequestEvent = EdkRequestHandShakeEvent | EdkRequestSsoEvent | EdkRequestSigninEvent
     /**
      * 응답 이벤트
      */
-    export declare type EdkResponseEvent =
-        | EdkResponseReadyEvent
-        | EdkResponseSsoEvent
-        | EdkResponseSigninEvent
-        | EdkResponseHandShakeEvent
+    export declare type EdkResponseEvent = EdkResponseReadyEvent | EdkResponseSsoEvent | EdkResponseSigninEvent | EdkResponseHandShakeEvent
     export declare type EdkResolveEvent = EdkResolveTokenEvent
     export declare type EdkRejectEvent = EdkRejectErrorEvent
     /**
      * 전체 이벤트
      */
-    export declare type EdkEvent =
-        | EdkResponseEvent
-        | EdkRequestEvent
-        | EdkResolveEvent
-        | EdkRejectEvent
+    export declare type EdkEvent = EdkResponseEvent | EdkRequestEvent | EdkResolveEvent | EdkRejectEvent
     export declare type EdkEventListener = (event: EdkEvent) => void
 }
 export {}

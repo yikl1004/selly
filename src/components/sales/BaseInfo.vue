@@ -1,7 +1,7 @@
 <template>
     <div class="sales-day-info">
-        <span class="day">6/24(목) 매출</span>
-        <strong class="price">10,200,000원</strong>
+        <span class="day">{{ date }} 매출</span>
+        <strong class="price">{{ totalAmount }}원</strong>
         <ul class="compare">
             <li>
                 {{ beforeDatePrefix }} 대비
@@ -27,15 +27,8 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
+import type { IncreaseValue, Status } from '@stores/modules/sales'
 
-type CaseType = 'daily' | 'weekly' | 'dayOfWeek'
-type IncreaseValue = {
-    value: string
-    increase:
-        | 'I' // 증가
-        | 'D' // 감소
-        | 'N' // 유지
-}
 type IconState = {
     text: string
     class: string
@@ -49,7 +42,7 @@ type IconState = {
 export default class BaseInfo extends Vue {
     /** 유형 */
     @Prop({ type: String, default: 'daily', required: true })
-    readonly type!: CaseType
+    readonly type!: Status
 
     /** 매출 총액 */
     @Prop({ type: String, default: '0', required: true })

@@ -282,25 +282,20 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
             },
             // 연동 페이지
             {
-                /** @working */
-                // 비즈넵 연동 확인 API 요청 후 결과에 따라 처리
+                /** @complete */
                 path: '/salesAndPurchases',
                 name: 'Sales Linkage',
                 component: createAsyncPage(import('@pages/salesAndPurchases/index.vue')),
                 children: [
-                    //매출페이지
-                    //매출내역 메인
-                    // TODO: 입금, 매출 내역 2개의 페이지로 나눠야함
-                    // 매출, 입금 에서 가가가 일간, 주간, 요일별 (총 6벌, 3벌씩 탭이 있는 페이지 2개)
                     {
-                        /** @working */
+                        /** @complete */
                         path: '/salesAndPurchases/sales',
                         name: 'Sales',
                         component: createAsyncPage(import('@pages/salesAndPurchases/sales/index.vue')),
                     },
                     // 입금 내역
                     {
-                        /** @working */
+                        /** @complete */
                         path: '/salesAndPurchases/deposit',
                         name: 'Deposit',
                         component: createAsyncPage(import('@pages/salesAndPurchases/deposit/index.vue')),

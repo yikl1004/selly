@@ -2,17 +2,26 @@
     <div class="sales-history-list">
         <h3>입금 내역</h3>
         <ul>
-            <li>
+            <li v-if="list.card">
                 <span>카드매출</span>
-                <em class="price"><strong>7,200,000</strong>원</em>
+                <em class="price">
+                    <strong>{{ list.card }}</strong>
+                    원
+                </em>
             </li>
-            <li>
-                <span>현금영수증</span>
-                <em class="price"><strong>7,200,000</strong>원</em>
-            </li>
-            <li>
+            <li v-if="list.delivery">
                 <span>배달매출</span>
-                <em class="price"><strong>7,200,000</strong>원</em>
+                <em class="price">
+                    <strong>{{ list.delivery }}</strong>
+                    원
+                </em>
+            </li>
+            <li v-if="list.cashReceipt">
+                <span>현금영수증</span>
+                <em class="price">
+                    <strong>{{ list.cashReceipt }}</strong>
+                    원
+                </em>
             </li>
         </ul>
         <div class="btn-biznav-box">
@@ -39,7 +48,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Prop, Vue } from 'vue-property-decorator'
 
 @Component({
     components: {
@@ -49,19 +58,46 @@ import { Component, Vue } from 'vue-property-decorator'
     },
 })
 export default class DepositHistory extends Vue {
+    /** 내역 (카드, 현금영수증, 배달) */
+    @Prop({
+        type: Object,
+        default: () => ({ card: '0', delivery: '0' }),
+        required: true,
+    })
+    readonly list!: {
+        card: string
+        cashReceipt?: string
+        delivery: string
+    }
+
     // s: popup
     private show = false
     openPopup() {
         this.show = true
     }
     onConfirm() {
-        this.show = false
+        // this.show = false
+        const target = document.querySelector('#em_embed') as HTMLDivElement
+        if (target) {
+            target.style.display = 'block'
+        }
+        this.$edkHost.openDataSync({
+            eventListener(event) {
+                console.log(event)
+            },
+        })
     }
 
     onCancel() {
         console.log('after close modal')
     }
-    // e: popup
+
+    beforeDestroy() {
+        const target = document.querySelector('#em_embed') as HTMLDivElement
+        if (target) {
+            target.style.display = 'none'
+        }
+    }
 }
 </script>
 

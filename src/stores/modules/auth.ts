@@ -93,6 +93,11 @@ export default class Auth extends VuexModule<AuthState> {
     async getLoginInfo() {
         const state = this.state as AuthState
         const { data } = await AuthService.getLoginInfo(state.kakaoUserInfo as UserInfo)
+
+        if (data.rc === '0000') {
+            localStorage.setItem('auth', JSON.stringify(data.data))
+        }
+
         return {
             loginInfo: data.data,
         }
@@ -329,7 +334,8 @@ export default class Auth extends VuexModule<AuthState> {
      * 사업자정보 리스트
      */
     get businessManList(): BottomSheetOptionItem[] {
-        const { list } = this.businessManInfo as BusinessManInfo
+        // const { list } = this.businessManInfo as BusinessManInfo
+        const list = this.businessManInfo?.list ?? null
 
         return list
             ? list.map(item => ({

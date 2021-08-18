@@ -22,11 +22,17 @@ export default class AccoItemSingle extends Vue {
     @Prop({ type: String, default: '' })
     readonly title!: string
 
-    /**
-     * @category Data(State)
-     */
+    /** 확장 여부 */
+    @Prop({ type: Boolean, default: false })
+    readonly expanded!: boolean
 
-    private toggle = false
+    /** 확장 토글 */
+    get toggle(): boolean {
+        return this.expanded
+    }
+    set toggle(value: boolean) {
+        this.$emit('update:expanded', value)
+    }
 
     /**
      * @category Methods

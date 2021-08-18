@@ -1,15 +1,15 @@
 <template>
     <Page>
-        <Header type="sub" title="매출 내역" />
-        <PageBody v-if="isMain">
-            <div v-if="isLinkPending" class="content">
+        <Header type="sub" :title="headerTitle" />
+        <PageBody v-if="!whetherToScrape">
+            <div v-if="!whetherTolinkage" class="content">
                 <div class="sales-linkage-box">
                     <h2>데이터 수집 및 연동중이며,<br />선택하신 연동 기관에 따라 <br />순차적으로 적용될 수 있습니다.</h2>
                 </div>
                 <DropdownBox id="workingPlace" label="사업장 선택" hiddenLabel :list="workingPlaceList" @select="onSelectWorkingPlace" />
-                <BasicButton type="large"> 추가연동 </BasicButton>
+                <BasicButton type="large" @click="toBiznav"> 추가연동 </BasicButton>
             </div>
-            <div class="content">
+            <div v-else class="content">
                 <div class="sales-main-box">
                     <div class="sale-main-title">
                         <h2>매일 드리는 매출, 입금보고<br />카드, 현금, 배달 매출까지</h2>
@@ -22,7 +22,7 @@
                         :list="workingPlaceList"
                         @select="onSelectWorkingPlace"
                     />
-                    <BasicButton type="large"> 데이터 연동 </BasicButton>
+                    <BasicButton type="large" @click="toBiznav"> 데이터 연동 </BasicButton>
                 </div>
             </div>
         </PageBody>
@@ -33,6 +33,9 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import type { DropdownBoxList } from '@components/form/DropdownBox.vue'
+import { namespace } from 'vuex-class'
+
+const { Action, Getter } = namespace('sales')
 
 /**
  * @description
@@ -44,24 +47,53 @@ import type { DropdownBoxList } from '@components/form/DropdownBox.vue'
  *      1-3. [ ] 연동 중 화면 노출
  */
 @Component
-export default class SalesPages extends Vue {
-    private workingPlaceList: DropdownBoxList = [
-        { displayName: '국대떡볶이', value: '1101123423' },
-        { displayName: '나이키', value: '1230012312' },
-        { displayName: '아디다스', value: '4348898798' },
-        { displayName: '샘숭전자', value: '5673320920' },
-    ]
+export default class SalesAndPurchasesPage extends Vue {
+    /** 스크래핑 정보 요청 */
+    @Action('getScrappingInfo') readonly getScrappingInfo!: () => Promise<void>
 
+    /** 연동 여부 */
+    @Getter('whetherTolinkage') readonly whetherTolinkage!: boolean
+
+    /** 스크래핑 여부 */
+    @Getter('whetherToScrape') readonly whetherToScrape!: boolean
+
+    /** 사업장 정보 */
+    @Getter('workingPlaceList') readonly workingPlaceList!: DropdownBoxList
+
+    /** 연동 페이지인지 여부 */
     get isMain() {
         return this.$route.name === 'Sales Linkage'
     }
 
-    get isLinkPending(): boolean {
-        return false
+    /** 헤더 타이틀 */
+    get headerTitle(): string {
+        return this.$route.name === 'Sales' ? '매출 내역' : '입금 내역'
     }
 
     onSelectWorkingPlace(value: string) {
         console.log(value)
+    }
+
+    // 비즈냅 연동 (아이프레임)
+    toBiznav() {
+        if (document.getElementById('em_embed') !== null) {
+            ;(document.getElementById('em_embed') as HTMLDivElement).style.display = 'block'
+        }
+        this.$edkHost.openDataSync({
+            eventListener: event => {
+                console.log('EVENT', event)
+            },
+        })
+    }
+
+    async created() {
+        await this.getScrappingInfo()
+    }
+
+    beforeDestroy() {
+        if (document.getElementById('em_embed') !== null) {
+            ;(document.getElementById('em_embed') as HTMLDivElement).style.display = 'none'
+        }
     }
 }
 </script>

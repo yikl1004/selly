@@ -17,13 +17,13 @@
                 v-for="(item, index) in list"
                 :key="`address-item-${index}`"
                 :jibun="item.jibunAddr"
-                :road="item.roadAddr"
+                :road="item.roadAddrPart1"
                 :zipcode="item.zipNo"
                 @select="onSelect"
             />
         </div>
         <!--[D] 검색결과 없음-->
-        <!-- <CautionBox v-else description="검색된 내용이 없습니다." /> -->
+        <CautionBox v-else description="검색된 내용이 없습니다." />
 
         <BasicButton v-if="visibleMoreButton" type="more" @click="more"> 더보기 </BasicButton>
     </div>

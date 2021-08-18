@@ -57,15 +57,16 @@ axiosInstance.interceptors.response.use(
                     confirm: '확인',
                 },
                 confirm: () => {
-                    // nothing
+                    // router.push({ name: 'Main' })
                 },
             })
         }
 
-        // 로그인 후 이용해 주세요
+        // FIXME: 로그인 후 이용해 주세요(수정해야 할 수 도 있음)
         if (data.rc === '8888' && response.config.url !== '/API/CMN/SECMNFA001') {
             router.push({ name: 'Login' })
-            // console.log('@@@@@', response)
+            // local-storage 삭제
+            localStorage.removeItem('auth')
         }
 
         store.commit('ui/setLoading', false)

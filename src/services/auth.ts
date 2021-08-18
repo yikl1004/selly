@@ -314,7 +314,7 @@ class AuthService {
 
     // my > 사업자정보 및 가맹점 정보
     private businessManInfo: API = {
-        url: 'API/MBR/SEMBRAA003',
+        url: '/API/MBR/SEMBRAA003',
         method: 'post',
     }
 

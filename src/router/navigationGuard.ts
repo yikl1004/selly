@@ -12,16 +12,8 @@ interface SellyNavigationGuard {
 
 const navigationGuard: SellyNavigationGuard = {
     async beforeEach(to, from, next) {
-        console.log('Navigation Guard...')
-
         const referrer = store.state.common.referrer
-
         const pageDirection = from.name === 'Navigation' || to.name === referrer ? 'prev' : 'next'
-        console.log('@@@ NavigationGuard - beforeEach, >>> ', {
-            referrer,
-            'to.name': to.name,
-            pageDirection,
-        })
         store.commit('ui/setPageDirection', pageDirection)
 
         /**
@@ -36,11 +28,6 @@ const navigationGuard: SellyNavigationGuard = {
 
         // 세션 연장
         await store.dispatch('common/getLoginExtendInfo')
-
-        // const isLogin = to.name === 'Login'
-        // const needLogin = store.state.common.loginExtendInfo?.rc === '8888'
-        // next([!isLogin, needLogin].every(item => item) ? { name: 'Login' } : undefined)
-
         next()
     },
 }

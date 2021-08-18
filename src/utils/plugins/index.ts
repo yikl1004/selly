@@ -7,6 +7,7 @@ import vLogger from '@utils/plugins/logger'
 import Modal from '@utils/plugins/modal'
 import Edk from '@utils/plugins/Edk'
 import KakaoSdkPlugin from '@utils/plugins/kakao-sdk'
+import VScrollLock from 'v-scroll-lock'
 
 // [개발용]
 import VueToast from 'vue-toast-notification'
@@ -49,6 +50,13 @@ const registerPlugins = (): void => {
     // 카카오 sdk 연동
     Vue.use(KakaoSdkPlugin, {
         apiKey: process.env.VUE_APP_KAKAO_API_KEY,
+    })
+
+    // 스크롤 차단
+    Vue.use(VScrollLock, {
+        bodyScrollOptions: {
+            reserveScrollBarGap: true,
+        },
     })
 }
 

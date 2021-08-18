@@ -18,7 +18,7 @@
                 <p v-if="!!description" class="dscription">
                     {{ description }}
                 </p>
-                <div class="select-options-box">
+                <div class="select-options-box" @scroll="scrollBlock">
                     <ul v-if="!!list.length" class="select-options">
                         <li v-for="(item, index) in list" :key="`list-${index}`" :class="{ selected: item.selected }">
                             <button type="button" @click="onClickOption(index)">
@@ -80,16 +80,16 @@ export default class BottomSheet extends Vue {
     readonly list!: BottomSheetOptionItem[]
 
     /**
-     * @category Data(State)
+     * @Data State
      */
     private transitionBeforeClass = ''
 
     /**
-     * @category Computed
+     * @Computed
      */
 
     /**
-     * @category Methods
+     * @Methods
      */
     onClose() {
         /**
@@ -106,6 +106,11 @@ export default class BottomSheet extends Vue {
          */
         this.$emit('select-option', this.list[index].value)
         this.onClose()
+    }
+
+    scrollBlock(event: Event) {
+        event.stopPropagation()
+        // event.preventDefault()
     }
 }
 </script>

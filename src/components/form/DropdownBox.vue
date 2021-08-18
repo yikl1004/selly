@@ -8,6 +8,7 @@
             </button>
             <portal to="bottomSheet">
                 <BottomSheet
+                    v-scroll-lock="bottomSheetVisible"
                     :show="bottomSheetVisible"
                     :title="label"
                     :list="selectList"

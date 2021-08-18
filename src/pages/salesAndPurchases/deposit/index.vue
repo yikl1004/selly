@@ -1,57 +1,218 @@
 <template>
-    <div class="container">
+    <PageBody>
         <div class="select-buisnessman-box">
             <DropdownBox
+                v-if="!!merchantList"
                 id="dropdown-box01"
-                label="사업자 선택"
-                :hidden-label="true"
-                :list="dropdownBoxList"
-                default-value="전체"
+                :list="merchantList"
                 :disabled="false"
+                label="사업자 선택"
+                hidden-label
+                default-value=""
+                @select="onChangeBusinessNumber"
             />
         </div>
-        <Tab :list="tabList" :active="0" type="solid">
-            <template slot-scope="{ activeIndex }">
-                <div v-if="activeIndex === 0" class="tab-inner">
-                    <!-- <SalesHistoryDetail /> -->
+        <Tab :list="tabList" type="solid" @change="onChangeTab">
+            <div class="tab-inner">
+                <div class="sales-detail-wrap">
+                    <BaseInfo
+                        :type="status"
+                        :totalAmount="depositTotalAmount"
+                        :date="depositBaseDate"
+                        :before="depositBefore"
+                        :latest="depositLatest"
+                    />
+
+                    <div
+                        class="chart"
+                        style="height: 140px; margin-top: 30px; color: #000; text-align: center; line-height: 140px; background: #ebebeb"
+                    >
+                        차트영역
+                    </div>
+
+                    <AccoItemSingle :title="salesLatestAverageTitle" :expanded.sync="salesListOfPeridoExpanded">
+                        <PriceList
+                            :list="depositListOfPerido"
+                            :status="status"
+                            :average="depositLatestAverage"
+                            :standard-date="depositBaseDatePerDay"
+                            @change-dayofweek="changeDayOfWeek"
+                        />
+                    </AccoItemSingle>
+
+                    <DepositHistory :list="depositList" />
                 </div>
-                <div v-if="activeIndex === 1" class="tab-inner">
-                    <p>주간</p>
-                </div>
-                <div v-if="activeIndex === 2" class="tab-inner">
-                    <p>요일별</p>
-                </div>
-            </template>
+            </div>
         </Tab>
-    </div>
+    </PageBody>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-// import SalesHistoryDetail from '@components/sales/SalesHistoryDetail.vue'
+import { namespace } from 'vuex-class'
+import PriceList from '@components/sales/PriceList.vue'
+import DepositHistory from '@components/sales/DepositHistory.vue'
+import BaseInfo from '@components/sales/BaseInfo.vue'
+import type {
+    Status,
+    IncreaseValue,
+    DepositDayOfWeekParams,
+    DepositWeeklyParams,
+    DepositDailyParams,
+    DepositFourWeeksPerDayParams,
+} from '@stores/modules/sales'
+import type { BottomSheetOptionItem } from '@components/common/BottomSheet.vue'
 import type { DropdownBoxList } from '@components/form/DropdownBox.vue'
+
+const { Action, State, Mutation, Getter } = namespace('sales')
 
 @Component({
     components: {
-        // SalesHistoryDetail,
+        PriceList,
+        DepositHistory,
+        BaseInfo,
     },
 })
 export default class SalesHistory extends Vue {
-    //드롭다운리스트 샘플
-    private dropdownBoxList: DropdownBoxList = [
-        { displayName: '전체', value: 'all', selected: true },
-        {
-            displayName: '이층집 강남점 222-20-2222',
-            value: 'LOCA MONEY:BIZ 7*3*',
-        },
-        {
-            displayName: '이층집 강남점 222-20-2222',
-            value: '가장최근에 받은 카드가 디폴트로 노출',
-        },
-    ]
+    /** @Stores */
 
+    /** 사업장 정보 */
+    @Getter('workingPlaceList') readonly workingPlaceList!: DropdownBoxList
+
+    /** 입금 일간 요청 */
+    @Action('getDepositDaily')
+    readonly getDepositDaily!: (params?: DepositDailyParams) => Promise<void>
+
+    /** 입금 주간 요청 */
+    @Action('getDepositWeekly')
+    readonly getDepositWeekly!: (params?: DepositWeeklyParams) => Promise<void>
+
+    /** 입금 요일별 요청 */
+    @Action('getDepositDayOfWeek')
+    readonly getDepositDayOfWeek!: (params?: DepositDayOfWeekParams) => Promise<void>
+
+    /** 매출내역>요일별최근4주매출 */
+    @Action('getDepositFourWeeksPerDay')
+    readonly getDepositFourWeeksPerDay!: (params: DepositFourWeeksPerDayParams) => Promise<void>
+
+    /** 현재 탭상태 변경 */
+    @Mutation('changeStatus')
+    readonly changeStatus!: (status: Status) => void
+
+    /** 현재 탭 산태 */
+    @State('status')
+    readonly status!: Status
+
+    /** 총 입금 */
+    @Getter('depositTotalAmount')
+    readonly depositTotalAmount!: string
+
+    /** 기준 기간 또는 날짜 */
+    @Getter('depositBaseDate')
+    readonly depositBaseDate!: string
+
+    /** 이전 대비 */
+    @Getter('depositBefore')
+    readonly depositBefore!: IncreaseValue
+
+    /** 최근 대비 */
+    @Getter('depositLatest')
+    readonly depositLatest!: IncreaseValue
+
+    /** 입금 리스트 */
+    @Getter('depositListOfPerido')
+    readonly depositListOfPerido!: { date: string; amount: string }[]
+
+    /** 최근 평균 입금 */
+    @Getter('depositLatestAverage')
+    readonly depositLatestAverage!: string
+
+    /** 매출 내역 */
+    @Getter('depositList')
+    readonly depositList!: { card: string; delivery: string }
+
+    /** 요일별 기준 날짜 */
+    @Getter('depositBaseDatePerDay')
+    readonly depositBaseDatePerDay!: string
+
+    /** @Data */
+
+    /** 탭 리스트 */
     private tabList = [{ name: '일간' }, { name: '주간' }, { name: '요일별' }]
+
+    /** 선택된 사업자 번호, 공백은 '전체' */
+    private businessNumber = ''
+
+    /** 가맹점 리스트 */
+    private merchantList: BottomSheetOptionItem[] = [{ displayName: '전체', value: '', selected: true }]
+
+    /** 기간별 매출 리스트 노출 확장 여부 */
+    private salesListOfPeridoExpanded = false
+
+    /** 현재 상태가 요일별 인지 */
+    get isDayOfWeek(): boolean {
+        return this.status === 'dayOfWeek'
+    }
+
+    /** 최근 평균 매출 리스트 타이틀 */
+    get salesLatestAverageTitle(): string {
+        const cases = {
+            daily: '최근 7일 평균',
+            weekly: '최근 4주 평균',
+            dayOfWeek: '최근 요일별 평균',
+        }
+        return cases[this.status]
+    }
+
+    /**
+     * 사업자 번호 변경 시
+     * @param {string} businessNumber 사업자 번호
+     */
+    onChangeBusinessNumber(businessNumber: string) {
+        const dispatch = this.dispatch(this.status)
+        dispatch({ bzno: businessNumber })
+        this.businessNumber = businessNumber
+    }
+
+    /** 탭 전환 시 */
+    onChangeTab(value: number) {
+        const tabStatusList: Status[] = ['daily', 'weekly', 'dayOfWeek']
+        const tabStatus = tabStatusList[value]
+        const dispatch = this.dispatch(tabStatus)
+        dispatch({ bzno: this.businessNumber })
+        this.changeStatus(tabStatus)
+    }
+
+    /** 상태 별 액션 */
+    dispatch(status: Status) {
+        const dispatches = {
+            daily: this.getDepositDaily,
+            weekly: this.getDepositWeekly,
+            dayOfWeek: this.getDepositDayOfWeek,
+        }
+        return dispatches[status]
+    }
+
+    /**
+     * 요일 변경
+     * @param {string} stdt 선택한 기준일
+     */
+    async changeDayOfWeek(stdt: string) {
+        await this.getDepositFourWeeksPerDay({
+            bzno: this.businessNumber,
+            stdt,
+        })
+    }
+
+    /** @Lifecycle */
+
+    async mounted() {
+        // 사업자 정보 세팅
+        this.merchantList = this.merchantList.concat(this.workingPlaceList)
+        // 매출 일간 정보 요청
+        await this.getDepositDaily()
+    }
 }
 </script>
 
-<style lang="scss" scoped src="./SalesHistory.scss"></style>
+<style lang="scss" scoped src="../SalesHistory.scss"></style>
