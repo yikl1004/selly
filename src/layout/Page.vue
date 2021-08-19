@@ -2,7 +2,7 @@
     <div class="layout-default">
         <slot />
         <FixedBtnBox v-if="floating"></FixedBtnBox>
-        <Footer v-else />
+        <Footer v-if="footer" />
     </div>
 </template>
 
@@ -14,6 +14,10 @@ export default class Page extends Vue {
     /** floating 버튼 영역 사용/노출 여부 */
     @Prop({ type: Boolean, default: false })
     readonly floating!: boolean
+
+    /** footer 노출여부 */
+    @Prop({ type: Boolean, default: true })
+    readonly footer!: boolean
 }
 </script>
 

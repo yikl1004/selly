@@ -13,8 +13,8 @@ interface SellyNavigationGuard {
 const navigationGuard: SellyNavigationGuard = {
     async beforeEach(to, from, next) {
         const referrer = store.state.common.referrer
-        const pageDirection = from.name === 'Navigation' || to.name === referrer ? 'prev' : 'next'
-        store.commit('ui/setPageDirection', pageDirection)
+        const pageTransitionDirection = from.name === 'Navigation' || to.name === referrer ? 'prev' : 'next'
+        store.commit('ui/setPageDirection', pageTransitionDirection)
 
         /**
          * @description
@@ -27,7 +27,9 @@ const navigationGuard: SellyNavigationGuard = {
          */
 
         // 세션 연장
-        await store.dispatch('common/getLoginExtendInfo')
+        if (to.name !== 'Login') {
+            await store.dispatch('common/getLoginExtendInfo')
+        }
         next()
     },
 }

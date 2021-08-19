@@ -68,6 +68,7 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
         children: [
             /** Global Navigation */
             {
+                /** @complete */
                 path: '/navigation',
                 name: 'Navigation',
                 component: createAsyncPage(import('@pages/navigation/index.vue')),
@@ -83,12 +84,14 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
 
             // 로그인
             {
+                /** @complete */
                 path: '/login',
                 name: 'Login',
                 component: createAsyncPage(import('@pages/login/index.vue')),
             },
 
             {
+                /** @complete */
                 path: '/join',
                 name: 'Join',
                 component: createAsyncPage(import('@pages/join/index.vue')),
@@ -269,6 +272,7 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
 
             // 이용약관
             {
+                /** @working */
                 path: '/config/terms',
                 name: 'Terms',
                 component: createAsyncPage(import('@pages/config/terms/index.vue')),
@@ -276,6 +280,7 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
 
             // 이용약관 상세
             {
+                /** @working */
                 path: '/config/termsdetail/:no',
                 name: 'Terms Detail',
                 component: createAsyncPage(import('@pages/config/terms/detail/index.vue')),

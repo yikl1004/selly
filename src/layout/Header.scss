@@ -1,10 +1,20 @@
+@mixin background-color() {
+    /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    background-image: linear-gradient(to bottom, rgba(243, 240, 238, 1) 0%, rgba(243, 240, 238, 0.45) 45%, rgba(243, 240, 238, 0) 100%);
+}
+
 .page-header{
     position: fixed;
     left: 0;
     right: 0;
     top: 0;
-    background-color: #fff;;
+    background-color: #fff;
     z-index: 2;
+
+    &.main {
+        background-color: rgba(243, 240, 238, 1);
+    }
+
     .header-inner {
         display: flex;
         align-items: center;

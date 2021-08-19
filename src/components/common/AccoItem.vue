@@ -8,7 +8,9 @@
                 :aria-expanded="index === currentIndex ? 'true' : 'false'"
                 @click="onClick(index)"
             >
-                <span v-if="item.category" class="category">{{ item.category }}</span>
+                <span v-if="item.category" class="category">
+                    {{ item.category }}
+                </span>
                 <strong class="tit">{{ item.title }}</strong>
             </button>
             <div :id="`acco-item-${index}`" class="acco-cont">

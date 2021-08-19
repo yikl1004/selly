@@ -19,6 +19,15 @@
     min-height: 100vh;
 }
 
+// page-header
+.page-header {
+    &.main {
+        & + .container {
+            background-color: #f3f0ee;
+        }
+    }
+}
+
 // page-body
 .container {
     overflow-y: auto;

@@ -63,7 +63,7 @@ axiosInstance.interceptors.response.use(
         }
 
         // FIXME: 로그인 후 이용해 주세요(수정해야 할 수 도 있음)
-        if (data.rc === '8888' && response.config.url !== '/API/CMN/SECMNFA001') {
+        if (data.rc === '8888') {
             router.push({ name: 'Login' })
             // local-storage 삭제
             localStorage.removeItem('auth')
