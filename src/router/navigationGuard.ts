@@ -1,19 +1,23 @@
 import store from '@stores/index'
 import { NavigationGuard } from 'vue-router'
-
-/**
- * navigatoin guard
- */
-// const exceptionPages = [' ', 'NeedLogin', 'NotFound', 'Join']
-
 interface SellyNavigationGuard {
     beforeEach: NavigationGuard
 }
 
+/**
+ * @title navigatoin guard
+ */
 const navigationGuard: SellyNavigationGuard = {
     async beforeEach(to, from, next) {
         const referrer = store.state.common.referrer
-        const pageTransitionDirection = from.name === 'Navigation' || to.name === referrer ? 'prev' : 'next'
+        let pageTransitionDirection = to.name === referrer ? 'prev' : 'next'
+        if (from.name === 'Navigation') {
+            pageTransitionDirection = 'prev'
+        }
+        console.log(pageTransitionDirection, {
+            to: to.name,
+            referrer,
+        })
         store.commit('ui/setPageDirection', pageTransitionDirection)
 
         /**

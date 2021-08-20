@@ -1,6 +1,6 @@
 <template>
     <div class="layout">
-        <transition :name="pageDirection" :duration="{ enter: 500, leave: 500 }" @before-enter="beforeEnter">
+        <transition :name="pageDirection" :duration="{ enter: 500, leave: 500 }">
             <router-view>
                 <template slot-scope="{ Component }">
                     <component :is="Component" />
@@ -28,20 +28,6 @@ export default class Layout extends Vue {
     /** @Stores */
     @State('referrer') readonly referrer!: string
     @UiState('pageDirection') readonly pageDirection!: PageDirection
-
-    /** @Watch */
-
-    /** 라우트 변경 시 */
-    // @Watch('$route')
-    // changeRoute(to: Route /* from: Route */) {
-    //     console.log('$route change', { to })
-    //     this.
-    //     this.transitionName = to.name === this.referrer ? 'prev' : 'next'
-    // }
-
-    beforeEnter() {
-        console.log('beforeEnter')
-    }
 }
 </script>
 

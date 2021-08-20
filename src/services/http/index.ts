@@ -11,37 +11,24 @@ declare global {
     }
 }
 
+// 환경변수가 production이 아닌 경우
 const isDev = process.env.NODE_ENV !== 'production'
 
-const getTransformResponse = (): AxiosTransformer => {
-    return (data: string) => {
-        try {
-            const _data = JSON.parse(data)
-            return {
-                ..._data,
-            }
-        } catch (error) {
-            return {}
-        }
-    }
-}
-
+// selly API response
 export const axiosInstance = axios.create({
     baseURL: isDev ? process.env.VUE_APP_API_DOMAIN : '/',
     adapter: throttleAdapterEnhancer(cacheAdapterEnhancer(axios.defaults.adapter as AxiosAdapter)),
-    transformResponse: getTransformResponse(),
     withCredentials: true,
 })
 
 axiosInstance.interceptors.request.use(
     requestConfig => {
-        console.log('interceptors - request - onFullfiled')
         store.commit('ui/setLoading', true)
         return requestConfig
     },
     error => {
         store.commit('ui/setLoading', false)
-        console.log('interceptors - request - onReject', error)
+        return error
     },
 )
 
@@ -74,6 +61,6 @@ axiosInstance.interceptors.response.use(
     },
     error => {
         store.commit('ui/setLoading', false)
-        console.log('interceptors - response - onReject', error)
+        return error
     },
 )

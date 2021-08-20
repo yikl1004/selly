@@ -1,11 +1,6 @@
 import { axiosInstance } from '@services/http'
 import { AxiosResponse } from 'axios'
 
-interface DefaultResponse<T> {
-    rc: ResponseCode
-    rsMsg: string
-    data: T
-}
 type OnlyBusinessNumber = {
     // 사업자 번호
     bzno?: string
@@ -366,7 +361,7 @@ class SalesService {
     }
 
     // 매출내역>일간
-    async getSalesDaily(params: SalesParameters['salesDaily']): SalesDailyRes {
+    async getSalesDaily(params?: SalesParameters['salesDaily']): SalesDailyRes {
         return await axiosInstance.request({ ...this.salesDaily, params })
     }
 
@@ -386,7 +381,7 @@ class SalesService {
     }
 
     // 입금내역>일간
-    async getDepositDaily(params: SalesParameters['depositDaily']): DepositDailyRes {
+    async getDepositDaily(params?: SalesParameters['depositDaily']): DepositDailyRes {
         return await axiosInstance.request({ ...this.depositDaily, params })
     }
 

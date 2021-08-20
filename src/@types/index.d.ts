@@ -4,6 +4,13 @@ declare global {
         store?: object
     }
 
+    // Selly API default format
+    interface DefaultResponse<T> {
+        rc: ResponseCode
+        rsMsg: string
+        data: T
+    }
+
     // Y 또는 N 문자열
     type YN = 'Y' | 'N'
 

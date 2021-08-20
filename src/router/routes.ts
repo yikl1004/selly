@@ -250,21 +250,21 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
             },
             //공지사항
             {
-                /** @working */
+                /** @complete */
                 path: '/config/notice',
                 name: 'Notice',
                 component: createAsyncPage(import('@pages/config/notice/index.vue')),
             },
             // 공지사항 상세
             {
-                /** @working */
+                /** @complete */
                 path: '/config/notice/detail/:no',
                 name: 'Notice Detail',
                 component: createAsyncPage(import('@pages/config/notice/detail/index.vue')),
             },
             // 자주 묻는 질문(faq)
             {
-                /** @working */
+                /** @complete */
                 path: '/config/faq',
                 name: 'FAQ',
                 component: createAsyncPage(import('@pages/config/faq/index.vue')),
@@ -272,7 +272,7 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
 
             // 이용약관
             {
-                /** @working */
+                /** @complete */
                 path: '/config/terms',
                 name: 'Terms',
                 component: createAsyncPage(import('@pages/config/terms/index.vue')),
@@ -280,8 +280,8 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
 
             // 이용약관 상세
             {
-                /** @working */
-                path: '/config/termsdetail/:no',
+                /** @complete */
+                path: '/config/terms/detail/:no',
                 name: 'Terms Detail',
                 component: createAsyncPage(import('@pages/config/terms/detail/index.vue')),
             },

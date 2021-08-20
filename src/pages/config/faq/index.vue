@@ -4,18 +4,13 @@
         <PageBody>
             <div class="content pd-btm">
                 <div class="faq-wrap">
-                    <Tab :list="tabList" :active="0">
-                        <template slot-scope="{ activeIndex }">
-                            <div v-if="activeIndex === 0">
-                                <FaqView />
+                    <Tab :list="faqCategoryData" :active="0" @change="onChangeCategory">
+                        <div>
+                            <div class="faq-view-wrap">
+                                <AccoItem :list="faqListData" type="board" />
+                                <BasicButton v-if="faqMoreYN" type="more" @click="onMore"> 더보기 </BasicButton>
                             </div>
-                            <div v-if="activeIndex === 1">
-                                <p>2</p>
-                            </div>
-                            <div v-if="activeIndex === 2">
-                                <p>3</p>
-                            </div>
-                        </template>
+                        </div>
                     </Tab>
                 </div>
             </div>
@@ -25,14 +20,37 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import FaqView from '@components/cs/FaqView.vue'
+import { BoardModule } from '@stores/modules/board'
 
-@Component({
-    components: {
-        FaqView,
-    },
-})
+@Component
 export default class FaqPage extends Vue {
-    private tabList = [{ name: '전체' }, { name: '회원' }, { name: '매출관리' }, { name: '금융상품' }, { name: '마케팅' }]
+    get faqCategoryData() {
+        return BoardModule.faqCategoryData
+    }
+
+    get faqListData() {
+        return BoardModule.faqListData
+    }
+
+    get faqMoreYN() {
+        return BoardModule.faqMoreYN
+    }
+
+    async onChangeCategory(index: number) {
+        const faqCtgDc = this.faqCategoryData[index].categoryCode
+        BoardModule.changeFaqCategory(faqCtgDc)
+        await BoardModule.getFaqList()
+    }
+
+    async onMore() {
+        BoardModule.changeFaqPageNo({ more: true })
+        await BoardModule.getFaqList()
+    }
+
+    async created() {
+        await BoardModule.getFaqCategory()
+        await BoardModule.getFaqList()
+    }
 }
 </script>
+<style scoped lang="scss" src="./FaqView.scss" />

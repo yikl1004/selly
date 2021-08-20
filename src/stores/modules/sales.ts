@@ -1,12 +1,12 @@
-import { Module, VuexModule, MutationAction, Mutation } from 'vuex-module-decorators'
+import { Module, VuexModule, MutationAction, Mutation, getModule } from 'vuex-module-decorators'
 import SalesService from '@services/sales'
 import { $dayjs } from '@utils/plugins/dayjs'
+import store from '@stores/index'
 import toNumber from 'lodash/toNumber'
 import pick from 'lodash/pick'
 import mapKeys from 'lodash/mapKeys'
 import mapValues from 'lodash/mapValues'
 
-import type { RootStore } from '@stores/index'
 import type { SalesParameters, SalesResponse } from '@services/sales'
 
 type DayOfWeekAverageData = { value: string; date: string }
@@ -64,8 +64,8 @@ const dates: DateList = {
 }
 const seperatePrice = (value?: string | null) => toNumber(value ?? '').toLocaleString()
 
-@Module({ name: 'sales', namespaced: true })
-export default class Sales extends VuexModule<SalesState, RootStore> {
+@Module({ name: 'sales', namespaced: true, dynamic: true, store })
+export default class Sales extends VuexModule {
     // 스크래핑 정보
     public scrappingInfo: ScrappingInfoRes | null = null
 
@@ -115,7 +115,7 @@ export default class Sales extends VuexModule<SalesState, RootStore> {
     }
 
     @MutationAction
-    async getSalesDaily(params: SalesDailyParams) {
+    async getSalesDaily(params?: SalesDailyParams) {
         const { data } = await SalesService.getSalesDaily(params)
         return {
             salesDaily: data,
@@ -159,7 +159,7 @@ export default class Sales extends VuexModule<SalesState, RootStore> {
     }
 
     @MutationAction
-    async getDepositDaily(params: DepositDailyParams) {
+    async getDepositDaily(params?: DepositDailyParams) {
         const { data } = await SalesService.getDepositDaily(params)
         return {
             depositDaily: data,
@@ -552,4 +552,11 @@ export default class Sales extends VuexModule<SalesState, RootStore> {
 
         return cases[this.status || 'default']
     }
+
+    // 현재 탭 상태
+    get currentStatus() {
+        return this.status
+    }
 }
+
+export const SalesModule = getModule(Sales)

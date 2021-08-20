@@ -1,10 +1,18 @@
 import Vue from 'vue'
 import Vuex, { createLogger } from 'vuex'
-import { default as common, CommonState } from './modules/common'
-import { default as finance, FinancialState } from './modules/finance'
-import { default as auth, AuthState } from './modules/auth'
-import { default as ui, UiState } from './modules/ui'
-import { default as sales, SalesState } from './modules/sales'
+import { default as common } from './modules/common'
+import { default as finance } from './modules/finance'
+import { default as auth } from './modules/auth'
+import { default as ui } from './modules/ui'
+import { default as sales } from './modules/sales'
+import { default as board } from './modules/board'
+
+import type { CommonState } from './modules/common'
+import type { FinancialState } from './modules/finance'
+import type { AuthState } from './modules/auth'
+import type { UiState } from './modules/ui'
+import type { SalesState } from './modules/sales'
+import type { BoardState } from './modules/board'
 
 export interface RootStore {
     common: CommonState
@@ -12,6 +20,7 @@ export interface RootStore {
     auth: AuthState
     ui: UiState
     sales: SalesState
+    board: BoardState
 }
 
 Vue.use(Vuex)
@@ -24,6 +33,7 @@ const store = new Vuex.Store<RootStore>({
         auth,
         ui,
         sales,
+        // board,
     },
     plugins: [createLogger()],
 })

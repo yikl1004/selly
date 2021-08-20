@@ -49,22 +49,11 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import { namespace } from 'vuex-class'
 import PriceList from '@components/sales/PriceList.vue'
 import DepositHistory from '@components/sales/DepositHistory.vue'
 import BaseInfo from '@components/sales/BaseInfo.vue'
-import type {
-    Status,
-    IncreaseValue,
-    SalesFourWeeksPerDayParams,
-    DepositDayOfWeekParams,
-    DepositWeeklyParams,
-    DepositDailyParams,
-} from '@stores/modules/sales'
+import { Status, SalesModule } from '@stores/modules/sales'
 import type { BottomSheetOptionItem } from '@components/common/BottomSheet.vue'
-import type { DropdownBoxList } from '@components/form/DropdownBox.vue'
-
-const { Action, State, Mutation, Getter } = namespace('sales')
 
 @Component({
     components: {
@@ -77,67 +66,54 @@ export default class SalesHistory extends Vue {
     /** @Stores */
 
     /** 사업장 정보 */
-    @Getter('workingPlaceList') readonly workingPlaceList!: DropdownBoxList
-
-    /** 매출 일간 요청 */
-    @Action('getSalesDaily')
-    readonly getSalesDaily!: (params?: DepositDailyParams) => Promise<void>
-
-    /** 매출 주간 요청 */
-    @Action('getSalesWeekly')
-    readonly getSalesWeekly!: (params?: DepositWeeklyParams) => Promise<void>
-
-    /** 매출 요일별 요청 */
-    @Action('getSalesDayOfWeek')
-    readonly getSalesDayOfWeek!: (params?: DepositDayOfWeekParams) => Promise<void>
-
-    /** 매출내역>요일별최근4주매출 */
-    @Action('getSalesFourWeeksPerDay')
-    readonly getSalesFourWeeksPerDay!: (params: SalesFourWeeksPerDayParams) => Promise<void>
-
-    /** 현재 탭상태 변경 */
-    @Mutation('changeStatus')
-    readonly changeStatus!: (status: Status) => void
+    get workingPlaceList() {
+        return SalesModule.workingPlaceList
+    }
 
     /** 현재 탭 산태 */
-    @State('status')
-    readonly status!: Status
+    get status() {
+        return SalesModule.currentStatus
+    }
 
     /** 총 매출 */
-    @Getter('salesTotalAmount')
-    readonly salesTotalAmount!: string
+    get salesTotalAmount() {
+        return SalesModule.salesTotalAmount
+    }
 
     /** 기준 기간 또는 날짜 */
-    @Getter('salesBaseDate')
-    readonly salesBaseDate!: string
+    get salesBaseDate() {
+        return SalesModule.salesBaseDate
+    }
 
     /** 이전 대비 */
-    @Getter('salesBefore')
-    readonly salesBefore!: IncreaseValue
+    get salesBefore() {
+        return SalesModule.salesBefore
+    }
 
     /** 최근 대비 */
-    @Getter('salesLatest')
-    readonly salesLatest!: IncreaseValue
+    get salesLatest() {
+        return SalesModule.salesLatest
+    }
 
     /** 매출 리스트 */
-    @Getter('salesListOfPerido')
-    readonly salesListOfPerido!: { date: string; amount: string }[]
+    get salesListOfPerido() {
+        return SalesModule.salesListOfPerido
+    }
 
     /** 최근 평균 매출 */
-    @Getter('salesLatestAverage')
-    readonly salesLatestAverage!: string
+    get salesLatestAverage() {
+        return SalesModule.salesLatestAverage
+    }
 
     /** 매출 내역 */
-    @Getter('salesList')
-    readonly salesList!: {
-        card: string
-        cashReceipt: string
-        delivery: string
+    get salesList() {
+        return SalesModule.salesList
     }
 
     /** 요일별 기준 날짜 */
-    @Getter('salesBaseDatePerDay')
-    readonly salesBaseDatePerDay!: string
+    get salesBaseDatePerDay() {
+        return SalesModule.salesBaseDatePerDay
+    }
 
     /** @Data */
 
@@ -184,15 +160,15 @@ export default class SalesHistory extends Vue {
         const tabStatus = tabStatusList[value]
         const dispatch = this.dispatch(tabStatus)
         dispatch({ bzno: this.businessNumber })
-        this.changeStatus(tabStatus)
+        SalesModule.changeStatus(tabStatus)
     }
 
     /** 상태 별 액션 */
     dispatch(status: Status) {
         const dispatches = {
-            daily: this.getSalesDaily,
-            weekly: this.getSalesWeekly,
-            dayOfWeek: this.getSalesDayOfWeek,
+            daily: SalesModule.getSalesDaily,
+            weekly: SalesModule.getSalesWeekly,
+            dayOfWeek: SalesModule.getSalesDayOfWeek,
         }
         return dispatches[status]
     }
@@ -202,7 +178,7 @@ export default class SalesHistory extends Vue {
      * @param {string} stdt 선택한 기준일
      */
     async changeDayOfWeek(stdt: string) {
-        await this.getSalesFourWeeksPerDay({
+        await SalesModule.getSalesFourWeeksPerDay({
             bzno: this.businessNumber,
             stdt,
         })
@@ -214,7 +190,7 @@ export default class SalesHistory extends Vue {
         // 사업자 정보 세팅
         this.merchantList = this.merchantList.concat(this.workingPlaceList)
         // 매출 일간 정보 요청
-        await this.getSalesDaily()
+        await SalesModule.getSalesDaily()
     }
 }
 </script>

@@ -32,10 +32,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import type { DropdownBoxList } from '@components/form/DropdownBox.vue'
-import { namespace } from 'vuex-class'
-
-const { Action, Getter } = namespace('sales')
+import { SalesModule } from '@stores/modules/sales'
 
 /**
  * @description
@@ -48,17 +45,20 @@ const { Action, Getter } = namespace('sales')
  */
 @Component
 export default class SalesAndPurchasesPage extends Vue {
-    /** 스크래핑 정보 요청 */
-    @Action('getScrappingInfo') readonly getScrappingInfo!: () => Promise<void>
-
     /** 연동 여부 */
-    @Getter('whetherTolinkage') readonly whetherTolinkage!: boolean
+    get whetherTolinkage() {
+        return SalesModule.whetherTolinkage
+    }
 
     /** 스크래핑 여부 */
-    @Getter('whetherToScrape') readonly whetherToScrape!: boolean
+    get whetherToScrape() {
+        return SalesModule.whetherToScrape
+    }
 
     /** 사업장 정보 */
-    @Getter('workingPlaceList') readonly workingPlaceList!: DropdownBoxList
+    get workingPlaceList() {
+        return SalesModule.workingPlaceList
+    }
 
     /** 연동 페이지인지 여부 */
     get isMain() {
@@ -87,7 +87,7 @@ export default class SalesAndPurchasesPage extends Vue {
     }
 
     async created() {
-        await this.getScrappingInfo()
+        await SalesModule.getScrappingInfo()
     }
 
     beforeDestroy() {
