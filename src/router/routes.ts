@@ -200,6 +200,48 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
                     },
                 ],
             },
+            // s : 마케팅
+            {
+                path: '/marketing',
+                name: 'Marketing',
+                component: createAsyncPage(import('@pages/marketing/index.vue')),
+                meta: {
+                    floating: true,
+                    footer: true,
+                },
+            },
+            //쿠폰만들기_step1
+            {
+                path: '/marketing/couponapply',
+                name: 'CouponApply',
+                component: createAsyncPage(import('@pages/marketing/apply/index.vue')),
+                meta: {
+                    floating: true,
+                    footer: false,
+                },
+            },
+            //쿠폰만들기_step2
+            {
+                path: '/marketing/couponapply2',
+                name: 'CouponApply',
+                component: createAsyncPage(import('@pages/marketing/apply/ApplyStep2.vue')),
+                meta: {
+                    floating: true,
+                    footer: false,
+                },
+            },
+            //쿠폰만들기_step3
+            {
+                path: '/marketing/couponapply3',
+                name: 'CouponApply',
+                component: createAsyncPage(import('@pages/marketing/apply/ApplyStep3.vue')),
+                meta: {
+                    floating: true,
+                    footer: false,
+                },
+            },
+
+            // e : 마케팅
 
             // 설정
             {

@@ -1,0 +1,61 @@
+
+.promotion-result-wrap {
+    margin-bottom: 12px;
+    padding: 20px;
+    background-color: #f8f8f8;
+    border-radius: 10px;
+    &.active {
+        .result-detail {
+            display: block;
+        }
+    }
+}
+.result-box {
+    margin-top: 12px;
+    .result-total {
+        display: flex;
+        justify-content: space-between;
+        .title,
+        .result-value {
+            font-weight: 500;
+            color: #222;
+        }
+        .title {
+            span {
+                display: block;
+                font-size: 12px;
+                color: #666;
+            }
+        }
+    }
+    .result-detail {
+        display: none;
+        margin-top: 8px;
+        padding-bottom: 12px;
+        li {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 4px;
+            &:first-of-type {
+                margin-top: 0;
+            }
+        }
+    }
+    &:last-of-type {
+        .result-detail {
+            padding-bottom: 0;
+        }
+    }
+    &.total {
+        margin: 0 0 32px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid #666;
+        .result-value {
+            font-size: 20px;
+            line-height: 1.4;
+        }
+        & + .result-box {
+            margin-top:0
+        }
+    }
+}

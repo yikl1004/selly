@@ -1,6 +1,5 @@
 <template>
     <header :class="['page-header', { 'proccess-type': isProcess }, type]">
-        <ProgressBar v-if="isProcess" :progress-number="20" />
         <div class="header-inner">
             <!-- 로고 -->
             <h1 v-if="isMain" class="header-logo">

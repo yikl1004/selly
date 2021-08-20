@@ -1,0 +1,31 @@
+.box-step {
+    padding-bottom: 10px;
+    ul {
+        overflow: hidden;
+    }
+    li {
+        float: left;
+        margin-left: 12px;
+        &:first-of-type {
+            margin-left: 0;
+        }
+        span {
+            display: block;
+            width: 16px;
+            height: 16px;
+            background-color: #f3f3f3;
+            background-color: $primary-color;
+            font-size:12px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 18px;
+            color: #fff;
+        }
+        &.active ~ li {
+            span {
+                background-color: #f3f3f3;
+                color: #666;
+            }
+        } 
+    }
+}
