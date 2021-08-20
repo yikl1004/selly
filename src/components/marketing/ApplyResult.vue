@@ -11,7 +11,7 @@
                     예상 수익 (A)
                     <span>A = B - ( C+D )</span>
                 </strong>
-                <em class="result-value"> 0원 </em>
+                <em class="result-value"> 4,500,000원 </em>
             </div>
         </div>
 

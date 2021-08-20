@@ -71,7 +71,7 @@ export default class Title extends Vue {
         &.right {
             text-align: right;
         }
-        & > p {
+        & + p {
             margin-top: 8px;
         }
     }
@@ -81,6 +81,13 @@ export default class Title extends Vue {
         color: #666;
         line-height: 1.57;
         letter-spacing: -0.5px;
+    }
+
+    &.flex {
+        align-items: center;
+        p {
+            margin-top: 0;
+        }
     }
 }
 </style>

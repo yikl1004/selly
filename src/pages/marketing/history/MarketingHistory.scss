@@ -1,8 +1,15 @@
+.no-result-wrap {
+    height:calc(100vh - 56px);
+}
+.coupon-list {
+    width: calc(100vw - 48px);
+    margin-top: 17px;
+}
 .coupon-box {
     display: block;
     position: relative;
     height: 180px;
-    margin: 0 -7px 0 -3px;
+    margin: 2px -7px 0 -3px;
     padding: 0 19px 0 30px;
     background:url("/assets/marketing/bg_coupon_front.png") no-repeat;
     background-size: auto 100%;
@@ -22,17 +29,24 @@
     }
     .coupon-inner {
         height: 180px;
-        padding: 20px 0;
+        padding: 24px 0;
         background:url("/assets/marketing/bg_coupon_repeat.png") repeat-x;
         background-size: auto 100%;
     }
     .franchisee-name {
         display: block;
+        overflow: hidden;
+        width: 100%;
+        padding-right: 30px;
         font-size: 16px;
         color: #222;
         font-weight: 700;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        box-sizing: border-box;
     }
     .coupon-name {
+        margin-top: 2px;
         color: #222;
         font-weight: 500;
     }
@@ -43,12 +57,12 @@
     .flag {
         display: inline-block;
         height: 30px;
-        margin-top: 16px;
+        margin-top: 18px;
         padding: 0 10px;
         color: #fff;
         border-radius: 4px;
         font-weight: 500;
-        line-height: 30px;
+        line-height: 32px;
 
     }
     &.type01{
@@ -99,25 +113,5 @@
         &:after {
             background-image: url("/assets/marketing/bg_coupon06.png");
         }
-    }
-}
-.banner {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    height: 142px;
-    padding: 0 20px;
-    border-radius: 10px;
-    background: #7dc3cf url("/assets/marketing/img_banner_history.png") right bottom no-repeat;
-    background-size: auto 100%;
-
-    color: #fff;
-    font-weight: 500;
-    strong {
-        display: block;
-        margin-top: 4px;
-        font-size: 20px;
-        font-weight: 700;
-        line-height: 1.4;
     }
 }

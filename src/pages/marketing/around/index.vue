@@ -1,6 +1,6 @@
 <template>
-    <Page floating>
-        <Header type="sub" title="쿠폰 만들기" />
+    <Page>
+        <Header type="sub" title="내 주변 매출" />
         <PageBody>
             <div class="content pd-btm">
                 <div class="box-around-store">
@@ -8,7 +8,11 @@
                         <h2>내 주변 동일 업종의<br />매출을 확인해보세요.</h2>
                         <p>2021년 5월 결제 기준입니다.</p>
                     </div>
-                    <FormProvider :schema="data" @change="formChange" @submit="onSubmit">
+                    <FormProvider
+                        :schema="data"
+                        @change="formChange"
+                        @submit="onSubmit"
+                    >
                         <template slot-scope="{ schema }">
                             <DropdownBox
                                 id="dropdown-box01"
@@ -28,7 +32,13 @@
                 </div>
 
                 <div class="store-info-wrap">
-                    <ButtonField id="areaSearch" name="search" label="지역 선택" button-text="검색" placeholder="서초동" />
+                    <ButtonField
+                        id="areaSearch"
+                        name="search"
+                        label="지역 선택"
+                        button-text="검색"
+                        placeholder="서초동"
+                    />
 
                     <div class="franchisee-info-wrap">
                         <div class="box-franchisee-info">
@@ -152,15 +162,27 @@
                     <Title title="요일별 매출" type="h4" />
                     <div class="chart-box">
                         <div class="txt-total">
-                            <strong> "일요일<span>이 가장 많아요</span>" </strong>
+                            <strong>
+                                "일요일<span>이 가장 많아요</span>"
+                            </strong>
                         </div>
-                        <div style="height: 200px; background-color: #eee; text-align: center; line-height: 200px">차트영역</div>
+                        <div
+                            style="
+                                height: 200px;
+                                background-color: #eee;
+                                text-align: center;
+                                line-height: 200px;
+                            "
+                        >
+                            차트영역
+                        </div>
                         <div class="tbl-chart">
                             <div class="table-box">
                                 <div class="table-scroll">
                                     <table>
                                         <caption>
-                                            요일, 결제 건수, 비율로 구성된 표입니다.
+                                            요일, 결제 건수, 비율로 구성된
+                                            표입니다.
                                         </caption>
                                         <colgroup>
                                             <col style="width: 33%" />
@@ -191,15 +213,27 @@
                     <Title title="시간대별 매출" type="h4" />
                     <div class="chart-box">
                         <div class="txt-total">
-                            <strong> "12사~15시<span> 사이에 가장 많아요</span>" </strong>
+                            <strong>
+                                "12사~15시<span> 사이에 가장 많아요</span>"
+                            </strong>
                         </div>
-                        <div style="height: 200px; background-color: #eee; text-align: center; line-height: 200px">차트영역</div>
+                        <div
+                            style="
+                                height: 200px;
+                                background-color: #eee;
+                                text-align: center;
+                                line-height: 200px;
+                            "
+                        >
+                            차트영역
+                        </div>
                         <div class="tbl-chart">
                             <div class="table-box">
                                 <div class="table-scroll">
                                     <table>
                                         <caption>
-                                            요일, 결제 건수, 비율로 구성된 표입니다.
+                                            요일, 결제 건수, 비율로 구성된
+                                            표입니다.
                                         </caption>
                                         <colgroup>
                                             <col style="width: 33%" />
@@ -230,15 +264,27 @@
                     <Title title="성별 매출" type="h4" />
                     <div class="chart-box">
                         <div class="txt-total">
-                            <strong> "12사~15시<span> 사이에 가장 많아요</span>" </strong>
+                            <strong>
+                                "12사~15시<span> 사이에 가장 많아요</span>"
+                            </strong>
                         </div>
-                        <div style="height: 200px; background-color: #eee; text-align: center; line-height: 200px">차트영역</div>
+                        <div
+                            style="
+                                height: 200px;
+                                background-color: #eee;
+                                text-align: center;
+                                line-height: 200px;
+                            "
+                        >
+                            차트영역
+                        </div>
                         <div class="tbl-chart">
                             <div class="table-box">
                                 <div class="table-scroll">
                                     <table>
                                         <caption>
-                                            요일, 결제 건수, 비율로 구성된 표입니다.
+                                            요일, 결제 건수, 비율로 구성된
+                                            표입니다.
                                         </caption>
                                         <colgroup>
                                             <col style="width: 33%" />
@@ -269,15 +315,27 @@
                     <Title title="연령대별 매출" type="h4" />
                     <div class="chart-box">
                         <div class="txt-total">
-                            <strong> "12사~15시<span> 사이에 가장 많아요</span>" </strong>
+                            <strong>
+                                "12사~15시<span> 사이에 가장 많아요</span>"
+                            </strong>
                         </div>
-                        <div style="height: 200px; background-color: #eee; text-align: center; line-height: 200px">차트영역</div>
+                        <div
+                            style="
+                                height: 200px;
+                                background-color: #eee;
+                                text-align: center;
+                                line-height: 200px;
+                            "
+                        >
+                            차트영역
+                        </div>
                         <div class="tbl-chart">
                             <div class="table-box">
                                 <div class="table-scroll">
                                     <table>
                                         <caption>
-                                            요일, 결제 건수, 비율로 구성된 표입니다.
+                                            요일, 결제 건수, 비율로 구성된
+                                            표입니다.
                                         </caption>
                                         <colgroup>
                                             <col style="width: 33%" />
@@ -356,7 +414,8 @@ export default class MarketingApply extends Vue {
 
     private infoList = [
         {
-            text: '한 달 미만 영업 가맹점의 경우 월 평균 매출이 보이지 않을 수 있습니다.',
+            text:
+                '한 달 미만 영업 가맹점의 경우 월 평균 매출이 보이지 않을 수 있습니다.',
         },
     ]
 }
