@@ -1,4 +1,4 @@
-import axios, { AxiosTransformer, AxiosAdapter, AxiosResponse } from 'axios'
+import axios, { AxiosAdapter, AxiosResponse } from 'axios'
 import { cacheAdapterEnhancer, throttleAdapterEnhancer } from 'axios-extensions'
 import store from '@stores/index'
 import router from '@router/index'

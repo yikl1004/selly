@@ -47,20 +47,21 @@
 
 <script lang="ts">
 import { Component, Mixins, Watch } from 'vue-property-decorator'
-import { namespace } from 'vuex-class'
 import PageView from '@utils/mixins/PageView'
 import menu from '@asstes/static/dummy/menu.json'
-import type { LogoutInfo } from '@stores/modules/auth'
+import { AuthModule, LogoutInfo } from '@stores/modules/auth'
 import type { GnbItem } from '@stores/modules/ui'
-
-const AuthModule = namespace('auth')
 
 @Component
 export default class NavigationPage extends Mixins(PageView) {
     /** @Stores */
-    @AuthModule.Getter('bizmanName') readonly bizmanName!: string
-    @AuthModule.State('logoutInfo') readonly logoutInfo!: LogoutInfo
-    @AuthModule.Action('getLogoutInfo') readonly getLogoutInfo!: Function
+    get bizmanName() {
+        return AuthModule.bizmanName
+    }
+
+    get logoutInfo() {
+        return AuthModule.logoutInfoData
+    }
 
     /** @Data */
 
@@ -111,7 +112,7 @@ export default class NavigationPage extends Mixins(PageView) {
 
     async logout() {
         await this.$kakaoSdk.logout()
-        await this.getLogoutInfo()
+        await AuthModule.getLogoutInfo()
     }
 }
 </script>

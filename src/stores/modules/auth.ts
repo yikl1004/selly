@@ -1,4 +1,5 @@
-import { Module, VuexModule, MutationAction, Mutation } from 'vuex-module-decorators'
+import { Module, VuexModule, MutationAction, Mutation, getModule } from 'vuex-module-decorators'
+import store from '@stores/index'
 import AuthService, { AuthResponse, AuthParameters } from '@services/auth'
 import { basicUtil } from '@utils/mixins'
 
@@ -32,8 +33,8 @@ export type WithdrawalInfo = AuthResponse['withdrawal']['data']
 export type BusinessManInfo = AuthResponse['businessMainInfo']['data']
 export type FranchiseDetail = AuthResponse['franchiseDetail']['data']
 
-@Module({ name: 'auth', namespaced: true })
-export default class Auth extends VuexModule<AuthState> {
+@Module({ name: 'auth', namespaced: true, dynamic: true, store })
+export default class Auth extends VuexModule {
     public loginInfo: LoginInfo | null = null
     public kakaoUserInfo: UserInfo | null = null
     public memberWorkplaceInfo: MemberWorkplaceInfo | null = null
@@ -345,4 +346,54 @@ export default class Auth extends VuexModule<AuthState> {
               }))
             : []
     }
+
+    /**
+     * @description
+     * 사업자 정보
+     */
+    get businessManInfoData() {
+        return this.businessManInfo
+    }
+
+    /**
+     * @description
+     * 메인화면 정보
+     */
+    get mainInfoData() {
+        return this.mainInfo?.data
+    }
+
+    /**
+     * @description
+     * 가맹점상세 정보
+     */
+    get franchiseDetailData() {
+        return this.franchiseDetail
+    }
+
+    /**
+     * @description
+     * 탈퇴 전 내용확인 정보
+     */
+    get cancelGuideListData() {
+        return this.cancelGuideList
+    }
+
+    /**
+     * @description
+     * 로그인 정보
+     */
+    get loginInfoData() {
+        return this.loginInfo
+    }
+
+    /**
+     * @description
+     * 로그아웃 정보
+     */
+    get logoutInfoData() {
+        return this.logoutInfo
+    }
 }
+
+export const AuthModule = getModule(Auth)

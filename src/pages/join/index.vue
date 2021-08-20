@@ -12,10 +12,8 @@
 import { Component, Vue } from 'vue-property-decorator'
 import SelectStore from '@pages/auth/SelectStore.vue'
 import UnableJoin from '@pages/auth/UnableJoin.vue'
-import { namespace } from 'vuex-class'
-import type { AuthParameters, BizInfoItem, BusinessPlaceListItem } from '@services/auth'
-
-const { Action, Getter } = namespace('auth')
+import { AuthModule } from '@stores/modules/auth'
+import type { BizInfoItem } from '@services/auth'
 
 @Component({
     components: {
@@ -29,22 +27,14 @@ export default class JoinPage extends Vue {
     // 현재 단계(1: 사업자정보, 2: 가입완료, 0: 가입불가)
     private step = 1
 
-    /** @Stores */
-
-    // 사업장 정보
-    @Action('getMemberWorkplaceInfo')
-    readonly getMemberWorkplaceInfo!: Function
-
-    // 최초로그인시 사업자정보 입력 요청
-    @Action('getBizInfoInput')
-    readonly getBizInfoInput!: (params: AuthParameters['bizInfo']) => Promise<void>
-
-    @Getter('workplaceList') workplaceList!: BusinessPlaceListItem[]
+    get workplaceList() {
+        return AuthModule.workplaceList
+    }
 
     /** @Methods */
 
     async onNext(list: BizInfoItem[]) {
-        await this.getBizInfoInput({ list })
+        await AuthModule.getBizInfoInput({ list })
         this.onComplete()
     }
 
@@ -59,7 +49,7 @@ export default class JoinPage extends Vue {
         this.step = step
 
         if (step === 1) {
-            this.getMemberWorkplaceInfo()
+            AuthModule.getMemberWorkplaceInfo()
         }
     }
 

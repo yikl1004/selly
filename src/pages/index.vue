@@ -32,9 +32,7 @@
                                 <strong class="title">매출</strong>
                                 <span class="flag">전일대비 +319,000</span>
                             </div>
-                            <div class="price">
-                                <strong>42,700,000</strong>원
-                            </div>
+                            <div class="price"><strong>42,700,000</strong>원</div>
                         </Anchor>
                     </swiper-slide>
                     <swiper-slide>
@@ -44,9 +42,7 @@
                                 <strong class="title">입금</strong>
                                 <span class="flag">전일대비 +319,000</span>
                             </div>
-                            <div class="price">
-                                <strong>42,700,000</strong>원
-                            </div>
+                            <div class="price"><strong>42,700,000</strong>원</div>
                         </Anchor>
                     </swiper-slide>
                 </BannerSwiper>
@@ -129,18 +125,13 @@
                 </Anchor>
 
                 <!-- 금융_비즈론_대출 이용거절 -->
-                <Anchor
-                    href="/"
-                    class="banner-box banner-finance type-biz refusal"
-                >
+                <Anchor href="/" class="banner-box banner-finance type-biz refusal">
                     <div class="banner-title">
                         <em>부담되는 매월 납부 대신</em>
                         <strong> 매출에 따라<br />납부하는 Biz론 </strong>
                     </div>
                     <span class="agree">이용 동의</span>
-                    <p class="info">
-                        이용동의 하시고 이자율과 이용가능금액을 알아보세요.
-                    </p>
+                    <p class="info">이용동의 하시고 이자율과 이용가능금액을 알아보세요.</p>
                 </Anchor>
 
                 <!-- 금융_장기카드론_대출 미신청 -->
@@ -215,25 +206,17 @@
                 </Anchor>
 
                 <!-- 금융_장기카드론_대출 이용거절 -->
-                <Anchor
-                    href="/"
-                    class="banner-box banner-finance type-loan refusal"
-                >
+                <Anchor href="/" class="banner-box banner-finance type-loan refusal">
                     <div class="banner-title">
                         <em>여유있는 한도!</em>
                         <strong>중도상환 수수료 없는<br />장기카드론</strong>
                     </div>
                     <span class="agree">이용 동의</span>
-                    <p class="info">
-                        이용동의 하시고 이자율과 이용가능금액을 알아보세요.
-                    </p>
+                    <p class="info">이용동의 하시고 이자율과 이용가능금액을 알아보세요.</p>
                 </Anchor>
 
                 <!-- 금융 예외 케이스-->
-                <Anchor
-                    href="/"
-                    class="banner-box banner-finance type-exception"
-                >
+                <Anchor href="/" class="banner-box banner-finance type-exception">
                     <div class="banner-title">
                         <em>사장님을 위한</em>
                         <strong>우대신용대출</strong>
@@ -340,10 +323,7 @@
 
                 <!-- 마케팅 신청 하지 않은경우 -->
                 <div class="box-banner-marketing">
-                    <Anchor
-                        href="/"
-                        class="banner-box banner-marketing default"
-                    >
+                    <Anchor href="/" class="banner-box banner-marketing default">
                         <div class="banner-title">
                             <em>Selly와</em>
                             <strong>
@@ -376,10 +356,7 @@
                                 <Flag color="blue" text="진행" />
                                 <em class="event-type">첫고객</em>
                                 <span class="event-info">5%</span>
-                                <p class="franchise-name">
-                                    연탄 불고기 가맹점연탄 불고기 가맹점연탄
-                                    불고기 가맹점연탄 불고기 가맹점
-                                </p>
+                                <p class="franchise-name">연탄 불고기 가맹점연탄 불고기 가맹점연탄 불고기 가맹점연탄 불고기 가맹점</p>
                                 <span class="event-date">
                                     2021. 07. 01 ~
                                     <br />
@@ -394,10 +371,7 @@
                     </swiper-slide>
                     <!-- 기본 마케팅 배너 -->
                     <swiper-slide>
-                        <Anchor
-                            href="/"
-                            class="banner-box banner-marketing default"
-                        >
+                        <Anchor href="/" class="banner-box banner-marketing default">
                             <div class="banner-title">
                                 <em>Selly와</em>
                                 <strong> 가맹점이 함께 만드는 쿠폰 </strong>
@@ -423,11 +397,7 @@
                 </div>
 
                 <!-- 신용카드 미보유 : 어드민등록 -->
-                <Anchor
-                    href="/"
-                    class="banner-box banner-credit"
-                    style="background-image:url('/assets/main/img_credit.png"
-                >
+                <Anchor href="/" class="banner-box banner-credit" style="background-image:url('/assets/main/img_credit.png">
                     <div class="banner-title">
                         <em>금융이자, 결제대금 납부까지 편리하게!</em>
                         <strong> LOCA MONEY<br />Biz 카드 </strong>
@@ -473,38 +443,22 @@
                     <swiper-slide>
                         <Anchor href="/" class="banner-box banner-affiliate">
                             <i class="img">
-                                <img
-                                    src="/assets/main/img_ affiliate.png"
-                                    alt="제휴사 이미지"
-                                />
+                                <img src="/assets/main/img_ affiliate.png" alt="제휴사 이미지" />
                             </i>
                             <div class="affiliate-info">
-                                <strong>
-                                    알밤알밤알밤알밤알밤알밤알밤알밤알밤알밤알밤알밤
-                                </strong>
-                                <p>
-                                    출/퇴근 관리를 무료로 이용해 보세요.출/퇴근
-                                    관리를 무료로 이용해 보세요.
-                                </p>
+                                <strong> 알밤알밤알밤알밤알밤알밤알밤알밤알밤알밤알밤알밤 </strong>
+                                <p>출/퇴근 관리를 무료로 이용해 보세요.출/퇴근 관리를 무료로 이용해 보세요.</p>
                             </div>
                         </Anchor>
                     </swiper-slide>
                     <swiper-slide>
                         <Anchor href="/" class="banner-box banner-affiliate">
                             <i class="img">
-                                <img
-                                    src="/assets/main/img_ affiliate.png"
-                                    alt="제휴사 이미지"
-                                />
+                                <img src="/assets/main/img_ affiliate.png" alt="제휴사 이미지" />
                             </i>
                             <div class="affiliate-info">
-                                <strong>
-                                    알밤알밤알밤알밤알밤알밤알밤알밤알밤알밤알밤알밤
-                                </strong>
-                                <p>
-                                    출/퇴근 관리를 무료로 이용해 보세요.출/퇴근
-                                    관리를 무료로 이용해 보세요.
-                                </p>
+                                <strong> 알밤알밤알밤알밤알밤알밤알밤알밤알밤알밤알밤알밤 </strong>
+                                <p>출/퇴근 관리를 무료로 이용해 보세요.출/퇴근 관리를 무료로 이용해 보세요.</p>
                             </div>
                         </Anchor>
                     </swiper-slide>
@@ -517,12 +471,9 @@
 
 <script lang="ts">
 import { Component, Mixins } from 'vue-property-decorator'
-import { namespace } from 'vuex-class'
 import PageView from '@utils/mixins/PageView'
-import type { MainInfo } from '@stores/modules/auth'
+import { AuthModule } from '@stores/modules/auth'
 import { SwiperSlide } from 'vue-awesome-swiper'
-
-const { Action: AuthAction, State: AuthState } = namespace('auth')
 
 @Component({
     components: {
@@ -530,9 +481,9 @@ const { Action: AuthAction, State: AuthState } = namespace('auth')
     },
 })
 export default class MainPage extends Mixins(PageView) {
-    /** @Stores */
-    @AuthAction('getMainInfo') readonly getMainInfo!: Function
-    @AuthState('mainInfo') readonly mainInfo!: MainInfo
+    get mainInfo() {
+        return AuthModule.mainInfoData
+    }
 
     /** @Computed */
     get info() {
@@ -540,7 +491,7 @@ export default class MainPage extends Mixins(PageView) {
     }
 
     created() {
-        this.getMainInfo()
+        AuthModule.getMainInfo()
     }
 }
 </script>

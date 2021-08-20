@@ -11,13 +11,9 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component /* Watch */ } from 'vue-property-decorator'
-import { namespace } from 'vuex-class'
-// import type { Route } from 'vue-router'
-import type { PageDirection } from '@stores/modules/ui'
-
-const { State } = namespace('common')
-const { State: UiState } = namespace('ui')
+import { Vue, Component } from 'vue-property-decorator'
+import { UiModule } from '@stores/modules/ui'
+import { CommonModule } from '@stores/modules/common'
 
 /**
  * @description
@@ -25,9 +21,13 @@ const { State: UiState } = namespace('ui')
  */
 @Component
 export default class Layout extends Vue {
-    /** @Stores */
-    @State('referrer') readonly referrer!: string
-    @UiState('pageDirection') readonly pageDirection!: PageDirection
+    get referrer() {
+        return CommonModule.referrerData
+    }
+
+    get pageDirection() {
+        return UiModule.pageDirectionData
+    }
 }
 </script>
 

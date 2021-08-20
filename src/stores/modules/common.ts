@@ -1,8 +1,6 @@
-import { Module, VuexModule, MutationAction, Mutation } from 'vuex-module-decorators'
-import CommonService, {
-    CommonResponse,
-    /* CommonParameters, */
-} from '@services/common'
+import { Module, VuexModule, MutationAction, Mutation, getModule } from 'vuex-module-decorators'
+import store from '@stores/index'
+import CommonService, { CommonResponse } from '@services/common'
 
 export interface CommonState {
     loginExtendInfo: LoginExtendInfo | null
@@ -11,8 +9,8 @@ export interface CommonState {
 
 export type LoginExtendInfo = CommonResponse['loginExtend']
 
-@Module({ name: 'common', namespaced: true })
-export default class Common extends VuexModule<CommonState> {
+@Module({ name: 'common', namespaced: true, dynamic: true, store })
+export default class Common extends VuexModule {
     public loginExtendInfo: LoginExtendInfo | null = null
     public referrer = ''
 
@@ -35,4 +33,11 @@ export default class Common extends VuexModule<CommonState> {
             loginExtendInfo: data,
         }
     }
+
+    // document.referrer 대체
+    get referrerData() {
+        return this.referrer
+    }
 }
+
+export const CommonModule = getModule(Common)

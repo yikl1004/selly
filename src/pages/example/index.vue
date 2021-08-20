@@ -18,12 +18,10 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import { namespace } from 'vuex-class'
 import ClickOutside from 'vue-click-outside'
 import type { BottomSheetOptionItem } from '@components/common/BottomSheet.vue'
 import type { DropdownBoxList } from '@components/form/DropdownBox.vue'
-
-const FinanceModule = namespace('finance')
+// import { FinanceModule } from '@stores/modules/finance'
 
 @Component({
     directives: { ClickOutside },
@@ -45,9 +43,6 @@ export default class ExamplePage extends Vue {
     private value = ''
     private opened = false
 
-    @FinanceModule.Action('getData')
-    readonly getData!: Function
-
     onSelect(option: BottomSheetOptionItem) {
         this.value = option.value
 
@@ -55,10 +50,6 @@ export default class ExamplePage extends Vue {
             item.selected = item.value === option.value
             return item
         })
-    }
-
-    callApi() {
-        this.getData()
     }
 
     toggle() {

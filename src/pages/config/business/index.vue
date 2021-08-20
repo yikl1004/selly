@@ -49,43 +49,24 @@
 
 <script lang="ts">
 import { Component, Mixins } from 'vue-property-decorator'
-import { namespace } from 'vuex-class'
 import SelectStore from '@pages/auth/SelectStore.vue'
 import PageView from '@utils/mixins/PageView'
 import type { DropdownBoxList } from '@components/form/DropdownBox.vue'
-import type { BusinessManInfo } from '@stores/modules/auth'
+import { AuthModule } from '@stores/modules/auth'
 import type { Schema } from '@components/form/FormProvider.vue'
-import type { AuthParameters, BusinessManInfoListItem, FranchiseItem } from '@services/auth'
-
-const { Action, State, Getter, Mutation } = namespace('auth')
+import type { BusinessManInfoListItem, FranchiseItem } from '@services/auth'
 
 @Component({
     components: { SelectStore },
 })
 export default class BusinessPage extends Mixins(PageView) {
-    /** @Stores */
-    @Action('getBusinessManInfo')
-    readonly getBusinessManInfo!: () => Promise<void>
+    get businessManInfo() {
+        return AuthModule.businessManInfo
+    }
 
-    @Action('updateBusinessManName')
-    readonly updateBusinessManName!: (params: AuthParameters['changeBusinessManName']) => Promise<void>
-
-    // 사업장 정보
-    @Action('getMemberWorkplaceInfo')
-    readonly getMemberWorkplaceInfo!: Function
-
-    // 최초로그인시 사업자정보 입력 요청
-    @Action('getBizInfoInput')
-    readonly getBizInfoInput!: (params: AuthParameters['bizInfo']) => Promise<void>
-
-    @Mutation('selectBusinessMan')
-    readonly selectBusinessMan!: (bzno: string) => void
-
-    @State('businessManInfo')
-    readonly businessManInfo!: BusinessManInfo
-
-    @Getter('businessManList')
-    readonly businessManList!: DropdownBoxList
+    get businessManList() {
+        return AuthModule.businessManList
+    }
 
     /** @Data */
 
@@ -98,7 +79,7 @@ export default class BusinessPage extends Mixins(PageView) {
     get franchiseList(): FranchiseItem[] {
         const selectedItem = this.businessManList.find(item => item.selected)
         if (selectedItem) {
-            const findList = this.businessManInfo.list.find(item => item.selected)?.subList
+            const findList = this.businessManInfo ? this.businessManInfo.list.find(item => item.selected)?.subList : []
 
             return findList || []
         } else {
@@ -108,7 +89,7 @@ export default class BusinessPage extends Mixins(PageView) {
 
     // 현재 선택된 사업자 정보
     get currentBusinessInfo(): BusinessManInfoListItem {
-        return this.businessManInfo.list.find(item => item.selected) as BusinessManInfoListItem
+        return this.businessManInfo?.list.find(item => item.selected) as BusinessManInfoListItem
     }
 
     /** @Methods */
@@ -117,7 +98,7 @@ export default class BusinessPage extends Mixins(PageView) {
      * 사업자 추가 팝업 열기
      */
     async openPopupAddBusinessMan() {
-        await this.getMemberWorkplaceInfo()
+        await AuthModule.getMemberWorkplaceInfo()
         this.showAddBusinessManPopup = true
     }
 
@@ -134,18 +115,18 @@ export default class BusinessPage extends Mixins(PageView) {
 
     async onChangeBusinessManName(bzmanNm: string) {
         const bzno = this.currentBusinessInfo.bzno
-        await this.updateBusinessManName({ bzno, bzmanNm })
-        await this.getBusinessManInfo()
+        await AuthModule.updateBusinessManName({ bzno, bzmanNm })
+        await AuthModule.getBusinessManInfo()
     }
 
     onSelectBusinessMan(value: string) {
-        this.selectBusinessMan(value)
+        AuthModule.selectBusinessMan(value)
     }
 
     /** @LifeCycle */
 
     async created() {
-        await this.getBusinessManInfo()
+        await AuthModule.getBusinessManInfo()
     }
 
     /** 개발 적용 전... */

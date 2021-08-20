@@ -1,4 +1,5 @@
-import { Module, VuexModule, MutationAction } from 'vuex-module-decorators'
+import { Module, VuexModule, MutationAction, getModule } from 'vuex-module-decorators'
+import store from '@stores/index'
 import FinacialService from '@services/finance'
 
 export interface FinancialState {
@@ -9,7 +10,7 @@ export interface FinancialState {
     guide: any
 }
 
-@Module({ name: 'finance', namespaced: true, stateFactory: true })
+@Module({ name: 'finance', namespaced: true, stateFactory: true, dynamic: true, store })
 export default class Finance extends VuexModule {
     public mainInfo: any = {}
     public policy: any = {}
@@ -57,3 +58,5 @@ export default class Finance extends VuexModule {
         }
     }
 }
+
+export const FinanceModule = getModule(Finance)

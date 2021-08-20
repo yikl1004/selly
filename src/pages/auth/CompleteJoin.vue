@@ -1,16 +1,9 @@
 <template>
     <div class="container">
-        <CautionBox
-            type="complete"
-            :title="`${bizmanName} 사장님, 반갑습니다! 셀리 회원가입이 완료되었습니다.`"
-        />
+        <CautionBox type="complete" :title="`${bizmanName} 사장님, 반갑습니다! 셀리 회원가입이 완료되었습니다.`" />
 
         <div v-if="bizInfoList" class="complete-store-list">
-            <div
-                v-for="(item, index) in bizInfoList"
-                :key="`biz-info-list-${index}`"
-                class="store-box"
-            >
+            <div v-for="(item, index) in bizInfoList" :key="`biz-info-list-${index}`" class="store-box">
                 <i>{{ convertBizNoFormatter({ bizNo: item.bzno }) }}</i>
                 <span class="store-name">{{ item.bzmanNm }}</span>
             </div>
@@ -23,16 +16,18 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import { namespace } from 'vuex-class'
-import type { BizInfo } from '@stores/modules/auth'
-
-const { Getter } = namespace('auth')
+import { AuthModule } from '@stores/modules/auth'
 
 @Component
 export default class CompleteJoinPage extends Vue {
     /** @category Stores */
-    @Getter('bizInfoList') readonly bizInfoList!: BizInfo['data']['list']
-    @Getter('bizmanName') readonly bizmanName!: BizInfo['data']['mbrNm']
+    get bizInfoList() {
+        return AuthModule.bizInfoList
+    }
+
+    get bizmanName() {
+        return AuthModule.bizmanName
+    }
 
     /** @category Methods */
 

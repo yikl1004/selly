@@ -19,20 +19,13 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import { namespace } from 'vuex-class'
-import type { AuthParameters } from '@services/auth'
-
-const { Getter, Action } = namespace('auth')
+import { AuthModule } from '@stores/modules/auth'
 
 @Component
 export default class SelectStorePage extends Vue {
-    /** @Props */
-
-    @Getter('recommenderCodeMessage')
-    readonly recommenderCodeMessage!: string
-
-    @Action('inputRecommenderCode')
-    readonly inputRecommenderCode!: (params: AuthParameters['recommenderCode']) => Promise<void>
+    get recommenderCodeMessage() {
+        return AuthModule.recommenderCodeMessage
+    }
 
     /** @Data */
     private recommendAreaOpen = false
@@ -45,7 +38,7 @@ export default class SelectStorePage extends Vue {
      * 3. 메세징 처리 (Watch: changeRecommenderCodeMessage 메서드 만들다 말았음)
      */
     async onClickRecommenderCode(rfnSn: string) {
-        await this.inputRecommenderCode({ rfnSn })
+        await AuthModule.inputRecommenderCode({ rfnSn })
     }
 
     openRecommendArea(event: { value?: string; index: number; fieldName: string }) {

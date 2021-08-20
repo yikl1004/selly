@@ -4,7 +4,7 @@
             <div class="content">
                 <div class="secession-wrap">
                     <h2>Selly 회원 탈퇴를 위해서<br />아래 내용을 확인해주세요.</h2>
-                    <BulletList v-if="!!cacelGuideList.length" :list="cacelGuideList" />
+                    <BulletList v-if="!!cancelGuideList.length" :list="cancelGuideList" />
                 </div>
                 <portal to="floating">
                     <BasicButton size="large" @click="onWithdrawal"> 내용 확인 후 탈퇴 </BasicButton>
@@ -15,10 +15,8 @@
 </template>
 
 <script lang="ts">
+import { AuthModule } from '@stores/modules/auth'
 import { Component, Vue } from 'vue-property-decorator'
-import { namespace } from 'vuex-class'
-
-const { Action, State } = namespace('auth')
 
 /**
  * @description
@@ -26,17 +24,12 @@ const { Action, State } = namespace('auth')
  */
 @Component
 export default class WithdrawalPage extends Vue {
-    /** @Stores */
-    @Action('setWithdrawal') readonly setWithdrawal!: () => Promise<void>
-    @Action('beforeWithdrawal') readonly beforeWithdrawal!: () => Promise<void>
-    @State('cacelGuideList') readonly cacelGuideList!: Array<{ text: string }>
-
-    /** @Data */
-
-    /** @Methods */
+    get cancelGuideList() {
+        return AuthModule.cancelGuideListData
+    }
 
     async handelWithdrawal() {
-        await this.setWithdrawal()
+        await AuthModule.setWithdrawal()
         this.$router.push({ name: 'Main' })
     }
 
@@ -51,7 +44,7 @@ export default class WithdrawalPage extends Vue {
     /** @Lifecycle */
 
     async beforeMount() {
-        await this.beforeWithdrawal()
+        await AuthModule.beforeWithdrawal()
     }
 }
 </script>

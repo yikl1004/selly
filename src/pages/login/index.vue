@@ -16,12 +16,9 @@
 
 <script lang="ts">
 import { Component, Mixins, Watch } from 'vue-property-decorator'
-import { namespace } from 'vuex-class'
 import store from '@stores/index'
-import type { LoginInfo, UserInfo } from '@stores/modules/auth'
+import { AuthModule, LoginInfo } from '@stores/modules/auth'
 import PageView from '@utils/mixins/PageView'
-
-const { Mutation, Action, State } = namespace('auth')
 
 @Component({
     beforeRouteEnter(to, from, next) {
@@ -30,16 +27,9 @@ const { Mutation, Action, State } = namespace('auth')
     },
 })
 export default class LoginPage extends Mixins(PageView) {
-    /**
-     * @category Use store
-     */
-
-    // [ store ]: auth
-    @Mutation('setUserInfo') readonly setUserInfo!: (userInfo: UserInfo) => void
-    @Action('getLoginInfo') readonly getLoginInfo!: Function
-    @State('loginInfo') readonly loginInfo!: LoginInfo
-
-    /** @category Watch */
+    get loginInfo() {
+        return AuthModule.loginInfoData
+    }
 
     // 로그인 정보에 따라 화면을 이동한다
     @Watch('loginInfo')
@@ -77,12 +67,12 @@ export default class LoginPage extends Mixins(PageView) {
         // 3. 동의한 약관 항목 요청
         const kakaoAgreedList = await this.$kakaoSdk.agreedList()
         // 4. Mutation: Selly 로그인 API 요청 Parameter 세팅
-        this.setUserInfo({
+        AuthModule.setUserInfo({
             ...kakaoUserInfoResponse,
             ...kakaoAgreedList,
         })
         // 5. Action: Selly 로그인 API 요청
-        await this.getLoginInfo()
+        await AuthModule.getLoginInfo()
     }
 
     // TODO: 임시 사용, 삭제 요망

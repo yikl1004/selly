@@ -55,30 +55,27 @@
 
 <script lang="ts">
 import { Component, Vue, Watch } from 'vue-property-decorator'
-import { namespace } from 'vuex-class'
 import { OnSelectValue } from '@components/form/CheckBoxBlock.vue'
-import type { AuthParameters, BizInfoItem, BusinessPlaceListItem } from '@services/auth'
-import type { BizInfo } from '@stores/modules/auth'
-
-const { Getter, Action } = namespace('auth')
+import type { BizInfoItem, BusinessPlaceListItem } from '@services/auth'
+import { AuthModule } from '@stores/modules/auth'
 
 @Component
 export default class SelectStorePage extends Vue {
     /** @Props */
 
     /** @Stores */
-    @Getter('workplaceOwnerName')
-    readonly workplaceOwnerName!: BizInfo['data']['mbrNm']
+    get workplaceOwnerName() {
+        return AuthModule.workplaceOwnerName
+    }
 
-    @Getter('recommenderCodeMessage')
-    readonly recommenderCodeMessage!: string
+    get recommenderCodeMessage() {
+        return AuthModule.recommenderCodeMessage
+    }
 
     /** 사업장 리스트 */
-    @Getter('workplaceList')
-    readonly workplaceList!: BusinessPlaceListItem[]
-
-    @Action('inputRecommenderCode')
-    readonly inputRecommenderCode!: (params: AuthParameters['recommenderCode']) => Promise<void>
+    get workplaceList() {
+        return AuthModule.workplaceList
+    }
 
     /** @Data */
     private recommendAreaOpen = false
@@ -95,9 +92,6 @@ export default class SelectStorePage extends Vue {
     ) {
         this.selectedWorkplace = value.filter(item => item.ltRgyn === 'Y').map(({ bzno, ltRgyn }) => ({ bzno, ltRgyn }))
     }
-
-    // @Watch('recommenderCodeMessage')
-    // changeRecommenderCodeMessage(value: string, oldValue: string) {}
 
     /** @Computed */
     get isFirstJoin(): boolean {
@@ -133,7 +127,7 @@ export default class SelectStorePage extends Vue {
      * 3. 메세징 처리 (Watch: changeRecommenderCodeMessage 메서드 만들다 말았음)
      */
     async onClickRecommenderCode(rfnSn: string) {
-        await this.inputRecommenderCode({ rfnSn })
+        await AuthModule.inputRecommenderCode({ rfnSn })
     }
 
     openRecommendArea(event: { value?: string; index: number; fieldName: string }) {

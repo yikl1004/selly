@@ -52,27 +52,23 @@
 
 <script lang="ts">
 import { Component, Mixins } from 'vue-property-decorator'
-import { namespace } from 'vuex-class'
 import PageView from '@utils/mixins/PageView'
-import type { MemberInfo } from '@stores/modules/auth'
-import type { AuthParameters } from '@services/auth'
-
-const { Action, Getter } = namespace('auth')
+import { AuthModule } from '@stores/modules/auth'
 
 @Component
 export default class MemberPage extends Mixins(PageView) {
-    /** @Data */
-
     private memberInfo: { name: string; value: string }[] = []
     // private marketingSMS: boolean = false
     // private marketingKakaoFriend: boolean = false
 
     /** @Stores */
-    @Getter('memberViewInfo') readonly memberViewInfo!: MemberInfo['data']
-    @Getter('cancelGuideParams') readonly cancelGuideParams!: Pick<MemberInfo['data'], 'datusYn' | 'mrktYn' | 'bizLoanYn' | 'loanYn'>
-    @Action('getMemberInfo') readonly getMemberInfo!: () => Promise<void>
-    @Action('setMarketingUpdate') readonly setMarketingUpdate!: (params: AuthParameters['marketingUpdate']) => Promise<void>
-    @Action('setWithdrawal') readonly setWithdrawal!: () => Promise<void>
+    get memberViewInfo() {
+        return AuthModule.memberViewInfo
+    }
+
+    get cancelGuideParams() {
+        return AuthModule.cancelGuideParams
+    }
 
     /** @Computed */
 
@@ -106,7 +102,7 @@ export default class MemberPage extends Mixins(PageView) {
     // }
 
     async handleWithdrawal() {
-        await this.setWithdrawal()
+        await AuthModule.setWithdrawal()
         this.$router.push({ name: 'Login' })
     }
 
@@ -128,7 +124,7 @@ export default class MemberPage extends Mixins(PageView) {
     /** @Lifecycle */
 
     async mounted() {
-        await this.getMemberInfo()
+        await AuthModule.getMemberInfo()
 
         this.memberInfo = [
             { name: '이름', value: this.memberViewInfo.mbrNm },
