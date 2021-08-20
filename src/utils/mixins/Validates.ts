@@ -102,12 +102,6 @@ export default class Validates extends Vue {
         }
     }
 
-    /**
-     * @TODO: 숫자가 아닌 텍스트만 입력 가능하게...
-     * @param event
-     */
-    // onlyText(event: KeyboardEvent) {}
-
     phoneNumber(value: string) {
         const cloneValue = this._.cloneDeep(value)
         let args: [RegExp, string] | []

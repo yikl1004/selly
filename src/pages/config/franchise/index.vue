@@ -63,7 +63,6 @@ import { AuthModule } from '@stores/modules/auth'
 /**
  * @description
  * 가맹점 번호에 따른 가맹점 정보를 조회하여 화면을 출력
- * TODO: 가맹점 정보 조회 API가 따로 생길 예정, 그에 따른 수정 필요
  */
 @Component
 export default class FranchiseePage extends Vue {

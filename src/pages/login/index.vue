@@ -88,7 +88,7 @@ export default class LoginPage extends Mixins(PageView) {
         await AuthModule.getLoginInfo()
     }
 
-    // TODO: 임시 사용, 삭제 요망
+    // FIXME: 임시 사용, 삭제 요망
     withdraw() {
         this.$kakaoSdk && this.$kakaoSdk.unlink()
     }

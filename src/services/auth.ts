@@ -112,10 +112,6 @@ export interface AuthParameters {
     }
 }
 
-/**
- * TODO: 공통 코드에 대한 정리
- * 1010: 회원가입 불가 대상입니다.
- */
 export interface AuthResponse {
     loginInfo: {
         rc: ResponseCode

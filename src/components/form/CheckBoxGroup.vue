@@ -80,7 +80,7 @@ export type CheckListItem = Omit<CheckboxProps, 'id' | 'name' | 'type'> & {
 export type CheckList = CheckListItem[]
 
 /**
- * TODO: 보기 링크를 아직 만들지 않았음...
+ * TODO: 보기 링크를 만들어야 함
  */
 
 @Component

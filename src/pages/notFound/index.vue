@@ -2,14 +2,18 @@
     <Page floating>
         <PageBody class="error">
             <i class="error-icon" />
-            <h2 class="error-title">요청하신 페이지를<br />찾을 수 없습니다.</h2>
+            <h2 class="error-title">
+                요청하신 페이지를<br />찾을 수 없습니다.
+            </h2>
             <p class="error-description">
                 서비스 이용에 불편을 드려서 죄송합니다.
                 <br />
                 페이지 주소를 다시 확인해주세요.
             </p>
             <portal to="floating">
-                <BasicButton type="large" @click="toMain"> 메인으로 가기 </BasicButton>
+                <BasicButton type="large" @click="toMain">
+                    메인으로 가기
+                </BasicButton>
             </portal>
         </PageBody>
     </Page>
@@ -20,7 +24,7 @@ import { Component, Mixins } from 'vue-property-decorator'
 import PageView from '@utils/mixins/PageView'
 
 /**
- * TODO: 404 페이지. 아직 디자인이없음
+ * @description 페이지가 없습니다. 404
  */
 @Component
 export default class NotFoundPage extends Mixins(PageView) {

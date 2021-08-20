@@ -55,12 +55,11 @@ import { SalesModule } from '@stores/modules/sales'
 
 /**
  * @description
- * TODO: 연동 여부 확인 하는 API 요청 해야 함!!!
  * 매출/입금 내역 조회 전 연동하는 페이지
  * 1. 페이지 진입 시 연동 됬는지 여부를 체크(연동 없음, 연동 있음, 연동 중)
  *      1-1. [O] 내역으로 redirect
  *      1-2. [X] 현재화면 계속 노출
- *      1-3. [ ] 연동 중 화면 노출
+ *      1-3. [-] 연동 중 화면 노출
  */
 @Component
 export default class SalesAndPurchasesPage extends Vue {
