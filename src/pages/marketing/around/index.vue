@@ -1,6 +1,6 @@
 <template>
-    <Page floating>
-        <Header type="sub" title="쿠폰 만들기" />
+    <Page>
+        <Header type="sub" title="내 주변 매출" />
         <PageBody>
             <div class="content pd-btm">
                 <div class="box-around-store">

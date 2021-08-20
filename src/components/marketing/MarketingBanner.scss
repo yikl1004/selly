@@ -1,0 +1,29 @@
+.marketing-banner {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 142px;
+    padding: 0 20px;
+    border-radius: 10px;
+    background: #7dc3cf url("/assets/marketing/img_banner_history.png") right bottom no-repeat;
+    background-size: auto 100%;
+    color: #fff;
+    font-weight: 500;
+    strong {
+        display: block;
+        margin-top: 4px;
+        font-size: 20px;
+        font-weight: 700;
+        line-height: 1.4;
+    }
+}
+
+.caution-box {
+    & + .marketing-banner {
+        position: absolute;
+        bottom: 60px;
+        left: 24px;
+        right: 24px;
+        width: calc(100% - 48px);
+    }
+}

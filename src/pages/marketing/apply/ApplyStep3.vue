@@ -12,6 +12,7 @@
                 <ApplyResult type="complete" />
                 <BulletList :list="infoResult" />
 
+                <!--[P] 아코디언 내용으로 하단의 bullet-list가 들어가야함. 개발 수정 요청중.-->
                 <AccoItem :list="accordionList" />
 
                 <BulletList :list="infoCaution" />
@@ -28,33 +29,15 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import type { RadioProps } from '@components/form/Radio.vue'
-
 import { AccordionListItem } from '@components/common/AccoItem.vue'
-
 import ApplyResult from '@components/marketing/ApplyResult.vue'
+
 @Component({
     components: {
         ApplyResult,
     },
 })
 export default class MarketingApply extends Vue {
-    private infoList = [
-        {
-            text: '가맹점 정보를 변경할 경우 변경 다음날 부터 신청 가능합니다.',
-        },
-    ]
-
-    private infoDate = [
-        {
-            text: '쿠폰 행사는 신청일로부터 7일 이후 시작 가능하며, 최대 30일까지 설정 가능합니다.',
-        },
-    ]
-
-    private infoBenefit = [
-        {
-            text: '롯데 신용카드 결제에 한하여, 행사 기간 중 1인당 1회만 적용됩니다.',
-        },
-    ]
     private infoResult = [
         {
             text: '롯데카드 결제 기준의 예상 산출이므로 실제 매출액, 고객수와 다를 수 있습니다.',
@@ -75,12 +58,6 @@ export default class MarketingApply extends Vue {
         {
             text: '간편결제는 롯데 앱카드, 삼성페이, LG페이, Lpay만 가능합니다.',
         },
-    ]
-
-    private benefitRadio: RadioProps[] = [
-        { value: '5', label: '5%', checked: false },
-        { value: '10', label: '10%', checked: true },
-        { value: '15', label: '15%', checked: false },
     ]
 
     private applyDetail = [
@@ -113,18 +90,6 @@ export default class MarketingApply extends Vue {
                 '매출내역이 정확하지 않은 경우는 크게 2가지 원인이 있을 수 있습니다. 매출내역이 정확하지 않은 경우는 크게 2가지 원인이 있을 수 있습니다.매출내역이 정확하지 않은 경우는 크게 2가지 원인이 있을 수 있습니다.',
         },
     ]
-
-    /**
-     * @category Data
-     */
-    private isActive = false
-
-    /**
-     * @category Methods
-     */
-    onMore() {
-        this.isActive = true
-    }
 }
 </script>
 

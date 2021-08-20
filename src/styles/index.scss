@@ -19,15 +19,6 @@
     min-height: 100vh;
 }
 
-// page-header
-.page-header {
-    &.main {
-        & + .container {
-            background-color: #f3f0ee;
-        }
-    }
-}
-
 // page-body
 .container {
     overflow-y: auto;
@@ -54,6 +45,16 @@
         .content {
             padding-bottom: 36px
         }
+        /*  [P]
+            플로팅버튼 푸터 전에 멈추는 액션 적용 전 임시로 푸터 간격 적용.
+            추후 플로팅버튼 스크롤액션 들어가면 삭제 필요.
+        */
+        & ~ .footer {
+            padding-bottom: 132px;
+        }
+    }
+    &.gray {
+        background-color: #f3f0ee;
     }
 
     .field-box:first-of-type {
@@ -70,9 +71,6 @@
 .page-header {
     & ~ .container {
         padding-top: 56px;
-    }
-    &.proccess-type ~ .container {
-        padding-top: 61px;
     }
 }
 
@@ -97,7 +95,13 @@
 //table
 .table-box {
     overflow: hidden;
-    width: 100%;
+    width: calc(100vw - 48px);
+    .t-center {
+        text-align: center;
+    }
+    .t-right {
+        text-align: right;
+    }
     .table-scroll {
         overflow-x: auto;
     }
@@ -126,7 +130,7 @@
 }
 
 // full-popup
-.vue-portal-target {
+.vue-portal-target:not(.fixed-btn-box) {
     position: relative;
     z-index: 3000;
 }

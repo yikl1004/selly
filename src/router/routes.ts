@@ -205,10 +205,6 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
                 path: '/marketing',
                 name: 'Marketing',
                 component: createAsyncPage(import('@pages/marketing/index.vue')),
-                meta: {
-                    floating: true,
-                    footer: true,
-                },
             },
             //쿠폰만들기_step1
             {
@@ -217,7 +213,6 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
                 component: createAsyncPage(import('@pages/marketing/apply/index.vue')),
                 meta: {
                     floating: true,
-                    footer: false,
                 },
             },
             //쿠폰만들기_step2
@@ -227,7 +222,6 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
                 component: createAsyncPage(import('@pages/marketing/apply/ApplyStep2.vue')),
                 meta: {
                     floating: true,
-                    footer: false,
                 },
             },
             //쿠폰만들기_step3
@@ -237,10 +231,36 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
                 component: createAsyncPage(import('@pages/marketing/apply/ApplyStep3.vue')),
                 meta: {
                     floating: true,
-                    footer: false,
                 },
             },
 
+            //신청내역
+            {
+                path: '/marketing/history',
+                name: 'CouponHistory',
+                component: createAsyncPage(import('@pages/marketing/history/index.vue')),
+                meta: {
+                    floating: true,
+                },
+            },
+            //신청내역_상세
+            {
+                path: '/marketing/detail',
+                name: 'CouponDetail',
+                component: createAsyncPage(import('@pages/marketing/detail/index.vue')),
+                meta: {
+                    floating: true,
+                },
+            },
+            //내 주변 매출
+            {
+                path: '/marketing/around',
+                name: 'AroundSales',
+                component: createAsyncPage(import('@pages/marketing/around/index.vue')),
+                meta: {
+                    floating: true,
+                },
+            },
             // e : 마케팅
 
             // 설정

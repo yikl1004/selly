@@ -1,5 +1,5 @@
 <template>
-    <Page floating>
+    <Page floating footer>
         <Header type="sub" title="쿠폰 만들기" />
         <PageBody class="floating gray">
             <div class="content">
