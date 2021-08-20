@@ -1,0 +1,206 @@
+.apply-step-wrap {
+    margin: 48px 0;
+    ul {
+        display: flex;
+        justify-content: space-between;
+        padding: 0 12px;
+    }
+    li {
+        text-align: center;
+        .ico {
+            display: block;
+            width: 48px;
+            height: 48px;
+            background-color: #f3f3f3;
+            font-size: 16px;
+            font-weight: 500;
+            border-radius: 50%;
+            line-height: 48px;
+            background-repeat: no-repeat;
+            background-size: 100%;
+        }
+        span {
+            display: block;
+        }
+        &.active {
+            font-weight: 700;
+            .ico {
+                background-image: url("/assets/marketing/ico_apply_step.svg");
+                span {
+                    display: none;
+                }
+            }
+            &.type01 {
+                color: #413a2f;
+                .ico {
+                    background-color: #413a2f;
+                }
+            }
+            &.type02 {
+                color: #198571;
+                .ico {
+                    background-color: #198571;
+                }
+            }
+            &.type03 {
+                color: #00648c;
+                .ico {
+                    background-color: #00648c;
+                }
+            } 
+        }
+    }
+}
+
+.marketing-info-box {
+    .state {
+        display: block;
+        font-weight: 700;
+        color: #6c625a;
+    }
+    .marketing-info {
+        position: relative;
+        margin-top: 12px;
+        padding: 20px;
+        background-color: #807164;
+        border-radius: 10px;
+        color: #fff;
+        &:before,
+        &:after {
+            content: '';
+            display: block;
+            position: absolute;
+            top: 50%;
+            width: 14px;
+            height: 14px;
+            margin-top: -7px;
+            background-color: #fff;
+            border-radius: 50%;
+        }
+        &:before {
+            left: -7px;
+        }
+        &:after {
+            right:  -7px;
+        }
+        strong {
+            font-weight: 700;
+        }
+        .info-detail {
+            margin-top: 12px;
+        }
+    }
+}
+
+.box-title {
+    display:flex;
+    align-items: center;
+    margin: 48px 0 12px;
+    .date {
+        margin-left: 8px;
+        font-size: 12px;
+        color: #222;
+    }
+    &:first-of-type {
+        margin: 0;
+    }
+}
+
+.analysis-wrap {
+    .use-total {
+        overflow: hidden;
+        li {
+            float: left;
+            width: calc(50% - 4px);
+            height: 126px;
+            padding: 20px 0;
+            background-color: #f3f0ee;
+            border-radius: 10px;
+            color: #222;
+            text-align: center;
+            & + li {
+                margin-left: 8px;
+            }
+        }
+        .ico {
+            display: block;
+            width: 32px;
+            height: 32px;
+            margin: 0 auto 4px;
+            background: url("/assets/marketing/ico_analysis.png") no-repeat;
+            background-size: 100%;
+        }
+        strong {
+            display: block;
+            font-size: 20px;
+            line-height: 1.4;
+            font-weight: 700;
+        }
+    }
+    .box-gray {
+        margin-top: 8px;
+    }
+}
+
+.chart-box {
+    .tbl-chart {
+        margin-top: 32px;
+    }
+}
+
+.box-sales-compare {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 56px;
+    margin-bottom: 12px;
+    background-color: #f3f0ee;
+    border-radius: 6px;
+    color: #222;
+    strong {
+        display: inline-block;
+        position: relative;
+        margin-left: 8px;
+        padding-right: 24px;
+        font-size: 16px;
+        font-weight: 700;
+        .ico {
+            display: block;
+            position: absolute;
+            right: 0;
+            top: -1px;
+            width: 24px;
+            height: 24px;
+            background-repeat: no-repeat;
+            background-size:100%;
+        }
+        &.up {
+            color: $primary-color;
+            .ico {
+                background-image: url('/assets/marketing/icon-arrow-up.png');
+            }
+        }
+        &.down {
+            color: $point-color-blue;
+            .ico {
+                background-image: url('/assets/marketing/icon-arrow-down.png');
+            }
+        }
+
+    }
+}
+
+.box-reject {
+    min-height: 84px;
+    margin: 12px 0 48px;
+    padding: 20px;
+    background-color: #f8f8f8;
+    border-radius: 10px;
+    strong {
+        display: block;
+        font-weight: 700;
+    }
+    p {
+        color: #222;
+    }
+}

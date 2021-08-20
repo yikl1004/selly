@@ -1,0 +1,20 @@
+.content {
+    padding-top: 40px;
+    .box-title:first-of-type {
+        margin-top: 0;
+    }
+    .box-img {
+        max-width: 312px;
+        margin: 12px auto 0;
+        img {
+            width: 100%;
+        }
+    }
+}
+.box-coupon-step {
+    padding-top: 12px;
+}
+
+.coupon-info-list {
+    margin-top:48px
+}

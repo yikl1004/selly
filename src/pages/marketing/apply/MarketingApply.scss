@@ -1,0 +1,160 @@
+.content {
+    .box-step + .box-title {
+        margin: 0;
+    }
+}
+.box-franchisee-list {
+    width: calc(100vw - 48px);
+    margin-top: 24px;
+    .franchisee-list {
+        overflow: hidden;
+        height: 200px;
+    }
+    li {
+        margin-top: 20px;
+        &:first-of-type {
+            margin-top: 0;
+        }
+    }
+    &::v-deep .radio-box {
+        width: 100%;
+        i {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+    }
+    &.active {
+        .franchisee-list {
+            height: auto;
+        }
+        .btn.more {
+            display: none;
+        }
+    }
+}
+
+.box-franchisee-info {
+    margin: 32px 0 12px;
+    ul {
+
+        padding: 20px;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+    }
+    li {
+        margin-top: 24px;
+        &:first-of-type {
+            margin-top: 0;
+        }
+    }
+    strong {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 500;
+        color: #222;
+    }
+    p {
+        span {
+            display: block;
+        }
+    }
+
+}
+
+.benefit-select-wrap {
+    .benefit-select-box {
+        margin-top: 12px;
+        &:first-of-type {
+            margin-top: 0;
+        }
+    }
+}
+.benefit-select-box {
+    padding: 16px 20px;
+    border:1px solid #ebebeb;
+    border-radius: 10px;
+    .field-box ~ .field-box {
+        margin-top: 32px;
+        border-top: 1px solid #ebebeb;
+    }
+    &::v-deep .radio-area {
+        display: flex;
+        .radio-list-item {
+            width: 33%;
+            margin-top: 0
+        }
+    }
+
+}
+.benefit-title {
+    @include checkbox-style;
+    i {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-size: 16px;
+        font-weight: 500;
+        strong { 
+            color: #222;
+        }
+        em {
+            color: $point-color-blue;
+        }
+    }
+    .sub-text {
+        display: block;
+        margin-top: 6px;
+        padding-left: 32px;
+        color: #666;
+        word-break: keep-all;
+    }
+}
+
+.promotion-sys-wrap {
+
+    .promotion-box {
+        margin-top: 8px;
+        &:first-of-type {
+            margin-top: 0;
+        }
+    }    
+}
+
+.promotion-box {
+    padding: 20px;
+    border-radius: 10px;
+    background: #f3f0ee;
+    .promotion-title {
+        font-weight: 500;
+        color: #222;
+    }
+    p {
+        margin-top: 8px;
+    }
+    ul {
+        overflow: hidden;
+    }
+    li {
+        float: left;
+        padding-left: 10px;
+        &:first-of-type {
+            padding-left: 0;
+        }
+        strong {
+            font-weight: 500;
+            color: #222;
+        }
+    }
+    &.type01 {
+        background-color: rgba(0, 100, 140, 0.06);
+        .promotion-title {
+            color: #00648c;
+        }
+    }
+}    
+
+
+.recommender-box {
+    margin-top: 50px;
+}
