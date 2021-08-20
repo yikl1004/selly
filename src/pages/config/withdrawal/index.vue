@@ -3,11 +3,18 @@
         <PageBody class="floating">
             <div class="content">
                 <div class="secession-wrap">
-                    <h2>Selly 회원 탈퇴를 위해서<br />아래 내용을 확인해주세요.</h2>
-                    <BulletList v-if="!!cancelGuideList.length" :list="cancelGuideList" />
+                    <h2>
+                        Selly 회원 탈퇴를 위해서<br />아래 내용을 확인해주세요.
+                    </h2>
+                    <BulletList
+                        v-if="!!cancelGuideList.length"
+                        :list="cancelGuideList"
+                    />
                 </div>
                 <portal to="floating">
-                    <BasicButton size="large" @click="onWithdrawal"> 내용 확인 후 탈퇴 </BasicButton>
+                    <BasicButton size="large" @click="onWithdrawal">
+                        내용 확인 후 탈퇴
+                    </BasicButton>
                 </portal>
             </div>
         </PageBody>

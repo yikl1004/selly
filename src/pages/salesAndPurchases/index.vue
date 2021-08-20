@@ -4,16 +4,33 @@
         <PageBody v-if="!whetherToScrape">
             <div v-if="!whetherTolinkage" class="content">
                 <div class="sales-linkage-box">
-                    <h2>데이터 수집 및 연동중이며,<br />선택하신 연동 기관에 따라 <br />순차적으로 적용될 수 있습니다.</h2>
+                    <h2>
+                        데이터 수집 및 연동중이며,<br />선택하신 연동 기관에
+                        따라 <br />순차적으로 적용될 수 있습니다.
+                    </h2>
                 </div>
-                <DropdownBox id="workingPlace" label="사업장 선택" hiddenLabel :list="workingPlaceList" @select="onSelectWorkingPlace" />
-                <BasicButton type="large" @click="toBiznav"> 추가연동 </BasicButton>
+                <DropdownBox
+                    id="workingPlace"
+                    label="사업장 선택"
+                    hiddenLabel
+                    :list="workingPlaceList"
+                    @select="onSelectWorkingPlace"
+                />
+                <BasicButton type="large" @click="toBiznav">
+                    추가연동
+                </BasicButton>
             </div>
             <div v-else class="content">
                 <div class="sales-main-box">
                     <div class="sale-main-title">
-                        <h2>매일 드리는 매출, 입금보고<br />카드, 현금, 배달 매출까지</h2>
-                        <p>홈택스, 여신금융협회, 배달앱 등 계정연동 한번이면<br />매일 매출, 입금 내역을 셀리에서 확인하실 수 있습니다.</p>
+                        <h2>
+                            매일 드리는 매출, 입금보고<br />카드, 현금, 배달
+                            매출까지
+                        </h2>
+                        <p>
+                            홈택스, 여신금융협회, 배달앱 등 계정연동 한번이면<br />매일
+                            매출, 입금 내역을 셀리에서 확인하실 수 있습니다.
+                        </p>
                     </div>
                     <DropdownBox
                         id="workingPlace"
@@ -22,7 +39,9 @@
                         :list="workingPlaceList"
                         @select="onSelectWorkingPlace"
                     />
-                    <BasicButton type="large" @click="toBiznav"> 데이터 연동 </BasicButton>
+                    <BasicButton type="large" @click="toBiznav">
+                        데이터 연동
+                    </BasicButton>
                 </div>
             </div>
         </PageBody>
@@ -77,7 +96,9 @@ export default class SalesAndPurchasesPage extends Vue {
     // 비즈냅 연동 (아이프레임)
     toBiznav() {
         if (document.getElementById('em_embed') !== null) {
-            ;(document.getElementById('em_embed') as HTMLDivElement).style.display = 'block'
+            ;(document.getElementById(
+                'em_embed',
+            ) as HTMLDivElement).style.display = 'block'
         }
         this.$edkHost.openDataSync({
             eventListener: event => {
@@ -92,7 +113,9 @@ export default class SalesAndPurchasesPage extends Vue {
 
     beforeDestroy() {
         if (document.getElementById('em_embed') !== null) {
-            ;(document.getElementById('em_embed') as HTMLDivElement).style.display = 'none'
+            ;(document.getElementById(
+                'em_embed',
+            ) as HTMLDivElement).style.display = 'none'
         }
     }
 }

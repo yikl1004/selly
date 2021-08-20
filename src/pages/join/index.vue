@@ -2,7 +2,11 @@
     <Page :floating="step === 1">
         <Header type="title" title="사업자 정보" />
         <PageBody :class="{ floating: step === 1 }">
-            <SelectStore v-if="step === 1" :workplace-list="workplaceList" @next="onNext" />
+            <SelectStore
+                v-if="step === 1"
+                :workplace-list="workplaceList"
+                @next="onNext"
+            />
             <UnableJoin v-else-if="step === -1" />
         </PageBody>
     </Page>

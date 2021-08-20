@@ -10,7 +10,9 @@
                     :title="item.title"
                     @click="toDetail(index)"
                 />
-                <BasicButton v-if="policyMoreYN" type="more" @click="onMore"> 더보기 </BasicButton>
+                <BasicButton v-if="policyMoreYN" type="more" @click="onMore">
+                    더보기
+                </BasicButton>
             </div>
         </PageBody>
     </Page>

@@ -31,7 +31,11 @@
             </div>
 
             <div v-if="isFirstJoin" class="recommender-box">
-                <CheckBox id="recommenderCheck" label="추천인이 있으시면 체크해주세요. (선택)" @change="openRecommendArea" />
+                <CheckBox
+                    id="recommenderCheck"
+                    label="추천인이 있으시면 체크해주세요. (선택)"
+                    @change="openRecommendArea"
+                />
                 <ButtonField
                     v-if="recommendAreaOpen"
                     id="recommenderCode"
@@ -48,7 +52,13 @@
             </div>
         </div>
         <portal to="floating">
-            <BasicButton :disabled="!selectedWorkplace.length" size="large" @click="onNext"> 메인으로 </BasicButton>
+            <BasicButton
+                :disabled="!selectedWorkplace.length"
+                size="large"
+                @click="onNext"
+            >
+                메인으로
+            </BasicButton>
         </portal>
     </div>
 </template>
@@ -90,7 +100,9 @@ export default class SelectStorePage extends Vue {
         value: BusinessPlaceListItem[],
         /* oldValue: BusinessPlaceListItem[] */
     ) {
-        this.selectedWorkplace = value.filter(item => item.ltRgyn === 'Y').map(({ bzno, ltRgyn }) => ({ bzno, ltRgyn }))
+        this.selectedWorkplace = value
+            .filter(item => item.ltRgyn === 'Y')
+            .map(({ bzno, ltRgyn }) => ({ bzno, ltRgyn }))
     }
 
     /** @Computed */
@@ -130,7 +142,11 @@ export default class SelectStorePage extends Vue {
         await AuthModule.inputRecommenderCode({ rfnSn })
     }
 
-    openRecommendArea(event: { value?: string; index: number; fieldName: string }) {
+    openRecommendArea(event: {
+        value?: string
+        index: number
+        fieldName: string
+    }) {
         this.recommendAreaOpen = !!event.value
     }
 

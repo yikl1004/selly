@@ -4,9 +4,19 @@
         <PageBody>
             <div v-if="businessManInfo" class="content">
                 <div class="business-wrap">
-                    <DropdownBox id="dropdown-box01" label="사업자 선택" :list="businessManList" @select="onSelectBusinessMan" />
+                    <DropdownBox
+                        id="dropdown-box01"
+                        label="사업자 선택"
+                        :list="businessManList"
+                        @select="onSelectBusinessMan"
+                    />
                     <div class="btn-area">
-                        <BasicButton type="textBlue" @click="openPopupAddBusinessMan"> 사업자 추가 </BasicButton>
+                        <BasicButton
+                            type="textBlue"
+                            @click="openPopupAddBusinessMan"
+                        >
+                            사업자 추가
+                        </BasicButton>
                         <BasicButton type="textBlue"> 사업자 삭제 </BasicButton>
                     </div>
                     <ButtonField
@@ -20,7 +30,9 @@
                         @search="onChangeBusinessManName"
                     />
                     <BtnGroup>
-                        <BasicButton type="medium"> 매출/입금 연동 </BasicButton>
+                        <BasicButton type="medium">
+                            매출/입금 연동
+                        </BasicButton>
                     </BtnGroup>
                     <div class="franchisee-list-box">
                         <strong class="title">가맹점 정보</strong>
@@ -79,7 +91,9 @@ export default class BusinessPage extends Mixins(PageView) {
     get franchiseList(): FranchiseItem[] {
         const selectedItem = this.businessManList.find(item => item.selected)
         if (selectedItem) {
-            const findList = this.businessManInfo ? this.businessManInfo.list.find(item => item.selected)?.subList : []
+            const findList = this.businessManInfo
+                ? this.businessManInfo.list.find(item => item.selected)?.subList
+                : []
 
             return findList || []
         } else {
@@ -89,7 +103,9 @@ export default class BusinessPage extends Mixins(PageView) {
 
     // 현재 선택된 사업자 정보
     get currentBusinessInfo(): BusinessManInfoListItem {
-        return this.businessManInfo?.list.find(item => item.selected) as BusinessManInfoListItem
+        return this.businessManInfo?.list.find(
+            item => item.selected,
+        ) as BusinessManInfoListItem
     }
 
     /** @Methods */

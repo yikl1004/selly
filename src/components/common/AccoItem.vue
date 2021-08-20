@@ -1,6 +1,10 @@
 <template>
     <div class="box-acco-list" :class="type">
-        <div v-for="(item, index) in list" :key="`acco-item-${index}`" :class="['box-acco-item', { active: index === currentIndex }]">
+        <div
+            v-for="(item, index) in list"
+            :key="`acco-item-${index}`"
+            :class="['box-acco-item', { active: index === currentIndex }]"
+        >
             <button
                 type="bubton"
                 class="acco-anchor"

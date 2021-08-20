@@ -18,6 +18,7 @@
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
+import { UiModule } from '@stores/modules/ui'
 import type { ModalOptions } from '@utils/plugins/modal'
 
 @Component
@@ -36,12 +37,13 @@ export default class App extends Vue {
 
     /** 로딩 여부 */
     get isLoading(): boolean {
-        return this.$store.state.ui.loading
+        return UiModule.loadingData
     }
 
     onConfirmModal() {
         console.log('모달 확인 버튼 누를때 실행되는 액션')
-        typeof this.modalProps.confirm === 'function' && this.modalProps.confirm()
+        typeof this.modalProps.confirm === 'function' &&
+            this.modalProps.confirm()
     }
 
     /** @Lifecycle */

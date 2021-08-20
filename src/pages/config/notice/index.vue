@@ -14,7 +14,13 @@
                         type="ellipsis"
                         @click="toDetail(item.seq)"
                     />
-                    <BasicButton v-if="noticeMoreYN" type="more" @click="onMore"> 더보기 </BasicButton>
+                    <BasicButton
+                        v-if="noticeMoreYN"
+                        type="more"
+                        @click="onMore"
+                    >
+                        더보기
+                    </BasicButton>
                 </div>
             </div>
         </PageBody>

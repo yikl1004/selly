@@ -1,5 +1,10 @@
 <template>
-    <div :class="['promotion-result-wrap', { active: isActive || type === 'complete' }]">
+    <div
+        :class="[
+            'promotion-result-wrap',
+            { active: isActive || type === 'complete' },
+        ]"
+    >
         <div class="result-box total">
             <div class="result-total">
                 <strong class="title">
@@ -82,7 +87,9 @@
             </ul>
         </div>
 
-        <BasicButton v-if="type !== 'complete'" type="more" @click="onMore"> 더보기 </BasicButton>
+        <BasicButton v-if="type !== 'complete'" type="more" @click="onMore">
+            더보기
+        </BasicButton>
     </div>
 </template>
 

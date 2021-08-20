@@ -112,8 +112,7 @@
     },
     "lint-staged": {
         "*.{ts,vue}": [
-            "eslint --fix",
-            "prettier --write"
+            "eslint --fix"
         ],
         "*.ts": "npm run tsc-staged",
         "*.vue": "npm run vue-staged"

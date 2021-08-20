@@ -46,18 +46,21 @@ export default class MarketingApply extends Vue {
 
     private infoDate = [
         {
-            text: '쿠폰 행사는 신청일로부터 7일 이후 시작 가능하며, 최대 30일까지 설정 가능합니다.',
+            text:
+                '쿠폰 행사는 신청일로부터 7일 이후 시작 가능하며, 최대 30일까지 설정 가능합니다.',
         },
     ]
 
     private infoBenefit = [
         {
-            text: '롯데 신용카드 결제에 한하여, 행사 기간 중 1인당 1회만 적용됩니다.',
+            text:
+                '롯데 신용카드 결제에 한하여, 행사 기간 중 1인당 1회만 적용됩니다.',
         },
     ]
     private infoResult = [
         {
-            text: '롯데카드 결제 기준의 예상 산출이므로 실제 매출액, 고객수와 다를 수 있습니다.',
+            text:
+                '롯데카드 결제 기준의 예상 산출이므로 실제 매출액, 고객수와 다를 수 있습니다.',
         },
         {
             text:
@@ -66,14 +69,17 @@ export default class MarketingApply extends Vue {
     ]
     private infoCaution = [
         {
-            text: '법인카드/체크카드/기프트카드 결제는 쿠폰 행사 대상에서 제외됩니다.',
+            text:
+                '법인카드/체크카드/기프트카드 결제는 쿠폰 행사 대상에서 제외됩니다.',
         },
         {
-            text: '현장결제(매장)에서만 가능하며, 배달앱 등 온라인 결제는 제외됩니다.',
+            text:
+                '현장결제(매장)에서만 가능하며, 배달앱 등 온라인 결제는 제외됩니다.',
         },
 
         {
-            text: '간편결제는 롯데 앱카드, 삼성페이, LG페이, Lpay만 가능합니다.',
+            text:
+                '간편결제는 롯데 앱카드, 삼성페이, LG페이, Lpay만 가능합니다.',
         },
     ]
 
@@ -102,7 +108,8 @@ export default class MarketingApply extends Vue {
         },
         {
             title: '홍보 방식',
-            desc: '케이스 확인 필요. 롯데카드 앱 푸시메시지, 롯데카드 앱에 쿠폰 노출 ',
+            desc:
+                '케이스 확인 필요. 롯데카드 앱 푸시메시지, 롯데카드 앱에 쿠폰 노출 ',
         },
     ]
 

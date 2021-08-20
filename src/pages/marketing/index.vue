@@ -3,13 +3,20 @@
         <Header type="sub" title="쿠폰 만들기" />
         <PageBody class="floating gray">
             <div class="content">
-                <Title title="고객들이 줄을 서는<br /> 쿠폰 만들기" align="center" />
+                <Title
+                    title="고객들이 줄을 서는<br /> 쿠폰 만들기"
+                    align="center"
+                />
                 <div class="box-img">
-                    <img src="/assets/marketing/img_application.png" alt="쿠폰 마케팅 이미지" />
+                    <img
+                        src="/assets/marketing/img_application.png"
+                        alt="쿠폰 마케팅 이미지"
+                    />
                 </div>
                 <p>
-                    사장님께서 롯데카드 회원 대상으로 진행 할 수 있는 쿠폰 마케팅으로, 가맹점 주변 롯데카드 회원에게 할인 혜택을 제공하여 더
-                    많은 고객을 유치할 수 있습니다.
+                    사장님께서 롯데카드 회원 대상으로 진행 할 수 있는 쿠폰
+                    마케팅으로, 가맹점 주변 롯데카드 회원에게 할인 혜택을
+                    제공하여 더 많은 고객을 유치할 수 있습니다.
                 </p>
 
                 <!--디자인 수정예정-->
@@ -30,26 +37,53 @@
                     수정예정입니다. 노신경
                     <ul>
                         <li class="box-coupon-info">
-                            <img src="/assets/marketing/img_application_info01.png" alt="" />
-                            <p>첫 고객과 단골 타겟 설정을 통한<br />더욱 효과적인 마케팅</p>
+                            <img
+                                src="/assets/marketing/img_application_info01.png"
+                                alt=""
+                            />
+                            <p>
+                                첫 고객과 단골 타겟 설정을 통한<br />더욱
+                                효과적인 마케팅
+                            </p>
                         </li>
                         <li class="box-coupon-info">
-                            <img src="/assets/marketing/img_application_info02.png" alt="" />
-                            <p>타겟 고객에게 롯데카드<br />앱 푸시메시지와 터치쿠폰 노출</p>
+                            <img
+                                src="/assets/marketing/img_application_info02.png"
+                                alt=""
+                            />
+                            <p>
+                                타겟 고객에게 롯데카드<br />앱 푸시메시지와
+                                터치쿠폰 노출
+                            </p>
                         </li>
                         <li class="box-coupon-info">
-                            <img src="/assets/marketing/img_application_info03.png" alt="" />
-                            <p>방문고객 수, 결제금액에 따른<br />합리적인 비용</p>
+                            <img
+                                src="/assets/marketing/img_application_info03.png"
+                                alt=""
+                            />
+                            <p>
+                                방문고객 수, 결제금액에 따른<br />합리적인 비용
+                            </p>
                         </li>
                         <li class="box-coupon-info">
-                            <img src="/assets/marketing/img_application_info04.png" alt="" />
-                            <p>행사 매출, 이용 건수, 이용 고객층 등<br />다양한 성과 분석 제공</p>
+                            <img
+                                src="/assets/marketing/img_application_info04.png"
+                                alt=""
+                            />
+                            <p>
+                                행사 매출, 이용 건수, 이용 고객층 등<br />다양한
+                                성과 분석 제공
+                            </p>
                         </li>
                     </ul>
                 </div>
                 <!--//디자인 수정예정-->
 
-                <Title title="쿠폰 만들기는 이렇게 진행됩니다." type="h3" align="center" />
+                <Title
+                    title="쿠폰 만들기는 이렇게 진행됩니다."
+                    type="h3"
+                    align="center"
+                />
 
                 <div class="box-coupon-step">
                     <div class="box-img">

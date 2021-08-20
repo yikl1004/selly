@@ -25,12 +25,22 @@
 
                     <div
                         class="chart"
-                        style="height: 140px; margin-top: 30px; color: #000; text-align: center; line-height: 140px; background: #ebebeb"
+                        style="
+                            height: 140px;
+                            margin-top: 30px;
+                            color: #000;
+                            text-align: center;
+                            line-height: 140px;
+                            background: #ebebeb;
+                        "
                     >
                         차트영역
                     </div>
 
-                    <AccoItemSingle :title="salesLatestAverageTitle" :expanded.sync="salesListOfPeridoExpanded">
+                    <AccoItemSingle
+                        :title="salesLatestAverageTitle"
+                        :expanded.sync="salesListOfPeridoExpanded"
+                    >
                         <PriceList
                             :list="salesListOfPerido"
                             :status="status"
@@ -124,7 +134,9 @@ export default class SalesHistory extends Vue {
     private businessNumber = ''
 
     /** 가맹점 리스트 */
-    private merchantList: BottomSheetOptionItem[] = [{ displayName: '전체', value: '', selected: true }]
+    private merchantList: BottomSheetOptionItem[] = [
+        { displayName: '전체', value: '', selected: true },
+    ]
 
     /** 기간별 매출 리스트 노출 확장 여부 */
     private salesListOfPeridoExpanded = false

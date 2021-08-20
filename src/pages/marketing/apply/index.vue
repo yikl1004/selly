@@ -18,24 +18,46 @@
                                 />
                             </li>
                             <li>
-                                <Radio label="라벨1" name="radio01" value="value" />
+                                <Radio
+                                    label="라벨1"
+                                    name="radio01"
+                                    value="value"
+                                />
                             </li>
                             <li>
-                                <Radio label="라벨1" name="radio01" value="value" />
+                                <Radio
+                                    label="라벨1"
+                                    name="radio01"
+                                    value="value"
+                                />
                             </li>
                             <li>
-                                <Radio label="라벨1" name="radio01" value="value" />
+                                <Radio
+                                    label="라벨1"
+                                    name="radio01"
+                                    value="value"
+                                />
                             </li>
                             <li>
-                                <Radio label="라벨1" name="radio01" value="value" />
+                                <Radio
+                                    label="라벨1"
+                                    name="radio01"
+                                    value="value"
+                                />
                             </li>
                             <li>
-                                <Radio label="라벨1" name="radio01" value="value" />
+                                <Radio
+                                    label="라벨1"
+                                    name="radio01"
+                                    value="value"
+                                />
                             </li>
                         </ul>
                     </div>
                     <!--[D] 더보기 클릭시 더보기버튼 비노출-->
-                    <BasicButton type="more" @click="onMore"> 더보기 </BasicButton>
+                    <BasicButton type="more" @click="onMore">
+                        더보기
+                    </BasicButton>
                 </div>
 
                 <div class="box-franchisee-info">
@@ -50,7 +72,10 @@
                             <strong>가맹점 주소</strong>
                             <p>
                                 <span>03272</span>
-                                <span> 서울특별시 종로구 세종대로 175 지하1층 1203호 </span>
+                                <span>
+                                    서울특별시 종로구 세종대로 175 지하1층
+                                    1203호
+                                </span>
                             </p>
                         </li>
                         <li>
@@ -61,7 +86,9 @@
                         </li>
                     </ul>
                     <div class="btn-area">
-                        <BasicButton type="textBlue"> 가맹점 정보 변경하기 </BasicButton>
+                        <BasicButton type="textBlue">
+                            가맹점 정보 변경하기
+                        </BasicButton>
                     </div>
                 </div>
                 <BulletList :list="infoList" />

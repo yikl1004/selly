@@ -1,7 +1,11 @@
 <template>
     <div class="box-step">
         <ul>
-            <li v-for="(step, index) in count" :key="`step-count-${index}`" :class="{ active: step === active }">
+            <li
+                v-for="(step, index) in count"
+                :key="`step-count-${index}`"
+                :class="{ active: step === active }"
+            >
                 <span>
                     {{ step }}
                 </span>

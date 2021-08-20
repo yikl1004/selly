@@ -1,6 +1,9 @@
 <template>
     <div class="layout">
-        <transition :name="pageDirection" :duration="{ enter: 500, leave: 500 }">
+        <transition
+            :name="pageDirection"
+            :duration="{ enter: 500, leave: 500 }"
+        >
             <router-view>
                 <template slot-scope="{ Component }">
                     <component :is="Component" />

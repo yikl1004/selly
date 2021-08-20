@@ -1,6 +1,10 @@
 <template>
     <div class="recommender-box">
-        <CheckBox id="recommenderCheck" label="추천인이 있으시면 체크해주세요. (선택)" @change="openRecommendArea" />
+        <CheckBox
+            id="recommenderCheck"
+            label="추천인이 있으시면 체크해주세요. (선택)"
+            @change="openRecommendArea"
+        />
         <ButtonField
             v-if="recommendAreaOpen"
             id="recommenderCode"
@@ -41,7 +45,11 @@ export default class SelectStorePage extends Vue {
         await AuthModule.inputRecommenderCode({ rfnSn })
     }
 
-    openRecommendArea(event: { value?: string; index: number; fieldName: string }) {
+    openRecommendArea(event: {
+        value?: string
+        index: number
+        fieldName: string
+    }) {
         this.recommendAreaOpen = !!event.value
     }
 

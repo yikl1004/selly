@@ -4,11 +4,21 @@
         <PageBody>
             <div class="content pd-btm">
                 <div class="faq-wrap">
-                    <Tab :list="faqCategoryData" :active="0" @change="onChangeCategory">
+                    <Tab
+                        :list="faqCategoryData"
+                        :active="0"
+                        @change="onChangeCategory"
+                    >
                         <div>
                             <div class="faq-view-wrap">
                                 <AccoItem :list="faqListData" type="board" />
-                                <BasicButton v-if="faqMoreYN" type="more" @click="onMore"> 더보기 </BasicButton>
+                                <BasicButton
+                                    v-if="faqMoreYN"
+                                    type="more"
+                                    @click="onMore"
+                                >
+                                    더보기
+                                </BasicButton>
                             </div>
                         </div>
                     </Tab>

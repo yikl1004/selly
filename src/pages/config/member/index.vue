@@ -7,7 +7,10 @@
                     <div class="setting-box">
                         <h2>회원정보</h2>
                         <ul>
-                            <li v-for="(info, index) in memberInfo" :key="`member-infor-list=${index}`">
+                            <li
+                                v-for="(info, index) in memberInfo"
+                                :key="`member-infor-list=${index}`"
+                            >
                                 <em class="setting-name">{{ info.name }}</em>
                                 <strong class="setting-cont">
                                     {{ info.value }}
@@ -43,7 +46,9 @@
                 </div> -->
                 </div>
                 <div class="btn-area">
-                    <BasicButton type="textGray" @click="toWithdrawal"> 회원탈퇴 </BasicButton>
+                    <BasicButton type="textGray" @click="toWithdrawal">
+                        회원탈퇴
+                    </BasicButton>
                 </div>
             </div>
         </PageBody>

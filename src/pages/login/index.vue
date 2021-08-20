@@ -2,8 +2,21 @@
     <Page>
         <PageBody>
             <div class="page-login-wrap">
-                <div style="height: 500px; background: #2b2b2b; text-align: center; line-height: 500px">상단 비주얼 추가 작업 예정</div>
-                <button type="button" class="btn-kakao-login" @click="() => login()">
+                <div
+                    style="
+                        height: 500px;
+                        background: #2b2b2b;
+                        text-align: center;
+                        line-height: 500px;
+                    "
+                >
+                    상단 비주얼 추가 작업 예정
+                </div>
+                <button
+                    type="button"
+                    class="btn-kakao-login"
+                    @click="() => login()"
+                >
                     <span>카카오톡으로 시작</span>
                 </button>
                 <button type="button" class="btn-kakao-login" @click="withdraw">
@@ -16,13 +29,13 @@
 
 <script lang="ts">
 import { Component, Mixins, Watch } from 'vue-property-decorator'
-import store from '@stores/index'
 import { AuthModule, LoginInfo } from '@stores/modules/auth'
+import { CommonModule } from '@stores/modules/common'
 import PageView from '@utils/mixins/PageView'
 
 @Component({
     beforeRouteEnter(to, from, next) {
-        const alreadyLogin = store.state.common.loginExtendInfo?.rc === '0000'
+        const alreadyLogin = CommonModule.loginExtendInfoData?.rc === '0000'
         next(alreadyLogin ? { name: 'Main' } : undefined)
     },
 })

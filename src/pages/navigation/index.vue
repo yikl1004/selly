@@ -13,12 +13,18 @@
             </div>
             <div class="user-info">
                 <strong class="user-name">{{ bizmanName }}님</strong>
-                <BasicButton type="textGray" @click="logout"> 로그아웃 </BasicButton>
+                <BasicButton type="textGray" @click="logout">
+                    로그아웃
+                </BasicButton>
             </div>
             <div class="box-gnb-list">
                 <div class="gnb-1dep-box">
                     <ul>
-                        <li v-for="(depth1, index) in gnbList" :key="`gnb-depth1-${index}`" :class="{ active: index === activeIndex }">
+                        <li
+                            v-for="(depth1, index) in gnbList"
+                            :key="`gnb-depth1-${index}`"
+                            :class="{ active: index === activeIndex }"
+                        >
                             <button type="button" @click="onActive(index)">
                                 {{ depth1.name }}
                             </button>
@@ -32,8 +38,15 @@
                         :class="['gnb-2dep', { active: index === activeIndex }]"
                     >
                         <ul v-if="depth2.children">
-                            <li v-for="(child, childIndex) in depth2.children" :key="`gnb-depth2-child-${childIndex}`">
-                                <Anchor :href="`${depth2.path === '*' ? '' : depth2.path}${child.path}`">
+                            <li
+                                v-for="(child, childIndex) in depth2.children"
+                                :key="`gnb-depth2-child-${childIndex}`"
+                            >
+                                <Anchor
+                                    :href="`${
+                                        depth2.path === '*' ? '' : depth2.path
+                                    }${child.path}`"
+                                >
                                     {{ child.name }}
                                 </Anchor>
                             </li>

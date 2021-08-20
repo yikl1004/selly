@@ -34,7 +34,9 @@
                 </div>
             </div>
             <portal to="floating">
-                <BasicButton size="large" @click="updateDetail"> 수정 </BasicButton>
+                <BasicButton size="large" @click="updateDetail">
+                    수정
+                </BasicButton>
             </portal>
         </PageBody>
     </Page>
@@ -98,7 +100,9 @@ export default class FranchiseePage extends Vue {
     }
 
     updateDetail() {
-        const phoneNumber = this.digit.replace(/(^\d{2,3})(\d{3,4})(\d{4}$)/gi, '$1-$2-$3').split('-')
+        const phoneNumber = this.digit
+            .replace(/(^\d{2,3})(\d{3,4})(\d{4}$)/gi, '$1-$2-$3')
+            .split('-')
         AuthModule.updateFranchiseDetail({
             mcno: this.franchiseDetail?.mcno,
             bpsnoAdd: this.addressItem?.value,
@@ -136,7 +140,8 @@ export default class FranchiseePage extends Vue {
     private list = [
         { text: '롯데카드에 등록된 가맹점 정보가 변경됩니다.' },
         {
-            text: '가맹점 정보를 변경 시 마케팅. 대상 고객 수집에 시간이 소요되며, 변경 후 당일에는 마케팅 신청이 불가합니다.',
+            text:
+                '가맹점 정보를 변경 시 마케팅. 대상 고객 수집에 시간이 소요되며, 변경 후 당일에는 마케팅 신청이 불가합니다.',
         },
     ]
     private schema: { [key: string]: object | number | string | boolean } = {

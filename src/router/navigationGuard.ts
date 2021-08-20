@@ -1,5 +1,6 @@
 import store from '@stores/index'
 import { NavigationGuard } from 'vue-router'
+import { CommonModule } from '@stores/modules/common'
 interface SellyNavigationGuard {
     beforeEach: NavigationGuard
 }
@@ -9,7 +10,7 @@ interface SellyNavigationGuard {
  */
 const navigationGuard: SellyNavigationGuard = {
     async beforeEach(to, from, next) {
-        const referrer = store.state.common.referrer
+        const referrer = CommonModule.referrerData
         let pageTransitionDirection = to.name === referrer ? 'prev' : 'next'
         if (from.name === 'Navigation') {
             pageTransitionDirection = 'prev'

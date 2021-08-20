@@ -8,16 +8,24 @@
 
                 <div class="benefit-select-wrap">
                     <Title title="대상 및 혜택" type="h3" />
-                    <div class="benefit-select-box" :class="{ active: isActive }">
+                    <div
+                        class="benefit-select-box"
+                        :class="{ active: isActive }"
+                    >
                         <div class="benefit-title">
                             <label>
-                                <input value="sdkj" type="checkbox" @change="onChange" />
+                                <input
+                                    value="sdkj"
+                                    type="checkbox"
+                                    @change="onChange"
+                                />
                                 <i>
                                     <strong>첫 고객 만들기</strong>
                                     <em>20,000명</em>
                                 </i>
                                 <span class="sub-text">
-                                    최근 1개월간 내 가맹점을 방문하지 않은 고객 중 반경 1km의 다른 가맹점을 이용한 고객
+                                    최근 1개월간 내 가맹점을 방문하지 않은 고객
+                                    중 반경 1km의 다른 가맹점을 이용한 고객
                                 </span>
                             </label>
                         </div>
@@ -33,21 +41,36 @@
 
                             <BulletList :list="infoDate" />
 
-                            <RadioGroup name="benefitRadio1" :disabled="false" :list="benefitRadio" label="할인 혜택(결제일 할인)" />
+                            <RadioGroup
+                                name="benefitRadio1"
+                                :disabled="false"
+                                :list="benefitRadio"
+                                label="할인 혜택(결제일 할인)"
+                            />
 
                             <BulletList :list="infoBenefit" />
                         </div>
                     </div>
 
-                    <div class="benefit-select-box" :class="{ active: isActive }">
+                    <div
+                        class="benefit-select-box"
+                        :class="{ active: isActive }"
+                    >
                         <div class="benefit-title">
                             <label>
-                                <input value="sdkj" type="checkbox" @change="onChange" />
+                                <input
+                                    value="sdkj"
+                                    type="checkbox"
+                                    @change="onChange"
+                                />
                                 <i>
                                     <strong>단골 만들기</strong>
                                     <em>10,000명</em>
                                 </i>
-                                <span class="sub-text"> 최근 3개월간 내 가맹점에서 1회 이상 결제한 고객 </span>
+                                <span class="sub-text">
+                                    최근 3개월간 내 가맹점에서 1회 이상 결제한
+                                    고객
+                                </span>
                             </label>
                         </div>
                         <div class="benefit-detail">
@@ -62,7 +85,12 @@
 
                             <BulletList :list="infoDate" />
 
-                            <RadioGroup name="benefitRadio" :disabled="false" :list="benefitRadio" label="할인 혜택(결제일 할인)" />
+                            <RadioGroup
+                                name="benefitRadio"
+                                :disabled="false"
+                                :list="benefitRadio"
+                                label="할인 혜택(결제일 할인)"
+                            />
 
                             <BulletList :list="infoBenefit" />
                         </div>
@@ -72,7 +100,9 @@
                 <div class="promotion-sys-wrap">
                     <Title title="홍보 방식" type="h3" />
                     <div class="promotion-box">
-                        <strong class="promotion-title"> 롯데카드 앱 내 터치쿠폰 노출 </strong>
+                        <strong class="promotion-title">
+                            롯데카드 앱 내 터치쿠폰 노출
+                        </strong>
                         <p>행사 대상자 전체</p>
                         <ul>
                             <li>첫 고객 : <strong>20,000명</strong></li>
@@ -80,8 +110,13 @@
                         </ul>
                     </div>
                     <div class="promotion-box type01">
-                        <strong class="promotion-title"> 앱 푸시메시지 무료 발송 </strong>
-                        <p>행사 대상자 중 푸시메시지 수신 동의 고객에게 행사 첫날 앱 푸시메시지 발송</p>
+                        <strong class="promotion-title">
+                            앱 푸시메시지 무료 발송
+                        </strong>
+                        <p>
+                            행사 대상자 중 푸시메시지 수신 동의 고객에게 행사
+                            첫날 앱 푸시메시지 발송
+                        </p>
                         <ul>
                             <li>첫 고객 : <strong>10,000명</strong></li>
                             <li>단골 : <strong>5,000명</strong></li>
@@ -120,18 +155,21 @@ export default class MarketingApply extends Vue {
 
     private infoDate = [
         {
-            text: '쿠폰 행사는 신청일로부터 7일 이후 시작 가능하며, 최대 30일까지 설정 가능합니다.',
+            text:
+                '쿠폰 행사는 신청일로부터 7일 이후 시작 가능하며, 최대 30일까지 설정 가능합니다.',
         },
     ]
 
     private infoBenefit = [
         {
-            text: '롯데 신용카드 결제에 한하여, 행사 기간 중 1인당 1회만 적용됩니다.',
+            text:
+                '롯데 신용카드 결제에 한하여, 행사 기간 중 1인당 1회만 적용됩니다.',
         },
     ]
     private infoResult = [
         {
-            text: '롯데카드 결제 기준의 예상 산출이므로 실제 매출액, 고객수와 다를 수 있습니다.',
+            text:
+                '롯데카드 결제 기준의 예상 산출이므로 실제 매출액, 고객수와 다를 수 있습니다.',
         },
         {
             text:

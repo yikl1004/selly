@@ -3,7 +3,10 @@
         <Header type="sub" title="이용약관" />
         <PageBody>
             <div class="content">
-                <BoardDetail :title="policyDetailData.title" :content="policyDetailData.content" />
+                <BoardDetail
+                    :title="policyDetailData.title"
+                    :content="policyDetailData.content"
+                />
                 <BasicButton type="medium"> 목록 </BasicButton>
             </div>
         </PageBody>

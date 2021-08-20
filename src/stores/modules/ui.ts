@@ -46,6 +46,10 @@ export default class Ui extends VuexModule {
     get pageDirectionData() {
         return this.pageDirection
     }
+
+    get loadingData() {
+        return this.loading
+    }
 }
 
 export const UiModule = getModule(Ui)

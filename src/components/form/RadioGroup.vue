@@ -2,8 +2,17 @@
     <div class="radio-group field-box">
         <LabelTitle :hidden-label="hiddenLabel" :label="label" />
         <div class="radio-area">
-            <div v-for="(check, index) in list" :key="`radio-group-${name}-${index}`" class="radio-list-item">
-                <Radio :label="check.label" :name="`radio-group-${name}`" :value="check.value" :checked="check.checked" />
+            <div
+                v-for="(check, index) in list"
+                :key="`radio-group-${name}-${index}`"
+                class="radio-list-item"
+            >
+                <Radio
+                    :label="check.label"
+                    :name="`radio-group-${name}`"
+                    :value="check.value"
+                    :checked="check.checked"
+                />
             </div>
         </div>
     </div>

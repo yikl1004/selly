@@ -38,6 +38,10 @@ export default class Common extends VuexModule {
     get referrerData() {
         return this.referrer
     }
+
+    get loginExtendInfoData() {
+        return this.loginExtendInfo
+    }
 }
 
 export const CommonModule = getModule(Common)
