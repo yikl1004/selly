@@ -363,6 +363,8 @@
                         <BasicButton type="more"> 더보기 </BasicButton>
                     </div>
                 </div>
+
+                <MarketingBanner />
             </div>
         </PageBody>
     </Page>
@@ -372,13 +374,14 @@
 import { Component, Vue } from 'vue-property-decorator'
 import type { Schema } from '@components/form/FormProvider.vue'
 import type { DropdownBoxList } from '@components/form/DropdownBox.vue'
+import MarketingBanner from '@components/marketing/MarketingBanner.vue'
 
 import type { RadioProps } from '@components/form/Radio.vue'
 
 import { AccordionListItem } from '@components/common/AccoItem.vue'
 
 @Component({
-    components: {},
+    components: { MarketingBanner },
 })
 export default class MarketingApply extends Vue {
     private data: { [key: string]: object | number | string | boolean } = {

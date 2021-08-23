@@ -235,3 +235,37 @@
     border-radius: 10px;
     background-color: #fff;
 }
+
+@mixin number-contrast($margin:0,$fontSize: 14, $fontWeight:500, $icoSize:24, $top:-5) {
+    display: inline-block;
+    position: relative;
+    margin:$margin;
+    padding-right: 24px;
+    font-size: $fontSize + px;
+    font-weight: $fontWeight;
+    line-height:$fontSize + px;
+
+    .ico {
+        display: block;
+        position: absolute;
+        right: 0;
+        top: $top + px;
+        width: $icoSize + px;
+        height: $icoSize + px;
+        background-repeat: no-repeat;
+        background-size:100%;
+        background-position: center;
+    }
+    &.up {
+        color: $primary-color;
+        .ico {
+            background-image: url('/assets/marketing/icon-arrow-up.png');
+        }
+    }
+    &.down {
+        color: $point-color-blue;
+        .ico {
+            background-image: url('/assets/marketing/icon-arrow-down.png');
+        }
+    }
+}

@@ -200,33 +200,7 @@
     border-radius: 6px;
     color: #222;
     strong {
-        display: inline-block;
-        position: relative;
-        margin-left: 8px;
-        padding-right: 24px;
-        font-size: 16px;
-        font-weight: 700;
-        .ico {
-            display: block;
-            position: absolute;
-            right: 0;
-            top: 0px;
-            width: 24px;
-            height: 24px;
-            background-repeat: no-repeat;
-            background-size:100%;
-        }
-        &.up {
-            color: $primary-color;
-            .ico {
-                background-image: url('/assets/marketing/icon-arrow-up.png');
-            }
-        }
-        &.down {
-            color: $point-color-blue;
-            .ico {
-                background-image: url('/assets/marketing/icon-arrow-down.png');
-            }
-        }
+        @include number-contrast(0 0 0 8px,16, 700)
     }
+    
 }

@@ -68,7 +68,7 @@
             padding-left: 6px;
             color: #222;
             strong {
-                font-weight: 500;
+                @include number-contrast;
             }
             &:before {
                 content: '';
@@ -97,15 +97,21 @@
         background-color: #f3efee;
         .total {
             text-align: center;
+            .price {
+                margin-top: 4px;
+            }
         }
         ul {
             overflow: hidden;
+            margin-top: 13px;
         }
         li {
             float: left;
             width: 50%;
+            margin: 0;
         }
         .my-store-sales {
+            margin-top: 25px;
             padding: 14px 20px;
             background-color:#fff;
             border-radius: 10px;
@@ -113,8 +119,14 @@
             p {
                 color: #222;
             }
+            strong {
+                @include number-contrast(8px 0 0 0,20, 700, 24, -3)
+            }
         }
     }
+}
+.tbl-chart {
+    margin-top: 32px;
 }
 
 .box-title {
@@ -133,4 +145,7 @@
         font-weight: 400;
         color: #666;
     }
+}
+.marketing-banner {
+    margin-top: 60px;
 }
