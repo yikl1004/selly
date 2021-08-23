@@ -143,6 +143,7 @@
         .flag{
             display: block;
             height: 28px;
+            margin-top: -3px;
             padding: 6px 12px 5px;
             background-color: #ffece8;
             font-size: 12px;
@@ -235,6 +236,12 @@
     }
     &.type-exception {
         background-color: #6c625a;
+        background-image: url('/assets/main/img_exception.png');
+    }
+
+    &.type-instant {
+        background-color: #00648c;
+        background-image: url('/assets/main/img_instant.png');
     }
     &.refusal {
         padding-bottom: 16px;
