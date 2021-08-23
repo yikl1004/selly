@@ -15,12 +15,6 @@
         line-height: 1.4;
         font-weight: 700;
     }
-    .btn-more {
-        display: block;
-        width: 24px;
-        height: 24px;
-        background: url('/assets/icon/icon-arrow-right.svg') right center no-repeat;
-    }
 }
 
 .banner-box {
@@ -176,6 +170,7 @@
 
 .banner-finance {
     min-height: 150px;
+    margin-top: 24px;
     padding: 25px 20px 23px;
     color: #fff;
     .banner-title {
@@ -238,7 +233,6 @@
         background-color: #6c625a;
         background-image: url('/assets/main/img_exception.png');
     }
-
     &.type-instant {
         background-color: #00648c;
         background-image: url('/assets/main/img_instant.png');
@@ -253,8 +247,10 @@
         }
     }
 }
+
 .box-price-info {
     overflow: hidden;
+    margin-top: 24px;
     // padding: 20px;
     padding-bottom: 20px;
     border-radius: 10px;
@@ -295,10 +291,6 @@
             text-align: center;
         }
     }
-    & + .banner-finance,
-    & + .box-price-info {
-        margin-top: 24px;
-    }
     &.type-credit {        
         .box-info-top {
             padding-bottom: 20px;
@@ -312,10 +304,24 @@
     }
 }
 
+.box-title {
+    
+    .btn-more {
+        display: block;
+        width: 24px;
+        height: 24px;
+        background: url('/assets/icon/icon-arrow-right.svg') right center no-repeat;
+    }
+    & + .banner-finance,
+    & + .box-price-info {
+        margin-top: 0;
+    }
+}
+
+
 .box-graph {
     margin: 18px 0 0;
     padding: 40px 20px 0;
-    // padding-top: 40px;
     .graph-bg {
         position: relative;
         height: 8px;

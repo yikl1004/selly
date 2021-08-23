@@ -337,16 +337,16 @@
                         주지 않습니다.
                     </p>
                 </Anchor>
-
                 <!-- e : 금융상품-->
 
                 <!-- s : 마케팅 -->
-                <div class="title-wrap">
-                    <h2 class="title">마케팅</h2>
-                    <Anchor href="/" class="btn-more">
-                        <span class="ir">더보기</span>
-                    </Anchor>
-                </div>
+                <Title title="마케팅" class="flex">
+                    <div class="box-right">
+                        <Anchor href="/" class="btn-more">
+                            <span class="ir">더보기</span>
+                        </Anchor>
+                    </div>
+                </Title>
 
                 <!-- 마케팅 신청 하지 않은경우 -->
                 <div class="box-banner-marketing">
@@ -428,9 +428,7 @@
                 <!-- e : 마케팅 -->
 
                 <!-- s : 신용카드 -->
-                <div class="title-wrap">
-                    <h2 class="title">신용 카드</h2>
-                </div>
+                <Title title="신용 카드" />
 
                 <!-- 신용카드 미보유 : 어드민등록 -->
                 <Anchor
