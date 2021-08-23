@@ -14,9 +14,9 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
+import { AuthModule } from '@stores/modules/auth'
 import SelectStore from '@pages/auth/SelectStore.vue'
 import UnableJoin from '@pages/auth/UnableJoin.vue'
-import { AuthModule } from '@stores/modules/auth'
 import type { BizInfoItem } from '@services/auth'
 
 @Component({
@@ -35,6 +35,14 @@ export default class JoinPage extends Vue {
         return AuthModule.workplaceList
     }
 
+    get loginInfo() {
+        return AuthModule.loginInfoData
+    }
+
+    get biznavToken() {
+        return AuthModule.biznavToken
+    }
+
     /** @Methods */
 
     async onNext(list: BizInfoItem[]) {
@@ -43,6 +51,29 @@ export default class JoinPage extends Vue {
     }
 
     onComplete() {
+        // TODO: 비즈넵 토큰 전달 (셀리 가입 완료 상태, 오류가 나도 어쩔수 없음)
+        const loginResult = this.loginInfo?.rspDc
+        const defaultMethod = ({
+            bznavSyncToken,
+        }: {
+            dom?: Element | undefined
+            bznavSyncToken: string
+        }) =>
+            console.warn(
+                `biznavToken: ${bznavSyncToken},`,
+                '비즈넵 로그인, 또는 가입 절차를 진행 할수 없습니다.',
+            )
+        const methods = {
+            // 비즈넵 회원가입
+            '01': this.$edkHost.signUpBznav,
+            // 비즈넵 로그인
+            '02': this.$edkHost.signInBznav,
+            // 그 외 예외 처리
+            '03': defaultMethod,
+            default: defaultMethod,
+        }
+
+        methods[loginResult || 'default']({ bznavSyncToken: this.biznavToken })
         this.$router.push({ name: 'Main' })
     }
 

@@ -1,6 +1,10 @@
 <template>
     <div class="box-gray">
-        <div v-for="(item, index) in list" :key="`item-list-${index}`" class="item">
+        <div
+            v-for="(item, index) in list"
+            :key="`item-list-${index}`"
+            class="item"
+        >
             <span class="subject">{{ item.subject }}</span>
             <strong class="value">{{ item.value }}</strong>
         </div>

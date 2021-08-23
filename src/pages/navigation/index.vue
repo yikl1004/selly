@@ -12,7 +12,7 @@
                 </button>
             </div>
             <div class="user-info">
-                <strong class="user-name">{{ bizmanName }}님</strong>
+                <strong class="user-name">{{ userName }}님</strong>
                 <BasicButton type="textGray" @click="logout">
                     로그아웃
                 </BasicButton>
@@ -68,8 +68,8 @@ import type { GnbItem } from '@stores/modules/ui'
 @Component
 export default class NavigationPage extends Mixins(PageView) {
     /** @Stores */
-    get bizmanName() {
-        return AuthModule.bizmanName
+    get userName() {
+        return AuthModule.userName
     }
 
     get logoutInfo() {

@@ -1,9 +1,16 @@
 <template>
     <div class="container">
-        <CautionBox type="complete" :title="`${bizmanName} 사장님, 반갑습니다! 셀리 회원가입이 완료되었습니다.`" />
+        <CautionBox
+            type="complete"
+            :title="`${bizmanName} 사장님, 반갑습니다! 셀리 회원가입이 완료되었습니다.`"
+        />
 
         <div v-if="bizInfoList" class="complete-store-list">
-            <div v-for="(item, index) in bizInfoList" :key="`biz-info-list-${index}`" class="store-box">
+            <div
+                v-for="(item, index) in bizInfoList"
+                :key="`biz-info-list-${index}`"
+                class="store-box"
+            >
                 <i>{{ convertBizNoFormatter({ bizNo: item.bzno }) }}</i>
                 <span class="store-name">{{ item.bzmanNm }}</span>
             </div>

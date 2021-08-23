@@ -57,7 +57,7 @@
                 size="large"
                 @click="onNext"
             >
-                메인으로
+                확인
             </BasicButton>
         </portal>
     </div>

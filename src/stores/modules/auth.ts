@@ -2,6 +2,7 @@ import { Module, VuexModule, MutationAction, Mutation, getModule } from 'vuex-mo
 import store from '@stores/index'
 import AuthService, { AuthResponse, AuthParameters } from '@services/auth'
 import { basicUtil } from '@utils/mixins'
+import { $dayjs } from '@utils/plugins/dayjs'
 
 interface BottomSheetOptionItem {
     displayName: string
@@ -96,7 +97,7 @@ export default class Auth extends VuexModule {
         const { data } = await AuthService.getLoginInfo(state.kakaoUserInfo as UserInfo)
 
         if (data.rc === '0000') {
-            localStorage.setItem('auth', JSON.stringify(data.data))
+            localStorage.setItem('auth', JSON.stringify(Object.assign({}, data.data, { date: $dayjs().format('YYYY-MM-DD HH:mm:ss') })))
         }
 
         return {
@@ -233,7 +234,21 @@ export default class Auth extends VuexModule {
         await AuthService.updateBusinessManName(params)
         return {}
     }
-    // ChangeBusinessManNameRes {
+
+    /**
+     * @description
+     * 사용자 이름
+     */
+    get userName(): string {
+        const authLocalStorage = JSON.parse(localStorage.getItem('auth') || '')
+        let cachedName = ''
+
+        if (authLocalStorage && authLocalStorage.dgNm) {
+            cachedName = authLocalStorage.dgNm
+        }
+
+        return cachedName
+    }
 
     /**
      * @description
@@ -393,6 +408,19 @@ export default class Auth extends VuexModule {
      */
     get logoutInfoData() {
         return this.logoutInfo
+    }
+
+    /**
+     * @description
+     * 비즈넵 토큰
+     */
+    get biznavToken(): string {
+        const cachedLoginInfo = JSON.parse(localStorage.getItem('auth') || '')
+        if (cachedLoginInfo && cachedLoginInfo.bzNavToken) {
+            return cachedLoginInfo.bzNavToken
+        } else {
+            return ''
+        }
     }
 }
 
