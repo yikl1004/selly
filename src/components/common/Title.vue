@@ -83,6 +83,9 @@ export default class Title extends Vue {
         letter-spacing: -0.5px;
     }
 
+    .box-right {
+        margin-left: auto;
+    }
     &.flex {
         align-items: center;
         p {
