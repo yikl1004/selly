@@ -22,7 +22,7 @@ export default class Anchor extends Vue {
 
     /** 이동할 uri */
     @Prop({ type: String, default: '/', required: true })
-    readonly href!: string
+    readonly href!: string | Location
 
     /** router-link인 경우 tag 지정 */
     @Prop({ type: String, default: 'a' })
@@ -32,7 +32,9 @@ export default class Anchor extends Vue {
 
     /** 외부 링크 인지 판단 */
     get external(): boolean {
-        return protocolRegExp.test(this.href)
+        return typeof this.href === 'string'
+            ? protocolRegExp.test(this.href)
+            : false
     }
 
     /** 같은 uri 인지 판단 */

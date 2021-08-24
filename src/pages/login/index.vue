@@ -89,6 +89,7 @@ export default class LoginPage extends Mixins(PageView) {
                 this.$router.push({ name: 'Join', params: { step: '-1' } })
                 break
             default:
+                alert('rspDc 가 null 입니다.')
                 break
         }
     }

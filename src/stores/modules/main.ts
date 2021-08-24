@@ -23,12 +23,49 @@ export default class Main extends VuexModule {
         }
     }
 
+    @Mutation
+    init() {
+        this.mainInfo = null
+    }
+
     /**
      * @description
-     * 메인화면 정보
+     * API 응답 코드
      */
-    get mainInfoData() {
-        return this.mainInfo?.data
+    get isResponseSuccess(): boolean {
+        return this.mainInfo?.rc === '0000'
+    }
+
+    /**
+     * @description
+     * 사용자 이름
+     */
+    get userName(): string {
+        return this.mainInfo?.data.dgNm || ''
+    }
+
+    /**
+     * @description
+     * 매출/입금 스크래핑 구분 코드
+     */
+    get salesScrappingCode() {
+        return this.mainInfo?.data.scrapDc || '0'
+    }
+
+    /**
+     * @description
+     * 매춣/입금 리스트
+     */
+    get salesList(): MainResponse['mainInfo']['data']['list2'] {
+        return this.mainInfo?.data.list2 || []
+    }
+
+    /**
+     * @description
+     * 메인 카드 정보
+     */
+    get cardInfo(): MainResponse['mainInfo']['data']['cardinf'] | null {
+        return this.mainInfo?.data.cardinf || null
     }
 }
 
