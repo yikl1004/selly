@@ -1,6 +1,6 @@
 
 .sales-main-box {
-    padding-top: 22px;
+    margin-top: 32px;
     .sale-main-title {
         h2 {
             font-size: 20px;
@@ -9,18 +9,17 @@
             line-height: 1.4;
         }
         p {
-            margin-top: 14px;
+            margin-top: 12px;
+        }
+    }
+    .img-box {
+        max-width: 312px;
+        margin: 24px auto 0;
+        img {
+            width: 100%;
         }
     }
 }
-
-.sales-linkage-box {
-    padding: 120px 0;
-    text-align: center;
-    h2 {
-        font-size: 20px;
-        color: #222;
-        line-height: 1.4;
-        font-weight: 700;
-    }
+.btn {
+    margin-top: 16px;
 }

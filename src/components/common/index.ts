@@ -46,6 +46,7 @@ import AddressItem from '@components/common/AddressItem.vue'
 import BoardItem from '@components/common/BoardItem.vue'
 import BoardDetail from '@components/common/BoardDetail.vue'
 import BannerSwiper from '@components/common/BannerSwiper.vue'
+import BannerAffiliate from '@components/common/BannerAffiliate.vue'
 import Step from '@components/common/Step.vue'
 import RecommenderBox from '@components/common/RecommenderBox.vue'
 
@@ -109,6 +110,7 @@ const componentList: { [key: string]: VueConstructor | AsyncComponent }[] = [
     { BoardItem },
     { BoardDetail },
     { BannerSwiper },
+    { BannerAffiliate },
     { Step },
     { RecommenderBox },
 

@@ -22,13 +22,17 @@
             }
         }
         &.select-type {
-            .avg-tit {
+            .avg-tit-wrap {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
                 width: 100%;
                 padding: 0 0 4px 10px;
+                color: #222;
             }
 
             .dropdown-box {
-                width: 125px;
+                width: 100%;
             }
         }
     }

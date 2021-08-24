@@ -1,5 +1,5 @@
 <template>
-    <Page floating>
+    <Page floating :footer="false">
         <PageBody class="error">
             <i class="error-icon" />
             <h2 class="error-title">
@@ -12,7 +12,7 @@
             </p>
             <portal to="floating">
                 <BasicButton type="large" @click="toMain">
-                    메인으로 가기
+                    메인으로 이동
                 </BasicButton>
             </portal>
         </PageBody>

@@ -1,16 +1,34 @@
 <template>
-    <div v-click-outside="onBlur" class="calendar-field field-box" :class="type">
+    <div
+        v-click-outside="onBlur"
+        class="calendar-field field-box"
+        :class="type"
+    >
         <LabelTitle :hidden-label="hiddenLabel" :label="label" />
         <div class="flex">
             <div class="input-area" :class="{ focus: focusedClass }">
-                <input ref="input" type="text" :value="displayValue" :class="{ readonly }" @keydown="onKeydown" @focus="onFocus" />
+                <input
+                    ref="input"
+                    type="text"
+                    :value="displayValue"
+                    :class="{ readonly }"
+                    @keydown="onKeydown"
+                    @focus="onFocus"
+                />
                 <i class="icon-calendar" />
             </div>
             <template v-if="type">
                 <span class="icon">~</span>
 
                 <div class="input-area" :class="{ focus: focusedClass }">
-                    <input ref="input" type="text" :value="displayValue" :class="{ readonly }" @keydown="onKeydown" @focus="onFocus" />
+                    <input
+                        ref="input"
+                        type="text"
+                        :value="displayValue"
+                        :class="{ readonly }"
+                        @keydown="onKeydown"
+                        @focus="onFocus"
+                    />
                     <i class="icon-calendar" />
                 </div>
             </template>
@@ -45,7 +63,9 @@ import dayjs from 'dayjs'
 @Component({
     components: {
         DatePicker: () => ({
-            component: import('v-calendar').then(vCalendar => vCalendar.DatePicker),
+            component: import('v-calendar').then(
+                vCalendar => vCalendar.DatePicker,
+            ),
         }),
     },
 })

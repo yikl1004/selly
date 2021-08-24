@@ -20,9 +20,17 @@
                 </p>
                 <div class="select-options-box" @scroll="scrollBlock">
                     <ul v-if="!!list.length" class="select-options">
-                        <li v-for="(item, index) in list" :key="`list-${index}`" :class="{ selected: item.selected }">
+                        <li
+                            v-for="(item, index) in list"
+                            :key="`list-${index}`"
+                            :class="{ selected: item.selected }"
+                        >
                             <button type="button" @click="onClickOption(index)">
-                                {{ item.displayName }}
+                                <strong>
+                                    {{ item.displayName }}
+                                </strong>
+                                <!--[D] 카드번호 / 가맹점 번호 태그-->
+                                <!-- <span> 220-22-22222 </span> -->
                             </button>
                         </li>
                     </ul>

@@ -4,6 +4,7 @@
             <DropdownBox
                 v-if="!!merchantList"
                 id="dropdown-box01"
+                type="large"
                 :list="merchantList"
                 :disabled="false"
                 label="사업자 선택"
@@ -49,6 +50,8 @@
                             @change-dayofweek="changeDayOfWeek"
                         />
                     </AccoItemSingle>
+
+                    <BannerAffiliate />
 
                     <DepositHistory :list="salesList" />
                 </div>

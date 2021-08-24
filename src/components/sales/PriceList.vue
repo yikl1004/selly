@@ -1,8 +1,17 @@
 <template>
     <div class="price-list">
-        <div v-if="isDayOfWeek" :class="['sales-week-avg', { 'select-type': isDayOfWeek }]">
+        <div
+            v-if="isDayOfWeek"
+            :class="['sales-week-avg', { 'select-type': isDayOfWeek }]"
+        >
             <!--[D] 요일별일때 select-type 클래스 추가-->
-            <span class="avg-tit">최근 4주</span>
+            <div class="avg-tit-wrap">
+                <span class="avg-tit">최근 4주 평균</span>
+                <em class="price">
+                    <strong>{{ average }}</strong>
+                    원
+                </em>
+            </div>
             <DropdownBox
                 v-if="!!weekList.length"
                 id="dropdown-box01"
@@ -13,12 +22,6 @@
                 hidden-label
                 @select="onSelectDayofweek"
             />
-
-            <em class="price">
-                <span>평균</span>
-                <strong>{{ average }}</strong>
-                원
-            </em>
         </div>
         <div v-else class="sales-week-avg">
             <span class="avg-tit">최근 7일 평균 매출</span>
@@ -28,7 +31,10 @@
             </em>
         </div>
         <ul>
-            <li v-for="(item, index) in list" :key="`sales-price-list-${index}`">
+            <li
+                v-for="(item, index) in list"
+                :key="`sales-price-list-${index}`"
+            >
                 <span>{{ item.date }}</span>
                 <em class="price">
                     <strong>

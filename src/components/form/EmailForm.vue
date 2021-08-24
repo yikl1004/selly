@@ -1,6 +1,11 @@
 <template>
     <div class="email-field" :class="isError">
-        <LabelTitle :id="id" title-type="label" :hidden-label="hiddenLabel" :label="label" />
+        <LabelTitle
+            :id="id"
+            title-type="label"
+            :hidden-label="hiddenLabel"
+            :label="label"
+        />
 
         <div class="email-input-box">
             <div
@@ -159,7 +164,10 @@ export default class EmailForm extends Mixins(Validates) {
 
     /** 타이핑한 값 */
     get displayValue(): string {
-        const conditionsSeperateNumbe = [this.value, this.type === 'seperateNumber']
+        const conditionsSeperateNumbe = [
+            this.value,
+            this.type === 'seperateNumber',
+        ]
         const conditionSelectType = [this.value, this.type === 'select']
         if (conditionsSeperateNumbe.every(condition => condition)) {
             return this._.toNumber(this.value).toLocaleString()
@@ -172,7 +180,10 @@ export default class EmailForm extends Mixins(Validates) {
 
     /** 에러 여부 */
     get isError(): string | undefined {
-        const conditions = [this.value.length, typeof this.validate === 'function']
+        const conditions = [
+            this.value.length,
+            typeof this.validate === 'function',
+        ]
         if (conditions.every(condition => condition)) {
             return this.validate(this.value) ? 'success' : 'error'
         }
@@ -251,7 +262,9 @@ export default class EmailForm extends Mixins(Validates) {
     }
 
     onSelectOption(value: string) {
-        this.selectedValue = this.list.find(option => option.value === value) as BottomSheetOptionItem
+        this.selectedValue = this.list.find(
+            option => option.value === value,
+        ) as BottomSheetOptionItem
         const changedList = this.list.map(option => {
             option.selected = option.value === value
             return option

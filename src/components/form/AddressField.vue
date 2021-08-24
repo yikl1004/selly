@@ -21,7 +21,12 @@
                     @blur="onBlur"
                 />
             </div>
-            <button class="search-button" :disabled="disabled" type="button" @click="openPopup">
+            <button
+                class="search-button"
+                :disabled="disabled"
+                type="button"
+                @click="openPopup"
+            >
                 <span>검색</span>
             </button>
         </div>
@@ -61,7 +66,12 @@
                 @focus="onFocus"
                 @blur="onBlur"
             />
-            <button v-if="!readonly && !!value.length" type="button" class="clear" @click="clearValue">
+            <button
+                v-if="!readonly && !!value.length"
+                type="button"
+                class="clear"
+                @click="clearValue"
+            >
                 <i />
                 <span class="ir">전체삭제</span>
             </button>
