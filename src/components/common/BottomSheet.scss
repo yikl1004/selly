@@ -59,7 +59,13 @@ $transition: all 0.3s ease-in-out;
                     text-align: left;
                     color: #222;
                     strong {
+                        display: block;
+                        overflow: hidden;
+                        width: 100%;
                         font-weight: 500;
+                        white-space: nowrap;
+                        text-overflow: ellipsis;
+
                     }
                     span {
                         display: block;
