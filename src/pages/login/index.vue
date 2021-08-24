@@ -12,12 +12,40 @@
                 >
                     상단 비주얼 추가 작업 예정
                 </div>
-                <button
+                <!-- <button
                     type="button"
                     class="btn-kakao-login"
                     @click="() => login()"
                 >
                     <span>카카오톡으로 시작</span>
+                </button> -->
+                <button
+                    type="button"
+                    class="btn-kakao-login"
+                    @click="bisinessManLoanLogin"
+                >
+                    <span>사업자 대출 - 카드: N, 정회원</span>
+                </button>
+                <button
+                    type="button"
+                    class="btn-kakao-login"
+                    @click="bizloanLogin"
+                >
+                    <span>비즈론 - 카드: Y, 정회원</span>
+                </button>
+                <button
+                    type="button"
+                    class="btn-kakao-login"
+                    @click="normalCardLoanLogin"
+                >
+                    <span>일반카드론 - 카드: Y, 준회원</span>
+                </button>
+                <button
+                    type="button"
+                    class="btn-kakao-login"
+                    @click="immediatelyLoanLogin"
+                >
+                    <span>즉시대출</span>
                 </button>
                 <button type="button" class="btn-kakao-login" @click="withdraw">
                     <span>연결끊기(탈퇴) - 테스트용</span>
@@ -67,7 +95,7 @@ export default class LoginPage extends Mixins(PageView) {
 
     /** @category Methods */
 
-    async login() {
+    async login(ciNo?: string) {
         /**
          * 로그인 창을 띄웁니다.
          * @reference https://developers.kakao.com/docs/latest/ko/reference/rest-api-reference
@@ -76,7 +104,7 @@ export default class LoginPage extends Mixins(PageView) {
         // 1. 카카오 로그인 요청
         await this.$kakaoSdk.login()
         // 2. 카카오 로그인 사용자 정보 요청
-        const kakaoUserInfoResponse = await this.$kakaoSdk.userInfo()
+        const kakaoUserInfoResponse = await this.$kakaoSdk.userInfo(ciNo)
         // 3. 동의한 약관 항목 요청
         const kakaoAgreedList = await this.$kakaoSdk.agreedList()
         // 4. Mutation: Selly 로그인 API 요청 Parameter 세팅
@@ -91,6 +119,32 @@ export default class LoginPage extends Mixins(PageView) {
     // FIXME: 임시 사용, 삭제 요망
     withdraw() {
         this.$kakaoSdk && this.$kakaoSdk.unlink()
+    }
+
+    // 비즈론 대상(카드 Y, 정회원)
+    bizloanLogin() {
+        this.login(
+            'tW32CogXmF3XpJALGO0chO7y39u7d6SW6rQ0DWsDXHiAlTzBo58sWO8gZLtVtrXQcV5/OesFnMuugmgBUWZI6g==',
+        )
+    }
+
+    // 일반카드론(카드 Y, 준회원)
+    normalCardLoanLogin() {
+        this.login(
+            '9F1R6htEBjzWzedR/LADOZ5ImcgLtA9bYJ+Oko7lehTjBb0gqPyQh6VeyIn6mRvWonmbkdPZFxp2ihIBdgcIXg==',
+        )
+    }
+
+    // 사업자대출 대상(카드 N, 정회원)
+    bisinessManLoanLogin() {
+        this.login(
+            '+r/s3HjBSHosl0NyLj1F8+TlogEFjBwJxt07lpPkN4zXDWYQ+N73rJdOCVM8+4anTlk5P+A3pWZqv+THfPiWQQ==',
+        )
+    }
+
+    // 즉시대출
+    immediatelyLoanLogin() {
+        this.login('TESTCIJ')
     }
 }
 </script>

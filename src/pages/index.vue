@@ -526,7 +526,7 @@
 <script lang="ts">
 import { Component, Mixins } from 'vue-property-decorator'
 import PageView from '@utils/mixins/PageView'
-import { AuthModule } from '@stores/modules/auth'
+import { MainModule } from '@stores/modules/main'
 import { SwiperSlide } from 'vue-awesome-swiper'
 
 @Component({
@@ -536,7 +536,7 @@ import { SwiperSlide } from 'vue-awesome-swiper'
 })
 export default class MainPage extends Mixins(PageView) {
     get mainInfo() {
-        return AuthModule.mainInfoData
+        return MainModule.mainInfoData
     }
 
     /** @Computed */
@@ -545,7 +545,7 @@ export default class MainPage extends Mixins(PageView) {
     }
 
     created() {
-        AuthModule.getMainInfo()
+        MainModule.getMainInfo()
     }
 }
 </script>

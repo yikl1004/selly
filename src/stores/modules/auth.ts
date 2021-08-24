@@ -14,7 +14,7 @@ export interface AuthState {
     loginInfo: LoginInfo | null
     kakaoUserInfo: UserInfo | null
     memberWorkplaceInfo: MemberWorkplaceInfo | null
-    mainInfo: MainInfo | null
+    // mainInfo: MainInfo | null
     bizInfo: BizInfo | null
     logoutInfo: LogoutInfo | null
     inputRecommenderCodeResult: RecommenderCode | null
@@ -25,7 +25,7 @@ export interface AuthState {
 export type UserInfo = AuthParameters['loginInfo']
 export type LoginInfo = AuthResponse['loginInfo']['data']
 export type MemberWorkplaceInfo = AuthResponse['memberWorkplaceInfo']
-export type MainInfo = AuthResponse['mainInfo']
+// export type MainInfo = AuthResponse['mainInfo']
 export type BizInfo = AuthResponse['bizInfo']
 export type LogoutInfo = AuthResponse['logoutInfo']
 export type RecommenderCode = AuthResponse['recommenderCode']
@@ -39,7 +39,7 @@ export default class Auth extends VuexModule {
     public loginInfo: LoginInfo | null = null
     public kakaoUserInfo: UserInfo | null = null
     public memberWorkplaceInfo: MemberWorkplaceInfo | null = null
-    public mainInfo: MainInfo | null = null
+    // public mainInfo: MainInfo | null = null
     public bizInfo: BizInfo | null = null
     public logoutInfo: LogoutInfo | null = null
     public inputRecommenderCodeResult: RecommenderCode | null = null
@@ -114,14 +114,14 @@ export default class Auth extends VuexModule {
         }
     }
 
-    @MutationAction
-    async getMainInfo() {
-        const { data } = await AuthService.getMainInfo()
+    // @MutationAction
+    // async getMainInfo() {
+    //     const { data } = await AuthService.getMainInfo()
 
-        return {
-            mainInfo: data,
-        }
-    }
+    //     return {
+    //         mainInfo: data,
+    //     }
+    // }
 
     @MutationAction
     async getBizInfoInput(params: AuthParameters['bizInfo']) {
@@ -374,9 +374,9 @@ export default class Auth extends VuexModule {
      * @description
      * 메인화면 정보
      */
-    get mainInfoData() {
-        return this.mainInfo?.data
-    }
+    // get mainInfoData() {
+    //     return this.mainInfo?.data
+    // }
 
     /**
      * @description

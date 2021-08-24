@@ -25,7 +25,7 @@
             </li>
         </ul>
         <div class="btn-biznav-box">
-            <Anchor href="/">
+            <Anchor external :href="biznavSalesLink">
                 <i>자세한 내역 보기</i>
             </Anchor>
         </div>
@@ -68,6 +68,10 @@ export default class DepositHistory extends Vue {
         card: string
         cashReceipt?: string
         delivery: string
+    }
+
+    get biznavSalesLink(): string {
+        return process.env.VUE_APP_SNP_DETAIL
     }
 
     // s: popup

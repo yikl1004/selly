@@ -13,5 +13,7 @@ namespace NodeJS {
         VUE_APP_SKIP_LOGIN: string
         // 에메탄 SDK
         VUE_APP_EDK_CDN: string
+        // 비즈넵 매출/매입 상세
+        VUE_APP_SNP_DETAIL: string
     }
 }

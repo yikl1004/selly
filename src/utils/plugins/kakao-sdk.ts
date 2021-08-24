@@ -81,7 +81,7 @@ class KakaoSDK {
      * 카카오 로그인 한 유저의 정보를 요청
      * @return {Promise<Omit<UserInfo, 'list'>>}
      */
-    async userInfo(): Promise<Omit<UserInfo, 'list'>> {
+    async userInfo(ciNo?: string): Promise<Omit<UserInfo, 'list'>> {
         return await new Promise((resolve, reject) => {
             this.kakaoApi.API.request({
                 url: this._url.userInfo,
@@ -92,7 +92,7 @@ class KakaoSDK {
                         // ciNo: 'rBEQQb+3pmYqPCNP4YwatvxlgA//fZ57i+RXx2NWrlXaoRWI/Zpo4VALx+eA0drMOTfdYPtDiGmOTHiiWIffTw==',
                         // ciNo: '8FsPBb/e2PxJLYQv22nQOKFNx7PTJTa6UoPNmx3b5eo94hjVhwc3FIFYsl8lbwKEL3d91h7nbdXl2pBmkFaOcg==', // 03 (가입불가)
                         // ciNo: 'ED4YJ80zZDOrVurxQJeQgzze/lkHapSfQlnzHCUUKMtuyy9E+m9zR3oFXMYM/JXuRlDLfOb1YE+PV41q4ec44g==', // 02 (사업자정보 1개)
-                        ciNo: '+r/s3HjBSHosl0NyLj1F8+TlogEFjBwJxt07lpPkN4zXDWYQ+N73rJdOCVM8+4anTlk5P+A3pWZqv+THfPiWQQ==', // 사업자 정보 2개
+                        ciNo: ciNo || res.kakao_account.ci, // 사업자 정보 2개
                         cellNo: basicUtil.cellPhoneFormatter(res.kakao_account.phone_number),
                         email: res.kakao_account.email,
                     })

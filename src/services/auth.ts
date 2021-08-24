@@ -138,21 +138,6 @@ export interface AuthResponse {
             mbrNm: string
         }
     }
-    // FIXME: 변경 예정
-    mainInfo: {
-        rc: ResponseCode
-        rsMsg: string
-        data: {
-            dgNm: string
-            scrapAgYn: YN | null
-            list2: string[] | null
-            totalSl: string | null
-            list1: string | null
-            lmBizYn: YN
-            locaCoin: number
-            todBilAm: number
-        }
-    }
     bizInfo: {
         rc: ResponseCode
         rsMsg: string
@@ -236,7 +221,6 @@ export interface AuthResponse {
 
 type LoginInfoRes = Promise<AxiosResponse<AuthResponse['loginInfo']>>
 type MemberWorkplaceInfoRes = Promise<AxiosResponse<AuthResponse['memberWorkplaceInfo']>>
-type MainInfoRes = Promise<AxiosResponse<AuthResponse['mainInfo']>>
 type BizInfoRes = Promise<AxiosResponse<AuthResponse['bizInfo']>>
 type LogoutInfoRes = Promise<AxiosResponse<AuthResponse['logoutInfo']>>
 type RecommenderCodeRes = Promise<AxiosResponse<AuthResponse['recommenderCode']>>
@@ -344,13 +328,6 @@ class AuthService {
     async getMemberWorkplaceInfo(): MemberWorkplaceInfoRes {
         return await axiosInstance.request({
             ...this.memberWorkplaceInfo,
-        })
-    }
-
-    // 메인화면 정보요청
-    async getMainInfo(): MainInfoRes {
-        return await axiosInstance.request({
-            ...this.mainInfo,
         })
     }
 
