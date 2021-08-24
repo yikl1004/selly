@@ -6,7 +6,11 @@
             </h3>
         </div>
         <div class="box-info-list">
-            <div v-for="(item, index) in list" :key="`list-${index}`" class="info-item">
+            <div
+                v-for="(item, index) in list"
+                :key="`list-${index}`"
+                class="info-item"
+            >
                 <div class="info-label">
                     <span>{{ item.title }}</span>
                 </div>

@@ -1,0 +1,47 @@
+.box-banner-affiliate {
+    margin-top: 32px;
+}
+.banner-affiliate {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 90px;
+    padding: 22px 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    color: #222;
+    border: 1px solid #ddd;
+    .img {
+        display: block;
+        width: 50px;
+        min-width: 50px;
+        height: 50px;
+        img {
+            width: 100%;
+        }
+    }
+    .affiliate-info {
+        width: calc(100% - 64px);
+        margin-left: 14px;
+        strong,
+        p {
+            overflow: hidden;
+            max-width: 100%;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            color: #666;
+        }
+        strong {
+            display: block;
+            font-size: 16px;
+            font-weight: 700;
+            color: #222;
+        }
+    }
+}
+.page-main-wrap {
+    .banner-affiliate {
+        border: 0;
+        box-shadow: 0 3px 6px 1px rgba(123, 123, 123, 0.15);
+    }
+}

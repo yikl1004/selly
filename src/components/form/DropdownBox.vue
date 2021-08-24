@@ -1,5 +1,5 @@
 <template>
-    <div class="dropdown-box field-box">
+    <div class="dropdown-box field-box" :class="type">
         <!-- id 필요여부에 따라 삭제 가능-->
         <LabelTitle :id="id" :hidden-label="hiddenLabel" :label="label" />
         <div class="input-area" :class="{ 'select-type': true }">
@@ -9,7 +9,11 @@
                 :disabled="disabled"
                 @click="onClick"
             >
-                <span>{{ selectedDisplayName }}</span>
+                <div class="select-inner">
+                    <strong>{{ selectedDisplayName }}</strong>
+                    <!--[D] 카드번호 / 가맹점 번호 태그-->
+                    <!-- <span>220-20-22222</span> -->
+                </div>
             </button>
             <portal to="bottomSheet">
                 <BottomSheet
@@ -46,6 +50,10 @@ export default class DropdownBox extends Vue {
     /** form에 사용될 id */
     @Prop({ type: String, required: true })
     readonly id!: string
+
+    /** 디자인 타입 : large (두줄케이스) */
+    @Prop({ type: String })
+    readonly type!: string
 
     /** label태그에 들어갈 텍스트 */
     @Prop({ type: String, default: '', required: true })

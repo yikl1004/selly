@@ -1,6 +1,11 @@
 <template>
     <div class="text-field field-box" :class="isError && errorMessage">
-        <LabelTitle :id="id" label-type="label" :hidden-label="hiddenLabel" :label="label" />
+        <LabelTitle
+            :id="id"
+            label-type="label"
+            :hidden-label="hiddenLabel"
+            :label="label"
+        />
         <div
             class="input-area"
             :class="{
@@ -10,7 +15,11 @@
             }"
         >
             <template v-if="isSelectType && selectedValue">
-                <button type="button" class="select-button" @click="openBottomSheet">
+                <button
+                    type="button"
+                    class="select-button"
+                    @click="openBottomSheet"
+                >
                     {{ selectedValue.displayName }}
                     <i class="open" />
                 </button>
@@ -43,13 +52,22 @@
             <span v-if="unit" class="unit">
                 {{ unit }}
             </span>
-            <button v-if="!readonly && !!value.length" type="button" class="clear" @click="clearValue">
+            <button
+                v-if="!readonly && !!value.length"
+                type="button"
+                class="clear"
+                @click="clearValue"
+            >
                 <i />
                 <span class="ir">전체삭제</span>
             </button>
         </div>
         <!--//유효성 검사가 되어 메시지 노출할때만 보여줌. 에러일때와 성공일때-->
-        <TextInputMessage v-if="isError && errorMessage" :error-message="errorMessage" :message-type="isError" />
+        <TextInputMessage
+            v-if="isError && errorMessage"
+            :error-message="errorMessage"
+            :message-type="isError"
+        />
     </div>
 </template>
 
@@ -179,7 +197,10 @@ export default class TextField extends Mixins(Validates) {
 
     /** 타이핑한 값 */
     get displayValue(): string {
-        const conditionsSeperateNumbe = [this.value, this.type === 'seperateNumber']
+        const conditionsSeperateNumbe = [
+            this.value,
+            this.type === 'seperateNumber',
+        ]
         const conditionSelectType = [this.value, this.type === 'select']
         const conditionDigitType = [this.value, this.type === 'digit']
 
@@ -196,7 +217,10 @@ export default class TextField extends Mixins(Validates) {
 
     /** 에러 여부 */
     get isError(): string | undefined {
-        const conditions = [this.value.length, typeof this.validate === 'function']
+        const conditions = [
+            this.value.length,
+            typeof this.validate === 'function',
+        ]
         if (conditions.every(condition => condition)) {
             return this.validate(this.value) ? 'success' : 'error'
         }
@@ -205,9 +229,14 @@ export default class TextField extends Mixins(Validates) {
 
     /** 에러 메세지 */
     get message(): string | undefined {
-        const conditions = [this.value.length, typeof this.validate === 'function']
+        const conditions = [
+            this.value.length,
+            typeof this.validate === 'function',
+        ]
         if (conditions.every(condition => condition)) {
-            return this.validate(this.value) ? this.successMessage : this.errorMessage
+            return this.validate(this.value)
+                ? this.successMessage
+                : this.errorMessage
         }
         return undefined
     }
@@ -287,7 +316,9 @@ export default class TextField extends Mixins(Validates) {
     }
 
     onSelectOption(value: string) {
-        this.selectedValue = this.list.find(option => option.value === value) as BottomSheetOptionItem
+        this.selectedValue = this.list.find(
+            option => option.value === value,
+        ) as BottomSheetOptionItem
         const changedList = this.list.map(option => {
             option.selected = option.value === value
             return option

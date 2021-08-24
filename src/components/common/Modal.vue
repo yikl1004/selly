@@ -5,7 +5,12 @@
             enter-active-class="animate__animated animate__fadeIn"
             leave-active-class="animate__animated animate__fadeOut"
         >
-            <div v-if="showState" ref="modal" :class="['modal', type]" @click="outsideClick">
+            <div
+                v-if="showState"
+                ref="modal"
+                :class="['modal', type]"
+                @click="outsideClick"
+            >
                 <div ref="inner" class="inner">
                     <!-- <header class="modal-header">
                         <h2 v-if="title" class="title">
@@ -18,7 +23,11 @@
                         </div>
                     </div>
                     <div class="button-group">
-                        <BasicButton v-if="buttonText.cancel" type="dialogWhite" @click="onCancel">
+                        <BasicButton
+                            v-if="buttonText.cancel"
+                            type="dialogWhite"
+                            @click="onCancel"
+                        >
                             {{ buttonText.cancel }}
                         </BasicButton>
                         <BasicButton type="dialogBlue" @click="onConfirm">

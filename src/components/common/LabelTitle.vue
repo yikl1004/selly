@@ -1,6 +1,8 @@
 <template>
     <div class="label-title-box" :class="{ ir: hiddenLabel }">
-        <label v-if="labelType === 'label'" :for="id" class="label">{{ label }}</label>
+        <label v-if="labelType === 'label'" :for="id" class="label">{{
+            label
+        }}</label>
         <strong v-else class="label">
             {{ label }}
         </strong>

@@ -56,8 +56,15 @@ $transition: all 0.3s ease-in-out;
                     padding: 17px 24px;
                     font-size: 14px;
                     line-height: 1.57;
-                    color: #222;
                     text-align: left;
+                    color: #222;
+                    strong {
+                        font-weight: 500;
+                    }
+                    span {
+                        display: block;
+                        color: #666;
+                    }
                 }
             }
         }

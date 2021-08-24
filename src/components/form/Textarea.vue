@@ -1,6 +1,11 @@
 <template>
     <div class="textarea-box" :class="isError">
-        <LabelTitle :id="id" label-type="label" :hidden-label="hiddenLabel" :label="label" />
+        <LabelTitle
+            :id="id"
+            label-type="label"
+            :hidden-label="hiddenLabel"
+            :label="label"
+        />
         <div
             class="input-area"
             :class="{

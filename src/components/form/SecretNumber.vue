@@ -23,8 +23,16 @@
             </template>
             <div class="fake-input">
                 <div class="fake" @click="onClickFake">
-                    <span v-for="index in digit.blank" :key="`regist-blank-${index}`" :class="{ on: index <= secretValue.length }" />
-                    <span v-for="index in digit.fill" :key="`regist-fill-${index}`" class="on" />
+                    <span
+                        v-for="index in digit.blank"
+                        :key="`regist-blank-${index}`"
+                        :class="{ on: index <= secretValue.length }"
+                    />
+                    <span
+                        v-for="index in digit.fill"
+                        :key="`regist-fill-${index}`"
+                        class="on"
+                    />
                 </div>
                 <input
                     :id="`${id}-back`"
@@ -35,7 +43,11 @@
                     :maxlength="digit.blank"
                     type="tel"
                     :readonly="readonly"
-                    :title="isRegistType ? '주민등록번호 뒷자리' : '카드 비밀번호 입력'"
+                    :title="
+                        isRegistType
+                            ? '주민등록번호 뒷자리'
+                            : '카드 비밀번호 입력'
+                    "
                     @input="onInputSecret"
                     @keydown="onKeydownBack"
                     @focus="onFocus"
@@ -163,7 +175,11 @@ export default class SecretNumber extends Mixins(Validates) {
 
     private onKeydownBack(event: KeyboardEvent) {
         const { value } = this.back
-        const conditions = [value.length === 0, event.key.toLowerCase() === 'backspace', this.front]
+        const conditions = [
+            value.length === 0,
+            event.key.toLowerCase() === 'backspace',
+            this.front,
+        ]
 
         this.onlyNumber(event)
         conditions.every(condition => condition) && this.front.focus()

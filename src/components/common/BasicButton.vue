@@ -1,5 +1,11 @@
 <template>
-    <button :type="buttonType" class="btn" :class="[type, size]" :disabled="disabled" @click="onClick">
+    <button
+        :type="buttonType"
+        class="btn"
+        :class="[type, size]"
+        :disabled="disabled"
+        @click="onClick"
+    >
         <span class="text">
             <slot />
         </span>
