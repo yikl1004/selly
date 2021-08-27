@@ -111,7 +111,7 @@ export default class LoginPage extends Mixins(PageView) {
     @Watch('datusLoginInfo')
     changeDatusLoginInfo(value: AuthResponse['datusLoginInfo']) {
         if (value.data.rspDc === '01') {
-            // ;(this.$refs.datusForm as HTMLFormElement).submit()
+            ;(this.$refs.datusForm as HTMLFormElement).submit()
         }
     }
 
