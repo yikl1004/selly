@@ -24,6 +24,7 @@ export interface AuthState {
 
 export type UserInfo = AuthParameters['loginInfo']
 export type LoginInfo = AuthResponse['loginInfo']['data']
+export type DatusLoginInfo = AuthResponse['datusLoginInfo']
 export type MemberWorkplaceInfo = AuthResponse['memberWorkplaceInfo']
 // export type MainInfo = AuthResponse['mainInfo']
 export type BizInfo = AuthResponse['bizInfo']
@@ -38,6 +39,7 @@ export type FranchiseDetail = AuthResponse['franchiseDetail']['data']
 export default class Auth extends VuexModule {
     public loginInfo: LoginInfo | null = null
     public kakaoUserInfo: UserInfo | null = null
+    public datusLoginInfo: DatusLoginInfo | null = null
     public memberWorkplaceInfo: MemberWorkplaceInfo | null = null
     // public mainInfo: MainInfo | null = null
     public bizInfo: BizInfo | null = null
@@ -89,6 +91,14 @@ export default class Auth extends VuexModule {
     @Mutation
     setUserInfo(userInfo: UserInfo) {
         this.kakaoUserInfo = userInfo
+    }
+
+    @MutationAction
+    async getDatusLoginInfo(params: AuthParameters['datusLoginInfo']) {
+        const { data } = await AuthService.getDatusLoginInfo(params)
+        return {
+            datusLoginInfo: data,
+        }
     }
 
     @MutationAction
@@ -421,6 +431,14 @@ export default class Auth extends VuexModule {
         } else {
             return ''
         }
+    }
+
+    /**
+     * @description
+     * 유쇼데 로그인 정보
+     */
+    get datusLoginInfoData() {
+        return this.datusLoginInfo
     }
 }
 

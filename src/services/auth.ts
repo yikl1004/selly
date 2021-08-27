@@ -60,6 +60,19 @@ export interface AuthParameters {
         }[]
     }
     /**
+     * @description 유쇼데 로그인
+     */
+    datusLoginInfo: {
+        // 카카오로 전달 받은 ci
+        ciNo: string
+        // 유입채널(셀리: MWEB, 비즈넵: BZNV, 알밤: ALBM, 로카M: LOCM)
+        chnlC: string
+        // 카카오로 전달 받은 휴대폰번호
+        cellNo?: string
+        // 카카오로 전달 받은 이메일
+        email?: string
+    }
+    /**
      * @description my>최초로그인시 사업자정보 입력 내용
      */
     bizInfo: {
@@ -132,6 +145,18 @@ export interface AuthResponse {
             // 마케팅 가능여부
             mrktPsyn: YN
         } | null
+    }
+    datusLoginInfo: {
+        data: {
+            encdata: string
+            rspDc:
+                | '01' // 유쇼데 페이지 open post
+                | '02' // 회원가입 불가
+            token: string
+            url: string
+        }
+        rc: '0000'
+        rsMsg: '정상처리 되었습니다.'
     }
     memberWorkplaceInfo: {
         rc: ResponseCode
@@ -230,6 +255,7 @@ export interface AuthResponse {
 }
 
 type LoginInfoRes = Promise<AxiosResponse<AuthResponse['loginInfo']>>
+type DatusLoginInfoRes = Promise<AxiosResponse<AuthResponse['datusLoginInfo']>>
 type MemberWorkplaceInfoRes = Promise<AxiosResponse<AuthResponse['memberWorkplaceInfo']>>
 type BizInfoRes = Promise<AxiosResponse<AuthResponse['bizInfo']>>
 type LogoutInfoRes = Promise<AxiosResponse<AuthResponse['logoutInfo']>>
@@ -242,6 +268,12 @@ type FranchiseDetailRes = Promise<AxiosResponse<AuthResponse['franchiseDetail']>
 type ChangeBusinessManNameRes = Promise<AxiosResponse<AuthResponse['changeBusinessManName']>>
 
 class AuthService {
+    // 유쇼대 로그인/카카오최초인입
+    private datusLogin: API = {
+        url: '/API/LGN/SELGNAA002',
+        method: 'post',
+    }
+
     // 로그인/카카오최초인입
     private login: API = {
         url: '/API/LGN/SELGNAA001',
@@ -324,6 +356,14 @@ class AuthService {
     private changeBusinessManName: API = {
         url: '/API/MBR/SEMBRAA005',
         method: 'post',
+    }
+
+    // 유쇼대 로그인/카카오최초인입
+    async getDatusLoginInfo(data: AuthParameters['loginInfo']): DatusLoginInfoRes {
+        return await axiosInstance.request({
+            ...this.datusLogin,
+            data,
+        })
     }
 
     // 로그인 카카오 최초 인입

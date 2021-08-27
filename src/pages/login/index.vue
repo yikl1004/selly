@@ -22,6 +22,13 @@
                 <button
                     type="button"
                     class="btn-kakao-login"
+                    @click="datusLogin"
+                >
+                    <span>유쇼데 로그인 - 비즈론 - 카드: Y, 정회원</span>
+                </button>
+                <button
+                    type="button"
+                    class="btn-kakao-login"
                     @click="bizloanLogin"
                 >
                     <span>비즈론 - 카드: Y, 정회원</span>
@@ -51,16 +58,28 @@
                     <span>연결끊기(탈퇴) - 테스트용</span>
                 </button>
             </div>
+            <form ref="datusForm" :action="datusFormData.url" method="post">
+                <input
+                    type="hidden"
+                    name="encdata"
+                    :value="datusFormData.encdata"
+                />
+                <input
+                    type="hidden"
+                    name="token"
+                    :value="datusFormData.token"
+                />
+            </form>
         </PageBody>
     </Page>
 </template>
 
 <script lang="ts">
-import { Component, Mixins, Watch } from 'vue-property-decorator'
-import { AuthModule, LoginInfo } from '@stores/modules/auth'
+import { Component, Mixins, Ref, Watch } from 'vue-property-decorator'
 import { CommonModule } from '@stores/modules/common'
 import PageView from '@utils/mixins/PageView'
-import axios from 'axios'
+import { AuthModule } from '@stores/modules/auth'
+import { AuthResponse } from '@services/auth'
 
 /**
  * TODO: 유쇼데 로그인 버튼만들기
@@ -73,7 +92,28 @@ import axios from 'axios'
     },
 })
 export default class LoginPage extends Mixins(PageView) {
+    @Ref('datusForm') datusForm!: HTMLFormElement
+
     private token = ''
+
+    get datusLoginInfo() {
+        return AuthModule.datusLoginInfoData
+    }
+
+    get datusFormData() {
+        return {
+            url: this.datusLoginInfo?.data.url || '',
+            encdata: this.datusLoginInfo?.data.encdata || '',
+            token: this.datusLoginInfo?.data.token || '',
+        }
+    }
+
+    @Watch('datusLoginInfo')
+    changeDatusLoginInfo(value: AuthResponse['datusLoginInfo']) {
+        if (value.data.rspDc === '01') {
+            // ;(this.$refs.datusForm as HTMLFormElement).submit()
+        }
+    }
 
     /** @category Methods */
 
@@ -127,6 +167,15 @@ export default class LoginPage extends Mixins(PageView) {
     // 즉시대출 대상(카드 N, 준회원)
     immediatelyLoanLogin() {
         this.login('TESTCIJ')
+    }
+
+    // 유쇼데 로그인
+    datusLogin() {
+        AuthModule.getDatusLoginInfo({
+            ciNo:
+                'tW32CogXmF3XpJALGO0chO7y39u7d6SW6rQ0DWsDXHiAlTzBo58sWO8gZLtVtrXQcV5/OesFnMuugmgBUWZI6g==',
+            chnlC: 'DATU',
+        })
     }
 }
 </script>
