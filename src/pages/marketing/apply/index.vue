@@ -1,10 +1,10 @@
 <template>
-    <Page floating>
+    <Page floating :footer="false">
         <Header type="sub" title="쿠폰 만들기" />
         <PageBody class="floating">
             <div class="content">
                 <Step :active="1" :count="3" />
-                <Title title="가맹점 정보 확인" />
+                <Title title="매장 정보 확인" />
 
                 <div class="box-franchisee-list" :class="{ active: isActive }">
                     <div class="franchisee-list">
@@ -63,13 +63,13 @@
                 <div class="box-franchisee-info">
                     <ul>
                         <li>
-                            <strong>가맹점 번호</strong>
+                            <strong>매장 번호</strong>
                             <p>
                                 <span>이층집 강남점 12345678</span>
                             </p>
                         </li>
                         <li>
-                            <strong>가맹점 주소</strong>
+                            <strong>주소</strong>
                             <p>
                                 <span>03272</span>
                                 <span>
@@ -87,7 +87,7 @@
                     </ul>
                     <div class="btn-area">
                         <BasicButton type="textBlue">
-                            가맹점 정보 변경하기
+                            매장 정보 변경하기
                         </BasicButton>
                     </div>
                 </div>
@@ -108,7 +108,8 @@ import { Component, Vue } from 'vue-property-decorator'
 export default class MarketingApply extends Vue {
     private infoList = [
         {
-            text: '가맹점 정보를 변경할 경우 변경 다음날 부터 신청 가능합니다.',
+            text:
+                '매장 정보를 변경할 경우 변경일 3일 이후부터 신청 가능합니다.',
         },
     ]
     /**

@@ -37,6 +37,9 @@
         .acco-cont {
             display: none;
         }
+        .acco-cont-inner {
+            padding: 24px 24px 40px;
+        }
         &.active {
             .acco-anchor:after {
                 transform: translate(0, -50%) rotate(180deg);
@@ -60,6 +63,99 @@
                 padding: 13px 0 40px;
             }
         }
+    }
+    //내부에서 사용하는 스타일
+    .list-tit {
+        display: block;
+        margin: 24px 0 8px;
+        font-weight: 500;
+        color: #222;
+        &:first-of-type {
+            margin-top: 0;
+        }
+    }
+    .list-sub-tit {
+        display: block;
+        margin-bottom: 8px;
+        color: #222;
+        & ~ .list-sub-tit {
+            margin-top: 16px;
+        }
+    }
+    .bul-list {
+        & > li {
+            position: relative;
+            padding-left: 8px;
+            font-size: 14px;
+            line-height: 1.57;
+            letter-spacing: -0.5px;
+            word-break: keep-all;
+            & + li {
+                margin-top: 8px;
+            }
+            &:before {
+                content: '';
+                display: block;
+                position: absolute;
+                left: 0;
+                top: 8px;
+                width: 2px;
+                height: 2px;
+                background-color: #666;
+            }
+        }
+        .dash-list {
+            margin-top: 8px;
+        }
+        & + .list-tit {
+            margin-top: 24px;
+        }
+    }
+    .dash-list {
+        & > li {
+            position: relative;
+            padding-left: 8px;
+            font-size: 14px;
+            line-height: 1.57;
+            letter-spacing: -0.5px;
+            word-break: keep-all;
+            & + li {
+                margin-top: 8px;
+            }
+            &:before {
+                content: '-';
+                display: block;
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 10px;
+                height: 5px;
+            }
+        }
+    }
+    .img-box {
+        padding: 0 36px;
+        img {
+            width: 100%;
+        }
+    }
+    .tel {
+        color: $point-color-blue;
+        text-decoration: underline;
+    }
+    p {
+        & + .list-tit {
+            margin-top: 24px !important;
+        }
+        & + .table-box {
+            margin-top: 16px;
+        }
+        & + .img-box {
+            margin-top: 30px;
+        }
+    }
+    .img-box + .bul-list {
+        margin-top: 20px;
     }
 }
 .content:not(.pd-btm) {

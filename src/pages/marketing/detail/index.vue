@@ -54,8 +54,6 @@
                     <BulletList :list="infoResult" />
 
                     <AccoItem :list="accordionList" />
-
-                    <BulletList :list="infoCaution" />
                 </div>
 
                 <!--[D] 진행중 케이스-->
@@ -67,7 +65,7 @@
                     <div class="marketing-info-box">
                         <strong class="state">진행중(종료 20일전)</strong>
                         <div class="marketing-info">
-                            <strong>[첫 고객 만들기] 10% 할인</strong>
+                            <strong>[첫 고객 만들기] 10% 결제일 할인</strong>
                             <div class="info-detail">
                                 <p>행사 기간 중 1회</p>
                                 <p>2021.06.01~2021.06.30</p>
@@ -392,22 +390,7 @@ export default class MarketingDetail extends Vue {
         },
         {
             text:
-                '행사 비용(할인혜택)은 이층집 강남점 가맹점 대금에서 차감되는 금액으로, 방문고객 수와 고객의 결제금액에 따라 변경될 수 있습니다.',
-        },
-    ]
-    private infoCaution = [
-        {
-            text:
-                '법인카드/체크카드/기프트카드 결제는 쿠폰 행사 대상에서 제외됩니다.',
-        },
-        {
-            text:
-                '현장결제(매장)에서만 가능하며, 배달앱 등 온라인 결제는 제외됩니다.',
-        },
-
-        {
-            text:
-                '간편결제는 롯데 앱카드, 삼성페이, LG페이, Lpay만 가능합니다.',
+                '행사 비용(할인혜택)은 <strong>이층집 강남점</strong> 가맹점 대금에서 차감되는 금액으로, 방문고객 수와 고객의 결제금액에 따라 변경될 수 있습니다.',
         },
     ]
     private infoAnalysis = [
@@ -428,6 +411,10 @@ export default class MarketingDetail extends Vue {
             desc: '[첫 고객 만들기] 5%할인 <br /> 2,000명',
         },
         {
+            title: '행사 기간',
+            desc: '21. 07. 01 ~ 21. 07. 30',
+        },
+        {
             title: '홍보 방식',
             desc:
                 '케이스 확인 필요. 롯데카드 앱 푸시메시지, 롯데카드 앱에 쿠폰 노출 ',
@@ -442,7 +429,7 @@ export default class MarketingDetail extends Vue {
         {
             title: '유의사항',
             desc:
-                '매출내역이 정확하지 않은 경우는 크게 2가지 원인이 있을 수 있습니다. 매출내역이 정확하지 않은 경우는 크게 2가지 원인이 있을 수 있습니다.매출내역이 정확하지 않은 경우는 크게 2가지 원인이 있을 수 있습니다.',
+                ' <ul class="bul-list"> <li> 법인카드/체크카드/기프트카드 결제는 쿠폰 행사 대상에서 제외됩니다. </li><li> 현장결제(매장)에서만 가능하며, 배달앱 등 온라인 결제는 제외됩니다. </li><li> 간편결제는 롯데 앱카드, 삼성페이, LG페이, Lpay만 가능합니다. </li></ul>',
         },
     ]
 

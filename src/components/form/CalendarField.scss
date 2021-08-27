@@ -53,6 +53,7 @@
                 // width: 100%;
                 border-color: #ebebeb;
                 font-family:'Spoqa Han Sans Neo', 'Malgun Gothic','맑은 고딕', '돋음','Dotum','Apple SD Gothic Neo', Arial, Helvetica, sans-serif;
+                --blue-900: #222 !important;
             }
             .vc-pane,
             .vc-weeks {
@@ -70,18 +71,20 @@
                 color: #222;
                 line-height: 1.4;
             }
-            .vc-weekday,
+            .vc-weekday {
+                color: #222 !important;
+            }
             .vc-day-content {
-                color: #222;
-
+                font-weight:400;
+                line-height: 33px;
             }
             .vc-day {
                 min-height: 42px;
             }
             .vc-highlights {
                 & + .vc-day-content {
-                    color : #fff !important;
                     &:hover {
+                        color:#fff !important;
                         background-color: transparent;
                     }
                 }
@@ -95,8 +98,11 @@
                 }
                 &.vc-highlight-base-middle {
                     background-color: #ffece8 !important;
-                    color: #222;
-                    font-weight: 400;
+                }
+            }
+            .vc-day-box-center-center {
+                & + .vc-day-content {
+                    color: #fff !important;
                 }
             }
             .vc-popover-content-wrapper {

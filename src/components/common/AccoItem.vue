@@ -18,9 +18,7 @@
                 <strong class="tit">{{ item.title }}</strong>
             </button>
             <div :id="`acco-item-${index}`" class="acco-cont">
-                <div class="acco-cont-inner">
-                    {{ item.desc }}
-                </div>
+                <div class="acco-cont-inner" v-html="item.desc"></div>
             </div>
         </div>
     </div>
@@ -70,4 +68,4 @@ export default class AccoItem extends Vue {
 }
 </script>
 
-<style lang="scss" scoped src="./AccoItem.scss"></style>
+<style lang="scss" src="./AccoItem.scss"></style>

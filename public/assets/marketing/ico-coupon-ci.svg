@@ -1,0 +1,8 @@
+<svg width="50" height="50" xmlns="http://www.w3.org/2000/svg">
+    <g fill="none" fill-rule="evenodd">
+        <rect fill="#DDD" width="50" height="50" rx="10"/>
+        <text font-family="SpoqaHanSansNeo-Regular, Spoqa Han Sans Neo" font-size="14" letter-spacing="-.5" fill="#222">
+                                <tspan x="20" y="30">ci</tspan>
+                            </text>
+    </g>
+</svg>

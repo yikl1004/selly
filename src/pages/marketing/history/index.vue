@@ -13,7 +13,7 @@
                     <template slot-scope="{ schema }">
                         <DropdownBox
                             id="dropdown-box01"
-                            label="가맹점 선택"
+                            label="매장 선택"
                             :hidden-label="true"
                             :list="dropdownBoxList"
                             :default-value="schema.dropdownBox"
@@ -42,7 +42,9 @@
                                 이층집 강남점 한줄말줄임처리이층집 강남점
                                 한줄말줄임처리이층집 강남점 한줄말줄임처리
                             </strong>
-                            <p class="coupon-name">[첫 고객 만들기] 5% 할인</p>
+                            <p class="coupon-name">
+                                [첫 고객 만들기] 5% 결제일 할인
+                            </p>
                             <span class="date">2021.06.01 ~2021.06.30</span>
                             <i class="flag">접수완료</i>
                         </div>
@@ -52,7 +54,9 @@
                             <strong class="franchisee-name">
                                 이층집 강남점
                             </strong>
-                            <p class="coupon-name">[첫 고객 만들기] 5% 할인</p>
+                            <p class="coupon-name">
+                                [첫 고객 만들기] 5% 결제일 할인
+                            </p>
                             <span class="date">2021.06.01 ~2021.06.30</span>
                             <i class="flag">준비중</i>
                         </div>
@@ -63,7 +67,9 @@
                             <strong class="franchisee-name">
                                 이층집 강남점
                             </strong>
-                            <p class="coupon-name">[첫 고객 만들기] 5% 할인</p>
+                            <p class="coupon-name">
+                                [첫 고객 만들기] 5% 결제일 할인
+                            </p>
                             <span class="date">2021.06.01 ~2021.06.30</span>
                             <i class="flag">진행예정 (D-3)</i>
                         </div>
@@ -74,7 +80,9 @@
                             <strong class="franchisee-name">
                                 이층집 강남점
                             </strong>
-                            <p class="coupon-name">[첫 고객 만들기] 5% 할인</p>
+                            <p class="coupon-name">
+                                [첫 고객 만들기] 5% 결제일 할인
+                            </p>
                             <span class="date">2021.06.01 ~2021.06.30</span>
                             <i class="flag">진행중</i>
                         </div>
@@ -85,7 +93,9 @@
                             <strong class="franchisee-name">
                                 이층집 강남점
                             </strong>
-                            <p class="coupon-name">[첫 고객 만들기] 5% 할인</p>
+                            <p class="coupon-name">
+                                [첫 고객 만들기] 5% 결제일 할인
+                            </p>
                             <span class="date">2021.06.01 ~2021.06.30</span>
                             <i class="flag">종료</i>
                         </div>
@@ -96,7 +106,9 @@
                             <strong class="franchisee-name">
                                 이층집 강남점
                             </strong>
-                            <p class="coupon-name">[첫 고객 만들기] 5% 할인</p>
+                            <p class="coupon-name">
+                                [첫 고객 만들기] 5% 결제일 할인
+                            </p>
                             <span class="date">2021.06.01 ~2021.06.30</span>
                             <i class="flag">재검토 필요</i>
                         </div>

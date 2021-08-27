@@ -3,81 +3,92 @@
         <Header type="sub" title="쿠폰 만들기" />
         <PageBody class="floating gray">
             <div class="content">
-                <Title
-                    title="고객들이 줄을 서는<br /> 쿠폰 만들기"
-                    align="center"
-                />
-                <div class="box-img">
-                    <img
-                        src="/assets/marketing/img_application.png"
-                        alt="쿠폰 마케팅 이미지"
-                    />
+                <div class="top-visual">
+                    <div class="box-img">
+                        <img
+                            src="/assets/marketing/img_application.png"
+                            alt="쿠폰 마케팅 이미지"
+                        />
+                    </div>
+                    <Title
+                        title="고객들이 줄을 서는 쿠폰 만들기"
+                        align="center"
+                    >
+                        <p>
+                            우리 매장 주변 롯데카드 회원들에게 할인 쿠폰을
+                            제공하여 제공하여 첫 고객과 단골 고객을 늘려보세요.
+                        </p>
+                    </Title>
                 </div>
-                <p>
-                    사장님께서 롯데카드 회원 대상으로 진행 할 수 있는 쿠폰
-                    마케팅으로, 가맹점 주변 롯데카드 회원에게 할인 혜택을
-                    제공하여 더 많은 고객을 유치할 수 있습니다.
-                </p>
 
                 <!--디자인 수정예정-->
-                <div
-                    style="
-                        width: 100%;
-                        height: 200px;
-                        margin-top: 48px;
-                        background: #222;
-                        color: #fff;
-                        text-align: center;
-                        line-height: 200px;
-                    "
-                >
-                    해당영역 디자인 수정예정
-                </div>
-                <div class="coupon-info-list" style="display: none">
-                    수정예정입니다. 노신경
+                <div class="coupon-info-list">
                     <ul>
                         <li class="box-coupon-info">
-                            <img
-                                src="/assets/marketing/img_application_info01.png"
-                                alt=""
-                            />
+                            <strong>첫 고객, 단골 고객별 맞춤 쿠폰 설정</strong>
+                            <div class="img">
+                                <img
+                                    src="/assets/marketing/img_application_info01.png"
+                                    alt=""
+                                />
+                            </div>
                             <p>
-                                첫 고객과 단골 타겟 설정을 통한<br />더욱
-                                효과적인 마케팅
+                                매장 주변의 첫 고객에게는 <br />할인혜택을
+                                제공하여 첫 방문 유도를,<br />단골 고객에게는
+                                추가혜택을 제공하여 <br />재방문을 유도할 수
+                                있습니다.
                             </p>
                         </li>
                         <li class="box-coupon-info">
-                            <img
-                                src="/assets/marketing/img_application_info02.png"
-                                alt=""
-                            />
+                            <strong>Selly만의 무료 홍보 서비스</strong>
+                            <div class="img">
+                                <img
+                                    src="/assets/marketing/img_application_info02.png"
+                                    alt=""
+                                />
+                            </div>
+                            <ul>
+                                <li>ㆍ 롯데카드 앱에 쿠폰 노출</li>
+                                <li>
+                                    ㆍ 쿠폰 행사 홍보를 위한 앱 푸시 메시지 발송
+                                </li>
+                                <li>
+                                    ㆍ 고객이 매장을 쉽게 찾아갈 수 있도록<br />위치
+                                    안내 서비스 제공
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="box-coupon-info">
+                            <strong>합리적인 비용</strong>
+                            <div class="img">
+                                <img
+                                    src="/assets/marketing/img_application_info03.png"
+                                    alt=""
+                                />
+                            </div>
                             <p>
-                                타겟 고객에게 롯데카드<br />앱 푸시메시지와
-                                터치쿠폰 노출
+                                첫 고객, 단골 고객별 비용 산정과 <br />무료 푸시
+                                메시지 발송 서비스를 통해 <br />사장님의 비용
+                                부담을 최소화 할 수 <br />있습니다.
                             </p>
                         </li>
                         <li class="box-coupon-info">
-                            <img
-                                src="/assets/marketing/img_application_info03.png"
-                                alt=""
-                            />
+                            <strong>매일 알려드리는 진행 현황</strong>
+                            <div class="img">
+                                <img
+                                    src="/assets/marketing/img_application_info04.png"
+                                    alt=""
+                                />
+                            </div>
                             <p>
-                                방문고객 수, 결제금액에 따른<br />합리적인 비용
-                            </p>
-                        </li>
-                        <li class="box-coupon-info">
-                            <img
-                                src="/assets/marketing/img_application_info04.png"
-                                alt=""
-                            />
-                            <p>
-                                행사 매출, 이용 건수, 이용 고객층 등<br />다양한
-                                성과 분석 제공
+                                쿠폰 행사 진행 현황을 알 수 있도록 이용
+                                <br />매출 현황을 알려드리고, 성별∙연령대별
+                                이용<br />
+                                현황 등을 추가로 분석해 드립니다.
                             </p>
                         </li>
                     </ul>
                 </div>
-                <!--//디자인 수정예정-->
 
                 <Title
                     title="쿠폰 만들기는 이렇게 진행됩니다."
@@ -109,4 +120,4 @@ import { Component, Vue } from 'vue-property-decorator'
 export default class MarketingPage extends Vue {}
 </script>
 
-<style scoped lang="scss" src="./Marketing.scss" />
+<style lang="scss" src="./Marketing.scss" />

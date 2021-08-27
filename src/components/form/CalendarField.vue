@@ -7,31 +7,18 @@
         <LabelTitle :hidden-label="hiddenLabel" :label="label" />
         <div class="flex">
             <div class="input-area" :class="{ focus: focusedClass }">
+                <!--[D] 기간 범위선택(range 적용)시 date format yy.mm.dd ~ yy.mm.dd -->
                 <input
                     ref="input"
                     type="text"
                     :value="displayValue"
                     :class="{ readonly }"
+                    readonly
                     @keydown="onKeydown"
                     @focus="onFocus"
                 />
-                <i class="icon-calendar" />
+                <i v-if="!isRange" class="icon-calendar" />
             </div>
-            <template v-if="type">
-                <span class="icon">~</span>
-
-                <div class="input-area" :class="{ focus: focusedClass }">
-                    <input
-                        ref="input"
-                        type="text"
-                        :value="displayValue"
-                        :class="{ readonly }"
-                        @keydown="onKeydown"
-                        @focus="onFocus"
-                    />
-                    <i class="icon-calendar" />
-                </div>
-            </template>
         </div>
         <transition
             mode="out-in"
@@ -43,8 +30,7 @@
                     v-model="value"
                     v-click-outside="hideDatepicker"
                     is-expanded
-                    is-range
-                    :attributes="attrs"
+                    :is-range="isRange"
                     :masks="{ title: 'MM월 YYYY', navYears: 'YYYY년' }"
                     @dayclick="onDayClick"
                 ></date-picker>
@@ -104,6 +90,10 @@ export default class CalendarField extends Vue {
     @Prop({ type: String })
     readonly type!: string
 
+    /** 기간 범위 선택값 : range(yyyy.mm.dd ~ yyyy.mm.dd) */
+    @Prop({ type: Boolean, default: false })
+    readonly isRange!: boolean
+
     /**
      * @Data (State)
      */
@@ -117,32 +107,6 @@ export default class CalendarField extends Vue {
     /** datepicker 노출 여부 */
     private datepickerVisible = false
 
-    /**  달력 선택된 값 표시 */
-    private attrs: Array<object> = [
-        {
-            highlight: {
-                start: { fillMode: 'light' },
-                base: { fillMode: 'light' },
-                end: { fillMode: 'light' },
-            },
-            // dates: { start: new Date(2019, 0, 14), end: new Date(2019, 0, 18) },
-        },
-    ]
-
-    private selectAttr: object = {
-        highlight: {
-            backgroundColor: 'white',
-            borderColor: 'red',
-            borderWidth: '3px',
-            borderStyle: 'solid',
-            width: '2.4rem',
-            height: '2.4rem',
-        },
-        contentStyle: {
-            color: 'grey',
-        },
-    }
-
     /**
      * @Computed
      */
@@ -150,6 +114,10 @@ export default class CalendarField extends Vue {
     /** 화면에 보여질 value */
     get displayValue(): string {
         return dayjs(this.value || undefined).format('YYYY.MM.DD')
+    }
+    /** 기간 범위 선택 타입 */
+    get range(): boolean {
+        return this.isRange
     }
 
     @Watch('value')

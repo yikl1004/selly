@@ -66,6 +66,12 @@
                 vertical-align: top;
             }
         }
-
+        &.active {
+            .text {
+                &:after {
+                    transform: rotate(180deg);
+                }
+            }
+        }
     }
 }

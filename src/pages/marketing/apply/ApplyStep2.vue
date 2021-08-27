@@ -1,5 +1,5 @@
 <template>
-    <Page floating>
+    <Page floating :footer="false">
         <Header type="proccess" title="쿠폰 만들기" />
         <PageBody class="floating">
             <div class="content">
@@ -24,8 +24,8 @@
                                     <em>20,000명</em>
                                 </i>
                                 <span class="sub-text">
-                                    최근 1개월간 내 가맹점을 방문하지 않은 고객
-                                    중 반경 1km의 다른 가맹점을 이용한 고객
+                                    최근 1개월간 내 매장을 방문하지 않은 고객 중
+                                    반경 1km의 다른 매장을 이용한 고객
                                 </span>
                             </label>
                         </div>
@@ -37,6 +37,7 @@
                                 :default-value="null"
                                 :readonly="false"
                                 name="date"
+                                :isRange="true"
                             />
 
                             <BulletList :list="infoDate" />
@@ -68,7 +69,7 @@
                                     <em>10,000명</em>
                                 </i>
                                 <span class="sub-text">
-                                    최근 3개월간 내 가맹점에서 1회 이상 결제한
+                                    최근 3개월간 내 매장에서 1회 이상 결제한
                                     고객
                                 </span>
                             </label>
@@ -81,6 +82,7 @@
                                 :default-value="null"
                                 :readonly="false"
                                 name="date"
+                                :isRange="true"
                             />
 
                             <BulletList :list="infoDate" />
@@ -147,12 +149,6 @@ import ApplyResult from '@components/marketing/ApplyResult.vue'
     components: { ApplyResult },
 })
 export default class MarketingApply extends Vue {
-    private infoList = [
-        {
-            text: '가맹점 정보를 변경할 경우 변경 다음날 부터 신청 가능합니다.',
-        },
-    ]
-
     private infoDate = [
         {
             text:
@@ -173,7 +169,11 @@ export default class MarketingApply extends Vue {
         },
         {
             text:
-                '행사 비용(할인혜택)은 이층집 강남점 가맹점 대금에서 차감되는 금액으로, 방문고객 수와 고객의 결제금액에 따라 변경될 수 있습니다.',
+                '행사 비용(할인혜택)은 <strong>이층집 강남점</strong> 가맹점 대금에서 차감되는 금액으로, 방문고객 수와 고객의 결제금액에 따라 변경될 수 있습니다.',
+        },
+        {
+            text:
+                '이전 달 매출 금액이 없을 경우 예상 수익이 산출되지 않을 수 있습니다.',
         },
     ]
 

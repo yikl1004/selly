@@ -1,6 +1,6 @@
 <template>
-    <div class="box-title">
-        <div v-if="!!title" :class="['title-area', align]">
+    <div :class="['box-title', align]">
+        <div v-if="!!title" class="title-area">
             <h2 v-if="type == 'h2'" class="title" v-html="title"></h2>
 
             <h3 v-else-if="type == 'h3'" class="title" v-html="title"></h3>
@@ -44,9 +44,16 @@ export default class Title extends Vue {
     margin-top: 48px;
     margin-bottom: 12px;
     // margin-bottom: 50px;
+    &.center {
+        text-align: center;
+    }
+    &.right {
+        text-align: right;
+    }
     .title {
         color: #222;
         letter-spacing: -0.5px;
+        word-break: keep-all;
     }
     h2.title {
         font-size: 20px;
@@ -65,12 +72,6 @@ export default class Title extends Vue {
         font-weight: 700;
     }
     .title-area {
-        &.center {
-            text-align: center;
-        }
-        &.right {
-            text-align: right;
-        }
         & + p {
             margin-top: 8px;
         }

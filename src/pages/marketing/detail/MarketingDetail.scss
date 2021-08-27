@@ -2,6 +2,16 @@
     .box-title:first-of-type {
         margin-top: 0;
     }
+    .box-title {
+        .date {
+            margin-left: 8px;
+            font-size: 12px;
+            color: #222;
+        }
+        &:first-of-type {
+            margin-top: 0;
+        }
+    }
 }
 .apply-step-wrap {
     margin: 48px 0;

@@ -15,9 +15,7 @@
                         <strong class="popup-title">{{ title }}</strong>
                     </div>
                     <div class="popup-contents">
-                        <div class="popup-inner">
-                            <slot />
-                        </div>
+                        <slot />
                         <div v-if="buttonText" class="popup-btn-bottom">
                             <FixedBtnBox target="modal">
                                 <BasicButton

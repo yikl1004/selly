@@ -2,9 +2,11 @@
     <div class="bullet-list">
         <strong v-if="title" class="bullet-title">{{ title }}</strong>
         <ul v-if="list">
-            <li v-for="(item, index) in list" :key="`bullet-list-${index}`">
-                {{ item.text }}
-            </li>
+            <li
+                v-for="(item, index) in list"
+                :key="`bullet-list-${index}`"
+                v-html="item.text"
+            ></li>
         </ul>
     </div>
 </template>
@@ -27,4 +29,4 @@ export default class BulletList extends Vue {
 }
 </script>
 
-<style lang="scss" scoped src="./BulletList.scss"></style>
+<style lang="scss" src="./BulletList.scss"></style>

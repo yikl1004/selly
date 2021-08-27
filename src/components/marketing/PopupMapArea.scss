@@ -1,0 +1,36 @@
+@import "../common/AccoItem.scss";
+
+.list-area {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    li {
+        min-width: calc(33% - 5px);
+        margin: 8px 0 0 8px;
+        &:nth-child(3n + 1) {
+            margin-left: 0;
+        }
+        &:nth-child(-n+3) {
+            margin-top: 0;
+        }
+    }
+    &.list-dong {
+        margin-top: 32px;
+        padding-top: 32px;
+        border-top: 1px solid #ddd;
+    }
+}
+.btn-map-area {
+    display: block;
+    width: 100%;
+    height: 52px;
+    border: 1px solid #bbb;
+    border-radius: 10px;
+    text-align: center;
+    &.active {
+        border:2px solid $primary-color;
+        color: $primary-color;
+        font-weight: 700;
+    }
+}

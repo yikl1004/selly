@@ -87,8 +87,9 @@
             </ul>
         </div>
 
+        <!--[D]클릭시 자세히 보기 > 간략히 보기 로 텍스트변경 및 active 클래스 추가 필요-->
         <BasicButton v-if="type !== 'complete'" type="more" @click="onMore">
-            더보기
+            자세히 보기
         </BasicButton>
     </div>
 </template>
