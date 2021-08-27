@@ -20,10 +20,7 @@ try {
     shell.rm('-rf', ['./dist', './dist.zip'])
 
     const now = dayjs().format('YYYYMMDD')
-    const githash = child
-        .execSync('git rev-parse --short HEAD')
-        .toString()
-        .trim()
+    const githash = child.execSync('git rev-parse --short HEAD').toString().trim()
     const rootPath = `${now}_${githash}`
 
     child.execSync(`yarn build --mode ${staging}`, {

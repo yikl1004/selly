@@ -2,7 +2,7 @@
     "extends": "./tsconfig.base.json",
     "compilerOptions": {
         "target": "es2021",
-        "module": "esnext",
+        "module": "CommonJS",
         "paths": {
             "@components/*": [
                 "src/components/*"

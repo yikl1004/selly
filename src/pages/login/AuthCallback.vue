@@ -10,8 +10,17 @@ import type { LoginInfo } from '@stores/modules/auth'
 
 @Component
 export default class AuthCallbakPage extends Vue {
+    private loadedKakaoSdk = false
+
     get loginInfo() {
         return AuthModule.loginInfoData
+    }
+
+    @Watch('kakaoApi')
+    changeKakaoApi(value: boolean) {
+        if (value) {
+            this.loadedKakaoSdk = true
+        }
     }
 
     // 로그인 정보에 따라 화면을 이동한다
@@ -80,21 +89,23 @@ export default class AuthCallbakPage extends Vue {
                     },
                 })
             } else {
-                this.$kakaoSdk.setAccessToken(res.data.access_token)
-
-                // 2. 카카오 로그인 사용자 정보 요청
-                const kakaoUserInfoResponse = await this.$kakaoSdk.userInfo(
-                    state,
-                )
-                // 3. 동의한 약관 항목 요청
-                const kakaoAgreedList = await this.$kakaoSdk.agreedList()
-                // 4. Mutation: Selly 로그인 API 요청 Parameter 세팅
-                AuthModule.setUserInfo({
-                    ...kakaoUserInfoResponse,
-                    ...kakaoAgreedList,
+                this.$nextTick().then(async () => {
+                    // 1. 토큰 받아오기
+                    this.$kakaoSdk.setAccessToken(res.data.access_token)
+                    // 2. 카카오 로그인 사용자 정보 요청
+                    const kakaoUserInfoResponse = await this.$kakaoSdk.userInfo(
+                        state,
+                    )
+                    // 3. 동의한 약관 항목 요청
+                    const kakaoAgreedList = await this.$kakaoSdk.agreedList()
+                    // 4. Mutation: Selly 로그인 API 요청 Parameter 세팅
+                    AuthModule.setUserInfo({
+                        ...kakaoUserInfoResponse,
+                        ...kakaoAgreedList,
+                    })
+                    // 5. Action: Selly 로그인 API 요청
+                    await AuthModule.getLoginInfo()
                 })
-                // 5. Action: Selly 로그인 API 요청
-                await AuthModule.getLoginInfo()
             }
         }
     }

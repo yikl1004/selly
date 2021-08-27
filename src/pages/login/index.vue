@@ -58,16 +58,21 @@
                     <span>연결끊기(탈퇴) - 테스트용</span>
                 </button>
             </div>
-            <form ref="datusForm" :action="datusFormData.url" method="post">
+            <form
+                v-if="datusLoginInfo"
+                ref="datusForm"
+                :action="datusLoginInfo.data.url"
+                method="post"
+            >
                 <input
                     type="hidden"
                     name="encdata"
-                    :value="datusFormData.encdata"
+                    :value="datusLoginInfo.data.encdata"
                 />
                 <input
                     type="hidden"
                     name="token"
-                    :value="datusFormData.token"
+                    :value="datusLoginInfo.data.token"
                 />
             </form>
         </PageBody>
@@ -100,18 +105,12 @@ export default class LoginPage extends Mixins(PageView) {
         return AuthModule.datusLoginInfoData
     }
 
-    get datusFormData() {
-        return {
-            url: this.datusLoginInfo?.data.url || '',
-            encdata: this.datusLoginInfo?.data.encdata || '',
-            token: this.datusLoginInfo?.data.token || '',
-        }
-    }
-
     @Watch('datusLoginInfo')
     changeDatusLoginInfo(value: AuthResponse['datusLoginInfo']) {
         if (value.data.rspDc === '01') {
-            ;(this.$refs.datusForm as HTMLFormElement).submit()
+            this.$nextTick().then(() => {
+                ;(this.$refs.datusForm as HTMLFormElement).submit()
+            })
         }
     }
 
@@ -131,11 +130,17 @@ export default class LoginPage extends Mixins(PageView) {
      * LOCA 2.0 앱 웹뷰에서 넘어 올때...
      */
     biznavAutoLogin() {
+        // bzNavToken // 비즈넵토큰
         if ('bzNavToken' in this.$route.query) {
-            // bzNavToken // 비즈넵토큰
-            // mrktPsyn    // 마케팅 메뉴 노출여부
-            // dgnm    // 사용자 이름
+            this.$edkHost.signUpBznav({
+                bznavSyncToken: this.$route.query.bzNavToken as string,
+            })
+            this.$edkHost.signInBznav({
+                bznavSyncToken: this.$route.query.bzNavToken as string,
+            })
         }
+        // mrktPsyn    // 마케팅 메뉴 노출여부
+        // dgnm    // 사용자 이름
     }
 
     // FIXME: 임시 사용, 삭제 요망
