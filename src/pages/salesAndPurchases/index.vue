@@ -121,6 +121,7 @@ export default class SalesAndPurchasesPage extends Vue {
             ) as HTMLDivElement).style.display = 'block'
         }
         this.$edkHost.openDataSync({
+            orgSyncId: '',
             eventListener: event => {
                 console.log('EVENT', event)
             },

@@ -90,6 +90,14 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
                 component: createAsyncPage(import('@pages/login/index.vue')),
             },
 
+            // 로그인 콜백
+            {
+                /** @complete */
+                path: '/authCallback',
+                name: 'Auth Callback',
+                component: createAsyncPage(import('@pages/login/AuthCallback.vue')),
+            },
+
             {
                 /** @complete */
                 path: '/join',
@@ -347,7 +355,7 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
                 name: 'Terms Detail',
                 component: createAsyncPage(import('@pages/config/terms/detail/index.vue')),
             },
-            // 연동 페이지
+            // 매출/입금 연동 페이지
             {
                 /** @complete */
                 path: '/salesAndPurchases',

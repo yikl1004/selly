@@ -24,7 +24,7 @@
             v-for="(item, index) in salesList"
             :key="`sales-list-item-${index}`"
         >
-            <Anchor href="/" class="box-sales-link">
+            <Anchor :href="getLink(item.slDc)" class="box-sales-link">
                 <span class="date">
                     {{ $dayjs(item.date).format('M월 D일(ddd) 기준') }}
                 </span>
@@ -89,6 +89,10 @@ export default class SalesAndDeposit extends Vue {
 
     salesOrDepositText(value: '0' | '1'): string {
         return value === '0' ? '매출' : '입금'
+    }
+
+    getLink(value: '0' | '1') {
+        return { name: value === '0' ? 'Sales' : 'Deposit' }
     }
 
     compareBeforeDay(

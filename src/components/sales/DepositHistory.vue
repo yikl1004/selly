@@ -86,6 +86,7 @@ export default class DepositHistory extends Vue {
             target.style.display = 'block'
         }
         this.$edkHost.openDataSync({
+            orgSyncId: '',
             eventListener(event) {
                 console.log(event)
             },

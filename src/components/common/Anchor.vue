@@ -1,14 +1,19 @@
 <template>
-    <a v-if="external || sameUri" :href="href" :target="anchorTarget">
+    <a
+        v-if="href && (external || sameUri)"
+        :href="href"
+        :target="anchorTarget"
+        data-a
+    >
         <slot />
     </a>
-    <router-link v-else :to="href">
+    <router-link v-else :to="href" data-route-link>
         <slot />
     </router-link>
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator'
+import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 
 const protocolRegExp = /https?/gi
 /**
@@ -18,23 +23,18 @@ const protocolRegExp = /https?/gi
  */
 @Component
 export default class Anchor extends Vue {
-    /** @Props */
-
     /** 이동할 uri */
-    @Prop({ type: String, default: '/', required: true })
+    @Prop({ type: [String, Object], default: '/', required: true })
     readonly href!: string | Location
 
-    /** router-link인 경우 tag 지정 */
-    @Prop({ type: String, default: 'a' })
-    readonly tag!: string
-
-    /** @Computed */
-
     /** 외부 링크 인지 판단 */
-    get external(): boolean {
-        return typeof this.href === 'string'
-            ? protocolRegExp.test(this.href)
-            : false
+    private external = protocolRegExp.test(this.href as string)
+
+    @Watch('href')
+    changeHref(value: string | object) {
+        if (typeof value === 'string') {
+            this.external = protocolRegExp.test(value)
+        }
     }
 
     /** 같은 uri 인지 판단 */

@@ -91,8 +91,8 @@ interface KakaoAuthAutorizeParameters {
     throughTalk?: boolean
     serviceTerms?: string
 }
-interface AuthStatusCallback {
-    (status: 'connected' | 'not_connected', user: KakaoUserInfoRes): void
+interface KakaoAuthStatusCallback {
+    (params: { status: 'connected' | 'not_connected'; user: KakaoUserInfoRes }): void
 }
 interface KakaoCert {
     cleanup(): void
@@ -111,6 +111,8 @@ interface KakaoCert {
         logout(callback?: Function): void
         /** 사용 중인 엑세스 토큰 확인 */
         getAccessToken(): string
+        /** 사용 할 엑세스 토큰 세팅 */
+        setAccessToken(token: string, persist?: boolean): void
     }
     API: {
         request(params: KakaoAPIRequestParams): void

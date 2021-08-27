@@ -5,7 +5,7 @@
         <!-- 신용카드 보유시 -->
         <div v-if="hasCard" class="box-price-info type-credit">
             <div class="box-info-top">
-                <span class="date">7월 8일(목) 기준</span>
+                <span class="date">{{ '기준일자 데이터 없음' }} 기준</span>
                 <div class="item-info">
                     <strong>결제 금액 한눈에 보기</strong>
                 </div>
@@ -13,18 +13,22 @@
             <div class="price-list">
                 <ul>
                     <li>
-                        <span class="subject">상환 금액</span>
-                        <strong class="price">26,000,000원</strong>
+                        <span class="subject">결제 예정 금액</span>
+                        <strong class="price">{{ amountToBePaid }}원</strong>
                     </li>
                     <li>
-                        <span class="subject">상환 금액</span>
-                        <strong class="price">26,000,000원</strong>
+                        <span class="subject">로카 코인</span>
+                        <strong class="price">{{ locaCoin }} P</strong>
                     </li>
                 </ul>
             </div>
             <div class="btn-area">
-                <BasicButton size="small">결제 금액 조회</BasicButton>
-                <BasicButton size="small">로카 코인 조회</BasicButton>
+                <BasicButton size="small" @click="toInquiryPaid">
+                    결제 금액 조회
+                </BasicButton>
+                <BasicButton size="small" @click="toLocaCoin">
+                    로카 코인 조회
+                </BasicButton>
             </div>
         </div>
 
@@ -33,7 +37,7 @@
             v-else
             :href="cardApplyURL"
             class="banner-box banner-credit"
-            style="background-image:url('/assets/main/img_credit.png)"
+            style="background-image: url('/assets/main/img_credit.png')"
         >
             <div class="banner-title">
                 <em>금융이자, 결제대금 납부까지 편리하게!</em>
@@ -59,6 +63,22 @@ export default class CreditCard extends Vue {
 
     get cardApplyURL() {
         return this.cardInfo?.cardUrl || ''
+    }
+
+    toLocaCoin() {
+        this.cardInfo?.locaCoinUrl && window.open(this.cardInfo?.locaCoinUrl)
+    }
+
+    toInquiryPaid() {
+        this.cardInfo?.todBilAmUrl && window.open(this.cardInfo?.todBilAmUrl)
+    }
+
+    amountToBePaid() {
+        return this._.toNumber(this.cardInfo?.todBilAm || '0').toLocaleString()
+    }
+
+    locaCoin() {
+        return this._.toNumber(this.cardInfo?.locaCoin || '0').toLocaleString()
     }
 }
 </script>

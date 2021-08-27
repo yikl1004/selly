@@ -24,13 +24,13 @@
                         label="가맹점 연락처"
                         name="phoneNumber"
                         placeholder="가맹점 연락처 입력"
-                        :maxlength="8"
+                        :maxlength="11"
                         :default-value="digit"
                         @change="digit = $event.value"
                     />
                     <!-- :list="prefixDigit"
                                 :error-message="digitErrorMessage" -->
-                    <BulletList :list="list" />
+                    <BulletList :list="guideList" />
                 </div>
             </div>
             <portal to="floating">
@@ -65,7 +65,7 @@ import { AuthModule } from '@stores/modules/auth'
  * 가맹점 번호에 따른 가맹점 정보를 조회하여 화면을 출력
  */
 @Component
-export default class FranchiseePage extends Vue {
+export default class FranchisePage extends Vue {
     get franchiseDetail() {
         return AuthModule.franchiseDetailData
     }
@@ -87,6 +87,15 @@ export default class FranchiseePage extends Vue {
     /** 주소 정보 */
     private addressItem: Omit<AddressItem, 'fieldName'> | null = null
 
+    /** 안내 문구 리스트 */
+    private guideList = [
+        { text: '롯데카드에 등록된 가맹점 정보가 변경됩니다.' },
+        {
+            text:
+                '가맹점 정보를 변경 시 마케팅. 대상 고객 수집에 시간이 소요되며, 변경 후 당일에는 마케팅 신청이 불가합니다.',
+        },
+    ]
+
     /** @Methods */
 
     digitValidator(value: string) {
@@ -95,22 +104,43 @@ export default class FranchiseePage extends Vue {
 
     onChangeAddress(value: AddressItem) {
         console.log('onChangeAddress', value)
-        this.schema.franchiseAdress = this._.omit(value, 'fieldName')
+        this.addressItem = this._.omit(value, 'fieldName')
     }
 
-    updateDetail() {
-        const phoneNumber = this.digit
-            .replace(/(^\d{2,3})(\d{3,4})(\d{4}$)/gi, '$1-$2-$3')
-            .split('-')
-        AuthModule.updateFranchiseDetail({
-            mcno: this.franchiseDetail?.mcno,
-            bpsnoAdd: this.addressItem?.value,
-            pnadd: this.addressItem?.road,
-            psno: this.addressItem?.zipcode,
-            ddd: phoneNumber[0],
-            exno: phoneNumber[1],
-            tlno: phoneNumber[2],
+    async validate(): Promise<boolean> {
+        return await new Promise(resolve => {
+            if (this.digit.length < 10) {
+                this.$modal.open({
+                    message: '가맹점 연락처 입력이 잘못되었습니다.',
+                    buttonText: {
+                        confirm: '확인',
+                    },
+                    confirm: () => {
+                        // nothing
+                    },
+                })
+                resolve(false)
+            } else {
+                resolve(true)
+            }
         })
+    }
+
+    async updateDetail() {
+        if (await this.validate()) {
+            const phoneNumber = this.digit
+                .replace(/(^\d{2,3})(\d{3,4})(\d{4}$)/gi, '$1-$2-$3')
+                .split('-')
+            await AuthModule.updateFranchiseDetail({
+                mcno: this.franchiseDetail?.mcno,
+                bpsnoAdd: this.addressItem?.value,
+                pnadd: this.addressItem?.road,
+                psno: this.addressItem?.zipcode,
+                ddd: phoneNumber[0],
+                exno: phoneNumber[1],
+                tlno: phoneNumber[2],
+            })
+        }
     }
 
     /** @Lifecycle */
@@ -132,28 +162,6 @@ export default class FranchiseePage extends Vue {
 
     beforeDestroy() {
         AuthModule.deleteFranchiseDetail()
-    }
-
-    /** 개발 적용 전 */
-
-    private list = [
-        { text: '롯데카드에 등록된 가맹점 정보가 변경됩니다.' },
-        {
-            text:
-                '가맹점 정보를 변경 시 마케팅. 대상 고객 수집에 시간이 소요되며, 변경 후 당일에는 마케팅 신청이 불가합니다.',
-        },
-    ]
-    private schema: { [key: string]: object | number | string | boolean } = {
-        franchiseAddress: '',
-        phoneNumber: '',
-    }
-
-    formChange(data: Schema) {
-        this.schema = data
-    }
-
-    onSubmit(data: Schema) {
-        console.log(data)
     }
 }
 </script>

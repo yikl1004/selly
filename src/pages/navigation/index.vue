@@ -60,10 +60,11 @@
 
 <script lang="ts">
 import { Component, Mixins, Watch } from 'vue-property-decorator'
-import PageView from '@utils/mixins/PageView'
-import menu from '@asstes/static/dummy/menu.json'
+import { axiosInstance } from '@services/http'
 import { AuthModule, LogoutInfo } from '@stores/modules/auth'
+import PageView from '@utils/mixins/PageView'
 import type { GnbItem } from '@stores/modules/ui'
+import axios from 'axios'
 
 @Component
 export default class NavigationPage extends Mixins(PageView) {
@@ -82,7 +83,7 @@ export default class NavigationPage extends Mixins(PageView) {
     private activeIndex = -1
 
     /** 메뉴 리스트 */
-    private gnbList: GnbItem[] = menu.gnbList
+    private gnbList: GnbItem[] = []
 
     /** @Computed */
 
@@ -126,6 +127,12 @@ export default class NavigationPage extends Mixins(PageView) {
     async logout() {
         await this.$kakaoSdk.logout()
         await AuthModule.getLogoutInfo()
+    }
+
+    /** @Lifecycle */
+    async created() {
+        const menuData = await axios.get('/assets/static/dummy/menu.json')
+        this.gnbList = menuData.data.gnbList
     }
 }
 </script>

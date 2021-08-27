@@ -46,7 +46,7 @@ class KakaoSDK {
         const KakaoSdk = window.Kakao
 
         if (!KakaoSdk.isInitialized()) {
-            KakaoSdk.init(process.env.VUE_APP_KAKAO_API_KEY)
+            KakaoSdk.init(this.apiKey)
         }
 
         this.kakaoApi = window.Kakao
@@ -88,10 +88,6 @@ class KakaoSDK {
                 success: (res: KakaoUserInfoRes) => {
                     console.log('/v2/user/me, 카카오에 요청한 유저정보', res)
                     resolve({
-                        // ciNo: res.kakao_account.ci,
-                        // ciNo: 'rBEQQb+3pmYqPCNP4YwatvxlgA//fZ57i+RXx2NWrlXaoRWI/Zpo4VALx+eA0drMOTfdYPtDiGmOTHiiWIffTw==',
-                        // ciNo: '8FsPBb/e2PxJLYQv22nQOKFNx7PTJTa6UoPNmx3b5eo94hjVhwc3FIFYsl8lbwKEL3d91h7nbdXl2pBmkFaOcg==', // 03 (가입불가)
-                        // ciNo: 'ED4YJ80zZDOrVurxQJeQgzze/lkHapSfQlnzHCUUKMtuyy9E+m9zR3oFXMYM/JXuRlDLfOb1YE+PV41q4ec44g==', // 02 (사업자정보 1개)
                         ciNo: ciNo || res.kakao_account.ci, // 사업자 정보 2개
                         cellNo: basicUtil.cellPhoneFormatter(res.kakao_account.phone_number),
                         email: res.kakao_account.email,
@@ -101,6 +97,38 @@ class KakaoSDK {
             })
         })
     }
+
+    /**
+     * 인가코드 발급
+     * @returns {Promise<void>}
+     */
+    async authorize(testCiNo?: string): Promise<void> {
+        return await this.kakaoApi.Auth.authorize({
+            redirectUri: `${process.env.VUE_APP_API_DOMAIN}/authCallback`,
+            throughTalk: true,
+            state: testCiNo,
+        })
+    }
+
+    setAccessToken(token: string) {
+        this.kakaoApi.Auth.setAccessToken(token)
+    }
+
+    /**
+     * 사용자 정보 가져오기
+     * @return {Promise<KakaoUserInfoRes>}
+     */
+    // async getStatusInfo(): Promise<KakaoUserInfoRes> {
+    //     return await new Promise((resolve, reject) => {
+    //         this.kakaoApi.Auth.getStatusInfo(({ status, user }) => {
+    //             if (status === 'connected') {
+    //                 resolve(user)
+    //             } else {
+    //                 reject('[KakaoTalk] 사용자 정보 가져오기에 실패 했습니다.')
+    //             }
+    //         })
+    //     })
+    // }
 
     /**
      * 카카오 로그인
@@ -161,6 +189,7 @@ class KakaoSDK {
                 const script = document.createElement('script')
                 script.id = 'kakao-login-sdk'
                 script.src = 'https://developers.kakao.com/sdk/js/kakao.min.js'
+
                 document.head.appendChild(script)
 
                 script.onload = () => {
@@ -170,21 +199,10 @@ class KakaoSDK {
             }
         })
     }
-
-    /** @category Life-Cycle */
-
-    // async created() {
-    //     await this.loadScript()
-    //     this.kakaoInitialize()
-    // }
-
-    // beforeMount() {
-    //     this.kakaoApi = window.Kakao
-    // }
 }
 
 const KakaoSdkPlugin: PluginObject<PluginOptions> = {
-    install(_Vue, options) {
+    async install(_Vue, options) {
         if (typeof options === 'undefined') {
             throw new Error('[KakaoSdkPlugin]: options을 추가해 주세요.')
         }
@@ -193,14 +211,13 @@ const KakaoSdkPlugin: PluginObject<PluginOptions> = {
             apiKey,
         })
 
-        sdk.loadScript().then(() => {
-            sdk.initialize()
+        await sdk.loadScript()
+        sdk.initialize()
 
-            Object.defineProperty(_Vue.prototype, '$kakaoSdk', {
-                enumerable: true,
-                configurable: true,
-                value: sdk,
-            })
+        Object.defineProperty(_Vue.prototype, '$kakaoSdk', {
+            enumerable: true,
+            configurable: true,
+            value: sdk,
         })
     },
 }

@@ -105,33 +105,30 @@ export default class EDKSample extends Vue {
             bznavSyncToken: 'syncTokenTest',
         })
     }
-
     signUpBznav() {
         this.$edkHost.signUpBznav({
             bznavSyncToken: 'syncTokenTest',
         })
     }
-
     signOutBznav() {
         this.$edkHost.signOutBznav({})
     }
-
     openDataSync() {
         this.$edkHost.openDataSync({
+            orgSyncId: 'ORG_SYNC_ID',
             eventListener: event => {
                 console.log('EVENT', event)
             },
         })
     }
-
     openInsight() {
         this.$edkHost.openInsight({
+            orgSyncId: 'ORG_SYNC_ID',
             eventListener: event => {
                 console.log('EVENT', event)
             },
         })
     }
-
     openDevtool() {
         this.$edkHost.openDevtool({
             eventListener: event => {

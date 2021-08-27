@@ -1,11 +1,6 @@
 <template>
     <div class="address-field">
         <LabelTitle :hidden-label="hiddenLabel" :label="label" />
-        <!-- <div class="address-box">
-            <BasicButton size="medium" @click="openPopup">
-                주소 찾기
-            </BasicButton>
-        </div> -->
         <div class="flex">
             <div class="input-area readonly">
                 <input

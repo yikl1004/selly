@@ -32,7 +32,7 @@ const navigationGuard: SellyNavigationGuard = {
          */
 
         // 세션 연장
-        if (to.name !== 'Login') {
+        if (['Login', 'Auth Callback'].every(item => item !== to.name)) {
             await store.dispatch('common/getLoginExtendInfo')
         }
         next()

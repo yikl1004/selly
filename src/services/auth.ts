@@ -121,6 +121,16 @@ export interface AuthResponse {
             rspDc: '01' | '02' | '03' | ''
             // S: 정회원, J: 준회원
             mbrDc: 'S' | 'J' | ''
+            // 셀리에서 생성하는 비즈넵 JWT토큰
+            bzNavToken: string
+            // ?? 날짜인데
+            date: string
+            // 대표자이름
+            dgNm: string
+            // 대출매뉴 노출 여부
+            finMenYn: YN
+            // 마케팅 가능여부
+            mrktPsyn: YN
         } | null
     }
     memberWorkplaceInfo: {

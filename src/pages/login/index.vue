@@ -22,13 +22,6 @@
                 <button
                     type="button"
                     class="btn-kakao-login"
-                    @click="bisinessManLoanLogin"
-                >
-                    <span>사업자 대출 - 카드: N, 정회원</span>
-                </button>
-                <button
-                    type="button"
-                    class="btn-kakao-login"
                     @click="bizloanLogin"
                 >
                     <span>비즈론 - 카드: Y, 정회원</span>
@@ -43,9 +36,16 @@
                 <button
                     type="button"
                     class="btn-kakao-login"
+                    @click="bisinessManLoanLogin"
+                >
+                    <span>사업자 대출 - 카드: N, 정회원</span>
+                </button>
+                <button
+                    type="button"
+                    class="btn-kakao-login"
                     @click="immediatelyLoanLogin"
                 >
-                    <span>즉시대출</span>
+                    <span>즉시대출 - 카드: N, 준회원</span>
                 </button>
                 <button type="button" class="btn-kakao-login" @click="withdraw">
                     <span>연결끊기(탈퇴) - 테스트용</span>
@@ -60,7 +60,12 @@ import { Component, Mixins, Watch } from 'vue-property-decorator'
 import { AuthModule, LoginInfo } from '@stores/modules/auth'
 import { CommonModule } from '@stores/modules/common'
 import PageView from '@utils/mixins/PageView'
+import axios from 'axios'
 
+/**
+ * TODO: 유쇼데 로그인 버튼만들기
+ *
+ */
 @Component({
     beforeRouteEnter(to, from, next) {
         const alreadyLogin = CommonModule.loginExtendInfoData?.rc === '0000'
@@ -68,31 +73,7 @@ import PageView from '@utils/mixins/PageView'
     },
 })
 export default class LoginPage extends Mixins(PageView) {
-    get loginInfo() {
-        return AuthModule.loginInfoData
-    }
-
-    // 로그인 정보에 따라 화면을 이동한다
-    @Watch('loginInfo')
-    changeLoginInfo(value: LoginInfo /* oldValue: LoginInfo | null */) {
-        switch (value?.rspDc) {
-            // 최초 회원가입, 사업자확인으로 이동(가입 절차)
-            case '01':
-                this.$router.push({ name: 'Join', params: { step: '1' } })
-                break
-            // 기존가입자: 메인으로 이동
-            case '02':
-                this.$router.push({ name: 'Main' })
-                break
-            // 가입불가 대상
-            case '03':
-                this.$router.push({ name: 'Join', params: { step: '-1' } })
-                break
-            default:
-                alert('rspDc 가 null 입니다.')
-                break
-        }
-    }
+    private token = ''
 
     /** @category Methods */
 
@@ -102,19 +83,19 @@ export default class LoginPage extends Mixins(PageView) {
          * @reference https://developers.kakao.com/docs/latest/ko/reference/rest-api-reference
          */
 
-        // 1. 카카오 로그인 요청
-        await this.$kakaoSdk.login()
-        // 2. 카카오 로그인 사용자 정보 요청
-        const kakaoUserInfoResponse = await this.$kakaoSdk.userInfo(ciNo)
-        // 3. 동의한 약관 항목 요청
-        const kakaoAgreedList = await this.$kakaoSdk.agreedList()
-        // 4. Mutation: Selly 로그인 API 요청 Parameter 세팅
-        AuthModule.setUserInfo({
-            ...kakaoUserInfoResponse,
-            ...kakaoAgreedList,
-        })
-        // 5. Action: Selly 로그인 API 요청
-        await AuthModule.getLoginInfo()
+        // 0. 카카오 인가 코드 요청
+        await this.$kakaoSdk.authorize(ciNo)
+    }
+
+    /**
+     * LOCA 2.0 앱 웹뷰에서 넘어 올때...
+     */
+    biznavAutoLogin() {
+        if ('bzNavToken' in this.$route.query) {
+            // bzNavToken // 비즈넵토큰
+            // mrktPsyn    // 마케팅 메뉴 노출여부
+            // dgnm    // 사용자 이름
+        }
     }
 
     // FIXME: 임시 사용, 삭제 요망
@@ -143,7 +124,7 @@ export default class LoginPage extends Mixins(PageView) {
         )
     }
 
-    // 즉시대출
+    // 즉시대출 대상(카드 N, 준회원)
     immediatelyLoanLogin() {
         this.login('TESTCIJ')
     }
