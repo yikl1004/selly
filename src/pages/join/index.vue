@@ -1,7 +1,7 @@
 <template>
-    <Page :floating="step === 1">
-        <Header type="title" title="사업자 정보" />
-        <PageBody :class="{ floating: step === 1 }">
+    <Page floating :footer="false">
+        <Header v-if="step === 1" type="title" title="사업자 정보" />
+        <PageBody class="floating">
             <SelectStore
                 v-if="step === 1"
                 :workplace-list="workplaceList"

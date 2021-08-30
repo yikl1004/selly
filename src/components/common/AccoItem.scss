@@ -55,11 +55,14 @@
                 padding: 20px 0;
                 font-size: 14px;
                 line-height: 1.57;
+                .tit {
+                    font-weight: 500;
+                }
                 &:after {
                     right: 0;
                 }
             }
-            .acco-cont {
+            .acco-cont .acco-cont-inner{
                 padding: 13px 0 40px;
             }
         }

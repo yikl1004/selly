@@ -52,6 +52,8 @@ import RecommenderBox from '@components/common/RecommenderBox.vue'
 
 //common popup
 import PopupAddressFind from '@components/common/PopupAddressFind.vue'
+import PopupTermsUse from '@components/common/PopupTermsUse.vue'
+import PopupTermsPrivacy from '@components/common/PopupTermsPrivacy.vue'
 
 // layouts
 import Page from '@layout/Page.vue'
@@ -116,6 +118,8 @@ const componentList: { [key: string]: VueConstructor | AsyncComponent }[] = [
 
     //popup common
     { PopupAddressFind },
+    { PopupTermsUse },
+    { PopupTermsPrivacy },
 
     // layouts
     { Page },
