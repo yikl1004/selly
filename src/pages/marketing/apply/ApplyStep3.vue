@@ -42,6 +42,14 @@
                 <ApplyResult type="complete" />
                 <BulletList :list="infoResult" />
 
+                <Title title="프로모션 제휴 필수사항 확인" type="h3" />
+                <CheckBoxGroup
+                    name="group1"
+                    value="TOUCH 프로모션 제휴 약관 동의"
+                    label="프로모션 제휴 필수사항 확인"
+                    :hidden-label="true"
+                />
+
                 <!--[P] 아코디언 내용으로 하단의 bullet-list가 들어가야함. 개발 수정 요청중.-->
                 <AccoItem :list="accordionList" />
             </div>

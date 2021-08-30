@@ -12,6 +12,9 @@
     .check-box-area {
         display: flex;
         @include border-box;
+        align-items: center;
+        height: auto;
+        min-height: 56px;
     }
     .btn-checkbox {
         display: block;
