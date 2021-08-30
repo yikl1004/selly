@@ -60,7 +60,7 @@ export default class AuthCallbakPage extends Vue {
             const data = makeFormData({
                 grant_type: 'authorization_code',
                 client_id: process.env.VUE_APP_KAKAO_REST_API_KEY,
-                redirect_uri: 'http://selly.lottecard.com:8080/authCallback',
+                redirect_uri: `${process.env.VUE_APP_API_DOMAIN}/authCallback`, //'http://selly.lottecard.com:8080/authCallback',
                 code,
                 // client_secret: 'tWLSIRAEqbtjXxrKJj6IWSoIopYUq2kW',
             })
