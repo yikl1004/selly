@@ -2,18 +2,30 @@
     <div class="content pd-btm">
         <div class="select-store-wrap">
             <div class="select-store">
-                <div class="store-user-info">
+                <div v-if="type === 'addBusiness'" class="store-user-info">
                     <strong>
-                        {{ workplaceOwnerName }} 사장님<br />
-                        사업자정보를 확인하세요.
+                        {{ workplaceOwnerName }} 사장님<br />사업자정보를
+                        확인하세요.
+                    </strong>
+                    <p>
+                        롯데카드에 등록된 사업자는 해지를 할 수 없습니다.<br />서비스를
+                        이용하지 않는 사업자는 체크를 해지해주세요.
+                    </p>
+                </div>
+
+                <div v-else class="store-user-info">
+                    <strong>
+                        {{ workplaceOwnerName }} 사장님<br />아래 사업자 정보로
+                        회원가입이<br />완료되었습니다.
                     </strong>
 
                     <p>
-                        가입을 원하지 않는 사업자의 경우 체크를 해지 해주세요.
-                        <br />
-                        (정 사업자의 경우는 체크해지가 불가 합니다.)
+                        가입을 원하지 않는 사업자의 경우 체크를 해지
+                        해주세요.<br />(정 사업자의 경우는 체크해지가 불가
+                        합니다.)
                     </p>
                 </div>
+
                 <div class="user-store-list">
                     <CheckBoxBlock
                         v-for="(item, index) in workplaceList"
@@ -30,7 +42,10 @@
                 </div>
             </div>
 
-            <div v-if="isFirstJoin" class="recommender-box">
+            <RecommenderBox v-if="isFirstJoin" />
+
+            <!--210830 컴포넌트로 따로 뺌. 컴포넌트 이상없을시 해당 부분 삭제 부탁. -->
+            <!-- <div v-if="isFirstJoin" class="recommender-box">
                 <CheckBox
                     id="recommenderCheck"
                     label="추천인이 있으시면 체크해주세요. (선택)"
@@ -49,7 +64,7 @@
                     :disabled="false"
                     @search="onClickRecommenderCode"
                 />
-            </div>
+            </div> -->
         </div>
         <portal to="floating">
             <BasicButton
@@ -57,14 +72,14 @@
                 size="large"
                 @click="onNext"
             >
-                확인
+                {{ type === 'addBusiness' ? '저장' : '확인' }}
             </BasicButton>
         </portal>
     </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue, Watch } from 'vue-property-decorator'
+import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 import { OnSelectValue } from '@components/form/CheckBoxBlock.vue'
 import type { BizInfoItem, BusinessPlaceListItem } from '@services/auth'
 import { AuthModule } from '@stores/modules/auth'
@@ -72,6 +87,9 @@ import { AuthModule } from '@stores/modules/auth'
 @Component
 export default class SelectStorePage extends Vue {
     /** @Props */
+    /** 디자인용 prop */
+    @Prop({ type: String })
+    readonly type!: string
 
     /** @Stores */
     get workplaceOwnerName() {

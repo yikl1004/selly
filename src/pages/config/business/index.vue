@@ -8,6 +8,7 @@
                         id="dropdown-box01"
                         label="사업자 선택"
                         :list="businessManList"
+                        type="large"
                         @select="onSelectBusinessMan"
                     />
                     <div class="btn-area">
@@ -15,9 +16,8 @@
                             type="textBlue"
                             @click="openPopupAddBusinessMan"
                         >
-                            사업자 추가
+                            사업자 추가 및 해지
                         </BasicButton>
-                        <BasicButton type="textBlue"> 사업자 삭제 </BasicButton>
                     </div>
                     <ButtonField
                         id="name"
@@ -47,13 +47,13 @@
                 </div>
             </div>
             <FullPopup
-                title="사업자추가"
+                title="사업자 추가 및 해지"
                 type="popup"
                 :show.sync="showAddBusinessManPopup"
-                :button-text="{ confirm: '사업자 추가' }"
+                :button-text="{ confirm: '저장' }"
                 @confirm="onConfirm"
             >
-                <SelectStore />
+                <SelectStore type="addBusiness" />
             </FullPopup>
         </PageBody>
     </Page>
