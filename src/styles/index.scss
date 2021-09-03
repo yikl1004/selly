@@ -36,6 +36,9 @@
         }
     }
     &.no-padding {
+        .content {
+            padding: 0;
+        }
         & > .caution-box {
             padding-bottom: 200px;
         }
@@ -65,6 +68,9 @@
     }
     .caution-box + .box-info-wrap {
         margin-top: 48px;
+    }
+    .box-form {
+        margin-top: 24px;
     }
 }
 
@@ -137,6 +143,10 @@
         width: 50%;
         .label-title-box {
             margin: 0;
+            .label {
+
+            font-size: 12px;
+            }
         }
     }
     .field-cont {

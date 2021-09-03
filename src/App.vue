@@ -2,7 +2,7 @@
     <div class="site-wrapper">
         <router-view />
         <PortalTarget name="bottomSheet" multiple />
-        <PortalTarget name="modal" />
+        <PortalTarget name="modal" multiple />
         <Loading v-if="isLoading" />
         <Modal
             v-if="modalProps.message"
