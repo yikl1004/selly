@@ -208,43 +208,52 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
                     },
                 ],
             },
-            // s : 마케팅
+
+            // 쿠폰만들기 - 안내페이지
             {
-                path: '/marketing',
-                name: 'Marketing',
-                component: createAsyncPage(import('@pages/marketing/index.vue')),
+                /** @working */
+                path: '/marketing/couponCreation',
+                name: 'Marketing Coupon Creation Guide',
+                component: createAsyncPage(import('@pages/marketing/couponCreation/index.vue')),
+                meta: {
+                    title: '쿠폰 만들기',
+                },
             },
             //쿠폰만들기_step1
             {
-                path: '/marketing/couponapply',
-                name: 'CouponApply',
-                component: createAsyncPage(import('@pages/marketing/apply/index.vue')),
+                /** @working */
+                path: '/marketing/couponCreation/stepFirst',
+                name: 'Marketing Coupon Creation Step 1',
+                component: createAsyncPage(import('@pages/marketing/couponCreation/StepFirst.vue')),
                 meta: {
                     floating: true,
+                    title: '쿠폰 만들기',
                 },
             },
             //쿠폰만들기_step2
             {
-                path: '/marketing/couponapply2',
-                name: 'CouponApply',
+                path: '/marketing/couponCreation/stepSecond',
+                name: 'Marketing Coupon Creation Step 2',
                 component: createAsyncPage(import('@pages/marketing/apply/ApplyStep2.vue')),
                 meta: {
                     floating: true,
+                    title: '쿠폰 만들기',
                 },
             },
             //쿠폰만들기_step3
             {
-                path: '/marketing/couponapply3',
-                name: 'CouponApply',
+                path: '/marketing/couponCreation/stepThird',
+                name: 'Marketing Coupon Creation Step 3',
                 component: createAsyncPage(import('@pages/marketing/apply/ApplyStep3.vue')),
                 meta: {
                     floating: true,
+                    title: '쿠폰 만들기',
                 },
             },
 
             //신청내역
             {
-                path: '/marketing/history',
+                path: '/marketing/application',
                 name: 'CouponHistory',
                 component: createAsyncPage(import('@pages/marketing/history/index.vue')),
                 meta: {

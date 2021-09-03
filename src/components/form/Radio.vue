@@ -6,13 +6,14 @@
             :name="name"
             :disabled="disabled"
             :checked="checked"
+            @change.prevent="onChange($event.target.value)"
         />
         <i>{{ label }}</i>
     </label>
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
+import { Component, Prop, Vue } from 'vue-property-decorator'
 
 export interface RadioProps {
     value: string
@@ -24,13 +25,9 @@ export interface RadioProps {
 
 @Component
 export default class Radio extends Vue {
-    /**
-     * @category Prop
-     */
-
     /** form id */
-    // @Prop({ type: String, required: true })
-    // readonly id!: string
+    @Prop({ type: String, required: true })
+    readonly id!: string
 
     /** label text */
     @Prop({ type: String, required: true })
@@ -52,32 +49,16 @@ export default class Radio extends Vue {
     @Prop({ type: Boolean, default: false })
     readonly checked!: boolean
 
-    /**
-     * @category Data
-     */
-
     /** value */
-    private value: boolean = this.checked || false
+    @Prop({ type: String, default: '' })
+    readonly value!: string
 
-    /**
-     * @category Watch
-     */
-
-    @Watch('checked')
-    changeChecked(newValue: boolean /* oldValue: boolean */) {
-        this.value = newValue
+    onChange(value: boolean) {
+        /**
+         * @event change
+         */
+        this.$emit('change', value)
     }
-
-    /**
-     * @category Methods
-     */
-
-    /** 초기화 */
-    init() {
-        this.value = this.checked || false
-    }
-
-    /* onChange() {} */
 }
 </script>
 

@@ -24,7 +24,12 @@
             </div>
 
             <!-- 프로세스 취소버튼 -->
-            <button v-if="isProcess" type="button" class="btn-proccess-cancel">
+            <button
+                v-if="isProcess"
+                type="button"
+                class="btn-proccess-cancel"
+                @click="onCancel"
+            >
                 <span>취소</span>
             </button>
 
@@ -110,6 +115,20 @@ export default class Header extends Vue {
 
     onClose() {
         this.toggle = false
+    }
+
+    /** 신청 프로세스 중 취소 */
+    onCancel() {
+        this.$modal.open({
+            message: `${this.$route.meta?.title || ''} 신청을 취소합니다.`,
+            buttonText: {
+                confirm: '확인',
+                cancel: '취소',
+            },
+            confirm: () => {
+                this.$router.push({ name: 'Main' })
+            },
+        })
     }
 }
 </script>

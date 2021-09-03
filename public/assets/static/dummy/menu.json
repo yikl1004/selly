@@ -41,12 +41,16 @@
             ]
         },
         {
-            "name": "마케팅",
-            "path": "*",
+            "name": "쿠폰만들기",
+            "path": "/marketing",
             "children": [
                 {
-                    "name": "마케팅 신청",
-                    "path": "/applyMarketing"
+                    "name": "쿠폰만들기",
+                    "path": "/couponCreation"
+                },
+                {
+                    "name": "신청내역",
+                    "path": "/applicationDetail"
                 }
             ]
         },

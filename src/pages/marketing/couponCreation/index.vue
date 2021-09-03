@@ -107,17 +107,24 @@
             </div>
 
             <portal to="floating">
-                <BasicButton size="large">신청하기</BasicButton>
+                <BasicButton size="large" @click="toApply">
+                    신청하기
+                </BasicButton>
             </portal>
         </PageBody>
     </Page>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Mixins } from 'vue-property-decorator'
+import PageView from '@utils/mixins/PageView'
 
 @Component
-export default class MarketingPage extends Vue {}
+export default class MarketingPage extends Mixins(PageView) {
+    toApply() {
+        this.$router.push({ name: 'Marketing Coupon Creation Step 1' })
+    }
+}
 </script>
 
-<style lang="scss" src="./Marketing.scss" />
+<style lang="scss" src="./index.scss" />

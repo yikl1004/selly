@@ -45,6 +45,41 @@ export interface MainResponse {
             scrapDc: Scrapping
             // 대표자명
             dgNm: string
+            // 마케팅 정보 리스트
+            list1:
+                | {
+                      // 할인율
+                      dcR: string
+                      // 행사 종료일자
+                      evEdt: string
+                      // 행사 시작일자
+                      evSdt: string
+                      // 집계 구분 명
+                      ggDNm: string
+                      // 집계 구분 코드
+                      ggDc: string
+                      // 가맹점 명
+                      mcNm: string
+                      // 마케팅 신청 일자
+                      mrktAplDt: string
+                      // 마케팅 혜택 내용
+                      mrktBnfCn: string
+                      // 마케팅 신청 일련번호
+                      mrktCtsSeq: string
+                      // 마케팅 상태 코드
+                      mrktStc:
+                          | '01' // 접수완료
+                          | '02' // 준비중
+                          | '03' // 진행예정
+                          | '04' // 진행중
+                      // 목표 대상 고객수
+                      trgOjCstt: string
+                      // 이용고객수
+                      ucstt: string
+                      // 이용건수
+                      uct: string
+                  }[]
+                | null
         }
     }
 }

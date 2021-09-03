@@ -7,7 +7,7 @@ import vLogger from '@utils/plugins/logger'
 import Modal from '@utils/plugins/modal'
 import Edk from '@utils/plugins/Edk'
 import KakaoSdkPlugin from '@utils/plugins/kakao-sdk'
-import VScrollLock from 'v-scroll-lock'
+import ScrollLock from '@utils/plugins/scroll-lock'
 
 // [개발용]
 import VueToast from 'vue-toast-notification'
@@ -53,11 +53,7 @@ const registerPlugins = (): void => {
     })
 
     // 스크롤 차단
-    Vue.use(VScrollLock, {
-        bodyScrollOptions: {
-            reserveScrollBarGap: true,
-        },
-    })
+    Vue.use(ScrollLock)
 }
 
 export default registerPlugins

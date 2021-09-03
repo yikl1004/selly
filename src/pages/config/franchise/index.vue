@@ -45,20 +45,10 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import axios from 'axios'
-import type { Schema } from '@components/form/FormProvider.vue'
+import { AuthModule } from '@stores/modules/auth'
+// import type { Schema } from '@components/form/FormProvider.vue'
 import type { DropdownBoxList } from '@components/form/DropdownBox.vue'
 import type { AddressItem } from '@components/form/AddressField.vue'
-import { AuthModule } from '@stores/modules/auth'
-
-// interface Data {
-//     buttonField: string
-//     calendarField: string
-//     checkSingle: boolean
-//     secretNumber: string
-//     singleSelection: string
-//     switchButton: boolean
-//     textFieldPrimary: string
-// }
 
 /**
  * @description

@@ -114,7 +114,7 @@ export default class CheckBoxGroup extends Vue {
     readonly hiddenLabel!: boolean
 
     /** 체크박스 리스트 */
-    @Prop({ type: Array, default: () => [], required: true })
+    @Prop({ type: Array, default: () => [] })
     readonly list!: CheckListItem[]
 
     @Prop({ type: String, default: 'normal' })

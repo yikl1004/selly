@@ -1,8 +1,6 @@
 import { Module, VuexModule, MutationAction, Mutation, getModule } from 'vuex-module-decorators'
 import store from '@stores/index'
 import MainService, { MainResponse } from '@services/main'
-// import { basicUtil } from '@utils/mixins'
-// import { $dayjs } from '@utils/plugins/dayjs'
 
 export interface MainState {
     mainInfo: MainInfo | null

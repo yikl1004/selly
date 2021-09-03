@@ -1,9 +1,9 @@
 <template>
     <div class="site-wrapper">
+        <Loading v-if="isLoading" />
         <router-view />
         <PortalTarget name="bottomSheet" multiple />
-        <PortalTarget name="modal" />
-        <Loading v-if="isLoading" />
+        <PortalTarget name="modal" multiple />
         <Modal
             v-if="modalProps.message"
             :show.sync="modalProps.show"

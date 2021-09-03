@@ -1,5 +1,5 @@
 <template>
-    <Page floating :footer="false">
+    <Page floating>
         <Header type="proccess" title="쿠폰 만들기" />
         <PageBody class="floating">
             <div class="content">
@@ -44,10 +44,11 @@
 
                 <Title title="프로모션 제휴 필수사항 확인" type="h3" />
                 <CheckBoxGroup
+                    id="sdkljflsdkfj"
                     name="group1"
                     value="TOUCH 프로모션 제휴 약관 동의"
                     label="프로모션 제휴 필수사항 확인"
-                    :hidden-label="true"
+                    hidden-label
                 />
 
                 <!--[P] 아코디언 내용으로 하단의 bullet-list가 들어가야함. 개발 수정 요청중.-->

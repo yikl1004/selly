@@ -60,7 +60,6 @@
 
 <script lang="ts">
 import { Component, Mixins, Watch } from 'vue-property-decorator'
-import { axiosInstance } from '@services/http'
 import { AuthModule, LogoutInfo } from '@stores/modules/auth'
 import PageView from '@utils/mixins/PageView'
 import type { GnbItem } from '@stores/modules/ui'

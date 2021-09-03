@@ -126,132 +126,88 @@ export interface AuthParameters {
 }
 
 export interface AuthResponse {
-    loginInfo: {
-        rc: ResponseCode
-        rsMsg: string
-        data: {
-            // 01: 로그인 완료(메인으로 이동), 02: 회원가입 후 등록한 사업자번호 없음(회원가입 절차 진행)
-            rspDc: '01' | '02' | '03' | ''
-            // S: 정회원, J: 준회원
-            mbrDc: 'S' | 'J' | ''
-            // 셀리에서 생성하는 비즈넵 JWT토큰
-            bzNavToken: string
-            // ?? 날짜인데
-            date: string
-            // 대표자이름
-            dgNm: string
-            // 대출매뉴 노출 여부
-            finMenYn: YN
-            // 마케팅 가능여부
-            mrktPsyn: YN
-        } | null
-    }
-    datusLoginInfo: {
-        data: {
-            encdata: string
-            rspDc:
-                | '01' // 유쇼데 페이지 open post
-                | '02' // 회원가입 불가
-            token: string
-            url: string
-        }
-        rc: '0000'
-        rsMsg: '정상처리 되었습니다.'
-    }
-    memberWorkplaceInfo: {
-        rc: ResponseCode
-        rsMsg: string
-        data: {
-            list: [
-                {
-                    bzno: string
-                    bzmanNm: string
-                    ltRgyn: YN
-                    locaMcYn: YN
-                },
-            ]
-            mbrNm: string
-        }
-    }
-    bizInfo: {
-        rc: ResponseCode
-        rsMsg: string
-        data: {
-            // 회원 이름
-            mbrNm: string
-            // 사업자 리스트
-            list: BusinessPlaceListItem[]
-        }
-    }
-    logoutInfo: {
-        rc: ResponseCode
-        rsMsg: string
-        data: null
-    }
-    recommenderCode: {
-        rc: ResponseCode
-        rsMsg: string
-        data: null | object
-    }
-    memberInfo: {
-        rc: ResponseCode
-        rsMsg: string
-        data: {
-            mbrNm: string
-            kkoId: string
-            cellNo: string
-            mrktYn: YN
-            loanYn: YN
-            bizLoanYn: YN
-            datusYn: YN
-        }
-    }
-    withdrawal: {
-        rc: ResponseCode
-        rsMsg: string
-        data: null
-    }
-    beforeWithdrawal: {
-        rc: ResponseCode
-        rsMsg: string
-        data: {
-            list: { rsgDesc: string }[]
-        }
-    }
-    businessMainInfo: {
-        rc: ResponseCode
-        rsMsg: string
-        data: {
-            list: BusinessManInfoListItem[]
-        }
-    }
-    franchiseDetail: {
-        rc: ResponseCode
-        rsMsg: string
-        data: {
-            mcno: string
-            mcNm: string
-            psno: string
-            pnadd: string
-            bpsnoAdd: string
-            ddd: string
-            exno: string
-            tlno: string
-        }
-    }
-    changeBusinessManName: {
-        rc: ResponseCode
-        rsMsg: string
-        data: {
-            list: {
-                bzno: string
-                bzmanNm: string
-                ltRgyn: YN
-                locaMcYn: YN
-            }[]
-            mbrNm: string
-        }
-    }
+    loginInfo: DefaultResponse<{
+        // 01: 로그인 완료(메인으로 이동), 02: 회원가입 후 등록한 사업자번호 없음(회원가입 절차 진행)
+        rspDc: '01' | '02' | '03' | ''
+        // S: 정회원, J: 준회원
+        mbrDc: 'S' | 'J' | ''
+        // 셀리에서 생성하는 비즈넵 JWT토큰
+        bzNavToken: string
+        // ?? 날짜인데
+        date: string
+        // 대표자이름
+        dgNm: string
+        // 대출매뉴 노출 여부
+        finMenYn: YN
+        // 마케팅 가능여부
+        mrktPsyn: YN
+    } | null>
+    datusLoginInfo: DefaultResponse<{
+        rspDc:
+            | '01' // 유쇼데 페이지 open post
+            | '02' // 회원가입 불가
+        // form parameter 1
+        token: string
+        // form parameter 2
+        encdata: string
+        // form action url
+        url: string
+    }>
+    memberWorkplaceInfo: DefaultResponse<{
+        list: {
+            bzno: string
+            bzmanNm: string
+            ltRgyn: YN
+            locaMcYn: YN
+        }[]
+        mbrNm: string
+    }>
+    bizInfo: DefaultResponse<{
+        // 회원 이름
+        mbrNm: string
+        // 사업자 리스트
+        list: BusinessPlaceListItem[]
+    }>
+    logoutInfo: DefaultResponse<null>
+    // FIXME: 개발 안됨
+    recommenderCode: DefaultResponse<null | object>
+    // FIXME: 주석 달아라 명기야
+    memberInfo: DefaultResponse<{
+        mbrNm: string
+        kkoId: string
+        cellNo: string
+        mrktYn: YN
+        loanYn: YN
+        bizLoanYn: YN
+        datusYn: YN
+    }>
+    withdrawal: DefaultResponse<null>
+    beforeWithdrawal: DefaultResponse<{
+        list: { rsgDesc: string }[]
+    }>
+    businessMainInfo: DefaultResponse<{
+        list: BusinessManInfoListItem[]
+    }>
+    // FIXME: 주석달자!!!!!
+    franchiseDetail: DefaultResponse<{
+        mcno: string
+        mcNm: string
+        psno: string
+        pnadd: string
+        bpsnoAdd: string
+        ddd: string
+        exno: string
+        tlno: string
+    }>
+    changeBusinessManName: DefaultResponse<{
+        list: {
+            bzno: string
+            bzmanNm: string
+            ltRgyn: YN
+            locaMcYn: YN
+        }[]
+        mbrNm: string
+    }>
 }
 
 type LoginInfoRes = Promise<AxiosResponse<AuthResponse['loginInfo']>>

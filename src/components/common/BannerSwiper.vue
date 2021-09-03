@@ -12,7 +12,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator'
+import { Component, Prop, Ref, Vue } from 'vue-property-decorator'
 import { Swiper } from 'vue-awesome-swiper'
 import 'swiper/css/swiper.css'
 
@@ -32,16 +32,8 @@ interface Options extends Object {
     },
 })
 export default class BannerSwiper extends Vue {
-    /**
-     * @Refs
-     */
-    $refs!: Vue['$refs'] & {
-        swiper: any
-    }
+    @Ref('swiper') swiper!: Vue
 
-    /**
-     * @Prop
-     */
     @Prop({
         type: Object,
         default: () => ({
@@ -54,19 +46,8 @@ export default class BannerSwiper extends Vue {
     })
     readonly options!: Options
 
-    /**
-     * Data(State)
-     */
-
     /* swiperSlide의 개수가 1개 인 경우 네이게이션 활성/비활성 */
     private isPagination = true
-
-    /**
-     * @Computed
-     */
-    get swiper() {
-        return this.$refs.swiper
-    }
 
     mounted() {
         this.isPagination = this.swiper.$children.length > 1

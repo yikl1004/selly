@@ -489,14 +489,50 @@ export default class MarketingApply extends Vue {
 
     //드롭다운리스트 샘플
     private dropdownBoxList: DropdownBoxList = [
+        // {
+        //     displayName: 'LOCA MONEY:BIZ 7*3*',
+        //     value: 'LOCA MONEY:BIZ 7*3*',
+        //     selected: true,
+        // },
+        // {
+        //     displayName: '가장최근에 받은 카드가 디폴트로 노출',
+        //     value: '가장최근에 받은 카드가 디폴트로 노출',
+        // },
         {
-            displayName: 'LOCA MONEY:BIZ 7*3*',
-            value: 'LOCA MONEY:BIZ 7*3*',
-            selected: true,
+            displayName: '11111111',
+            value: '11111111',
         },
         {
-            displayName: '가장최근에 받은 카드가 디폴트로 노출',
-            value: '가장최근에 받은 카드가 디폴트로 노출',
+            displayName: '22222222',
+            value: '22222222',
+        },
+        {
+            displayName: '333333',
+            value: '333333',
+        },
+        {
+            displayName: '4444444',
+            value: '4444444',
+        },
+        {
+            displayName: '5555555',
+            value: '5555555',
+        },
+        {
+            displayName: '6666666',
+            value: '6666666',
+        },
+        {
+            displayName: '77777777',
+            value: '77777777',
+        },
+        {
+            displayName: '88888888',
+            value: '88888888',
+        },
+        {
+            displayName: '9999999',
+            value: '9999999',
         },
     ]
     formChange(data: Schema) {
