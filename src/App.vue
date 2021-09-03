@@ -46,16 +46,27 @@ export default class App extends Vue {
             this.modalProps.confirm()
     }
 
+    setModalContainer() {
+        this.$modal.bus.$on('open', (options: ModalOptions | string) => {
+            let mergeOption = { ...this.modalProps, show: true }
+
+            if (typeof options === 'string') {
+                mergeOption.message = options
+            } else {
+                mergeOption = {
+                    ...mergeOption,
+                    ...options,
+                }
+            }
+
+            this.modalProps = mergeOption
+        })
+    }
+
     /** @Lifecycle */
 
     mounted() {
-        this.$modal.bus.$on('open', (options: ModalOptions) => {
-            this.modalProps = {
-                ...this.modalProps,
-                ...options,
-                show: true,
-            }
-        })
+        this.setModalContainer()
     }
 }
 </script>

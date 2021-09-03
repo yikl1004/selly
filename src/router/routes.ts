@@ -209,6 +209,14 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
                 ],
             },
 
+            // 세무서비스
+            {
+                path: '/taxServiceGuide',
+                name: 'Tax Service Guide',
+                component: createAsyncPage(import('@pages/taxServiceGuide/index.vue')),
+                meta: {},
+            },
+
             // 쿠폰만들기 - 안내페이지
             {
                 /** @working */

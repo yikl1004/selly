@@ -22,6 +22,41 @@
                 <button
                     type="button"
                     class="btn-kakao-login"
+                    @click="testLogin(0)"
+                >
+                    <span>사업자 1</span>
+                </button>
+                <button
+                    type="button"
+                    class="btn-kakao-login"
+                    @click="testLogin(1)"
+                >
+                    <span>사업자 2</span>
+                </button>
+                <button
+                    type="button"
+                    class="btn-kakao-login"
+                    @click="testLogin(2)"
+                >
+                    <span>사업자 3</span>
+                </button>
+                <button
+                    type="button"
+                    class="btn-kakao-login"
+                    @click="testLogin(3)"
+                >
+                    <span>사업자 4</span>
+                </button>
+                <button
+                    type="button"
+                    class="btn-kakao-login"
+                    @click="marketingLogin"
+                >
+                    <span>마케팅 신청용 로그인</span>
+                </button>
+                <button
+                    type="button"
+                    class="btn-kakao-login"
                     @click="datusLogin"
                 >
                     <span>유쇼데 로그인 - 비즈론 - 카드: Y, 정회원</span>
@@ -146,6 +181,23 @@ export default class LoginPage extends Mixins(PageView) {
     // FIXME: 임시 사용, 삭제 요망
     withdraw() {
         this.$kakaoSdk && this.$kakaoSdk.unlink()
+    }
+
+    testLogin(seq: number) {
+        const ciList = [
+            '+TSL1BTyCjo13Chruu2HTH5taSTurksOXXo/9kvp+q1xAU/kir2t7jHakNw19MRsqrYGfxTT4zf5VeE8BpvQ6A==',
+            'WScHE+32Ja47zwjIyESHSDSY3G7FkipQ0Lc2VzVcZKyRSTM43AarLg3qMBivM73wPc72NdXeyLE/pMIU2S2Ezw==',
+            '8h15IuxC6ZmGKxyC/0W2q2qWBQ63S3jyyQ+lJ1NvHIcgjZje2PjabO7hymj6wTfPS+mVLkjrzfEfLjTrkl93Kw==',
+            'cILvcjFICNJrQXm2SUcou+6c6G+htoP3wsFPkWbn0kR/JVH2kyn0xbXW2ew4dOfAMcwntnNJ9AL3jX9Q+FzmKA==',
+        ]
+        this.login(ciList[seq])
+    }
+
+    // 마케팅 스템 통과 가능 CI
+    marketingLogin() {
+        this.login(
+            '+TSL1BTyCjo13Chruu2HTH5taSTurksOXXo/9kvp+q1xAU/kir2t7jHakNw19MRsqrYGfxTT4zf5VeE8BpvQ6A==',
+        )
     }
 
     // 비즈론 대상(카드 Y, 정회원)

@@ -12,11 +12,11 @@ declare module 'vue/types/vue' {
 
 export interface ModalOptions {
     message: string
-    buttonText: {
+    buttonText?: {
         confirm: string
         cancel?: string
     }
-    confirm: Function
+    confirm?: Function
     cancel?: Function
 }
 
@@ -25,7 +25,7 @@ const install: PluginFunction<{}> = _Vue => {
     Object.defineProperties(_Vue.prototype, {
         $modal: {
             value: {
-                open(option: ModalOptions) {
+                open(option: ModalOptions | string) {
                     ModalBus.$emit('open', option)
                 },
                 bus: ModalBus,

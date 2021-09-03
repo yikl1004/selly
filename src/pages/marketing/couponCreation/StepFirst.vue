@@ -18,6 +18,7 @@
                                     name="franchise-list"
                                     :label="item.mcNm"
                                     :value="item.mcno"
+                                    :disabled="item.mrktXBtYn === 'Y'"
                                     :checked="index === 0"
                                     @change="onChangeFranchiseSelect($event)"
                                 />
@@ -48,9 +49,10 @@
                         <li>
                             <strong>주소</strong>
                             <p>
-                                <!-- <span>03272</span> -->
+                                <span>우편번호 없어요</span>
                                 <span>
-                                    {{ selectedFranchiseList.mcAdd }}
+                                    {{ selectedFranchiseList.pnadd }}<br />
+                                    {{ selectedFranchiseList.bpsnoAdd }}
                                 </span>
                             </p>
                         </li>
@@ -112,7 +114,9 @@ export default class MarketingApply extends Mixins(PageView) {
     }
 
     /** 선택된 가맹점에 대한 유효성 검사 결과 */
-    // get
+    get step1ValidateResult() {
+        return MarketingModule.step1ValidateResult
+    }
 
     /** 사업자 정보 페이지로 이동 */
     toBusiness() {
@@ -132,20 +136,52 @@ export default class MarketingApply extends Mixins(PageView) {
         await MarketingModule.getValidatePossibleApplyFranchiseList({
             mcno: this.selectedMcNo,
         })
-        this.openModal('3102')
+
+        if (
+            this.step1ValidateResult &&
+            this.step1ValidateResult.rspDc !== '0000'
+        ) {
+            const { rspDc, rspDcMsg } = this.step1ValidateResult
+            this.openModal({ rspDc, rspDcMsg })
+        } else {
+            this.openModal({
+                rspDc: '9999',
+                rspDcMsg: '시스템 에러입니다. 잠시 후 다시 이용해 주세요.',
+            })
+        }
     }
 
     /**
-     * @param {string} value
+     * @param {string} value 업무구분 코드
      * 3101: 유해업종
-     * 3102: 접속당일 가맹점 정보 변경
-     * 3103: 위도/경도 정보 없음)
+     * 3102: 가맹점 정보 변경된 3일 이전인 경우(접속당일 가맹점 정보 변경)
+     * 3103: 위도/경도 정보 없음
+     * @param {string} message 구분코드에 따른 메세지
      */
-    openModal(value: '3101' | '3102' | '3103') {
-        console.log(value)
-        // this.$modal.open({
-        // })
+    openModal(params: {
+        rspDc: '3101' | '3102' | '3103' | '9999'
+        rspDcMsg: string
+    }) {
+        const cases = {
+            '3101': {},
+            '3102': {},
+            '3103': {
+                buttonText: {
+                    confirm: '변경하기',
+                    cancel: '닫기',
+                },
+                confirm: () => this.$router.push({ name: 'Business' }),
+            },
+            '9999': {},
+            default: '',
+        }
+
+        this.$modal.open({
+            message: params.rspDcMsg,
+            ...cases[params.rspDc || 'default'],
+        })
     }
+
     /** @Lifecycle */
     async created() {
         await MarketingModule.getPossibleApplyFranchiseList()
@@ -153,7 +189,10 @@ export default class MarketingApply extends Mixins(PageView) {
         this.selectedMcNo = list.length ? list[0].mcno : ''
     }
 
-    // mounted() {}
+    mounted() {
+        /** API data 없음 */
+        this.$toast.error('가맹점 우편번호 필드가 없습니다.(mcPsno')
+    }
 }
 </script>
 

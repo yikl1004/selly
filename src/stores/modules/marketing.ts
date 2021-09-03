@@ -20,6 +20,7 @@ export default class Marketing extends VuexModule {
         }
     }
 
+    /** 가맹점 리스트 */
     get franchiseList() {
         const origin = this.possibleApplyFranchiseList
         return origin ? origin.data.list : []
@@ -32,6 +33,10 @@ export default class Marketing extends VuexModule {
         return {
             validatePossibleApplyFranchiseList: data,
         }
+    }
+
+    get step1ValidateResult() {
+        return this.validatePossibleApplyFranchiseList?.data
     }
 }
 

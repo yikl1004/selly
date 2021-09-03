@@ -15,25 +15,29 @@ export interface MarketingResponse {
     /** 마케팅 신청 가능 가맹점 목록 */
     possibleApplyFranchiseList: DefaultResponse<{
         list: {
+            // 우편번호 외 주수
+            bpsnoAdd: string
             // 업종명
             btNm: string
             // 사업자번호
             bzno: string
-            // 가맹점 주소
-            mcAdd: string
             // 가맹점 명
             mcNm: string
             // 가맹점 전화번호
             mcTlno: string
             // 가맹점 번호
             mcno: string
-            // FIXME: 유해 업종 여부 추가 예정
+            // 마케팅 제외 업종 여부(Y이면 라디오버튼 비활성화)
+            mrktXBtYn: YN
+            // 우편번호 주소
+            pnadd: string
         }[]
     }>
     /** 마케팅 신청 가능 가맹점 유효성 검사 */
     validatePossibleApplyFranchiseList: DefaultResponse<{
         // 업무 응담 코드
         rspDc:
+            | '0000' // 정상
             | '3101' // 유해업종
             | '3102' // 접속당일 가맹점 정보 변경
             | '3103' // 위도/경도 정보 없음
