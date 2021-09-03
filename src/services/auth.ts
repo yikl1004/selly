@@ -58,6 +58,8 @@ export interface AuthParameters {
             agTag: string
             agDtti?: string
         }[]
+        // 외부에서 들어 올 경우
+        redirectUrl?: string
     }
     /**
      * @description 유쇼데 로그인
@@ -141,6 +143,8 @@ export interface AuthResponse {
         finMenYn: YN
         // 마케팅 가능여부
         mrktPsyn: YN
+        // redirect url
+        redirectUrl: string
     } | null>
     datusLoginInfo: DefaultResponse<{
         rspDc:
