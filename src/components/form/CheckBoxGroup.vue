@@ -1,5 +1,5 @@
 <template>
-    <div class="check-box-group">
+    <div class="check-box-group field-box">
         <LabelTitle :hidden-label="hiddenLabel" :label="label" />
         <div class="check-box-area">
             <!-- 클래스에 checked 추가시 체크표시 -->

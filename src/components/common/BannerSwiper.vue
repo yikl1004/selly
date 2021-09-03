@@ -7,6 +7,10 @@
                 class="swiper-pagination"
                 slot="pagination"
             ></div>
+            <template v-if="isNavigation">
+                <div class="swiper-button-prev" slot="button-prev"></div>
+                <div class="swiper-button-next" slot="button-next"></div>
+            </template>
         </swiper>
     </div>
 </template>
@@ -42,9 +46,19 @@ export default class BannerSwiper extends Vue {
             pagination: {
                 el: '.swiper-pagination',
             },
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
         }),
     })
     readonly options!: Options
+
+    /**
+     * 네비게이션(arrow 버튼) 활성화 여부
+     */
+    @Prop({ type: Boolean, default: false })
+    readonly isNavigation!: boolean
 
     /* swiperSlide의 개수가 1개 인 경우 네이게이션 활성/비활성 */
     private isPagination = true
