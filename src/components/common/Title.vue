@@ -94,4 +94,7 @@ export default class Title extends Vue {
         }
     }
 }
+.content .box-step + .box-title {
+    margin-top: 0;
+}
 </style>
