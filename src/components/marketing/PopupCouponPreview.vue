@@ -104,7 +104,7 @@
                             <span class="date">21.06.01~21.06.30</span>
                             <div class="img-ci">
                                 <img
-                                    src="/assets/marketing/@ico-ci.png"
+                                    src="/assets/marketing/icon-ci-sample01.png"
                                     alt=""
                                 />
                             </div>
@@ -125,7 +125,7 @@
                             <span class="date">21.06.01~21.06.30</span>
                             <div class="img-ci">
                                 <img
-                                    src="/assets/marketing/@ico-ci.png"
+                                    src="/assets/marketing/icon-ci-sample02.png"
                                     alt=""
                                 />
                             </div>
