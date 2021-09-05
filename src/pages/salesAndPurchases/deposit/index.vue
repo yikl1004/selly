@@ -27,15 +27,19 @@
                     <div
                         class="chart"
                         style="
-                            height: 140px;
+                            height: 100%;
+                            width:90%;
                             margin-top: 30px;
                             color: #000;
                             text-align: center;
-                            line-height: 140px;
+                            <!-- line-height: 140px; -->
                             background: #ebebeb;
                         "
                     >
-                        차트영역
+                        <LineChart
+                            :chartData="datacollection"
+                            :options="chartOption"
+                        />
                     </div>
 
                     <AccoItemSingle
@@ -62,13 +66,15 @@
 import { Component, Vue } from 'vue-property-decorator'
 import { SalesModule } from '@stores/modules/sales'
 import PriceList from '@components/sales/PriceList.vue'
+import LineChart from '@components/common/LineChart.vue'
 import DepositHistory from '@components/sales/DepositHistory.vue'
 import BaseInfo from '@components/sales/BaseInfo.vue'
 import type { Status } from '@stores/modules/sales'
 import type { BottomSheetOptionItem } from '@components/common/BottomSheet.vue'
-
+import _ from 'lodash'
 @Component({
     components: {
+        LineChart,
         PriceList,
         DepositHistory,
         BaseInfo,
@@ -130,6 +136,8 @@ export default class SalesHistory extends Vue {
     /** @Data */
 
     /** 탭 리스트 */
+    private datacollection = {}
+    private chartOption = {}
     private tabList = [{ name: '일간' }, { name: '주간' }, { name: '요일별' }]
 
     /** 선택된 사업자 번호, 공백은 '전체' */
@@ -175,6 +183,7 @@ export default class SalesHistory extends Vue {
         const dispatch = this.dispatch(tabStatus)
         dispatch({ bzno: this.businessNumber })
         SalesModule.changeStatus(tabStatus)
+        this.fillData()
     }
 
     /** 상태 별 액션 */
@@ -205,6 +214,99 @@ export default class SalesHistory extends Vue {
         this.merchantList = this.merchantList.concat(this.workingPlaceList)
         // 매출 일간 정보 요청
         await SalesModule.getDepositDaily()
+        this.fillData()
+    }
+    fillData() {
+        console.log(SalesModule.depositListOfPerido)
+        if (SalesModule.depositListOfPerido.length === 0) {
+            console.log(SalesModule.depositListOfPerido)
+            console.log('test')
+            return
+        }
+        this.chartOption = {
+            // scales: {
+            //     y: {
+            //         display: true,
+            //         scaleLabel: {
+            //             display: true,
+            //             labelString: 'dong',
+            //         },
+            //         // ticks: {
+            //         //     callback(label: any, index: any, labelss: any) {
+            //         //         switch (index) {
+            //         //             case 0:
+            //         //                 return '원'
+            //         //             default:
+            //         //                 return label
+            //         //         }
+            //         //     },
+            //         // },
+            //         gridLines: {
+            //             display: false,
+            //         },
+            //     },
+            // },
+            height: 200,
+            width: 300,
+            responsive: true,
+            // maintainAspectRatio: false,
+            maintainAspectRatio: true,
+            legend: {
+                position: 'bottom',
+                align: 'end',
+            },
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                    align: 'end',
+                },
+                title: {
+                    display: true,
+                },
+            },
+        }
+        this.datacollection = {
+            labels: _.map(SalesModule.depositListOfPerido, 'date'),
+            datasets: [
+                {
+                    label: this.salesLatestAverageTitle,
+                    backgroundColor: '#666',
+                    borderColor: '#666',
+                    fill: false,
+                    borderDash: [5, 5],
+                    data: this.convertSalesLatestAverage(), //,
+                },
+                {
+                    label: '금주',
+                    backgroundColor: '#fa4123',
+                    borderColor: '#fa4123',
+                    fill: false,
+                    // borderDash: [5, 5],
+                    data: _.map(SalesModule.depositListOfPerido, obj => {
+                        return (
+                            parseInt(obj.amount.replace(/,/g, ''), 10) / 10000
+                        )
+                    }),
+                },
+            ],
+        }
+    }
+    convertSalesLatestAverage() {
+        console.log(SalesModule.depositListOfPerido)
+        console.log(
+            _.fill(
+                Array(SalesModule.depositListOfPerido.length),
+                parseInt(this.depositLatestAverage.replace(/,/g, ''), 10) /
+                    10000,
+            ),
+        )
+        return _.fill(
+            Array(SalesModule.depositListOfPerido.length),
+            parseInt(this.depositLatestAverage.replace(/,/g, ''), 10) / 10000,
+        )
+    }
+    getRandomInt() {
+        return Math.floor(Math.random() * (50 - 5 + 1)) + 5
     }
 }
 </script>
