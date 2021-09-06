@@ -40,7 +40,9 @@
             style="background-image: url('/assets/main/img_credit.png')"
         >
             <div class="banner-title">
-                <em>금융이자, 결제대금 납부까지 편리하게!</em>
+                <em>
+                    개인사업자를 위한 세무지원, <br />국내외 가맹점 적립혜택까지
+                </em>
                 <strong> LOCA MONEY<br />Biz 카드 </strong>
             </div>
         </Anchor>
