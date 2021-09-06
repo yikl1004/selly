@@ -28,7 +28,7 @@
                         class="chart"
                         style="
                             height: 100%;
-                            width:90%;
+                            width:95%;
                             margin-top: 30px;
                             color: #000;
                             text-align: center;
@@ -39,7 +39,7 @@
                         <LineChart
                             :chartData="datacollection"
                             :options="chartOption"
-                            :width="300"
+                            :width="320"
                             :height="200"
                         />
                     </div>
