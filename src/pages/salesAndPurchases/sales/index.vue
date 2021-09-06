@@ -72,7 +72,6 @@ import DepositHistory from '@components/sales/DepositHistory.vue'
 import BaseInfo from '@components/sales/BaseInfo.vue'
 import { Status, SalesModule } from '@stores/modules/sales'
 import type { BottomSheetOptionItem } from '@components/common/BottomSheet.vue'
-import _ from 'lodash'
 
 @Component({
     components: {
@@ -179,11 +178,11 @@ export default class SalesHistory extends Vue {
     }
 
     /** 탭 전환 시 */
-    onChangeTab(value: number) {
+    async onChangeTab(value: number) {
         const tabStatusList: Status[] = ['daily', 'weekly', 'dayOfWeek']
         const tabStatus = tabStatusList[value]
         const dispatch = this.dispatch(tabStatus)
-        dispatch({ bzno: this.businessNumber })
+        await dispatch({ bzno: this.businessNumber })
         SalesModule.changeStatus(tabStatus)
         this.fillData()
     }
@@ -264,7 +263,9 @@ export default class SalesHistory extends Vue {
             },
         }
         this.datacollection = {
-            labels: _.map(SalesModule.salesListOfPerido, 'date'),
+            labels: SalesModule.salesListOfPerido.map(obj => {
+                return obj.date
+            }),
             datasets: [
                 {
                     label: this.salesLatestAverageTitle,
@@ -280,7 +281,7 @@ export default class SalesHistory extends Vue {
                     borderColor: '#fa4123',
                     fill: false,
                     // borderDash: [5, 5],
-                    data: _.map(SalesModule.salesListOfPerido, obj => {
+                    data: SalesModule.salesListOfPerido.map(obj => {
                         return (
                             parseInt(obj.amount.replace(/,/g, ''), 10) / 10000
                         )
@@ -290,13 +291,9 @@ export default class SalesHistory extends Vue {
         }
     }
     convertSalesLatestAverage() {
-        return _.fill(
-            Array(SalesModule.salesListOfPerido.length),
+        return Array(SalesModule.salesListOfPerido.length).fill(
             parseInt(this.salesLatestAverage.replace(/,/g, ''), 10) / 10000,
         )
-    }
-    getRandomInt() {
-        return Math.floor(Math.random() * (50 - 5 + 1)) + 5
     }
 }
 </script>
