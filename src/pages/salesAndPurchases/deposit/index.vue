@@ -71,7 +71,7 @@ import DepositHistory from '@components/sales/DepositHistory.vue'
 import BaseInfo from '@components/sales/BaseInfo.vue'
 import type { Status } from '@stores/modules/sales'
 import type { BottomSheetOptionItem } from '@components/common/BottomSheet.vue'
-
+import Chart from 'chart.js'
 @Component({
     components: {
         LineChart,
@@ -137,7 +137,7 @@ export default class SalesHistory extends Vue {
 
     /** 탭 리스트 */
     private datacollection = {}
-    private chartOption = {}
+    private chartOption: Chart.ChartOptions = {}
     private tabList = [{ name: '일간' }, { name: '주간' }, { name: '요일별' }]
 
     /** 선택된 사업자 번호, 공백은 '전체' */
@@ -166,6 +166,15 @@ export default class SalesHistory extends Vue {
         return cases[this.status]
     }
 
+    /** 차트 타입 bar/line */
+    get chartjsType(): string {
+        const cases = {
+            daily: 'line',
+            weekly: 'bar',
+            dayOfWeek: 'line',
+        }
+        return cases[this.status]
+    }
     /**
      * 사업자 번호 변경 시
      * @param {string} businessNumber 사업자 번호
@@ -217,39 +226,24 @@ export default class SalesHistory extends Vue {
         this.fillData()
     }
     fillData() {
-        console.log(SalesModule.depositListOfPerido)
-        if (SalesModule.depositListOfPerido.length === 0) {
-            console.log(SalesModule.depositListOfPerido)
-            console.log('test')
-            return
-        }
         this.chartOption = {
-            // scales: {
-            //     y: {
-            //         display: true,
-            //         scaleLabel: {
-            //             display: true,
-            //             labelString: 'dong',
-            //         },
-            //         // ticks: {
-            //         //     callback(label: any, index: any, labelss: any) {
-            //         //         switch (index) {
-            //         //             case 0:
-            //         //                 return '원'
-            //         //             default:
-            //         //                 return label
-            //         //         }
-            //         //     },
-            //         // },
-            //         gridLines: {
-            //             display: false,
-            //         },
-            //     },
-            // },
-            height: 200,
-            width: 300,
+            scales: {
+                yAxes: [
+                    {
+                        ticks: {
+                            callback(value, index, values) {
+                                switch (index) {
+                                    case values.length - 1:
+                                        return '만원'
+                                    default:
+                                        return value
+                                }
+                            },
+                        },
+                    },
+                ],
+            },
             responsive: true,
-            // maintainAspectRatio: false,
             maintainAspectRatio: true,
             legend: {
                 position: 'bottom',
@@ -276,6 +270,7 @@ export default class SalesHistory extends Vue {
                     borderColor: '#666',
                     fill: false,
                     borderDash: [5, 5],
+                    type: 'line',
                     data: this.convertSalesLatestAverage(), //,
                 },
                 {
@@ -283,6 +278,9 @@ export default class SalesHistory extends Vue {
                     backgroundColor: '#fa4123',
                     borderColor: '#fa4123',
                     fill: false,
+                    type: this.chartjsType,
+                    barPercentage: 0.5,
+                    categoryPercentage: 0.55,
                     // borderDash: [5, 5],
                     data: SalesModule.depositListOfPerido.map(obj => {
                         return (
