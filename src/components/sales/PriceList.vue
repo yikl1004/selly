@@ -24,7 +24,7 @@
             />
         </div>
         <div v-else class="sales-week-avg">
-            <span class="avg-tit">최근 7일 평균 매출</span>
+            <span class="avg-tit">{{ title }} 매출</span>
             <em class="price">
                 <strong>{{ average }}</strong>
                 원
@@ -65,6 +65,10 @@ export default class PriceList extends Vue {
     /** 최근 평균 */
     @Prop({ type: String, default: '' })
     readonly average!: string
+
+    /** 최근 평균 명*/
+    @Prop({ type: String, default: '' })
+    readonly title!: string
 
     /** 기준일자 - 요일별 일때만 사용 */
     @Prop({ type: String, default: '', required: true })

@@ -51,6 +51,7 @@
                         <PriceList
                             :list="salesListOfPerido"
                             :status="status"
+                            :title="salesLatestAverageTitle"
                             :average="salesLatestAverage"
                             :standard-date="salesBaseDatePerDay"
                             @change-dayofweek="changeDayOfWeek"

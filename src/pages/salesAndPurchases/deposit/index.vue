@@ -51,6 +51,7 @@
                         <PriceList
                             :list="depositListOfPerido"
                             :status="status"
+                            :title="salesLatestAverageTitle"
                             :average="depositLatestAverage"
                             :standard-date="depositBaseDatePerDay"
                             @change-dayofweek="changeDayOfWeek"
