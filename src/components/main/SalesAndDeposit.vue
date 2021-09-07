@@ -1,6 +1,10 @@
 <template>
     <!-- 연동안되어 있음 -->
-    <Anchor v-if="isNoLinkage" href="/" class="banner-box banner-user">
+    <Anchor
+        v-if="isNoLinkage"
+        href="/salesAndPurchases/sales"
+        class="banner-box banner-user"
+    >
         <div class="banner-title">
             <em>반가워요 {{ userName }}님</em>
             <strong> 우리매장 매출을<br />확인하세요. </strong>
@@ -9,7 +13,11 @@
     </Anchor>
 
     <!-- 연동 후 데이터수집/ 연동안되었음-->
-    <Anchor v-else-if="isProceedingLinkage" href="/" class="banner-box no-data">
+    <Anchor
+        v-else-if="isProceedingLinkage"
+        href="/salesAndPurchases/sales"
+        class="banner-box no-data"
+    >
         <strong>
             고객님의 매출/입금<br />데이터 수집 및 연동중입니다.
             <br />
