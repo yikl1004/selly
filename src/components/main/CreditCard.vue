@@ -73,11 +73,11 @@ export default class CreditCard extends Vue {
         this.cardInfo?.todBilAmUrl && window.open(this.cardInfo?.todBilAmUrl)
     }
 
-    amountToBePaid() {
+    get amountToBePaid() {
         return this._.toNumber(this.cardInfo?.todBilAm || '0').toLocaleString()
     }
 
-    locaCoin() {
+    get locaCoin() {
         return this._.toNumber(this.cardInfo?.locaCoin || '0').toLocaleString()
     }
 }

@@ -16,6 +16,6 @@ namespace NodeJS {
         // 비즈넵 매출/매입 상세
         VUE_APP_SNP_DETAIL: string
         // 비즈넵 세무서비스(세무상담)
-        VUE_APP_TXA_SERVICE: string
+        VUE_APP_TAX_SERVICE: string
     }
 }

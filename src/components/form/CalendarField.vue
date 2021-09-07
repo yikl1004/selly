@@ -13,7 +13,6 @@
                     type="text"
                     :value="displayValue"
                     :class="{ readonly }"
-                    readonly
                     @keydown="onKeydown"
                     @focus="onFocus"
                 />
@@ -30,10 +29,12 @@
                     v-model="value"
                     v-click-outside="hideDatepicker"
                     is-expanded
+                    :min-date="minDate"
+                    :max-date="maxDate"
                     :is-range="isRange"
                     :masks="{ title: 'MM월 YYYY', navYears: 'YYYY년' }"
                     @dayclick="onDayClick"
-                ></date-picker>
+                />
             </div>
         </transition>
     </div>
@@ -46,6 +47,8 @@ import dayjs from 'dayjs'
 // const month = new Date().getMonth()
 // const year = new Date().getFullYear()
 
+export type Period = { end: Date; start: Date }
+
 @Component({
     components: {
         DatePicker: () => ({
@@ -56,15 +59,7 @@ import dayjs from 'dayjs'
     },
 })
 export default class CalendarField extends Vue {
-    /**
-     * @Refs
-     */
-
     @Ref('input') readonly input!: HTMLInputElement
-
-    /**
-     * @Props
-     */
 
     /** form에 사용될 id */
     @Prop({ type: String, required: true })
@@ -79,8 +74,8 @@ export default class CalendarField extends Vue {
     readonly hiddenLabel!: boolean
 
     /** 기본 값 */
-    @Prop(Date)
-    readonly defaultValue!: Date
+    @Prop([Date, Object])
+    readonly defaultValue!: Date | Period
 
     /** 읽기전용 */
     @Prop({ type: Boolean, default: false })
@@ -94,30 +89,58 @@ export default class CalendarField extends Vue {
     @Prop({ type: Boolean, default: false })
     readonly isRange!: boolean
 
-    /**
-     * @Data (State)
-     */
+    /** 선택 가능한 범위 일수 */
+    @Prop({ type: Number })
+    readonly rangeSection!: number
+
+    /** 선택 가능한 최소 일 */
+    @Prop({ type: Date, default: undefined })
+    readonly minDate!: Date
 
     /** focus 상태 */
     private focusedClass = false
 
     /** 실제 값 */
-    private value: Date | null = this.defaultValue || new Date()
+    private value: Date | string | null | Period =
+        this.defaultValue ||
+        (this.isRange
+            ? {
+                  start: dayjs(this.defaultValue).toDate(),
+                  end: dayjs(this.defaultValue)
+                      .add(this.rangeSection || 1, 'day')
+                      .toDate(),
+              }
+            : new Date())
 
     /** datepicker 노출 여부 */
     private datepickerVisible = false
 
-    /**
-     * @Computed
-     */
-
     /** 화면에 보여질 value */
     get displayValue(): string {
-        return dayjs(this.value || undefined).format('YYYY.MM.DD')
+        if (this.isRange) {
+            const period = this.value as Period
+            const start = dayjs(period.start || undefined).format('YYYY.MM.DD')
+            const end = dayjs(period.end || undefined).format('YYYY.MM.DD')
+            return `${start} ~ ${end}`
+        } else {
+            const date = this.value as Date
+            return dayjs(date).format('YYYY.MM.DD')
+        }
     }
+
     /** 기간 범위 선택 타입 */
     get range(): boolean {
         return this.isRange
+    }
+
+    /** 선택 가능한 최대 날짜 */
+    get maxDate(): Date | undefined {
+        if (this.isRange) {
+            return this.$dayjs((this.value as Period).start)
+                .add(29, 'day')
+                .toDate()
+        }
+        return undefined
     }
 
     @Watch('value')
@@ -130,18 +153,24 @@ export default class CalendarField extends Vue {
             value: newValue,
             fieldName: this._.camelCase(this.id),
         })
+        this.hideDatepicker()
     }
-
-    /**
-     * @Methods
-     */
 
     onKeydown(event: KeyboardEvent) {
         event.preventDefault()
     }
 
-    onDayClick(/* day: { date: Date } */) {
-        // this.hideDatepicker()
+    /**
+     * 캘린더 날짜를 클릭 했을 때
+     * @notice 경우에 따라 parameter가 2가지로 나뉨
+     * @param { object: { start: Date, end: Date} } day 기간 범위 선택 일 경우
+     * @param { object: { date: Date } } day 단일 선택인 경우
+     */
+    onDayClick(day: { date: Date } | Period) {
+        /**
+         * @event day-click
+         */
+        this.$emit('day-click', day)
     }
 
     onClickIcon() {

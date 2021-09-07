@@ -16,6 +16,7 @@ export default class Common extends VuexModule {
 
     @Mutation
     changeReferrer(referrer: string) {
+        localStorage.setItem('referrer', referrer)
         this.referrer = referrer
     }
 
@@ -26,7 +27,6 @@ export default class Common extends VuexModule {
 
     @MutationAction
     async getLoginExtendInfo() {
-        // const state = this.state as CommonState
         const { data } = await CommonService.getLoginExtend()
 
         return {

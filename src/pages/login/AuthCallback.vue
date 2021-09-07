@@ -50,6 +50,7 @@ export default class AuthCallbakPage extends Vue {
         if ('code' in this.$route.query) {
             const code = this.$route.query.code as string
             const state = (this.$route.query.state as string) || undefined
+            console.log('@@@@@@', state)
             const makeFormData = (params: { [key: string]: string }) => {
                 const searchParams = new URLSearchParams()
                 Object.keys(params).forEach(key => {
@@ -90,6 +91,11 @@ export default class AuthCallbakPage extends Vue {
                 })
             } else {
                 this.$nextTick().then(async () => {
+                    // 0. redirect를 위한 referrer 체크
+                    // const referrer = JSON.parse(
+                    //     localStorage.getItem('referrer') || 'null',
+                    // )
+                    // console.log(referrer)
                     // 1. 토큰 받아오기
                     this.$kakaoSdk.setAccessToken(res.data.access_token)
                     // 2. 카카오 로그인 사용자 정보 요청

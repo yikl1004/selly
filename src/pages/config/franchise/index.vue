@@ -99,7 +99,7 @@ export default class FranchisePage extends Vue {
 
     async validate(): Promise<boolean> {
         return await new Promise(resolve => {
-            if (this.digit.length < 10) {
+            if (this.digit.length < 9) {
                 this.$modal.open({
                     message: '가맹점 연락처 입력이 잘못되었습니다.',
                     buttonText: {

@@ -59,7 +59,7 @@ export default class MainPage extends Mixins(PageView) {
     }
 
     toTaxService() {
-        return process.env.VUE_APP_TXA_SERVICE
+        return process.env.VUE_APP_TAX_SERVICE
     }
 
     created() {

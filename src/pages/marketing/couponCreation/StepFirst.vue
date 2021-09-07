@@ -49,7 +49,7 @@
                         <li>
                             <strong>주소</strong>
                             <p>
-                                <span>우편번호 없어요</span>
+                                <span>{{ selectedFranchiseList.mcPsno }}</span>
                                 <span>
                                     {{ selectedFranchiseList.pnadd }}<br />
                                     {{ selectedFranchiseList.bpsnoAdd }}
@@ -99,6 +99,7 @@ export default class MarketingApply extends Mixins(PageView) {
 
     /** 선택된 가맹점 번호 */
     private selectedMcNo = ''
+    private selectedBizNo = ''
 
     /** 다음 버튼 비활성화 여부 */
     private nextDisabled = true
@@ -130,25 +131,32 @@ export default class MarketingApply extends Mixins(PageView) {
 
     onChangeFranchiseSelect(value: string) {
         this.selectedMcNo = value
+        this.selectedBizNo = this.selectedFranchiseList?.bzno || ''
     }
 
     async nextStep() {
+        this.nextDisabled = true
         await MarketingModule.getValidatePossibleApplyFranchiseList({
             mcno: this.selectedMcNo,
         })
 
-        if (
-            this.step1ValidateResult &&
-            this.step1ValidateResult.rspDc !== '0000'
-        ) {
-            const { rspDc, rspDcMsg } = this.step1ValidateResult
-            this.openModal({ rspDc, rspDcMsg })
-        } else {
-            this.openModal({
-                rspDc: '9999',
-                rspDcMsg: '시스템 에러입니다. 잠시 후 다시 이용해 주세요.',
+        const rspDc = this.step1ValidateResult?.rspDc
+        const rspDcMsg = this.step1ValidateResult?.rspDcMsg
+
+        if (rspDc === '0000') {
+            // 성공
+            this.$router.push({
+                name: 'Marketing Coupon Creation Step 2',
+                query: {
+                    mcno: this.selectedMcNo,
+                    bzno: this.selectedBizNo,
+                },
             })
+        } else if (rspDc) {
+            this.openModal({ rspDc, rspDcMsg })
         }
+
+        this.nextDisabled = true
     }
 
     /**
@@ -160,38 +168,41 @@ export default class MarketingApply extends Mixins(PageView) {
      */
     openModal(params: {
         rspDc: '3101' | '3102' | '3103' | '9999'
-        rspDcMsg: string
+        rspDcMsg?: string
     }) {
-        const cases = {
-            '3101': {},
-            '3102': {},
-            '3103': {
-                buttonText: {
-                    confirm: '변경하기',
-                    cancel: '닫기',
+        if (params.rspDc && params.rspDcMsg) {
+            const cases = {
+                '3101': {},
+                '3102': {},
+                '3103': {
+                    buttonText: {
+                        confirm: '변경하기',
+                        cancel: '닫기',
+                    },
+                    confirm: () => this.$router.push({ name: 'Business' }),
                 },
-                confirm: () => this.$router.push({ name: 'Business' }),
-            },
-            '9999': {},
-            default: '',
-        }
+                '9999': {},
+                default: '',
+            }
 
-        this.$modal.open({
-            message: params.rspDcMsg,
-            ...cases[params.rspDc || 'default'],
-        })
+            this.$modal.open({
+                message: params.rspDcMsg,
+                ...cases[params.rspDc || 'default'],
+            })
+        }
     }
 
     /** @Lifecycle */
     async created() {
         await MarketingModule.getPossibleApplyFranchiseList()
         const list = this.franchiseList
-        this.selectedMcNo = list.length ? list[0].mcno : ''
-    }
-
-    mounted() {
-        /** API data 없음 */
-        this.$toast.error('가맹점 우편번호 필드가 없습니다.(mcPsno')
+        if (list.length) {
+            this.selectedMcNo = list[0].mcno
+            this.selectedBizNo = list[0].bzno
+        } else {
+            this.selectedMcNo = ''
+            this.selectedBizNo = ''
+        }
     }
 }
 </script>

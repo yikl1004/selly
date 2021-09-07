@@ -53,29 +53,28 @@ export default {
     props: {
         options: {
             type: Object,
-            default: () => ({}),
+            default: null,
             required: true,
         },
         chartData: {
             type: Object,
+            default: null,
+            required: true,
         },
     },
 
     watch: {
         chartData() {
-            this.$data._chart.update()
-        },
-        options() {
-            this.$data._chart.update()
+            this.$nextTick().then(() => {
+                this.$data._chart.update()
+            })
         },
     },
     mounted() {
         console.log('차트 렌더====')
 
         // Overwriting base render method with actual data.
-        this.options &&
-            this.chartData &&
-            this.renderChart(this.chartData, this.options)
+        this.renderChart(this.chartData, this.options)
         console.log(this.chartData)
 
         // this.renderChart({

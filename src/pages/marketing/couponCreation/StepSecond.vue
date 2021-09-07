@@ -2,26 +2,28 @@
     <Page floating :footer="false">
         <Header type="proccess" title="쿠폰 만들기" />
         <PageBody class="floating">
-            <div class="content">
+            <div v-if="marketingTargetData" class="content">
                 <Step :active="2" :count="3" />
                 <Title title="쿠폰 내용 설정" />
 
                 <div class="benefit-select-wrap">
                     <Title title="대상 및 혜택" type="h3" />
                     <div
-                        class="benefit-select-box"
-                        :class="{ active: isActive }"
+                        :class="[
+                            'benefit-select-box',
+                            { active: isActiveClass('first') },
+                        ]"
                     >
                         <div class="benefit-title">
                             <label>
                                 <input
-                                    value="sdkj"
+                                    value="first"
                                     type="checkbox"
-                                    @change="onChange"
+                                    @change="onChange($event.target)"
                                 />
                                 <i>
                                     <strong>첫 고객 만들기</strong>
-                                    <em>20,000명</em>
+                                    <em>{{ firstCustomer }}명</em>
                                 </i>
                                 <span class="sub-text">
                                     최근 1개월간 내 매장을 방문하지 않은 고객 중
@@ -31,42 +33,43 @@
                         </div>
                         <div class="benefit-detail">
                             <CalendarField
-                                id="calendar01"
+                                id="firstCustomerPeriod"
                                 label="행사 기간"
-                                :hidden-label="false"
-                                :default-value="null"
-                                :readonly="false"
                                 name="date"
-                                :isRange="true"
+                                isRange
+                                :readonly="false"
+                                :default-value="period"
+                                :min-date="startDate"
+                                :range-section="29"
+                                @change="onDayClick"
                             />
-
                             <BulletList :list="infoDate" />
-
                             <RadioGroup
                                 name="benefitRadio1"
                                 :disabled="false"
                                 :list="benefitRadio"
                                 label="할인 혜택(결제일 할인)"
                             />
-
                             <BulletList :list="infoBenefit" />
                         </div>
                     </div>
 
                     <div
-                        class="benefit-select-box"
-                        :class="{ active: isActive }"
+                        :class="[
+                            'benefit-select-box',
+                            { active: isActiveClass('regular') },
+                        ]"
                     >
                         <div class="benefit-title">
                             <label>
                                 <input
-                                    value="sdkj"
+                                    value="regular"
                                     type="checkbox"
-                                    @change="onChange"
+                                    @change="onChange($event.target)"
                                 />
                                 <i>
                                     <strong>단골 만들기</strong>
-                                    <em>10,000명</em>
+                                    <em>{{ regularCustomer }}명</em>
                                 </i>
                                 <span class="sub-text">
                                     최근 3개월간 내 매장에서 1회 이상 결제한
@@ -76,24 +79,23 @@
                         </div>
                         <div class="benefit-detail">
                             <CalendarField
-                                id="calendar01"
+                                id="regularCustomerPeriod"
                                 label="행사 기간"
-                                :hidden-label="false"
-                                :default-value="null"
-                                :readonly="false"
                                 name="date"
-                                :isRange="true"
+                                isRange
+                                :readonly="false"
+                                :default-value="period"
+                                :min-date="startDate"
+                                :range-section="29"
+                                @change="onDayClick"
                             />
-
                             <BulletList :list="infoDate" />
-
                             <RadioGroup
                                 name="benefitRadio"
                                 :disabled="false"
                                 :list="benefitRadio"
                                 label="할인 혜택(결제일 할인)"
                             />
-
                             <BulletList :list="infoBenefit" />
                         </div>
                     </div>
@@ -107,8 +109,14 @@
                         </strong>
                         <p>행사 대상자 전체</p>
                         <ul>
-                            <li>첫 고객 : <strong>20,000명</strong></li>
-                            <li>단골 : <strong>10,000명</strong></li>
+                            <li>
+                                첫 고객 :
+                                <strong> {{ firstCustomer }}명 </strong>
+                            </li>
+                            <li>
+                                단골 :
+                                <strong>{{ regularCustomer }}명</strong>
+                            </li>
                         </ul>
                     </div>
                     <div class="promotion-box type01">
@@ -120,8 +128,14 @@
                             첫날 앱 푸시메시지 발송
                         </p>
                         <ul>
-                            <li>첫 고객 : <strong>10,000명</strong></li>
-                            <li>단골 : <strong>5,000명</strong></li>
+                            <li>
+                                첫 고객 :
+                                <strong>{{ firstCustomerPush }}명</strong>
+                            </li>
+                            <li>
+                                단골 :
+                                <strong>{{ regularCustomerPush }}명</strong>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -142,11 +156,18 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import type { RadioProps } from '@components/form/Radio.vue'
 import ApplyResult from '@components/marketing/ApplyResult.vue'
+import { MarketingModule } from '@stores/modules/marketing'
+import type { RadioProps } from '@components/form/Radio.vue'
+import type { Period } from '@components/form/CalendarField.vue'
 
 @Component({
     components: { ApplyResult },
+    beforeRouteEnter(to, from, next) {
+        if (to.query.mcno && to.query.bzno) {
+            next()
+        }
+    },
 })
 export default class MarketingApply extends Vue {
     private infoDate = [
@@ -182,20 +203,92 @@ export default class MarketingApply extends Vue {
         { value: '10', label: '10%', checked: true },
         { value: '15', label: '15%', checked: false },
     ]
+    private isActive: ('regular' | 'first')[] = []
 
-    /**
-     * @category Data
-     */
-    private isActive = false
+    /**  */
 
-    /**
-     * @category Methods
-     */
+    /** 시작 일자 */
+    get startDate(): Date {
+        return this.$dayjs().add(6, 'day').toDate()
+    }
+
+    /** 마케팅 기간 기본값 */
+    get period(): { start: Date; end: Date } {
+        const standardDate = this.$dayjs().add(6, 'day')
+        const start = standardDate.toDate()
+        const end = standardDate.add(29, 'day').toDate()
+
+        return { start, end }
+    }
+
+    /** 마케팅 행사 대상자 조회 결과 값 */
+    get marketingTargetData() {
+        return MarketingModule.marketingTargetData
+    }
+
+    /** 첫 고객 수 */
+    get firstCustomer() {
+        return this._.toNumber(
+            this.marketingTargetData?.newEvOjpT || 0,
+        ).toLocaleString()
+    }
+
+    /** 단골 고객 수 */
+    get regularCustomer() {
+        return this._.toNumber(
+            this.marketingTargetData?.odEvOjpT,
+        ).toLocaleString()
+    }
+
+    /** 첫 고객 수 */
+    get firstCustomerPush() {
+        return this._.toNumber(
+            this.marketingTargetData?.newPushOjpT,
+        ).toLocaleString()
+    }
+
+    /** 단골 고객 수 */
+    get regularCustomerPush() {
+        return this._.toNumber(
+            this.marketingTargetData?.odPushOjpT,
+        ).toLocaleString()
+    }
+
+    /** 활성화 상태 css class 반환 (toggle) */
+    isActiveClass(value: 'first' | 'regular'): boolean {
+        return this.isActive.some(item => item === value)
+    }
+
     /* 체크박스 체크시 내용 토글됨 */
-    onChange() {
-        this.isActive = !this.isActive
+    onChange({
+        value,
+        checked,
+    }: {
+        value: 'regular' | 'first'
+        checked: boolean
+    }) {
+        if (checked) {
+            this.isActive.push(value)
+        } else {
+            this.isActive = this.isActive.filter(item => item !== value)
+        }
+    }
+
+    /** 캘린더 선택 */
+    onDayClick({ fieldName, value }: { fieldName: string; value: Period }) {
+        console.log(fieldName, value)
+    }
+
+    /** @Lifecycle */
+
+    async created() {
+        const { mcno, bzno } = this.$route.query
+        await MarketingModule.getMarketingTarget({
+            mcno: (mcno as string) || '',
+            bzno: (bzno as string) || '',
+        })
     }
 }
 </script>
 
-<style lang="scss" scoped src="./ApplyStep2.scss"></style>
+<style lang="scss" scoped src="./StepSecond.scss"></style>

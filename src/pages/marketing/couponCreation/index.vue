@@ -118,11 +118,22 @@
 <script lang="ts">
 import { Component, Mixins } from 'vue-property-decorator'
 import PageView from '@utils/mixins/PageView'
+import { MarketingModule } from '@stores/modules/marketing'
 
+/**
+ * @description
+ * 마케팅: 쿠폰 만들기 안내 페이지
+ */
 @Component
 export default class MarketingPage extends Mixins(PageView) {
     toApply() {
         this.$router.push({ name: 'Marketing Coupon Creation Step 1' })
+    }
+
+    /** @Lifecycle */
+    async created() {
+        // 마케팅 신청 가능 회원여부 조회
+        await MarketingModule.getPossibleApplyUser()
     }
 }
 </script>

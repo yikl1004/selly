@@ -12,8 +12,8 @@
             placeholder="추천인 코드 입력"
             button-text="확인"
             name="cert"
+            hidden-label
             :maxlength="9999"
-            :hidden-label="true"
             :readonly="false"
             :disabled="false"
             @search="onClickRecommenderCode"

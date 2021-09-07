@@ -125,6 +125,8 @@ devDependency
 
 ### TODO List
 
+[ ] 사업자정보 > 가맹점 정보 변경후 화면 변화 없음!!!!!
+
 [ ] 삭제 예정 dependency(테스트성, 또는 깜박하고 안지운 것들)정리 하기  
 [ ] 소스 상에 TODO 해결 하기
 [ ] bundle 사이즈 줄이기

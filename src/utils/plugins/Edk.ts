@@ -38,7 +38,7 @@ const load = (url: string) => {
 const bootstrap = () => {
     return load(process.env.VUE_APP_EDK_CDN)
         .then(() => {
-            const edk: EmentalEDK = window.edk
+            const edk = window && window.edk
             if (!edk) {
                 throw new Error('EDK Inject에 실패했습니다.')
             }
