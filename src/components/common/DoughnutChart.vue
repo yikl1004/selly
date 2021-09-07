@@ -1,0 +1,105 @@
+<script>
+// import { Component, Mixins, Prop, Watch } from 'vue-property-decorator'
+import { Doughnut, mixins } from 'vue-chartjs'
+// import Chart from 'chart.js'
+
+// @Component({
+//     extends: Line,
+// })
+// export default class LineChart extends Mixins(mixins.reactiveProp) {
+//     @Prop({ type: Object, default: () => ({}), required: true })
+//     readonly options!: Chart.ChartOptions
+
+//     @Watch('chartData')
+//     changeChartData() {
+//         this.$data._chart.update()
+//     }
+
+//     mounted() {
+//         console.log('차트 렌더====')
+
+//         // Overwriting base render method with actual data.
+//         this.options && this.renderChart(this.chartData, this.options)
+//         console.log(this.chartData)
+//         // this.renderChart({
+//         //     labels: [
+//         //         'January',
+//         //         'February',
+//         //         'March',
+//         //         'April',
+//         //         'May',
+//         //         'June',
+//         //         'July',
+//         //         'August',
+//         //         'September',
+//         //         'October',
+//         //         'November',
+//         //         'December',
+//         //     ],
+//         //     datasets: [
+//         //         {
+//         //             label: 'test',
+//         //             backgroundColor: '#f87979',
+//         //             data: [40, 20, 12, 39, 10, 40, 39, 80, 40, 20, 12, 11],
+//         //         },
+//         //     ],
+//         // })
+//     }
+// }
+
+export default {
+    extends: Doughnut,
+    mixins: [mixins.reactiveProp],
+    props: {
+        options: {
+            type: Object,
+            default: null,
+            required: true,
+        },
+        chartData: {
+            type: Object,
+            default: null,
+            required: true,
+        },
+    },
+
+    watch: {
+        chartData() {
+            this.$nextTick().then(() => {
+                this.$data._chart.update()
+            })
+        },
+    },
+    mounted() {
+        console.log('차트 렌더====')
+
+        // Overwriting base render method with actual data.
+        this.renderChart(this.chartData, this.options)
+        console.log(this.chartData)
+
+        // this.renderChart({
+        //     labels: [
+        //         'January',
+        //         'February',
+        //         'March',
+        //         'April',
+        //         'May',
+        //         'June',
+        //         'July',
+        //         'August',
+        //         'September',
+        //         'October',
+        //         'November',
+        //         'December',
+        //     ],
+        //     datasets: [
+        //         {
+        //             label: 'test',
+        //             backgroundColor: '#f87979',
+        //             data: [40, 20, 12, 39, 10, 40, 39, 80, 40, 20, 12, 11],
+        //         },
+        //     ],
+        // })
+    },
+}
+</script>

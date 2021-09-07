@@ -141,7 +141,7 @@ export default class SalesHistory extends Vue {
     /** @Data */
 
     /** 탭 리스트 */
-    private datacollection = {}
+    private datacollection: Chart.ChartData = {}
     private chartOption: Chart.ChartOptions = {}
     private tabList = [{ name: '일간' }, { name: '주간' }, { name: '요일별' }]
 
