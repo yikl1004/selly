@@ -40,9 +40,10 @@
 .tab {
     // 3개 이상의 탭에서는 flicking!!!
     .tab-item-list {
+        position: relative;
+        width: 100vw;
         height: 56px;
         border-bottom: 1px solid #ebebeb;
-        position: relative;
         box-sizing: border-box;
     }
     

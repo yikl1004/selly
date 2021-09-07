@@ -1,6 +1,6 @@
 <script>
 // import { Component, Mixins, Prop, Watch } from 'vue-property-decorator'
-import { Line, mixins } from 'vue-chartjs'
+import { Bar, mixins } from 'vue-chartjs'
 // import type { Chart } from 'chart.js'
 
 // @Component({
@@ -48,7 +48,7 @@ import { Line, mixins } from 'vue-chartjs'
 // }
 
 export default {
-    extends: Line,
+    extends: Bar,
     mixins: [mixins.reactiveProp],
     props: {
         options: {
