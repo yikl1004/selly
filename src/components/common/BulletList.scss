@@ -29,6 +29,11 @@
             font-weight: 500;
             color: #222;
         }
+
+        .tel {
+            color: $point-color-blue;
+            text-decoration: underline;
+        }
     }
 }
 .field-box + .bullet-list {
