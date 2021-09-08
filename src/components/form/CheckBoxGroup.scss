@@ -15,6 +15,7 @@
         align-items: center;
         height: auto;
         min-height: 56px;
+        
     }
     .btn-checkbox {
         display: block;
@@ -81,27 +82,36 @@
             background-position: center center;
             background-size: 24px 24px;
         }
-
-        &.opened:before {
-            transform: translate(-50%,-50%) rotate(180deg);
-        }
     }
     .check-list {
         max-height: 0;
         overflow: hidden;
         transition: max-height 250ms ease-in-out;
         .check-list-wrapper {
-            margin-top: 20px;
-            padding: 0 20px;
+            padding: 20px;
+            border: 1px solid #ebebeb;
+            border-top: 0;
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
         }
         .check-list-title {
-            margin:20px 0 16px;
-            color: #222;
+            margin:20px 0 12px;
             &:first-of-type {
                 margin-top: 0;
             }
             strong {
+                display: block;
                 font-weight: 500;
+                color: #222;
+            }
+            p {
+                margin-top: 4px;
+            }
+            & + .check-list-box {
+
+                padding: 16px;
+                background-color: #f8f8f8;
+                border-radius: 5px;
             }
         }
         .check-list-box {
@@ -116,9 +126,6 @@
                     }
                 }
             }
-        }
-        &.opened {
-            max-height: 1000px;
         }
 
         .check-list-item {
@@ -136,6 +143,18 @@
 
         }
 
+    }
+    &.opened {
+        .check-box-area {
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+        .open:before {
+            transform: translate(-50%,-50%) rotate(180deg);
+        }
+        .check-list {
+            max-height: 1000px;
+        }
     }
 }
 

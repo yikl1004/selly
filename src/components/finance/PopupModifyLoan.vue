@@ -1,5 +1,5 @@
 <template>
-    <div class="popup-modify-loan">
+    <div class="popup-inner">
         <FormProvider :schema="data" @change="formChange" @submit="onSubmit">
             <template slot-scope="{ schema }">
                 <DropdownBox

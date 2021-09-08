@@ -1,5 +1,5 @@
 <template>
-    <div class="search-field">
+    <div class="search-field field-box">
         <LabelTitle
             :id="id"
             label-type="label"

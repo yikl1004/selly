@@ -1,0 +1,76 @@
+.phone-auth-box {
+    .check-box-area {
+        display: flex;
+        @include border-box;
+        align-items: center;
+        position: relative;
+        height: auto;
+        min-height: 56px;
+        padding: 12px 16px 14px 20px;
+        &::v-deep .check-box i {
+            font-size: 16px;
+            color: #222;
+            font-weight: 500;
+        }
+        .open {
+            display: block;
+            position: absolute;
+            right: 0;
+            top: 0;
+            min-width: 56px;
+            height: 56px;
+            &:before {
+                content: '';
+                display: block;
+                position: absolute;            
+                width: 24px;
+                height: 24px;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -50%);
+                transition: transform 250ms ease-in-out;
+                background-image: url("/assets/icon/icon-arrow-bottom2.svg");
+                background-repeat: no-repeat;
+                background-position: center center;
+                background-size: 24px 24px;
+            }
+        }
+    }
+    .check-list {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 250ms ease-in-out;
+        .check-list-wrapper {
+            padding: 20px;
+            border: 1px solid #ebebeb;
+            border-top: 0;
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+        }
+    }
+    .list-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 20px;
+        .btn {
+            min-width: 25px;
+            margin-top: -2px;
+        }
+        &:first-of-type {
+            margin-top: 0;
+        }
+    }
+    &.opened {
+        .check-box-area {
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+        .open:before {
+            transform: translate(-50%,-50%) rotate(180deg);
+        }
+        .check-list {
+            max-height: 1000px;
+        }
+    }
+}

@@ -15,8 +15,11 @@
                 color: $primary-color;
             }
         }
-        .btn {
+        .btn-addloan {
+            @include button-style(32);
             min-width: 77px;
+            background-color: $primary-color;
+            color: #fff;
         }
     }
 }

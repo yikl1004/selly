@@ -1,5 +1,5 @@
 <template>
-    <div class="popup-prepayment-wrap">
+    <div class="popup-inner">
         <PriceBox title="상환원금" price="1,000,000" />
 
         <Tab :list="tabList" :active="0" type="solid">
