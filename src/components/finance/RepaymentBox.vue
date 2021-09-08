@@ -20,7 +20,7 @@
                     placeholder="금액 입력"
                     :readonly="false"
                     :disabled="false"
-                    unit="단위"
+                    unit="만원"
                     :validate="null"
                     error-message="상환금액을 정확하게 입력 해주세요."
                     :default-value="null"
@@ -68,7 +68,7 @@ export default class RepaymentBox extends Vue {
     private repaymentInfo = [
         {
             text:
-                '중도상환은 조회만 가능하며, 신청을 원하는 고객님께서는 고객센터 (1588-8100) 으로 연락해 주시기 바랍니다.',
+                '중도상환은 조회만 가능하며, 신청을 원하는 고객님께서는 고객센터 (<a href="tel:1588-8100" class="tel">1588-8100</a>) 으로 연락해 주시기 바랍니다.',
         },
     ]
 

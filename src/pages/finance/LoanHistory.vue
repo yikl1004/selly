@@ -1,20 +1,30 @@
 <template>
-    <div class="container">
-        <CautionBox description="이용중인 내역이 없습니다" type="result" />
+    <Page>
+        <Header type="sub" title="대출 내역" />
+        <PageBody class="no-padding">
+            <div class="content">
+                <CautionBox
+                    description="이용중인 내역이 없습니다"
+                    type="result"
+                />
 
-        <div class="loan-history-wrap">
-            <AdditionalLoan />
-            <div class="loan-history-list">
-                <LoanCard />
-                <LoanCard />
+                <div class="loan-history-wrap">
+                    <AdditionalLoan />
+                    <div class="loan-history-list">
+                        <LoanCard />
+                        <LoanCard />
 
-                <BtnGroup>
-                    <BasicButton type="medium"> 추가상환 </BasicButton>
-                    <BasicButton type="medium"> 금리인하권 </BasicButton>
-                </BtnGroup>
+                        <BtnGroup>
+                            <BasicButton type="medium"> 추가상환 </BasicButton>
+                            <BasicButton type="medium">
+                                금리인하권
+                            </BasicButton>
+                        </BtnGroup>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
+        </PageBody>
+    </Page>
 </template>
 
 <script lang="ts">

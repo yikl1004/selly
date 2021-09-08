@@ -1,43 +1,49 @@
 <template>
-    <div class="popup-prediction-laon">
-        <FormProvider :schema="data" @change="formChange" @submit="onSubmit">
-            <template slot-scope="{}">
-                <TextField
-                    id="text-form01"
-                    type="text"
-                    label="매출대금"
-                    :hidden-label="null"
-                    :maxlength="9999"
-                    placeholder="예상 3개월 실적 입력"
-                    :readonly="false"
-                    :disabled="false"
-                    unit="만원"
-                    :validate="null"
-                    :default-value="null"
-                />
-                <BulletList :list="priceInfo" />
+    <div class="popup-inner">
+        <div class="popup-prediction-laon">
+            <FormProvider
+                :schema="data"
+                @change="formChange"
+                @submit="onSubmit"
+            >
+                <template slot-scope="{}">
+                    <TextField
+                        id="text-form01"
+                        type="text"
+                        label="매출대금"
+                        :hidden-label="null"
+                        :maxlength="9999"
+                        placeholder="예상 3개월 실적 입력"
+                        :readonly="false"
+                        :disabled="false"
+                        unit="만원"
+                        :validate="null"
+                        :default-value="null"
+                    />
+                    <BulletList :list="priceInfo" />
 
-                <TextField
-                    id="text-form02"
-                    type="text"
-                    label="대금상환율 조정"
-                    :hidden-label="null"
-                    :maxlength="9999"
-                    placeholder="상환율 입력"
-                    :readonly="false"
-                    :disabled="false"
-                    unit="%"
-                    :validate="null"
-                    error-message="대금상환율을 정확하게 입력 해주세요."
-                    :default-value="null"
-                />
-                <BtnGroup>
-                    <BasicButton size="medium"> 계산 </BasicButton>
-                </BtnGroup>
-            </template>
-        </FormProvider>
+                    <TextField
+                        id="text-form02"
+                        type="text"
+                        label="대금상환율 조정"
+                        :hidden-label="null"
+                        :maxlength="9999"
+                        placeholder="상환율 입력"
+                        :readonly="false"
+                        :disabled="false"
+                        unit="%"
+                        :validate="null"
+                        error-message="대금상환율을 정확하게 입력 해주세요."
+                        :default-value="null"
+                    />
+                    <BtnGroup>
+                        <BasicButton size="medium"> 계산 </BasicButton>
+                    </BtnGroup>
+                </template>
+            </FormProvider>
 
-        <PredictionPriceBox price-name="예상 상환금액" />
+            <PredictionPriceBox price-name="예상 상환금액" />
+        </div>
     </div>
 </template>
 
@@ -45,16 +51,6 @@
 import { Component, Vue } from 'vue-property-decorator'
 import PredictionPriceBox from '@components/finance/PredictionPriceBox.vue'
 import type { Schema } from '@components/form/FormProvider.vue'
-
-// interface Data {
-//     buttonField: string
-//     calendarField: string
-//     checkSingle: boolean
-//     secretNumber: string
-//     singleSelection: string
-//     switchButton: boolean
-//     textFieldPrimary: string
-// }
 
 @Component({
     components: { PredictionPriceBox },

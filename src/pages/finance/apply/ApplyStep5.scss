@@ -1,0 +1,22 @@
+.box-info-wrap {
+    margin-bottom: 32px;
+}
+.select-job-box {
+    margin-top: 32px;
+    .dropdown-box + .dropdown-box {
+        margin-top: 12px;
+    }
+}
+.card-auth-box {
+    .text-field {
+        & + .text-field {
+            margin-top: 12px;
+        }
+    }
+    .img-box {
+        padding: 24px 35px 0;
+        img {
+            width: 100%;
+        }
+    }
+}

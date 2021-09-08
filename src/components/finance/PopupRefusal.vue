@@ -1,12 +1,15 @@
 <template>
-    <div class="popup-refusal-wrap">
-        <p class="txt">
-            장기카드대출을 이용할 의사가 없는 회원님은 보이스피싱(전화금융사기)
-            피해방지를 위해 장기카드대출 이용거절을 신청할 수 있습니다.
-        </p>
-        <BulletList :list="infoRefusal" />
+    <div class="popup-inner">
+        <div class="popup-refusal-wrap">
+            <p class="txt">
+                장기카드대출을 이용할 의사가 없는 회원님은
+                보이스피싱(전화금융사기) 피해방지를 위해 장기카드대출 이용거절을
+                신청할 수 있습니다.
+            </p>
+            <BulletList :list="infoRefusal" />
 
-        <CardAuth type="cvc" />
+            <CardAuth type="cvc" />
+        </div>
     </div>
 </template>
 
