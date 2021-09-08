@@ -18,6 +18,7 @@
             :width="320"
             :height="200"
         />
+        <ConvertChart :datas="datas" :labels="labels" />
         <router-view />
     </div>
 </template>
@@ -27,14 +28,15 @@ import { Component, Vue } from 'vue-property-decorator'
 import ClickOutside from 'vue-click-outside'
 import type { BottomSheetOptionItem } from '@components/common/BottomSheet.vue'
 import type { DropdownBoxList } from '@components/form/DropdownBox.vue'
-import DoughnutChart from '@components/common/DoughnutChart.vue'
+import DoughnutChart from '@components/common/DoughnutChartCl.vue'
+import ConvertChart from '@components/common/ConvertChart.vue'
 import Chart from 'chart.js'
 import patternnomaly from 'patternomaly'
 // import { FinanceModule } from '@stores/modules/finance'
 
 @Component({
     directives: { ClickOutside },
-    components: { DoughnutChart },
+    components: { DoughnutChart, ConvertChart },
 })
 export default class ExamplePage extends Vue {
     private timer: { [key: string]: any } = {
@@ -70,8 +72,12 @@ export default class ExamplePage extends Vue {
         this.opened = false
     }
     private datacollection: Chart.ChartData = {}
+    private datacollection1 = {}
+    private datacollection2: Chart.ChartData = {}
     private chartOption: Chart.ChartOptions = {}
-
+    private chartBy = 'test22'
+    private datas = [101, 20, 20]
+    private labels = ['Red1', 'Yellow', 'Blue']
     mounted() {
         console.log('MOUNTED =======')
         this.fillData()
@@ -82,7 +88,33 @@ export default class ExamplePage extends Vue {
         this.datacollection = {
             datasets: [
                 {
-                    data: [10, 20, 30],
+                    data: [10, 20, 3220],
+                    backgroundColor: [
+                        patternnomaly.draw('square', '#1f77b4', 'black'),
+                        patternnomaly.draw('disc', '#ff7f0e', 'black'),
+                        patternnomaly.draw('diamond', '#2ca02c', 'black'),
+                    ],
+                },
+            ],
+            labels: ['Red', 'Yellow', 'Blue'],
+        }
+        this.datacollection1 = {
+            datasets: [
+                {
+                    data: [10, 220, 350],
+                    backgroundColor: [
+                        patternnomaly.draw('square', '#1f77b4', 'black'),
+                        patternnomaly.draw('disc', '#ff7f0e', 'black'),
+                        patternnomaly.draw('diamond', '#2ca02c', 'black'),
+                    ],
+                },
+            ],
+            labels: ['Red', 'Yellow', 'Blue'],
+        }
+        this.datacollection2 = {
+            datasets: [
+                {
+                    data: [110, 20, 30],
                     backgroundColor: [
                         patternnomaly.draw('square', '#1f77b4', 'black'),
                         patternnomaly.draw('disc', '#ff7f0e', 'black'),

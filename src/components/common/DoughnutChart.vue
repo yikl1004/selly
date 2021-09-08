@@ -70,9 +70,10 @@ export default {
             })
         },
     },
+
     mounted() {
         console.log('차트 렌더====')
-
+        this.convertData()
         // Overwriting base render method with actual data.
         this.renderChart(this.chartData, this.options)
         console.log(this.chartData)
@@ -100,6 +101,13 @@ export default {
         //         },
         //     ],
         // })
+    },
+    methods: {
+        convertData() {
+            console.log('convertData:::::::::::::::::')
+            console.log(this.chartData)
+            console.log(this.options)
+        },
     },
 }
 </script>
