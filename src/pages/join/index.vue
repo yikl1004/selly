@@ -65,9 +65,9 @@ export default class JoinPage extends Vue {
             )
         const methods = {
             // 비즈넵 회원가입
-            '01': this.$edkHost.signUpBznav,
+            '01': this.$edkHost.syncBznav,
             // 비즈넵 로그인
-            '02': this.$edkHost.signInBznav,
+            '02': this.$edkHost.syncBznav,
             // 그 외 예외 처리
             '03': defaultMethod,
             default: defaultMethod,

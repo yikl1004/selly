@@ -23,6 +23,15 @@ export interface MarketingParameters {
         mcno: string
         bzno: string
     }
+    /** 전년 동기간 매출 평균 */
+    lastYearSalesAverage: {
+        // 가맹점 번호
+        mcno: string
+        // 행사 시작일자
+        evSdt: string
+        // 행사 종료일자
+        evEdt: string
+    }
 }
 
 export interface MarketingResponse {
@@ -67,10 +76,20 @@ export interface MarketingResponse {
         // 기존 PUSH 대상자 수
         odPushOjpT: string
     }>
+    /** 전년 동기간 매출 평균 */
+    lastYearSalesAverage: DefaultResponse<{
+        // 매출 총액
+        slTam: string
+        // 매출 건수
+        slCt: string
+        // 매출 평균
+        slAv: string
+    }>
 }
 
 type PossibleApplyFranchiseListRes = Promise<AxiosResponse<MarketingResponse['possibleApplyFranchiseList']>>
 type MarketingTargetRes = Promise<AxiosResponse<MarketingResponse['marketingTarget']>>
+type LastYearSalesAverageRes = Promise<AxiosResponse<MarketingResponse['lastYearSalesAverage']>>
 
 class MarketingService {
     // 마케팅 신청 가능 회원 여부
@@ -97,6 +116,18 @@ class MarketingService {
         method: 'post',
     }
 
+    /** 전년 동기간 매출 평균 */
+    private lastYearSalesAverage: API = {
+        url: '/API/MRT/SEMRKAA004',
+        method: 'post',
+    }
+
+    // 마케팅 신청 추천인 코드 확인
+    private checkRecommenderCode: API = {
+        url: '/API/MRT/SEMRKAA005',
+        method: 'post',
+    }
+
     async getPossibleApplyUser() {
         return await axiosInstance.request({
             ...this.possibleApplyUser,
@@ -120,6 +151,13 @@ class MarketingService {
         // TODO: 현재 시스템 에러, 담당자(김아름 책임) 확인 중
         return await axiosInstance.request({
             ...this.marketingTarget,
+            params,
+        })
+    }
+
+    async getLastYearSalesAverage(params: MarketingParameters['lastYearSalesAverage']): LastYearSalesAverageRes {
+        return await axiosInstance.request({
+            ...this.lastYearSalesAverage,
             params,
         })
     }

@@ -1,5 +1,6 @@
 import Vue from 'vue'
 export { default as Validates } from '@utils/mixins/Validates'
+import toNumber from 'lodash/toNumber'
 
 interface ConvertBizNoFormatterParams {
     bizNo: string
@@ -14,6 +15,7 @@ declare module 'vue/types/vue' {
         convertBizNoFormatter(params: ConvertBizNoFormatterParams): string
         cellPhoneFormatter(cellphoneNumber: string): string
         getByteLength(text: string): number
+        seperateNumber(value?: string): string
     }
 }
 
@@ -59,10 +61,18 @@ export const basicUtil = {
         }
         return bytes
     },
+
+    /**
+     * 문자열로 된 숫자를 숫자로 변경 후 3자리를 콤마로 구분하여 다시 문자열로 반환
+     * @param {string} value
+     */
+    seperateNumber(value?: string): string {
+        return toNumber(value || '0').toLocaleString()
+    },
 }
 
 const registerMixins = () => {
-    const { convertBizNoFormatter, cellPhoneFormatter, getByteLength } = basicUtil
+    const { convertBizNoFormatter, cellPhoneFormatter, getByteLength, seperateNumber } = basicUtil
 
     Vue.mixin({
         data() {
@@ -75,6 +85,7 @@ const registerMixins = () => {
             convertBizNoFormatter,
             cellPhoneFormatter,
             getByteLength,
+            seperateNumber,
         },
     })
 }

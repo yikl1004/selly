@@ -45,12 +45,20 @@ export default class SelectStorePage extends Vue {
         await AuthModule.inputRecommenderCode({ rfnSn })
     }
 
-    openRecommendArea(event: {
+    openRecommendArea({
+        value,
+    }: /* index,
+        fieldName, */
+    {
         value?: string
         index: number
         fieldName: string
     }) {
-        this.recommendAreaOpen = !!event.value
+        this.recommendAreaOpen = !!value
+        /**
+         * @event check
+         */
+        this.$emit('check', value)
     }
 
     /** @Lifecycle */

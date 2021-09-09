@@ -53,7 +53,7 @@ export default class Radio extends Vue {
     @Prop({ type: String, default: '' })
     readonly value!: string
 
-    onChange(value: boolean) {
+    onChange(value: string) {
         /**
          * @event change
          */

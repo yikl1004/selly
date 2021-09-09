@@ -49,6 +49,7 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
+import type { LoginInfo } from '@stores/modules/auth'
 
 @Component({
     components: {
@@ -85,8 +86,13 @@ export default class DepositHistory extends Vue {
         if (target) {
             target.style.display = 'block'
         }
+
+        const auth = JSON.parse(
+            localStorage.getItem('auth') || 'null',
+        ) as LoginInfo
+
         this.$edkHost.openDataSync({
-            orgSyncId: '',
+            orgSyncId: auth?.bzNavToken || '',
             eventListener(event) {
                 console.log(event)
             },

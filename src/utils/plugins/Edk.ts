@@ -4,14 +4,15 @@ declare module 'vue/types/vue' {
     interface Vue {
         $edkHost: {
             init: Function
-            signInBznav(params: { dom?: Element; bznavSyncToken: string }): void
-            signUpBznav(params: { dom?: Element; bznavSyncToken: string }): void
+            syncBznav(params: { dom?: Element; bznavSyncToken: string }): void
+            // signInBznav(params: { dom?: Element; bznavSyncToken: string }): void
+            // signUpBznav(params: { dom?: Element; bznavSyncToken: string }): void
             signOutBznav(params: { dom?: Element }): void
             // 연동 페이지
             openDataSync(params?: { dom?: Element; orgSyncId: string; eventListener?: EdkEventListener }): void
             // 세무서비스 페이지
-            openInsight(params: { dom?: Element; orgSyncId: string; eventListener?: EdkEventListener }): void
-            openDevtool(params: { dom?: Element; eventListener?: EdkEventListener }): void
+            openInsightLoca(params: { dom?: Element; orgSyncId: string; eventListener?: EdkEventListener }): void
+            // openDevtool(params: { dom?: Element; eventListener?: EdkEventListener }): void
         }
     }
 }

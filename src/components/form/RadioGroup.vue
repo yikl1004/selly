@@ -8,10 +8,12 @@
                 class="radio-list-item"
             >
                 <Radio
+                    :id="`${name}-${index}`"
                     :label="check.label"
                     :name="`radio-group-${name}`"
                     :value="check.value"
                     :checked="check.checked"
+                    @change="onChange"
                 />
             </div>
         </div>
@@ -28,10 +30,6 @@ import { RadioProps } from '@components/form/Radio.vue'
 
 @Component
 export default class RadioGroup extends Vue {
-    /**
-     * @category Prop
-     */
-
     /** 제목 */
     @Prop({ type: String })
     readonly title!: string
@@ -55,6 +53,14 @@ export default class RadioGroup extends Vue {
     /** 라디오 리스트 */
     @Prop({ type: Array, default: () => [], required: true })
     readonly list!: RadioProps[]
+
+    /** 값이 변경 됬을 때 */
+    onChange(value: string) {
+        /**
+         * @event change
+         */
+        this.$emit('change', value)
+    }
 }
 </script>
 

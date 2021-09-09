@@ -20,7 +20,10 @@
                 <!--// e : 신용카드 -->
 
                 <!-- s : 세무서비스 -->
-                <Anchor :href="toTaxService()" class="banner-tax">
+                <Anchor
+                    class="banner-tax"
+                    :href="{ name: 'Tax Service Guide' }"
+                >
                     <em>가장 간편한 사업 관리</em>
                     <strong>간편하게 세무 관리<br />시작 하세요</strong>
                 </Anchor>
@@ -39,7 +42,6 @@ import { Component, Mixins } from 'vue-property-decorator'
 import PageView from '@utils/mixins/PageView'
 import { MainModule } from '@stores/modules/main'
 import SalesAndDeposit from '@components/main/SalesAndDeposit.vue'
-// import Financial from '@components/main/Financial.vue'
 import Marketing from '@components/main/Marketing.vue'
 import CreditCard from '@components/main/CreditCard.vue'
 import AffiliatedBanner from '@components/main/AffiliatedBanner.vue'
@@ -56,10 +58,6 @@ import AffiliatedBanner from '@components/main/AffiliatedBanner.vue'
 export default class MainPage extends Mixins(PageView) {
     get isResponseSuccess() {
         return MainModule.isResponseSuccess
-    }
-
-    toTaxService() {
-        return process.env.VUE_APP_TAX_SERVICE
     }
 
     created() {

@@ -35,31 +35,31 @@
                     </BasicButton>
                 </div>
 
-                <div v-if="selectedFranchiseList" class="box-franchisee-info">
+                <div v-if="franchiseInfo" class="box-franchisee-info">
                     <ul>
                         <li>
                             <strong>매장 번호</strong>
                             <p>
                                 <span>
-                                    {{ selectedFranchiseList.mcNm }}
-                                    {{ selectedFranchiseList.mcno }}
+                                    {{ franchiseInfo.mcNm }}
+                                    {{ franchiseInfo.mcno }}
                                 </span>
                             </p>
                         </li>
                         <li>
                             <strong>주소</strong>
                             <p>
-                                <span>{{ selectedFranchiseList.mcPsno }}</span>
+                                <span>{{ franchiseInfo.mcPsno }}</span>
                                 <span>
-                                    {{ selectedFranchiseList.pnadd }}<br />
-                                    {{ selectedFranchiseList.bpsnoAdd }}
+                                    {{ franchiseInfo.pnadd }}<br />
+                                    {{ franchiseInfo.bpsnoAdd }}
                                 </span>
                             </p>
                         </li>
                         <li>
                             <strong>전화번호</strong>
                             <p>
-                                <span>{{ selectedFranchiseList.mcTlno }}</span>
+                                <span>{{ franchiseInfo.mcTlno }}</span>
                             </p>
                         </li>
                     </ul>
@@ -97,10 +97,6 @@ export default class MarketingApply extends Mixins(PageView) {
         },
     ]
 
-    /** 선택된 가맹점 번호 */
-    private selectedMcNo = ''
-    private selectedBizNo = ''
-
     /** 다음 버튼 비활성화 여부 */
     private nextDisabled = true
 
@@ -109,14 +105,14 @@ export default class MarketingApply extends Mixins(PageView) {
         return MarketingModule.franchiseList
     }
 
-    /** 선택된 가맹점 */
-    get selectedFranchiseList() {
-        return this.franchiseList.find(item => item.mcno === this.selectedMcNo)
-    }
-
     /** 선택된 가맹점에 대한 유효성 검사 결과 */
     get step1ValidateResult() {
         return MarketingModule.step1ValidateResult
+    }
+
+    /** 선택된 가맹점 정보(store) */
+    get franchiseInfo() {
+        return MarketingModule.franchiseInfoData
     }
 
     /** 사업자 정보 페이지로 이동 */
@@ -129,33 +125,34 @@ export default class MarketingApply extends Mixins(PageView) {
         this.isActive = true
     }
 
+    /** 선택된 가맹점 */
+    getSelectedFranchiseList(mcno: string) {
+        return this.franchiseList.find(item => item.mcno === mcno)
+    }
+
     onChangeFranchiseSelect(value: string) {
-        this.selectedMcNo = value
-        this.selectedBizNo = this.selectedFranchiseList?.bzno || ''
+        const selected = this.getSelectedFranchiseList(value)
+        selected && MarketingModule.setFranchiseInfo(selected)
     }
 
     async nextStep() {
         this.nextDisabled = true
-        await MarketingModule.getValidatePossibleApplyFranchiseList({
-            mcno: this.selectedMcNo,
-        })
 
-        const rspDc = this.step1ValidateResult?.rspDc
-        const rspDcMsg = this.step1ValidateResult?.rspDcMsg
-
-        if (rspDc === '0000') {
-            // 성공
-            this.$router.push({
-                name: 'Marketing Coupon Creation Step 2',
-                query: {
-                    mcno: this.selectedMcNo,
-                    bzno: this.selectedBizNo,
-                },
+        if (this.franchiseInfo) {
+            await MarketingModule.getValidatePossibleApplyFranchiseList({
+                mcno: this.franchiseInfo.mcno as string,
             })
-        } else if (rspDc) {
-            this.openModal({ rspDc, rspDcMsg })
-        }
 
+            const rspDc = this.step1ValidateResult?.rspDc
+            const rspDcMsg = this.step1ValidateResult?.rspDcMsg
+
+            if (rspDc === '0000') {
+                // 성공
+                this.$router.push({ name: 'Marketing Coupon Creation Step 2' })
+            } else if (rspDc) {
+                this.openModal({ rspDc, rspDcMsg })
+            }
+        }
         this.nextDisabled = true
     }
 
@@ -197,11 +194,7 @@ export default class MarketingApply extends Mixins(PageView) {
         await MarketingModule.getPossibleApplyFranchiseList()
         const list = this.franchiseList
         if (list.length) {
-            this.selectedMcNo = list[0].mcno
-            this.selectedBizNo = list[0].bzno
-        } else {
-            this.selectedMcNo = ''
-            this.selectedBizNo = ''
+            MarketingModule.setFranchiseInfo(list[0])
         }
     }
 }

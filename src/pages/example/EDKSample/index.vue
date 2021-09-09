@@ -66,14 +66,14 @@
                 </a>
             </li>
             <li>
-                <a
+                <!-- <a
                     class="btn"
                     target="_blank"
                     rel="noopener"
                     @click="openDevtool"
                 >
                     openDevtool
-                </a>
+                </a> -->
             </li>
         </ul>
         <div
@@ -101,12 +101,12 @@ export default class EDKSample extends Vue {
     }
 
     signInBznav() {
-        this.$edkHost.signInBznav({
+        this.$edkHost.syncBznav({
             bznavSyncToken: 'syncTokenTest',
         })
     }
     signUpBznav() {
-        this.$edkHost.signUpBznav({
+        this.$edkHost.syncBznav({
             bznavSyncToken: 'syncTokenTest',
         })
     }
@@ -122,15 +122,8 @@ export default class EDKSample extends Vue {
         })
     }
     openInsight() {
-        this.$edkHost.openInsight({
+        this.$edkHost.openInsightLoca({
             orgSyncId: 'ORG_SYNC_ID',
-            eventListener: event => {
-                console.log('EVENT', event)
-            },
-        })
-    }
-    openDevtool() {
-        this.$edkHost.openDevtool({
             eventListener: event => {
                 console.log('EVENT', event)
             },

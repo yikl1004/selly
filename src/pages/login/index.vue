@@ -174,10 +174,7 @@ export default class LoginPage extends Mixins(PageView) {
     biznavAutoLogin() {
         // bzNavToken // 비즈넵토큰
         if ('bzNavToken' in this.$route.query) {
-            this.$edkHost.signUpBznav({
-                bznavSyncToken: this.$route.query.bzNavToken as string,
-            })
-            this.$edkHost.signInBznav({
+            this.$edkHost.syncBznav({
                 bznavSyncToken: this.$route.query.bzNavToken as string,
             })
         }
