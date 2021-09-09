@@ -1,35 +1,37 @@
 <template>
-    <div class="popup-address-find">
-        <ButtonField
-            id="addressSearch"
-            name="search"
-            label="주소 검색"
-            button-text="검색"
-            placeholder="도로명, 건물번호, 지번 입력"
-            hidden-label
-            @search="searchJuso"
-        />
-        <p class="txt-search-info">
-            예시 : 도로명(양녕로 25길), 건물번호(39-1)
-        </p>
-
-        <!--[D] 검색결과 리스트-->
-        <div v-if="hasList" class="address-list">
-            <AddressItem
-                v-for="(item, index) in list"
-                :key="`address-item-${index}`"
-                :jibun="item.jibunAddr"
-                :road="item.roadAddrPart1"
-                :zipcode="item.zipNo"
-                @select="onSelect"
+    <div class="popup-inner">
+        <div class="popup-address-find">
+            <ButtonField
+                id="addressSearch"
+                name="search"
+                label="주소 검색"
+                button-text="검색"
+                placeholder="도로명, 건물번호, 지번 입력"
+                hidden-label
+                @search="searchJuso"
             />
-        </div>
-        <!--[D] 검색결과 없음-->
-        <CautionBox v-else description="검색된 내용이 없습니다." />
+            <p class="txt-search-info">
+                예시 : 도로명(양녕로 25길), 건물번호(39-1)
+            </p>
 
-        <BasicButton v-if="visibleMoreButton" type="more" @click="more">
-            더보기
-        </BasicButton>
+            <!--[D] 검색결과 리스트-->
+            <div v-if="hasList" class="address-list">
+                <AddressItem
+                    v-for="(item, index) in list"
+                    :key="`address-item-${index}`"
+                    :jibun="item.jibunAddr"
+                    :road="item.roadAddrPart1"
+                    :zipcode="item.zipNo"
+                    @select="onSelect"
+                />
+            </div>
+            <!--[D] 검색결과 없음-->
+            <CautionBox v-else description="검색된 내용이 없습니다." />
+
+            <BasicButton v-if="visibleMoreButton" type="more" @click="more">
+                더보기
+            </BasicButton>
+        </div>
     </div>
 </template>
 
