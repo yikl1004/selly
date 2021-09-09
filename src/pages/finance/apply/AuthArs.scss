@@ -1,0 +1,30 @@
+.ars-box {
+    padding-top: 50px;
+    text-align: center;
+    strong {
+        color: #222;
+        font-weight: 500;
+    }   
+}
+.user-info {
+    margin-top: 48px;
+    color: #222;
+    &:before {
+        content: '';
+        display: block;
+        width: 48px;
+        height: 48px;
+        margin: 0 auto;
+        background: url('/assets/finance/img_ars.png') no-repeat;
+        background-size: 48px;
+    }
+    strong {
+        display: block;
+        margin-top: 12px;
+        font-size: 20px;
+        font-weight: 700;
+    }
+    p {
+        margin-top: 8px;
+    }
+}

@@ -1,30 +1,36 @@
 <template>
-    <div class="container">
-        <div class="content">
-            <div class="loan-detail-wrap">
-                <LoanInfo />
+    <Page>
+        <Header type="sub" title="대출 내역 상세" />
+        <PageBody>
+            <div class="content">
+                <div class="loan-detail-wrap">
+                    <LoanInfo />
 
-                <!--[D] 비즈론/장기카드 -->
-                <div class="price-round-wrap">
-                    <AccoReimbursement :list="reimbursementList" />
-                    <BasicButton type="more"> 더보기 </BasicButton>
-                </div>
+                    <!--[D] 비즈론/장기카드 -->
+                    <div class="price-round-wrap">
+                        <AccoReimbursement :list="reimbursementList" />
+                        <BasicButton type="more"> 더보기 </BasicButton>
+                    </div>
 
-                <!--[D] 사업자 대출 및 즉시대출_상환중케이스-->
-                <div class="price-round-wrap">
-                    <AccoReimbursement :list="reimbursementList" type="month" />
-                    <BasicButton type="more"> 더보기 </BasicButton>
-                </div>
+                    <!--[D] 사업자 대출 및 즉시대출_상환중케이스-->
+                    <div class="price-round-wrap">
+                        <AccoReimbursement
+                            :list="reimbursementList"
+                            type="month"
+                        />
+                        <BasicButton type="more"> 더보기 </BasicButton>
+                    </div>
 
-                <div class="caution-info-box">
-                    <BulletList
-                        title="반드시 확인하세요."
-                        :list="cautionList"
-                    ></BulletList>
+                    <div class="caution-info-box">
+                        <BulletList
+                            title="반드시 확인하세요."
+                            :list="cautionList"
+                        ></BulletList>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
+        </PageBody>
+    </Page>
 </template>
 
 <script lang="ts">

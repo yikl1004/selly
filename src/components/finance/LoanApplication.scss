@@ -1,27 +1,4 @@
-.form-col {
-    display: flex;
-    align-items: center;
-    .field-box {
-        width: 50%;
-        .label-title-box {
-            margin: 0;
-        }
-    }
-    .field-cont {
-        em {
-            font-size: 20px;
-            font-weight: 500;
-            color: #222;
-            line-height: 1.4;
-            strong {
-                font-size: 26px;
-                font-weight: 700;
-                line-height: 1.38;
-                vertical-align: middle;
-            }
-        }
-    }
-}
+
 .check-box {
     margin-top: 32px;
 }

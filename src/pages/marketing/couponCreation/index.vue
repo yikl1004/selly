@@ -97,11 +97,59 @@
                 />
 
                 <div class="box-coupon-step">
-                    <div class="box-img">
-                        <img
-                            src="/assets/marketing/img_step.png"
-                            alt="쿠폰 내용 설정 및 예상 수익 확인 >  신청 및 접수 > 관리자 검토 및 승인 > 행사 진행 및 중간 결과 확인 > 성과 분석 확인"
-                        />
+                    <div class="step-box col3">
+                        <div class="step-box-item">
+                            <span class="ir">1.</span>
+                            <i class="img">
+                                <img
+                                    src="/assets/marketing/ico_marketing_intro01.png"
+                                    alt=""
+                                />
+                            </i>
+                            <p>쿠폰 내용 설정 및<br />예상 수익 확인</p>
+                        </div>
+                        <div class="step-box-item">
+                            <span class="ir">2.</span>
+                            <i class="img">
+                                <img
+                                    src="/assets/marketing/ico_marketing_intro02.png"
+                                    alt=""
+                                />
+                            </i>
+                            <p>신청 및 접수</p>
+                        </div>
+                        <div class="step-box-item">
+                            <span class="ir">3.</span>
+                            <i class="img">
+                                <img
+                                    src="/assets/marketing/ico_marketing_intro03.png"
+                                    alt=""
+                                />
+                            </i>
+                            <p>관리자 검토<br />및 승인</p>
+                        </div>
+                    </div>
+                    <div class="step-box col2">
+                        <div class="step-box-item">
+                            <span class="ir">4.</span>
+                            <i class="img">
+                                <img
+                                    src="/assets/marketing/ico_marketing_intro04.png"
+                                    alt=""
+                                />
+                            </i>
+                            <p>행사 진행 및<br />중간 결과 확인</p>
+                        </div>
+                        <div class="step-box-item">
+                            <span class="ir">5.</span>
+                            <i class="img">
+                                <img
+                                    src="/assets/marketing/ico_marketing_intro05.png"
+                                    alt=""
+                                />
+                            </i>
+                            <p>성과 분석<br />확인</p>
+                        </div>
                     </div>
                 </div>
             </div>

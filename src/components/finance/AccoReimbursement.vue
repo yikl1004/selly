@@ -1,6 +1,6 @@
 <template>
     <!--[D] type month는 케이스용 prop / v-if 바꿔도 됨-->
-    <div class="box-acco-list" :class="type">
+    <div class="box-price-list" :class="type">
         <div
             v-for="(item, index) in list"
             :key="`acco-item-${index}`"

@@ -1,137 +1,143 @@
 <template>
-    <div class="popup-repayment-schedule">
-        <!--[D] 장기카드biz론 / 장기카드론-->
-        <PriceBox
-            title="이용가능 금액"
-            price="1,000,000"
-            date="21. 05. 25 14:05 기준"
-        />
-        <p class="txt-interest-rate">
-            연 이자율
-            <strong>4.95%</strong>
-        </p>
-        <!--//[D] 장기카드biz론 / 장기카드론-->
+    <div class="popup-inner">
+        <div class="popup-repayment-schedule">
+            <!--[D] 장기카드biz론 / 장기카드론-->
+            <PriceBox
+                title="이용가능 금액"
+                price="1,000,000"
+                date="21. 05. 25 14:05 기준"
+            />
+            <p class="txt-interest-rate">
+                연 이자율
+                <strong>4.95%</strong>
+            </p>
+            <!--//[D] 장기카드biz론 / 장기카드론-->
 
-        <!--[D] 할부금융(사업자/즉시)-->
-        <PriceBox date="21. 05. 25 14:05 기준" />
-        <!--//[D] 할부금융(사업자/즉시)-->
+            <!--[D] 할부금융(사업자/즉시)-->
+            <PriceBox date="21. 05. 25 14:05 기준" />
+            <!--//[D] 할부금융(사업자/즉시)-->
 
-        <FormProvider :schema="data" @change="formChange" @submit="onSubmit">
-            <template slot-scope="{ schema }">
-                <TextField
-                    id="text-form01"
-                    type="text"
-                    label="신청금액"
-                    :hidden-label="null"
-                    :maxlength="9999"
-                    placeholder="금액 입력"
-                    :readonly="false"
-                    :disabled="false"
-                    unit="만원"
-                    :validate="null"
-                    :default-value="null"
-                    error-message="신청금액을 정확하게 입력해 주세요."
-                />
+            <FormProvider
+                :schema="data"
+                @change="formChange"
+                @submit="onSubmit"
+            >
+                <template slot-scope="{ schema }">
+                    <TextField
+                        id="text-form01"
+                        type="text"
+                        label="신청금액"
+                        :hidden-label="null"
+                        :maxlength="9999"
+                        placeholder="금액 입력"
+                        :readonly="false"
+                        :disabled="false"
+                        unit="만원"
+                        :validate="null"
+                        :default-value="null"
+                        error-message="신청금액을 정확하게 입력해 주세요."
+                    />
 
-                <!--[D] 신청금액 5천만원 이상 입력되었을시 노출 -->
-                <BulletList :list="priceInfo" />
+                    <!--[D] 신청금액 5천만원 이상 입력되었을시 노출 -->
+                    <BulletList :list="priceInfo" />
 
-                <CalendarField
-                    id="calendar01"
-                    label="이용예정일"
-                    :hidden-label="false"
-                    :default-value="null"
-                    :readonly="false"
-                    name="date"
-                />
+                    <CalendarField
+                        id="calendar01"
+                        label="이용예정일"
+                        :hidden-label="false"
+                        :default-value="null"
+                        :readonly="false"
+                        name="date"
+                    />
 
-                <!--장기카드론-->
-                <DropdownBox
-                    id="dropdown-box01"
-                    label="상환방법"
-                    :hidden-label="false"
-                    :list="dropdownBoxList"
-                    :default-value="schema.dropdownBox"
-                    :disabled="false"
-                    error-message="에러메시지가 필요할까"
-                    success-message="없어도 될듯"
-                />
+                    <!--장기카드론-->
+                    <DropdownBox
+                        id="dropdown-box01"
+                        label="상환방법"
+                        :hidden-label="false"
+                        :list="dropdownBoxList"
+                        :default-value="schema.dropdownBox"
+                        :disabled="false"
+                        error-message="에러메시지가 필요할까"
+                        success-message="없어도 될듯"
+                    />
 
-                <DropdownBox
-                    id="dropdown-box02"
-                    label="거치기간"
-                    :hidden-label="false"
-                    :list="dropdownBoxList"
-                    :default-value="schema.dropdownBox"
-                    :disabled="false"
-                    error-message="에러메시지가 필요할까"
-                    success-message="없어도 될듯"
-                />
+                    <DropdownBox
+                        id="dropdown-box02"
+                        label="거치기간"
+                        :hidden-label="false"
+                        :list="dropdownBoxList"
+                        :default-value="schema.dropdownBox"
+                        :disabled="false"
+                        error-message="에러메시지가 필요할까"
+                        success-message="없어도 될듯"
+                    />
 
-                <DropdownBox
-                    id="dropdown-box03"
-                    label="분할상환개월"
-                    :hidden-label="false"
-                    :list="dropdownBoxList"
-                    :default-value="schema.dropdownBox"
-                    :disabled="false"
-                    error-message="에러메시지가 필요할까"
-                    success-message="없어도 될듯"
-                />
-                <!--//장기카드론-->
+                    <DropdownBox
+                        id="dropdown-box03"
+                        label="분할상환개월"
+                        :hidden-label="false"
+                        :list="dropdownBoxList"
+                        :default-value="schema.dropdownBox"
+                        :disabled="false"
+                        error-message="에러메시지가 필요할까"
+                        success-message="없어도 될듯"
+                    />
+                    <!--//장기카드론-->
 
-                <DropdownBox
-                    id="dropdown-box04"
-                    label="대출기간"
-                    :hidden-label="false"
-                    :list="dropdownBoxList"
-                    :default-value="schema.dropdownBox"
-                    :disabled="false"
-                    error-message="에러메시지가 필요할까"
-                    success-message="없어도 될듯"
-                />
+                    <DropdownBox
+                        id="dropdown-box04"
+                        label="대출기간"
+                        :hidden-label="false"
+                        :list="dropdownBoxList"
+                        :default-value="schema.dropdownBox"
+                        :disabled="false"
+                        error-message="에러메시지가 필요할까"
+                        success-message="없어도 될듯"
+                    />
 
-                <!--할부금융-->
-                <TextField
-                    id="text-form02"
-                    type="text"
-                    label="적용이자율(연)"
-                    :hidden-label="null"
-                    :maxlength="9999"
-                    placeholder="이자율 입력"
-                    :readonly="false"
-                    :disabled="false"
-                    unit="%"
-                    :validate="null"
-                    :default-value="null"
-                />
+                    <!--할부금융-->
+                    <TextField
+                        id="text-form02"
+                        type="text"
+                        label="적용 연 이자율"
+                        :hidden-label="null"
+                        :maxlength="9999"
+                        placeholder="이자율 입력"
+                        :readonly="false"
+                        :disabled="false"
+                        unit="%"
+                        :validate="null"
+                        :default-value="null"
+                    />
 
-                <CalendarField
-                    id="calendar02"
-                    label="대출일"
-                    :hidden-label="false"
-                    :default-value="null"
-                    :readonly="false"
-                    name="date"
-                />
+                    <CalendarField
+                        id="calendar02"
+                        label="대출일"
+                        :hidden-label="false"
+                        :default-value="null"
+                        :readonly="false"
+                        name="date"
+                    />
 
-                <CalendarField
-                    id="calendar03"
-                    label="최초상환일"
-                    :hidden-label="false"
-                    :default-value="null"
-                    :readonly="false"
-                    name="date"
-                />
-                <!--//할부금융-->
-            </template>
-        </FormProvider>
+                    <CalendarField
+                        id="calendar03"
+                        label="최초상환일"
+                        :hidden-label="false"
+                        :default-value="null"
+                        :readonly="false"
+                        name="date"
+                    />
+                    <!--//할부금융-->
+                </template>
+            </FormProvider>
 
-        <BtnGroup>
-            <BasicButton size="medium"> 초기화 </BasicButton>
-            <BasicButton size="medium"> 계산 </BasicButton>
-        </BtnGroup>
-        <PredictionPriceBox price-name="총 대출원금" />
+            <BtnGroup>
+                <BasicButton size="medium"> 초기화 </BasicButton>
+                <BasicButton size="medium"> 계산 </BasicButton>
+            </BtnGroup>
+            <PredictionPriceBox price-name="총 대출원금" />
+        </div>
     </div>
 </template>
 

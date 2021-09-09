@@ -5,6 +5,7 @@
                 <DropdownBox
                     id="dropdown-box01"
                     label="보유카드"
+                    type="large"
                     :list="dropdownBoxList"
                     :default-value="schema.dropdownBox"
                     :disabled="false"
@@ -44,16 +45,6 @@
 import { Component, Prop, Vue } from 'vue-property-decorator'
 import type { Schema } from '@components/form/FormProvider.vue'
 import type { DropdownBoxList } from '@components/form/DropdownBox.vue'
-
-// interface Data {
-//     buttonField: string
-//     calendarField: string
-//     checkSingle: boolean
-//     secretNumber: string
-//     singleSelection: string
-//     switchButton: boolean
-//     textFieldPrimary: string
-// }
 
 @Component
 export default class CardAuth extends Vue {

@@ -13,7 +13,55 @@
     }
 }
 .box-coupon-step {
+    max-width: 312px;
+    margin: 0 auto;
     padding-top: 12px;
+    .step-box {
+        display: flex;
+        flex-wrap: wrap;
+        margin-top: 20px;
+        &.col3 {
+            margin-top: 0;
+            .step-box-item {
+                &:first-of-type {
+                    &:before {
+                        display: none;
+                    }
+                }
+            }
+        }
+        &.col2 {
+            justify-content: center;
+        }
+    }
+    .step-box-item {
+        width: 33%;
+        position: relative;
+        text-align: center;
+        .img {
+            display: block;
+            width: 64px;
+            height: 64px;
+            margin: 0 auto;
+            img {
+                width: 100%;
+            }
+        }
+        p {
+            margin-top: 18px;
+        }
+        &:before {
+            content: '';
+            display: block;
+            position: absolute;
+            left: -12px;
+            top: 20px;
+            width: 25px;
+            height: 24px;
+            background: url('/assets/marketing/ico_arrow_step.png') no-repeat;
+            background-size: 100%;
+        }
+    }
 }
 
 .coupon-info-list {

@@ -1,5 +1,5 @@
 <template>
-    <div class="check-box-group field-box">
+    <div :class="['check-box-group field-box', { opened: open }]">
         <LabelTitle :hidden-label="hiddenLabel" :label="label" />
         <div class="check-box-area">
             <!-- 클래스에 checked 추가시 체크표시 -->
@@ -9,17 +9,21 @@
             <button
                 v-if="list.length"
                 type="button"
-                :class="['open', { opened: open }]"
+                class="open"
                 @click="toggle"
             >
                 <span class="ir">{{ open ? '열림' : '닫힘' }}</span>
             </button>
         </div>
-        <div v-if="list.length" :class="['check-list', { opened: open }]">
+        <div v-if="list.length" :class="['check-list']">
             <div class="check-list-wrapper">
                 <!-- 동의 리스트가 두개 들어올 경우 동의내용에 대한 타이틀 노출 필요 -->
                 <div class="check-list-title">
                     <strong>개인(신용)정보 동의</strong>
+                    <p>
+                        종합신용정보집중기관 및 신용정보회사에 개인(신용)정보
+                        제공
+                    </p>
                 </div>
                 <div class="check-list-box">
                     <div
@@ -43,11 +47,36 @@
                     </div>
                 </div>
                 <!-- 체크박스가 2줄로 나오는 케이스가 있음. check-list-box에 col 클래스 추가 -->
+
                 <div class="check-list-title">
                     <strong>개인(신용)정보 동의</strong>
+                    <p>
+                        종합신용정보집중기관 및 신용정보회사에 개인(신용)정보
+                        제공
+                    </p>
                 </div>
 
                 <div class="check-list-box col">
+                    <div
+                        v-for="(check, index) in list"
+                        :key="`check-box-group-${name}-${index}`"
+                        class="check-list-item"
+                    >
+                        <button
+                            type="button"
+                            class="check-box"
+                            :class="{
+                                checked: check.checked,
+                                disabled: check.disabled,
+                            }"
+                        >
+                            <i>{{ check.label }}</i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 타이틀없는 경우 -->
+                <div class="check-list-box">
                     <div
                         v-for="(check, index) in list"
                         :key="`check-box-group-${name}-${index}`"
