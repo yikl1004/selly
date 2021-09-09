@@ -11,11 +11,9 @@
     <!-- 연동 후 데이터수집/ 연동안되었음-->
     <Anchor v-else-if="isProceedingLinkage" href="/" class="banner-box no-data">
         <strong>
-            고객님의 매출/입금<br />데이터 수집 및 연동중입니다.
-            <br />
-            조금만 기다려 주세요.
+            고객님의 매출/입금<br />데이터 수집 중입니다.<br />조금만 기다려
+            주세요.
         </strong>
-        <img src="/assets/icon/ico_loading.svg" alt="로딩중" />
     </Anchor>
 
     <!-- 연동 데이터 존재시-->

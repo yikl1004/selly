@@ -76,12 +76,15 @@
     }
 
     &.no-data {
-        padding: 34px 24px 25px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 192px;
+        padding: 34px 24px;
         background-color: #fff;
         text-align: center;
         strong {
             display: block;
-            padding-bottom: 5px;
             font-size: 16px;
             color: #222;
             line-height: 1.5;
