@@ -139,6 +139,7 @@
         }
         .flag{
             display: block;
+            position: relative;
             height: 28px;
             margin-top: -3px;
             padding: 6px 12px 5px;
@@ -147,6 +148,18 @@
             color: #fa4123;
             border-radius: 4px;
             font-weight: 700;
+            &:after {
+                content: '';
+                display: block;
+                position: absolute;
+                right: 35px;
+                bottom: -5px;
+                width: 0;
+                height: 0;
+                border-left: 4px solid transparent;
+                border-right:4px solid transparent;
+                border-top: 5px solid #ffece8;
+            }
         }
     }
     .price {
