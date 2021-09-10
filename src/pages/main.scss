@@ -76,12 +76,15 @@
     }
 
     &.no-data {
-        padding: 34px 24px 25px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 192px;
+        padding: 34px 24px;
         background-color: #fff;
         text-align: center;
         strong {
             display: block;
-            padding-bottom: 5px;
             font-size: 16px;
             color: #222;
             line-height: 1.5;
@@ -136,6 +139,7 @@
         }
         .flag{
             display: block;
+            position: relative;
             height: 28px;
             margin-top: -3px;
             padding: 6px 12px 5px;
@@ -144,6 +148,18 @@
             color: #fa4123;
             border-radius: 4px;
             font-weight: 700;
+            &:after {
+                content: '';
+                display: block;
+                position: absolute;
+                right: 35px;
+                bottom: -5px;
+                width: 0;
+                height: 0;
+                border-left: 4px solid transparent;
+                border-right:4px solid transparent;
+                border-top: 5px solid #ffece8;
+            }
         }
     }
     .price {
