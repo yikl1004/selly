@@ -96,6 +96,7 @@
             </div>
         </Anchor>
 
+        <!--[D] 1차 오픈 -->
         <!-- 금융_장기카드론_대출 미신청 / 한도부족 심사부적격 -->
         <Anchor href="/" class="banner-box banner-finance type-loan">
             <div class="banner-title">
@@ -147,7 +148,7 @@
 
         <Anchor href="/" class="banner-box banner-finance type-loan">
             <div class="available-box type02">
-                <p>추가대출가능 금액</p>
+                <p>추가대ㅁ출가능 금액</p>
                 <span class="price"> <strong>5,000</strong> 만원 </span>
                 <p>이용가능금액 <em>연 5.2%</em></p>
             </div>
@@ -167,6 +168,7 @@
             </p>
         </Anchor>
 
+        <!--[D] 1차 오픈 -->
         <!-- 금융 예외 케이스-->
         <Anchor href="/" class="banner-box banner-finance type-exception">
             <div class="banner-title">
@@ -264,6 +266,7 @@
             </div>
         </div>
 
+        <!--[D] 1차 오픈 -->
         <!-- 즉시대출 -->
         <Anchor href="/" class="banner-box banner-finance type-instant">
             <div class="banner-title">
