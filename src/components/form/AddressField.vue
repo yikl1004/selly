@@ -12,6 +12,7 @@
                     :maxlength="maxlength"
                     type="text"
                     disabled
+                    title="우편번호"
                     @input="onInput"
                     @blur="onBlur"
                 />
@@ -35,6 +36,7 @@
                 :value="road"
                 :name="_.camelCase(id)"
                 :maxlength="maxlength"
+                title="도로명주소"
                 @input="onInput"
                 @blur="onBlur"
             />
@@ -57,6 +59,7 @@
                 :value="value"
                 :name="_.camelCase(id)"
                 :maxlength="maxlength"
+                title="상세주소"
                 @input="onInput"
                 @focus="onFocus"
                 @blur="onBlur"
