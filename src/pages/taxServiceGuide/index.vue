@@ -17,10 +17,10 @@ export default class TaxServiceGuide extends Mixins(PageView) {
             localStorage.getItem('auth') || 'null',
         ) as LoginInfo
 
-        // const target = document.querySelector('#em_embed') as HTMLDivElement
-        // if (target) {
-        //     target.style.display = 'block'
-        // }
+        const target = document.querySelector('#em_embed') as HTMLDivElement
+        if (target) {
+            target.style.display = 'block'
+        }
 
         if (auth?.bzNavToken) {
             this.$edkHost.openInsightLoca({
@@ -43,10 +43,10 @@ export default class TaxServiceGuide extends Mixins(PageView) {
     }
 
     beforeDestroy() {
-        // const target = document.querySelector('#em_embed') as HTMLDivElement
-        // if (target) {
-        //     target.style.display = 'none'
-        // }
+        const target = document.querySelector('#em_embed') as HTMLDivElement
+        if (target) {
+            target.style.display = 'none'
+        }
     }
 }
 </script>
