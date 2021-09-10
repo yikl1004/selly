@@ -100,7 +100,7 @@
         <Anchor href="/" class="banner-box banner-finance type-loan">
             <div class="banner-title">
                 <em>여유있는 한도!</em>
-                <strong>중도상환 수수료 없는<br />장기카드론</strong>
+                <strong>중도상환 수수료 없는<br />장기카드 대출</strong>
             </div>
         </Anchor>
 
