@@ -16,33 +16,24 @@
             :maxlength="9999"
             :readonly="false"
             :disabled="false"
-            @search="onClickRecommenderCode"
+            @search="onSearch"
         />
     </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import { AuthModule } from '@stores/modules/auth'
 
 @Component
-export default class SelectStorePage extends Vue {
-    get recommenderCodeMessage() {
-        return AuthModule.recommenderCodeMessage
-    }
-
-    /** @Data */
+export default class RecommenderBox extends Vue {
     private recommendAreaOpen = false
 
-    /** @Methods */
-    /**
-     * FIXME: 수정 해야 함
-     * 1. 체크박스가 없음(디자인 추가 되어야 함 )
-     * 2. API가 명확하지 않음
-     * 3. 메세징 처리 (Watch: changeRecommenderCodeMessage 메서드 만들다 말았음)
-     */
-    async onClickRecommenderCode(rfnSn: string) {
-        await AuthModule.inputRecommenderCode({ rfnSn })
+    onSearch(value: string) {
+        console.log('onSearch', value)
+        /**
+         * @event search
+         */
+        this.$emit('search', value)
     }
 
     openRecommendArea({
@@ -60,8 +51,6 @@ export default class SelectStorePage extends Vue {
          */
         this.$emit('check', value)
     }
-
-    /** @Lifecycle */
 }
 </script>
 <style scoped>

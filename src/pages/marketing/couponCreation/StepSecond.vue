@@ -169,7 +169,10 @@
                     :salesAverage="estimateResult.salesAverage"
                 />
                 <BulletList :list="infoResult" />
-                <RecommenderBox @change="onChangeRecommender" />
+                <RecommenderBox
+                    @check="onCheckRecommender"
+                    @search="onSearchRecommender"
+                />
             </div>
 
             <portal to="floating">
@@ -195,7 +198,7 @@ type RequiredData = { mcno: string; bzno: string }
 @Component({
     components: { ApplyResult },
 })
-export default class MarketingApply extends Vue {
+export default class StepSecondPage extends Vue {
     private infoDate = [
         {
             text:
@@ -216,10 +219,6 @@ export default class MarketingApply extends Vue {
         },
         {
             text:
-                '행사 비용(할인혜택)은 <strong>이층집 강남점</strong> 가맹점 대금에서 차감되는 금액으로, 방문고객 수와 고객의 결제금액에 따라 변경될 수 있습니다.',
-        },
-        {
-            text:
                 '이전 달 매출 금액이 없을 경우 예상 수익이 산출되지 않을 수 있습니다.',
         },
     ]
@@ -236,7 +235,7 @@ export default class MarketingApply extends Vue {
     /** 추천인 코드 활성화 */
     private activeRecommender = false
     /** 추천인 코드 */
-    private recommenderCode = ''
+    private recommenderCode = false
 
     /** 시작 일자 */
     get startDate(): Date {
@@ -316,13 +315,22 @@ export default class MarketingApply extends Vue {
         }
     }
 
+    /** 추천인 코드 확인 결과 반환 */
+    get checkRecommenderResult() {
+        return MarketingModule.checkRecommenderResult
+    }
+
+    /** 날짜 서식 */
     makeFormattedDate(value: Date): string {
         return this.$dayjs(value).format('YYYYMMDD')
     }
 
     /** 다음 스텝 */
-    nextStep() {
-        // 다음 스텝
+    async nextStep() {
+        // TODO: 현재 API 에러 남 (수정 요청 필요)
+        await MarketingModule.applyValidateCheck()
+        // 일단 강제로 다음스텝 진행
+        this.$router.push({ name: 'Marketing Coupon Creation Step 3' })
     }
 
     /** 할인율 변경(radio) */
@@ -334,8 +342,33 @@ export default class MarketingApply extends Vue {
     }
 
     /** 추천인 코드 선택 했을 경우 - 체크박스 */
-    onChangeRecommender(recommenderCode: string) {
+    onCheckRecommender(recommenderCode: boolean) {
         this.recommenderCode = recommenderCode
+
+        MarketingModule.setTheLastData({
+            refInYn: recommenderCode ? 'Y' : 'N',
+        })
+    }
+
+    /** 추천인 코드 확인 버튼 */
+    async onSearchRecommender(value: string) {
+        await MarketingModule.getCheckRecommenderCode({ rfeC: value })
+
+        if (this.checkRecommenderResult) {
+            const code = this.checkRecommenderResult.rspDc
+            const message = this.checkRecommenderResult.rspDcMsg
+            if (['3201', '3202'].some(item => item === code)) {
+                this.$modal.open({
+                    message,
+                    buttonText: {
+                        confirm: '확인',
+                    },
+                    confirm: () => {
+                        // nothing
+                    },
+                })
+            }
+        }
     }
 
     /** 활성화 상태 css class 반환 (toggle) */
@@ -343,7 +376,7 @@ export default class MarketingApply extends Vue {
         return this.isActive.some(item => item === value)
     }
 
-    /** 고객 별 데이터 세팅 */
+    /** 고객(첫, 단골) 별 데이터 세팅 */
     setCustomerData(type: Customer, value: Partial<CustomerItem>) {
         const keyMap: { [key: string]: '1' | '2' } = {
             first: '1',
@@ -415,6 +448,21 @@ export default class MarketingApply extends Vue {
                 evEdt: this.makeFormattedDate(period.end),
             },
         })
+
+        this.theLastFormData.list.forEach(item => {
+            let type: Customer
+            let evBefSlAv: string
+
+            if (item.ggDc === '1') {
+                type = 'first'
+                evBefSlAv = this.lastYearSalesAverage.first?.slAv || '0'
+            } else {
+                type = 'regular'
+                evBefSlAv = this.lastYearSalesAverage.regular?.slAv || '0'
+            }
+
+            this.setCustomerData(type, { evBefSlAv })
+        })
     }
 
     /** @Lifecycle */
@@ -431,6 +479,9 @@ export default class MarketingApply extends Vue {
         })
     }
 }
+
+// async applyValidateCheck(params: MarketingParameters['applyValidateCheck']) {
+// get applyValidateResultData() {
 </script>
 
 <style lang="scss" scoped src="./StepSecond.scss"></style>

@@ -85,7 +85,7 @@ import PageView from '@utils/mixins/PageView'
 import { MarketingModule } from '@stores/modules/marketing'
 
 @Component
-export default class MarketingApply extends Mixins(PageView) {
+export default class StepFirstPage extends Mixins(PageView) {
     /* 더보기버튼 */
     private isActive = false
 
@@ -132,7 +132,13 @@ export default class MarketingApply extends Mixins(PageView) {
 
     onChangeFranchiseSelect(value: string) {
         const selected = this.getSelectedFranchiseList(value)
-        selected && MarketingModule.setFranchiseInfo(selected)
+
+        if (selected) {
+            MarketingModule.setFranchiseInfo(selected)
+            MarketingModule.setTheLastData({
+                mcno: selected.mcno,
+            })
+        }
     }
 
     async nextStep() {
@@ -193,7 +199,7 @@ export default class MarketingApply extends Mixins(PageView) {
     async created() {
         await MarketingModule.getPossibleApplyFranchiseList()
         const list = this.franchiseList
-        if (list.length) {
+        if (list && list.length) {
             MarketingModule.setFranchiseInfo(list[0])
         }
     }

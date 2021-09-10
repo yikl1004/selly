@@ -32,6 +32,29 @@ export interface MarketingParameters {
         // 행사 종료일자
         evEdt: string
     }
+    /** 추천인 코드 확인 */
+    checkRecommenderCode: {
+        // 추천인 코드
+        rfeC: string
+    }
+    /** 마케팅 신청 유효성 검사 */
+    applyValidateCheck: {
+        // 가맹점 번호
+        mcno: string
+        // 추천인 입력 여부
+        refInYn: string
+        // 추천인 코드
+        refC: string
+        // 집계 구분별 신청 정보
+        list: {
+            // 집계 구분코드
+            ggDc: '1' | '2'
+            // 행사 시작일자
+            evSdt: string
+            // 행사 종료일자
+            evEdt: string
+        }[]
+    }
 }
 
 export interface MarketingResponse {
@@ -85,79 +108,125 @@ export interface MarketingResponse {
         // 매출 평균
         slAv: string
     }>
+    /** 추천인 코드 확인 */
+    checkRecommenderCode: DefaultResponse<{
+        // 업무 응답 코드
+        rspDc: string
+        // 업무 응답 메세지
+        rspDcMsg: string
+    }>
+    /** 마케팅 신청 유효성 검사 */
+    applyValidateCheck: DefaultResponse<{
+        rspDc:
+            | '3101' // 유해업종
+            | '3102' // 접속 당일 가맹점 정보 변경
+            | '3203' // 추천인 미입력
+            | '3202' // 추천인 코드 불일치
+            | '3301' // 첫고객 행사기간 유효성 탈락
+            | '3311' // 첫고객 유쇼데 행사기간 중복
+            | '3321' // 첫고객 셀리 중복(이미 진행중인 행사기간과 중복)
+            | '3302' // 단골 행사기간 유효성 탈락
+            | '3312' // 단골 유쇼데 행사기간 중복
+            | '3322' // 단골 셀리 중복(이미 진행중인 행사기간과 중복)
+        rspDcMsg: string
+    }>
 }
 
+// response data
 type PossibleApplyFranchiseListRes = Promise<AxiosResponse<MarketingResponse['possibleApplyFranchiseList']>>
 type MarketingTargetRes = Promise<AxiosResponse<MarketingResponse['marketingTarget']>>
 type LastYearSalesAverageRes = Promise<AxiosResponse<MarketingResponse['lastYearSalesAverage']>>
+type CheckRecommenderCodeRes = Promise<AxiosResponse<MarketingResponse['checkRecommenderCode']>>
+type ApplyValidateCheckRes = Promise<AxiosResponse<MarketingResponse['applyValidateCheck']>>
+
+// request parameter
+type ValidatePossibleApplyFranchiseList = MarketingParameters['validatePossibleApplyFranchiseList']
+type MarketingTarget = MarketingParameters['marketingTarget']
+type LastYearSalesAverage = MarketingParameters['lastYearSalesAverage']
+type CheckRecommenderCode = MarketingParameters['checkRecommenderCode']
+type ApplyValidateCheck = MarketingParameters['applyValidateCheck']
+
+const createApi = (url: string, method?: 'get' | 'post'): API => ({
+    url,
+    method: method || 'post',
+})
+
+type APINames =
+    | 'possibleApplyUser' // * 마케팅 신청 가능 회원 여부
+    | 'possibleApplyFranchiseList' //마케팅 신청 가능 가맹점 목록
+    | 'validatePossibleApplyFranchiseList' //마케팅 신청 가능 가맹점 유효성 검사
+    | 'marketingTarget' //마케팅 행사대상자 조회
+    | 'lastYearSalesAverage' //전년 동기간 매출 평균
+    | 'checkRecommenderCode' //마케팅 신청 추천인 코드 확인
+    | 'applyValidateCheck' // 마케팅 신청 유효성 검사
+type APIList = Record<APINames, API>
 
 class MarketingService {
-    // 마케팅 신청 가능 회원 여부
-    private possibleApplyUser: API = {
-        url: '/API/MRT/SEMRKAA008',
-        method: 'post',
+    private apiList: APIList = {
+        possibleApplyUser: createApi('/API/MRT/SEMRKAA008'),
+        possibleApplyFranchiseList: createApi('/API/MRT/SEMRKAA001'),
+        validatePossibleApplyFranchiseList: createApi('/API/MRT/SEMRKAA002'),
+        marketingTarget: createApi('/API/MRT/SEMRKAA003'),
+        lastYearSalesAverage: createApi('/API/MRT/SEMRKAA004'),
+        checkRecommenderCode: createApi('/API/MRT/SEMRKAA005'),
+        applyValidateCheck: createApi('/API/MRT/SEMRKAA006'),
     }
 
-    // 마케팅 신청 가능 가맹점 목록
-    private possibleApplyFranchiseList: API = {
-        url: '/API/MRT/SEMRKAA001',
-        method: 'post',
+    wow(params: string) {
+        console.log(params)
     }
 
-    // 마케팅 신청 가능 가맹점 유효성 검사
-    private validatePossibleApplyFranchiseList: API = {
-        url: '/API/MRT/SEMRKAA002',
-        method: 'post',
+    /** 마케팅 신청 가능 회원 여부 */
+    async getPossibleApplyUser() {
+        return await axiosInstance.request({
+            ...this.apiList.possibleApplyUser,
+        })
     }
 
-    // 마케팅 행사대상자 조회
-    private marketingTarget: API = {
-        url: '/API/MRT/SEMRKAA003',
-        method: 'post',
+    /** 마케팅 신청 가능 가맹점 목록 */
+    async getPossibleApplyFranchiseList(): PossibleApplyFranchiseListRes {
+        return await axiosInstance.request({
+            ...this.apiList.possibleApplyFranchiseList,
+        })
+    }
+
+    /** 마케팅 신청 가능 가맹점 유효성 검사 */
+    async getValidatePossibleApplyFranchiseList(params: ValidatePossibleApplyFranchiseList) {
+        return await axiosInstance.request({
+            ...this.apiList.validatePossibleApplyFranchiseList,
+            params,
+        })
+    }
+
+    /** 마케팅 행사대상자 조회 */
+    async getMarketingTarget(params: MarketingTarget): MarketingTargetRes {
+        // TODO: 현재 시스템 에러, 담당자(김아름 책임) 확인 중
+        return await axiosInstance.request({
+            ...this.apiList.marketingTarget,
+            params,
+        })
     }
 
     /** 전년 동기간 매출 평균 */
-    private lastYearSalesAverage: API = {
-        url: '/API/MRT/SEMRKAA004',
-        method: 'post',
-    }
-
-    // 마케팅 신청 추천인 코드 확인
-    private checkRecommenderCode: API = {
-        url: '/API/MRT/SEMRKAA005',
-        method: 'post',
-    }
-
-    async getPossibleApplyUser() {
+    async getLastYearSalesAverage(params: LastYearSalesAverage): LastYearSalesAverageRes {
         return await axiosInstance.request({
-            ...this.possibleApplyUser,
-        })
-    }
-
-    async getPossibleApplyFranchiseList(): PossibleApplyFranchiseListRes {
-        return await axiosInstance.request({
-            ...this.possibleApplyFranchiseList,
-        })
-    }
-
-    async getValidatePossibleApplyFranchiseList(params: MarketingParameters['validatePossibleApplyFranchiseList']) {
-        return await axiosInstance.request({
-            ...this.validatePossibleApplyFranchiseList,
+            ...this.apiList.lastYearSalesAverage,
             params,
         })
     }
 
-    async getMarketingTarget(params: MarketingParameters['marketingTarget']): MarketingTargetRes {
-        // TODO: 현재 시스템 에러, 담당자(김아름 책임) 확인 중
+    /** 마케팅 신청 추천인 코드 확인 */
+    async getCheckRecommenderCode(params: CheckRecommenderCode): CheckRecommenderCodeRes {
         return await axiosInstance.request({
-            ...this.marketingTarget,
+            ...this.apiList.checkRecommenderCode,
             params,
         })
     }
 
-    async getLastYearSalesAverage(params: MarketingParameters['lastYearSalesAverage']): LastYearSalesAverageRes {
+    /** 마케팅 신청 유효성 검사 */
+    async applyValidateCheck(params: ApplyValidateCheck): ApplyValidateCheckRes {
         return await axiosInstance.request({
-            ...this.lastYearSalesAverage,
+            ...this.apiList.applyValidateCheck,
             params,
         })
     }

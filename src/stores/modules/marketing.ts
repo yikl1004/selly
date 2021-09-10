@@ -7,6 +7,8 @@ export type PossibleApplyFranchiseListRes = MarketingResponse['possibleApplyFran
 export type ValidatePossibleApplyFranchiseListRes = MarketingResponse['validatePossibleApplyFranchiseList']
 export type MarketingTargetRes = MarketingResponse['marketingTarget']
 export type LastYearSalesAverageRes = MarketingResponse['lastYearSalesAverage']
+export type CheckRecommenderRes = MarketingResponse['checkRecommenderCode']
+export type ApplyValidateCheckRes = MarketingResponse['applyValidateCheck']
 
 interface MarketingState {
     possibleApplyFranchiseList: PossibleApplyFranchiseListRes | null
@@ -37,8 +39,6 @@ export interface ListOfCustomer {
 interface ApplyParameter {
     // 가맹점 번호
     mcno: string
-    // 행사전 매출 평균
-    evBefSlAv: string
     // 추천인 입력 여부
     refInYn: YN
     // 추천인 코드
@@ -66,6 +66,8 @@ export interface CustomerItem {
     evEdt: string
     bnfDcR: string
     trgOjCstt: string
+    // 행사전 매출 평균
+    evBefSlAv: string
 }
 
 @Module({ name: 'marketing', namespaced: true, dynamic: true, store })
@@ -77,13 +79,10 @@ export default class Marketing extends VuexModule {
         first: null,
         regular: null,
     }
-
     public franchiseInfo: Partial<FranchiseInfo> | null = null
-
     /** step 3 최종 신청 양식 */
     public theLastForm: ApplyParameter = {
         mcno: '',
-        evBefSlAv: '',
         refInYn: 'N',
         refC: '',
         list: [
@@ -91,6 +90,8 @@ export default class Marketing extends VuexModule {
             // 단골 고객: 2
         ],
     }
+    public checkRecommender: CheckRecommenderRes | null = null
+    public applyValidateResult: ApplyValidateCheckRes | null = null
 
     @Mutation
     setFranchiseInfo(value: Partial<FranchiseInfo>) {
@@ -210,7 +211,6 @@ export default class Marketing extends VuexModule {
 
     @MutationAction
     async getLastYearSalesAverage(value: { type: 'first' | 'regular'; params: MarketingParameters['lastYearSalesAverage'] }) {
-        console.log(value.params)
         const originData = (this.state as MarketingState).lastYearSalesAverage
         const { data } = await MarketingService.getLastYearSalesAverage(value.params)
 
@@ -225,6 +225,49 @@ export default class Marketing extends VuexModule {
     /** 전대 동일기간 매출 평균 값 반환 */
     get lastYearSalesAverageData() {
         return this.lastYearSalesAverage
+    }
+
+    /** 추천인 코드 확인 */
+    @MutationAction
+    async getCheckRecommenderCode(params: MarketingParameters['checkRecommenderCode']) {
+        const { data } = await MarketingService.getCheckRecommenderCode(params)
+
+        return {
+            checkRecommender: data,
+        }
+    }
+
+    /** 추천인 코드 확인 결과 반환 */
+    get checkRecommenderResult() {
+        return this.checkRecommender?.data
+    }
+
+    /** 마케팅 신청 유효성 검사 */
+    @MutationAction
+    async applyValidateCheck() {
+        const origin = (this.state as MarketingState).theLastForm
+        const { mcno, refInYn, refC, list } = origin
+
+        const params: MarketingParameters['applyValidateCheck'] = {
+            mcno,
+            refInYn,
+            refC,
+            list: list.map(item => {
+                const { ggDc, evEdt, evSdt } = item
+                return { ggDc, evEdt, evSdt }
+            }),
+        }
+
+        const { data } = await MarketingService.applyValidateCheck(params)
+
+        return {
+            applyValidateResult: data,
+        }
+    }
+
+    /** 마케팅 신청 유효성 검사 반환 */
+    get applyValidateResultData() {
+        return this.applyValidateResult
     }
 }
 

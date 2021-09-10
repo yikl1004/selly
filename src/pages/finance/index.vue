@@ -8,7 +8,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import { AccordionListItem } from '@components/common/AccoItem.vue'
+// import { AccordionListItem } from '@components/common/AccoItem.vue'
 @Component({
     components: {},
 })

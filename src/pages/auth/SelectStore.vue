@@ -41,30 +41,11 @@
                     />
                 </div>
             </div>
-
-            <RecommenderBox v-if="isFirstJoin" />
-
-            <!--210830 컴포넌트로 따로 뺌. 컴포넌트 이상없을시 해당 부분 삭제 부탁. -->
-            <!-- <div v-if="isFirstJoin" class="recommender-box">
-                <CheckBox
-                    id="recommenderCheck"
-                    label="추천인이 있으시면 체크해주세요. (선택)"
-                    @change="openRecommendArea"
-                />
-                <ButtonField
-                    v-if="recommendAreaOpen"
-                    id="recommenderCode"
-                    label="추천인 코드(선택)"
-                    placeholder="추천인 코드 입력"
-                    button-text="확인"
-                    name="cert"
-                    :maxlength="9999"
-                    :hidden-label="true"
-                    :readonly="false"
-                    :disabled="false"
-                    @search="onClickRecommenderCode"
-                />
-            </div> -->
+            <RecommenderBox
+                v-if="isFirstJoin"
+                @check="openRecommendArea"
+                @search="onClickRecommenderCode"
+            />
         </div>
         <portal to="floating">
             <BasicButton
@@ -91,11 +72,12 @@ export default class SelectStorePage extends Vue {
     @Prop({ type: String })
     readonly type!: string
 
-    /** @Stores */
+    /** 사업장 대표명 */
     get workplaceOwnerName() {
         return AuthModule.workplaceOwnerName
     }
 
+    /** 추천인 코드 확인 결과 메세지 */
     get recommenderCodeMessage() {
         return AuthModule.recommenderCodeMessage
     }
@@ -105,14 +87,12 @@ export default class SelectStorePage extends Vue {
         return AuthModule.workplaceList
     }
 
-    /** @Data */
     private recommendAreaOpen = false
 
     // 선택된 사업장 정보
     private selectedWorkplace: BizInfoItem[] = []
 
-    /** @Watch */
-
+    /** 사업장 리스트 변경 시 */
     @Watch('workplaceList')
     changeWorkplaceList(
         value: BusinessPlaceListItem[],
@@ -123,7 +103,6 @@ export default class SelectStorePage extends Vue {
             .map(({ bzno, ltRgyn }) => ({ bzno, ltRgyn }))
     }
 
-    /** @Computed */
     get isFirstJoin(): boolean {
         return this.$route.name === 'Join'
     }
@@ -150,16 +129,12 @@ export default class SelectStorePage extends Vue {
         }
     }
 
-    /**
-     * FIXME: 수정 해야 함
-     * 1. 체크박스가 없음(디자인 추가 되어야 함 )
-     * 2. API가 명확하지 않음
-     * 3. 메세징 처리 (Watch: changeRecommenderCodeMessage 메서드 만들다 말았음)
-     */
+    /** 추천인 코드 확인 버튼 클릭 */
     async onClickRecommenderCode(rfnSn: string) {
         await AuthModule.inputRecommenderCode({ rfnSn })
     }
 
+    /** 추천인 코드 입력 활성화 체크 */
     openRecommendArea(event: {
         value?: string
         index: number
@@ -167,8 +142,6 @@ export default class SelectStorePage extends Vue {
     }) {
         this.recommendAreaOpen = !!event.value
     }
-
-    /** @Lifecycle */
 }
 </script>
 <style scoped lang="scss" src="./SelectStore.scss"></style>

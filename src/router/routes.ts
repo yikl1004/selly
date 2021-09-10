@@ -318,7 +318,7 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
             {
                 path: '/marketing/couponCreation/stepThird',
                 name: 'Marketing Coupon Creation Step 3',
-                component: createAsyncPage(import('@pages/marketing/apply/ApplyStep3.vue')),
+                component: createAsyncPage(import('@pages/marketing/couponCreation/StepThird.vue')),
                 meta: {
                     floating: true,
                     title: '쿠폰 만들기',

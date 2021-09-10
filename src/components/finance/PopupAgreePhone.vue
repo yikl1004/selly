@@ -5,7 +5,7 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import AgreeStepBox from '@components/finance/AgreeStepBox.vue'
-import type { RadioProps } from '@components/form/Radio.vue'
+// import type { RadioProps } from '@components/form/Radio.vue'
 
 @Component({
     components: {

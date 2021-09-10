@@ -10,7 +10,6 @@ import { Component, Mixins } from 'vue-property-decorator'
 import PageView from '@utils/mixins/PageView'
 import type { LoginInfo } from '@stores/modules/auth'
 
-// FIXME: 싱크 아이디 넣어야 함
 @Component
 export default class TaxServiceGuide extends Mixins(PageView) {
     mounted() {
@@ -18,17 +17,18 @@ export default class TaxServiceGuide extends Mixins(PageView) {
             localStorage.getItem('auth') || 'null',
         ) as LoginInfo
 
-        const target = document.querySelector('#em_embed') as HTMLDivElement
-        if (target) {
-            target.style.display = 'block'
-        }
+        // const target = document.querySelector('#em_embed') as HTMLDivElement
+        // if (target) {
+        //     target.style.display = 'block'
+        // }
 
         if (auth?.bzNavToken) {
             this.$edkHost.openInsightLoca({
                 orgSyncId: auth.bzNavToken || '',
-                eventListener(a) {
-                    console.log(a)
-                    // event listener
+                eventListener: value => {
+                    if (value.action === 'close') {
+                        this.$router.push({ name: 'Main' })
+                    }
                 },
             })
         } else {
@@ -43,10 +43,10 @@ export default class TaxServiceGuide extends Mixins(PageView) {
     }
 
     beforeDestroy() {
-        const target = document.querySelector('#em_embed') as HTMLDivElement
-        if (target) {
-            target.style.display = 'none'
-        }
+        // const target = document.querySelector('#em_embed') as HTMLDivElement
+        // if (target) {
+        //     target.style.display = 'none'
+        // }
     }
 }
 </script>

@@ -87,9 +87,11 @@ import PopupCouponPreview from '@components/marketing/PopupCouponPreview.vue'
         PopupCouponPreview,
     },
 })
-export default class MarketingApply extends Vue {
-    // s: popup 쿠폰 미리보기
+export default class StepThirdPage extends Vue {
+    /** 쿠폰 미리보기 팝업 */
     private popCouponPreview = false
+
+    /* toggle */
     openCouponPreview() {
         this.popCouponPreview = true
     }
@@ -136,11 +138,16 @@ export default class MarketingApply extends Vue {
     private accordionList: AccordionListItem[] = [
         {
             title: '유의사항',
-            desc:
-                ' <ul class="bul-list"> <li> 법인카드/체크카드/기프트카드 결제는 쿠폰 행사 대상에서 제외됩니다. </li><li> 현장결제(매장)에서만 가능하며, 배달앱 등 온라인 결제는 제외됩니다. </li><li> 간편결제는 롯데 앱카드, 삼성페이, LG페이, Lpay만 가능합니다. </li></ul>',
+            desc: `
+                <ul class="bul-list">
+                    <li> 법인카드/체크카드/기프트카드 결제는 쿠폰 행사 대상에서 제외됩니다. </li>
+                    <li> 현장결제(매장)에서만 가능하며, 배달앱 등 온라인 결제는 제외됩니다. </li>
+                    <li> 간편결제는 롯데 앱카드, 삼성페이, LG페이, Lpay만 가능합니다. </li>
+                </ul>
+            `,
         },
     ]
 }
 </script>
 
-<style lang="scss" scoped src="./ApplyStep3.scss"></style>
+<style lang="scss" scoped src="./StepThird.scss"></style>
