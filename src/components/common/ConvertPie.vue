@@ -1,6 +1,5 @@
 <template>
     <div>
-        <h1>접근성 차트</h1>
         <PieChart
             :chartData="datacollection"
             :options="chartOption"
@@ -29,13 +28,9 @@ export default class ConvertChart extends Vue {
     private datacollection = {}
     private chartOption: Chart.ChartOptions = {}
     mounted() {
-        console.log('MOUNTED =======')
-        console.log(this.labels)
-        console.log(this.datas)
         this.fillData()
     }
     fillData() {
-        console.log('Fill DATA =======')
         this.chartOption = {
             // scales: {
             //     yAxes: [

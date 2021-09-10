@@ -108,7 +108,7 @@
                     <Title title="주간별 이용 고객" type="h4" />
                     <div class="chart-box active">
                         <!--[D] active 클래스 추가시 테이블 노출-->
-                        <div
+                        <!-- <div
                             style="
                                 height: 200px;
                                 background-color: #eee;
@@ -117,7 +117,8 @@
                             "
                         >
                             차트영역
-                        </div>
+                        </div> -->
+                        <ConvertBar :datas="weekUser" :labels="weekPeriod" />
                         <div class="tbl-chart">
                             <div class="table-box">
                                 <div class="table-scroll">
@@ -152,7 +153,7 @@
 
                     <Title title="주간별 이용 매출" type="h4" />
                     <div class="chart-box">
-                        <div
+                        <!-- <div
                             style="
                                 height: 200px;
                                 background-color: #eee;
@@ -161,7 +162,11 @@
                             "
                         >
                             차트영역
-                        </div>
+                        </div> -->
+                        <ConvertBar
+                            :datas="weekUseSale"
+                            :labels="weekUsePeriod"
+                        />
                         <div class="tbl-chart">
                             <div class="table-box">
                                 <div class="table-scroll">
@@ -208,7 +213,7 @@
                             </strong>
                         </div>
 
-                        <div
+                        <!-- <div
                             style="
                                 height: 200px;
                                 background-color: #eee;
@@ -217,7 +222,8 @@
                             "
                         >
                             차트영역
-                        </div>
+                        </div> -->
+                        <ConvertBar :datas="eventSale" :labels="eventLabel" />
                         <div class="tbl-chart">
                             <div class="table-box">
                                 <div class="table-scroll">
@@ -259,7 +265,7 @@
 
                     <Title title="성별 이용 비율" type="h4" />
                     <div class="chart-box">
-                        <div
+                        <!-- <div
                             style="
                                 height: 200px;
                                 background-color: #eee;
@@ -268,7 +274,8 @@
                             "
                         >
                             차트영역
-                        </div>
+                        </div> -->
+                        <ConvertPie :datas="genderUser" :labels="gender" />
                         <div class="tbl-chart">
                             <div class="table-box">
                                 <div class="table-scroll">
@@ -305,7 +312,7 @@
 
                     <Title title="연령별 이용 비율" type="h4" />
                     <div class="chart-box">
-                        <div
+                        <!-- <div
                             style="
                                 height: 200px;
                                 background-color: #eee;
@@ -314,7 +321,11 @@
                             "
                         >
                             차트영역
-                        </div>
+                        </div> -->
+                        <ConvertPie
+                            :datas="ageGroupsUser"
+                            :labels="ageGroups"
+                        />
                         <div class="tbl-chart">
                             <div class="table-box">
                                 <div class="table-scroll">
@@ -378,9 +389,10 @@ import { Component, Vue } from 'vue-property-decorator'
 import ApplyResult from '@components/marketing/ApplyResult.vue'
 import BoxGray from '@components/marketing/BoxGray.vue'
 import { AccordionListItem } from '@components/common/AccoItem.vue'
-
+import ConvertBar from '@components/common/ConvertBar.vue'
+import ConvertPie from '@components/common/ConvertPie.vue'
 @Component({
-    components: { ApplyResult, BoxGray },
+    components: { ApplyResult, BoxGray, ConvertBar, ConvertPie },
 })
 export default class MarketingDetail extends Vue {
     private infoResult = [
@@ -449,6 +461,28 @@ export default class MarketingDetail extends Vue {
             value: '22,000원',
         },
     ]
+    private weekPeriod = [
+        '7/1~7/7',
+        '7/8~7/14',
+        '7/15~7/21',
+        '7/23~7/28',
+        '7/29~7/30',
+    ]
+    private weekUser = [50, 50, 50, 100, 50, 50]
+    private weekUsePeriod = [
+        '7/1~7/7',
+        '7/8~7/14',
+        '7/15~7/21',
+        '7/23~7/28',
+        '7/29~7/30',
+    ]
+    private weekUseSale = [3000, 4000, 5000, 6000, 3000]
+    private eventLabel = ['행사전', '행사후']
+    private eventSale = [4000, 8000]
+    private gender = ['여성', '남성']
+    private genderUser = [40, 60]
+    private ageGroups = ['10대이하', '20대', '30대', '40대', '50대', '60대이상']
+    private ageGroupsUser = [140, 150, 160, 100, 30, 30]
 }
 </script>
 

@@ -1,6 +1,5 @@
 <template>
     <div>
-        <h1>접근성 차트</h1>
         <DoughnutChart
             :chartData="datacollection"
             :options="chartOption"
@@ -29,13 +28,9 @@ export default class ConvertChart extends Vue {
     private datacollection = {}
     private chartOption: Chart.ChartOptions = {}
     mounted() {
-        console.log('MOUNTED =======')
-        console.log(this.labels)
-        console.log(this.datas)
         this.fillData()
     }
     fillData() {
-        console.log('Fill DATA =======')
         this.chartOption = {
             // scales: {
             //     yAxes: [
@@ -54,6 +49,13 @@ export default class ConvertChart extends Vue {
             //     ],
             // },
             responsive: true,
+            animation: {
+                onComplete(animation) {
+                    console.log('animation onComplete')
+                    console.log(this)
+                    console.log(animation.chart.ctx)
+                },
+            },
             maintainAspectRatio: true,
             legend: {
                 position: 'bottom',
@@ -92,6 +94,9 @@ export default class ConvertChart extends Vue {
                         patternnomaly.draw('dot', '#413a2f', 'white'),
                         patternnomaly.draw('diamond-box', '#00648c', 'white'),
                     ],
+                    // borderColor: ['#00648c'],
+                    // borderWidth: 10,
+                    // borderColor: 'black'
                 },
             ],
             labels: this.labels,
