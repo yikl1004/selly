@@ -55,6 +55,20 @@ export interface MarketingParameters {
             evEdt: string
         }[]
     }
+    /** 최종 신청 */
+    apply: {
+        mcno: string
+        refInYn: YN
+        refC: string
+        list: {
+            ggDc: '1' | '2'
+            evSdt: string
+            evEdt: string
+            evBefSlAv: string
+            bnfDcR: string
+            trgOjCstt: string
+        }[]
+    }
 }
 
 export interface MarketingResponse {
@@ -145,6 +159,7 @@ type MarketingTarget = MarketingParameters['marketingTarget']
 type LastYearSalesAverage = MarketingParameters['lastYearSalesAverage']
 type CheckRecommenderCode = MarketingParameters['checkRecommenderCode']
 type ApplyValidateCheck = MarketingParameters['applyValidateCheck']
+type LastApplyParameter = MarketingParameters['apply']
 
 const createApi = (url: string, method?: 'get' | 'post'): API => ({
     url,
@@ -159,6 +174,7 @@ type APINames =
     | 'lastYearSalesAverage' //전년 동기간 매출 평균
     | 'checkRecommenderCode' //마케팅 신청 추천인 코드 확인
     | 'applyValidateCheck' // 마케팅 신청 유효성 검사
+    | 'apply' // 마케팅 신청
 type APIList = Record<APINames, API>
 
 class MarketingService {
@@ -170,6 +186,7 @@ class MarketingService {
         lastYearSalesAverage: createApi('/API/MRT/SEMRKAA004'),
         checkRecommenderCode: createApi('/API/MRT/SEMRKAA005'),
         applyValidateCheck: createApi('/API/MRT/SEMRKAA006'),
+        apply: createApi('/API/MRT/SEMRKAA007'),
     }
 
     wow(params: string) {
@@ -227,6 +244,14 @@ class MarketingService {
     async applyValidateCheck(params: ApplyValidateCheck): ApplyValidateCheckRes {
         return await axiosInstance.request({
             ...this.apiList.applyValidateCheck,
+            data: params,
+        })
+    }
+
+    /** 최종 신청 */
+    async apply(params: LastApplyParameter) {
+        return await axiosInstance.request({
+            ...this.apiList.apply,
             params,
         })
     }

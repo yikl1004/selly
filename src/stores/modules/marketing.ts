@@ -31,6 +31,8 @@ export interface ListOfCustomer {
     evSdt: string
     // 행사 종료일자
     evEdt: string
+    // 행사전 매출 평균
+    evBefSlAv: string
     // 혜택 할인율
     bnfDcR: string
     // 목표 대상 고객수
@@ -268,6 +270,15 @@ export default class Marketing extends VuexModule {
     /** 마케팅 신청 유효성 검사 반환 */
     get applyValidateResultData() {
         return this.applyValidateResult
+    }
+
+    /** 최종 신청 */
+    @MutationAction
+    async apply() {
+        const params = (this.state as MarketingState).theLastForm
+
+        await MarketingService.apply(params)
+        return {}
     }
 }
 

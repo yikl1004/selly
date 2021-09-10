@@ -27,14 +27,17 @@
             <div class="touch-coupon-cont">
                 <strong class="touch-tit">로카알리미</strong>
                 <div class="touch-cont-box">
-                    <span class="date">2021. 07. 01(월)</span>
-                    <div class="touch-message-box">
+                    <span v-if="period" class="date">{{ startDate }}</span>
+                    <div v-if="discountRate" class="touch-message-box">
                         <p class="subject">
-                            (광고) <strong>[첫 결제 10%할인]</strong>
+                            (광고)
+                            <strong>
+                                [{{ gubunText }} {{ discountRate }}%할인]
+                            </strong>
                         </p>
                         <p>
-                            김로카님 주변1km에 있는 가맹점명에서 결제일 할인을
-                            받아보세요.
+                            김로카님 주변1km에 있는 {{ franchiseName }}에서
+                            결제일 할인을 받아보세요.
                         </p>
                     </div>
                     <div class="img">
@@ -78,10 +81,12 @@
                     <div class="coupon-sample-inner">
                         <div class="coupon-info">
                             <span class="franchisee-name">
-                                [감사쿠폰] 이층집 강남점
+                                [{{ gubunText }}] {{ franchiseName }}
                             </span>
-                            <strong class="info">10% 결제일 할인</strong>
-                            <span class="date">21.06.01~21.06.30</span>
+                            <strong class="info">
+                                {{ discountRate }}% 결제일 할인
+                            </strong>
+                            <span class="date">{{ term }}</span>
                             <div class="img-ci">
                                 <img
                                     src="/assets/marketing/@ico-ci.png"
@@ -142,10 +147,53 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Prop, Vue } from 'vue-property-decorator'
+
+export interface CouponPreviewProps {
+    period: {
+        start: string
+        end: string
+    }
+    discountRate: string
+    franchiseName: string
+    gubun: '1' | '2'
+}
 
 @Component
-export default class PopupCouponPreview extends Vue {}
+export default class PopupCouponPreview extends Vue {
+    /** 행사 시작일 */
+    @Prop({ type: Object })
+    readonly period!: {
+        start: string
+        end: string
+    }
+
+    /** 할인율 */
+    @Prop({ type: String })
+    readonly discountRate!: string
+
+    /** 가맹점명 */
+    @Prop({ type: String })
+    readonly franchiseName!: string
+
+    /** 구분 코드 */
+    @Prop({ type: String })
+    readonly gubun!: '1' | '2'
+
+    get gubunText() {
+        return this.gubun === '1' ? '첫 결제' : '재방문'
+    }
+
+    get startDate() {
+        return this.$dayjs(this.period.start).format('YYYY. MM. DD(ddd)')
+    }
+
+    get term() {
+        return `${this.$dayjs(this.period.start).format(
+            'YYYY.MM.DD',
+        )}~${this.$dayjs(this.period.end).format('YYYY.MM.DD')}`
+    }
+}
 </script>
 
 <style lang="scss" scoped src="./PopupCouponPreview.scss"></style>

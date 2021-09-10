@@ -8,38 +8,18 @@
 
                 <InfoList :list="applyDetail" />
 
-                <div class="coupon-preview-wrap">
-                    <button
-                        type="button"
-                        class="coupon-preview-item"
-                        @click="openCouponPreview"
-                    >
-                        <div class="info">
-                            <strong>
-                                [첫 고객 만들기] 5% 결제일 할인 2,000명
-                            </strong>
-                            <span class="date">21.06.01~21.06.30</span>
-                        </div>
-                        <span class="btn-preview">미리보기</span>
-                    </button>
-
-                    <button
-                        type="button"
-                        class="coupon-preview-item"
-                        @click="openCouponPreview"
-                    >
-                        <div class="info">
-                            <strong>
-                                [첫 고객 만들기] 5% 결제일 할인 2,000명
-                            </strong>
-                            <span class="date">21.06.01~21.06.30</span>
-                        </div>
-                        <span class="btn-preview">미리보기</span>
-                    </button>
-                </div>
+                <CouponList
+                    :list="couponList"
+                    @preview="openCouponPreview($event)"
+                />
 
                 <Title title="예상 결과" type="h3" />
-                <ApplyResult type="complete" />
+                <ApplyResult
+                    type="complete"
+                    :target="estimateResult.target"
+                    :selectRatio="estimateResult.selectRatio"
+                    :salesAverage="estimateResult.salesAverage"
+                />
                 <BulletList :list="infoResult" />
 
                 <Title title="프로모션 제휴 필수사항 확인" type="h3" />
@@ -56,19 +36,28 @@
             </div>
 
             <!--[D] 쿠폰 미리보기 팝업 -->
-            <FullPopup
-                :show.sync="popCouponPreview"
-                title="쿠폰 미리보기"
-                type="popup"
-                @confirm="onCouponPreviewConfirm"
-            >
-                <PopupCouponPreview />
-            </FullPopup>
+            <template v-if="couponPreviewProp">
+                <FullPopup
+                    :show.sync="popCouponPreview"
+                    title="쿠폰 미리보기"
+                    type="popup"
+                    @confirm="onCouponPreviewConfirm"
+                >
+                    <PopupCouponPreview
+                        :period="couponPreviewProp.period"
+                        :discountRate="couponPreviewProp.discountRate"
+                        :franchiseName="couponPreviewProp.franchiseName"
+                        :gubun="couponPreviewProp.gubun"
+                    />
+                </FullPopup>
+            </template>
             <!--//[D] 쿠폰 미리보기 팝업 -->
 
             <portal to="floating">
-                <BasicButton size="large">이전</BasicButton>
-                <BasicButton size="large">신청</BasicButton>
+                <BasicButton size="large" @click="$router.back()">
+                    이전
+                </BasicButton>
+                <BasicButton size="large" @click="apply">신청</BasicButton>
             </portal>
         </PageBody>
     </Page>
@@ -76,62 +65,30 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-// import type { RadioProps } from '@components/form/Radio.vue'
-import { AccordionListItem } from '@components/common/AccoItem.vue'
+import { MarketingModule } from '@stores/modules/marketing'
 import ApplyResult from '@components/marketing/ApplyResult.vue'
-import PopupCouponPreview from '@components/marketing/PopupCouponPreview.vue'
+import CouponList from '@components/marketing/CouponList.vue'
+import type { CouponItem } from '@components/marketing/CouponList.vue'
+import type { AccordionListItem } from '@components/common/AccoItem.vue'
+import type { CouponPreviewProps } from '@components/marketing/PopupCouponPreview.vue'
 
 @Component({
     components: {
         ApplyResult,
-        PopupCouponPreview,
+        PopupCouponPreview: () => ({
+            component: import('@components/marketing/PopupCouponPreview.vue'),
+        }),
+        CouponList,
     },
 })
 export default class StepThirdPage extends Vue {
     /** 쿠폰 미리보기 팝업 */
     private popCouponPreview = false
 
-    /* toggle */
-    openCouponPreview() {
-        this.popCouponPreview = true
-    }
-    onCouponPreviewConfirm() {
-        this.popCouponPreview = false
-    }
-    // e: popup
-
     private infoResult = [
         {
             text:
                 '롯데카드 결제 기준의 예상 산출이므로 실제 매출액, 고객수와 다를 수 있습니다.',
-        },
-        {
-            text:
-                '행사 비용(할인혜택)은 <strong>이층집 강남점</strong> 가맹점 대금에서 차감되는 금액으로, 방문고객 수와 고객의 결제금액에 따라 변경될 수 있습니다.',
-        },
-    ]
-
-    private applyDetail = [
-        {
-            title: '매장명',
-            desc: '이층집 강남점',
-        },
-        {
-            title: '주소',
-            desc: '서울시 종로구 새문안로 12길 2층',
-        },
-        {
-            title: '전화번호',
-            desc: '02-2050-1234',
-        },
-        {
-            title: '홍보 방식',
-            desc:
-                '케이스 확인 필요. 롯데카드 앱 푸시메시지, 롯데카드 앱에 쿠폰 노출 ',
-        },
-        {
-            title: '추천인 코드',
-            desc: 'asdasf ',
         },
     ]
 
@@ -147,7 +104,155 @@ export default class StepThirdPage extends Vue {
             `,
         },
     ]
+
+    /** 쿠폰 미리보기 정보 */
+    private couponPreviewProp: null | CouponPreviewProps = null
+
+    /** store에 저장된 form data */
+    get theLastFormData() {
+        return MarketingModule.theLastFormData
+    }
+
+    /** 가맹점 정보 */
+    get franchiseInfo() {
+        return MarketingModule.franchiseInfoData
+    }
+
+    /** 신청 상세 */
+    get applyDetail() {
+        const data = MarketingModule.franchiseInfoData
+        const formData = MarketingModule.theLastFormData
+        return [
+            {
+                title: '매장명',
+                desc: data?.mcNm,
+            },
+            {
+                title: '주소',
+                desc: `${data?.pnadd} ${data?.bpsnoAdd}`,
+            },
+            {
+                title: '전화번호',
+                desc: data?.mcTlno,
+            },
+            {
+                title: '홍보 방식',
+                desc:
+                    '케이스 확인 필요. 롯데카드 앱 푸시메시지, 롯데카드 앱에 쿠폰 노출 ',
+            },
+            {
+                title: '추천인 코드',
+                desc: formData.refC,
+            },
+        ]
+    }
+
+    /** 쿠폰 리스트 정보 */
+    get couponList(): CouponItem[] {
+        const list = MarketingModule.theLastFormData.list
+        return list.map(item => ({
+            gubun: item.ggDc,
+            discountRate: item.bnfDcR,
+            period: `${this.$dayjs(item.evSdt).format(
+                'YYYY.MM.DD',
+            )}~${this.$dayjs(item.evEdt).format('YYYY.MM.DD')}`,
+            target: item.trgOjCstt,
+        }))
+    }
+
+    /** 마케팅 행사 대상자 조회 결과 값 */
+    get marketingTarget() {
+        return {
+            /** 첫 고객 수 */
+            firstCustomer: MarketingModule.marketingTargetData?.newEvOjpT,
+            /** 첫 고객 수 PUSH */
+            firstCustomerPush: MarketingModule.marketingTargetData?.newPushOjpT,
+            /** 단골 고객 수 */
+            regularCustomer: MarketingModule.marketingTargetData?.odEvOjpT,
+            /** 단골 고객 수 PUSH */
+            regularCustomerPush:
+                MarketingModule.marketingTargetData?.odPushOjpT,
+        }
+    }
+
+    /** 예상 결과 */
+    get estimateResult() {
+        return {
+            // 행사 대상자 수
+            target: {
+                first: this.marketingTarget.firstCustomer || '0',
+                regular: this.marketingTarget.regularCustomer || '0',
+            },
+            // 선택된 할인율
+            selectRatio: this.theLastFormData.list.reduce(
+                (acc, cv) => {
+                    const key: 'first' | 'regular' =
+                        cv.ggDc === '1' ? 'first' : 'regular'
+                    acc[key] = cv.bnfDcR
+
+                    return acc
+                },
+                { first: '0', regular: '0' } as {
+                    first?: string
+                    regular?: string
+                },
+            ),
+            // 평균 매출
+            salesAverage: {
+                first: this.lastYearSalesAverage.first?.slAv || '0',
+                regular: this.lastYearSalesAverage.regular?.slAv || '0',
+            },
+        }
+    }
+
+    /** 전년 동기간 매출 평균 */
+    get lastYearSalesAverage() {
+        return MarketingModule.lastYearSalesAverageData
+    }
+
+    /** 미리보기 팝업 쿠폰 데이터 */
+    getCouponPreviewProps(gubun: '1' | '2'): null | CouponPreviewProps {
+        const origin = this.theLastFormData.list.find(
+            item => item.ggDc === gubun,
+        )
+
+        if (origin) {
+            return {
+                period: {
+                    start: origin.evSdt,
+                    end: origin.evEdt,
+                },
+                discountRate: origin.bnfDcR,
+                franchiseName: this.franchiseInfo?.mcNm || '',
+                gubun,
+            }
+        } else {
+            return null
+        }
+    }
+
+    /** 미리보기 팝업 열기/닫기 */
+    openCouponPreview(gubun: '1' | '2') {
+        this.couponPreviewProp = this.getCouponPreviewProps(gubun)
+        this.popCouponPreview = true
+    }
+
+    // 미리보기 팝업 닫기
+    onCouponPreviewConfirm() {
+        // 확인 버튼
+    }
+
+    /** 신청 */
+    async apply() {
+        await MarketingModule.apply()
+    }
+
+    mounted() {
+        this.infoResult.push({
+            text: `행사 비용(할인혜택)은 <strong>${this.franchiseInfo?.mcNm}</strong> 가맹점 대금에서 차감되는 금액으로, 방문고객 수와 고객의 결제금액에 따라 변경될 수 있습니다.`,
+        })
+    }
 }
 </script>
 
-<style lang="scss" scoped src="./StepThird.scss"></style>
+<style lang="scss" src="./StepThird.scss"></style>
