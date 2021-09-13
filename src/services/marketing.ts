@@ -252,7 +252,7 @@ class MarketingService {
     async apply(params: LastApplyParameter) {
         return await axiosInstance.request({
             ...this.apiList.apply,
-            params,
+            data: params,
         })
     }
 }

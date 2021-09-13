@@ -2,14 +2,14 @@
     <div class="sales-history-list">
         <h3>입금 내역</h3>
         <ul>
-            <li v-if="list.card">
+            <li v-if="list.card !== '0'">
                 <span>카드매출</span>
                 <em class="price">
                     <strong>{{ list.card }}</strong>
                     원
                 </em>
             </li>
-            <li v-if="list.delivery">
+            <li v-if="list.delivery !== '0'">
                 <span>배달매출</span>
                 <em class="price">
                     <strong>{{ list.delivery }}</strong>
@@ -62,13 +62,13 @@ export default class DepositHistory extends Vue {
     /** 내역 (카드, 현금영수증, 배달) */
     @Prop({
         type: Object,
-        default: () => ({ card: '0', delivery: '0' }),
-        required: true,
+        default: () => ({}),
+        required: false,
     })
     readonly list!: {
-        card: string
+        card?: string
         cashReceipt?: string
-        delivery: string
+        delivery?: string
     }
 
     get biznavSalesLink(): string {

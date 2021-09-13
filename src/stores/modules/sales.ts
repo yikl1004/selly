@@ -325,6 +325,7 @@ export default class Sales extends VuexModule {
                       return {
                           date: $dayjs(item.dt).format('M/D(ddd)'),
                           amount: seperatePrice(item.slTam),
+                          average: seperatePrice(item.slTam),
                       }
                   })
                 : [],
@@ -333,6 +334,7 @@ export default class Sales extends VuexModule {
                       return {
                           date: [$dayjs(item.sdt).format('M/D'), $dayjs(item.edt).format('M/D')].join('~'),
                           amount: seperatePrice(item.slTam),
+                          average: seperatePrice(item.slTam),
                       }
                   })
                 : [],
@@ -341,6 +343,7 @@ export default class Sales extends VuexModule {
                       return {
                           date: $dayjs(item.dt).format('M/D(ddd)'),
                           amount: seperatePrice(item.slTam),
+                          average: seperatePrice(item.re4wDwAvSlAm),
                       }
                   })
                 : [],
@@ -488,6 +491,7 @@ export default class Sales extends VuexModule {
                       return {
                           date: $dayjs(item.dt).format('M/D(ddd)'),
                           amount: seperatePrice(item.payTam),
+                          average: seperatePrice(item.payTam),
                       }
                   })
                 : [],
@@ -496,6 +500,7 @@ export default class Sales extends VuexModule {
                       return {
                           date: [$dayjs(item.sdt).format('M/D'), $dayjs(item.edt).format('M/D')].join('~'),
                           amount: seperatePrice(item.payTam),
+                          average: seperatePrice(item.payTam),
                       }
                   })
                 : [],
@@ -504,6 +509,7 @@ export default class Sales extends VuexModule {
                       return {
                           date: $dayjs(item.dt).format('M/D(ddd)'),
                           amount: seperatePrice(item.payTam),
+                          average: seperatePrice(item.re4wDwAvPayAm),
                       }
                   })
                 : [],

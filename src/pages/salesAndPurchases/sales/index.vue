@@ -17,6 +17,7 @@
             <div class="tab-inner">
                 <div class="sales-detail-wrap">
                     <BaseInfo
+                        :parentType="parentType"
                         :type="status"
                         :totalAmount="salesTotalAmount"
                         :date="salesBaseDate"
@@ -120,6 +121,8 @@ export default class SalesHistory extends Vue {
 
     /** 매출 리스트 */
     get salesListOfPerido() {
+        console.log('SalesModule.salesListOfPerido=======')
+        console.log(SalesModule.salesListOfPerido)
         return SalesModule.salesListOfPerido
     }
 
@@ -139,7 +142,8 @@ export default class SalesHistory extends Vue {
     }
 
     /** @Data */
-
+    /**  현재 메뉴  매츨/ 입금 */
+    private parentType = '매출'
     /** 탭 리스트 */
     private datacollection = {}
     private chartOption: Chart.ChartOptions = {}
@@ -299,9 +303,16 @@ export default class SalesHistory extends Vue {
         }
     }
     convertSalesLatestAverage() {
-        return Array(SalesModule.salesListOfPerido.length).fill(
-            parseInt(this.salesLatestAverage.replace(/,/g, ''), 10) / 10000,
-        )
+        // 상태가 요일별때 l
+        if (this.isDayOfWeek) {
+            return SalesModule.salesListOfPerido.map(obj => {
+                return parseInt(obj.average.replace(/,/g, ''), 10) / 10000
+            })
+        } else {
+            return Array(SalesModule.salesListOfPerido.length).fill(
+                parseInt(this.salesLatestAverage.replace(/,/g, ''), 10) / 10000,
+            )
+        }
     }
 }
 </script>

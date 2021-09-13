@@ -17,6 +17,7 @@
             <div class="tab-inner">
                 <div class="sales-detail-wrap">
                     <BaseInfo
+                        :parentType="parentType"
                         :type="status"
                         :totalAmount="depositTotalAmount"
                         :date="depositBaseDate"
@@ -137,7 +138,7 @@ export default class SalesHistory extends Vue {
     }
 
     /** @Data */
-
+    private parentType = '입금'
     /** 탭 리스트 */
     private datacollection: Chart.ChartData = {}
     private chartOption: Chart.ChartOptions = {}
@@ -295,9 +296,17 @@ export default class SalesHistory extends Vue {
         }
     }
     convertSalesLatestAverage() {
-        return Array(SalesModule.depositListOfPerido.length).fill(
-            parseInt(this.depositLatestAverage.replace(/,/g, ''), 10) / 10000,
-        )
+        // 상태가 요일별때 l
+        if (this.isDayOfWeek) {
+            return SalesModule.depositListOfPerido.map(obj => {
+                return parseInt(obj.average.replace(/,/g, ''), 10) / 10000
+            })
+        } else {
+            return Array(SalesModule.depositListOfPerido.length).fill(
+                parseInt(this.depositLatestAverage.replace(/,/g, ''), 10) /
+                    10000,
+            )
+        }
     }
 }
 </script>

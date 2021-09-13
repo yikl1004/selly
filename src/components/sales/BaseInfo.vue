@@ -1,6 +1,6 @@
 <template>
     <div class="sales-day-info">
-        <span class="day">{{ date }} 매출</span>
+        <span class="day">{{ date }} {{ parentType }}</span>
         <strong class="price">{{ totalAmount }}원</strong>
         <ul class="compare">
             <li>
@@ -40,6 +40,9 @@ type IconState = {
  */
 @Component
 export default class BaseInfo extends Vue {
+    /** 매출 /입금  */
+    @Prop({ type: String, default: '매출', required: true })
+    readonly parentType!: Status
     /** 유형 */
     @Prop({ type: String, default: 'daily', required: true })
     readonly type!: Status

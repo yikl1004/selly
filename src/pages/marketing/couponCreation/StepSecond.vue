@@ -244,7 +244,7 @@ export default class StepSecondPage extends Vue {
 
     /** 마케팅 기간 기본값 */
     get period(): { start: Date; end: Date } {
-        const standardDate = this.$dayjs().add(6, 'day')
+        const standardDate = this.$dayjs().add(7, 'day')
         const start = standardDate.toDate()
         const end = standardDate.add(29, 'day').toDate()
 
