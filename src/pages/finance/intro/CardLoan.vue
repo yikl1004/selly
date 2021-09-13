@@ -1,12 +1,12 @@
 <template>
     <!--[D] 신청 불가인 경우 Page / PageBody에 있는 floating 제거.-->
     <Page floating>
-        <Header type="sub" title="장기카드론" />
+        <Header type="sub" title="장기카드 대출" />
         <PageBody class="floating">
             <div class="content finance-main-wrap">
                 <div class="top-visual card">
                     <div class="visual-inner">
-                        <Title title="장기카드론">
+                        <Title title="장기카드 대출">
                             <p>
                                 대출 금액에 따라 일정 기간 거치 후 상환이
                                 가능해서 상환 기간에 대한 여유가 있어요.
