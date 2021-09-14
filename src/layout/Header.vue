@@ -4,7 +4,7 @@
             <!-- 로고 -->
             <h1 v-if="isMain" class="header-logo">
                 <Anchor href="/" class="logo">
-                    <span class="ir">Selly</span>
+                    <span class="ir">Selly beta</span>
                 </Anchor>
             </h1>
 

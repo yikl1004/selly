@@ -4,7 +4,7 @@
             <div class="gnb-header">
                 <h2>
                     <Anchor href="/" class="logo">
-                        <span class="ir">Selly</span>
+                        <span class="ir">Selly beta</span>
                     </Anchor>
                 </h2>
                 <button type="button" class="btn-gnb-close" @click="onClose">
