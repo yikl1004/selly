@@ -13,13 +13,17 @@
     .compare {
         margin-top: 7px;
         li {
+            display: flex;
+            align-items: center;
             margin-top: 3px;
             &:first-of-type{
                 margin-top: 0;
             }
         }
         .compare-price {
+            display: block;
             position: relative;
+            padding-left: 3px;
             padding-right: 24px;
             font-size: 16px;
             font-weight: 500;
@@ -28,7 +32,7 @@
                 display: block;
                 position: absolute;
                 right: 0;
-                top: -5px;
+                top: -3px;
                 width: 24px;
                 height: 24px;
                 background-image: url('/assets/icon/icon-arrow-equal.svg');
