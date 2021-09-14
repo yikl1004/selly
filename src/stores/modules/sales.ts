@@ -251,7 +251,7 @@ export default class Sales extends VuexModule {
         const cases = {
             [dates.daily]: date(this.salesDaily?.data.stdt || undefined),
             [dates.weekly]: [
-                date(this.salesWeekly?.data.stdt || undefined), // 시작일자
+                date(this.salesWeekly?.data.sdt || undefined), // 시작일자
                 date(this.salesWeekly?.data.edt || undefined), // 종료일자
             ].join(' ~ '),
             [dates.dayOfWeek]: date(this.salesDayOfWeek?.data.stdt || undefined, 'ddd(M/D)'),
@@ -417,7 +417,7 @@ export default class Sales extends VuexModule {
         const cases = {
             [dates.daily]: date(this.depositDaily?.data.stdt || undefined),
             [dates.weekly]: [
-                date(this.depositWeekly?.data.stdt || undefined), // 시작일자
+                date(this.depositWeekly?.data.sdt || undefined), // 시작일자
                 date(this.depositWeekly?.data.edt || undefined), // 종료일자
             ].join(' ~ '),
             [dates.dayOfWeek]: date(this.depositDayOfWeek?.data.stdt || undefined, 'ddd(M/D)'),

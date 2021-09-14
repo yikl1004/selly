@@ -246,7 +246,9 @@ export default class SalesHistory extends Vue {
                                     case values.length - 1:
                                         return '만원'
                                     default:
-                                        return value
+                                        return (
+                                            Number(value) / 10000
+                                        ).toLocaleString()
                                 }
                             },
                         },
@@ -258,14 +260,15 @@ export default class SalesHistory extends Vue {
             legend: {
                 position: 'bottom',
                 align: 'end',
-            },
-            plugins: {
-                legend: {
-                    position: 'bottom',
-                    align: 'end',
+                onClick(e) {
+                    e.stopPropagation()
                 },
-                title: {
-                    display: true,
+            },
+            tooltips: {
+                callbacks: {
+                    label(toolTipItem) {
+                        return Number(toolTipItem.value).toLocaleString()
+                    },
                 },
             },
         }
@@ -281,6 +284,7 @@ export default class SalesHistory extends Vue {
                     fill: false,
                     borderDash: [5, 5],
                     type: 'line',
+                    lineTension: 0,
                     data: this.convertSalesLatestAverage(), //,
                 },
                 {
@@ -289,14 +293,13 @@ export default class SalesHistory extends Vue {
                     borderColor: '#fa4123',
                     fill: false,
                     type: this.chartjsType,
+                    lineTension: 0,
                     barPercentage: 0.5,
                     categoryPercentage: 0.55,
                     // offset: false,
                     // borderDash: [5, 5],
                     data: SalesModule.salesListOfPerido.map(obj => {
-                        return (
-                            parseInt(obj.amount.replace(/,/g, ''), 10) / 10000
-                        )
+                        return parseInt(obj.amount.replace(/,/g, ''), 10)
                     }),
                 },
             ],
@@ -306,14 +309,18 @@ export default class SalesHistory extends Vue {
         // 상태가 요일별때 l
         if (this.isDayOfWeek) {
             return SalesModule.salesListOfPerido.map(obj => {
-                return parseInt(obj.average.replace(/,/g, ''), 10) / 10000
+                return parseInt(obj.average.replace(/,/g, ''), 10)
             })
         } else {
             return Array(SalesModule.salesListOfPerido.length).fill(
-                parseInt(this.salesLatestAverage.replace(/,/g, ''), 10) / 10000,
+                parseInt(this.salesLatestAverage.replace(/,/g, ''), 10),
             )
         }
     }
+    seperatePrice() {
+        return
+    }
+    // const seperatePrice = (value?: string | null) => toNumber(value ?? '').toLocaleString()
 }
 </script>
 
