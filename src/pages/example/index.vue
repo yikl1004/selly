@@ -28,6 +28,7 @@ import ConvertDoughnut from '@components/common/ConvertDoughnut.vue'
 import ConvertBar from '@components/common/ConvertBar.vue'
 import ConvertPie from '@components/common/ConvertPie.vue'
 import Chart from 'chart.js'
+import ChartDataLabels from 'chartjs-plugin-datalabels'
 import patternnomaly from 'patternomaly'
 // import { FinanceModule } from '@stores/modules/finance'
 @Component({
@@ -72,6 +73,7 @@ export default class ExamplePage extends Vue {
     private datas = [30, 20, 20, 30, 40, 40, 50]
     private labels = ['일', '월', '화', '수', '목', '금', '토']
     mounted() {
+        Chart.plugins.register(ChartDataLabels)
         console.log('MOUNTED =======')
         this.fillData()
     }
@@ -101,6 +103,14 @@ export default class ExamplePage extends Vue {
                         patternnomaly.draw('disc', '#ff7f0e', 'black'),
                         patternnomaly.draw('diamond', '#2ca02c', 'black'),
                     ],
+                    // ChartDataLabels: {
+                    //     color: '#FFCE56',
+                    //     formatter(value: any, context: any) {
+                    //         console.log('formatter')
+                    //         console.log(value)
+                    //         console.log(context)
+                    //     },
+                    // },
                 },
             ],
             labels: ['Red', 'Yellow', 'Blue'],

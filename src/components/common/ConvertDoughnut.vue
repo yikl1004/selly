@@ -94,6 +94,7 @@ export default class ConvertChart extends Vue {
                         patternnomaly.draw('dot', '#413a2f', 'white'),
                         patternnomaly.draw('diamond-box', '#00648c', 'white'),
                     ],
+
                     // borderColor: ['#00648c'],
                     // borderWidth: 10,
                     // borderColor: 'black'

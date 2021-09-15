@@ -1,16 +1,16 @@
 <template>
     <div class="sales-history-list">
-        <h3>입금 내역</h3>
+        <h3>{{ parentType }} 내역</h3>
         <ul>
             <li v-if="list.card !== '0'">
-                <span>카드매출</span>
+                <span>카드{{ parentType }}</span>
                 <em class="price">
                     <strong>{{ list.card }}</strong>
                     원
                 </em>
             </li>
             <li v-if="list.delivery !== '0'">
-                <span>배달매출</span>
+                <span>배달{{ parentType }}</span>
                 <em class="price">
                     <strong>{{ list.delivery }}</strong>
                     원
@@ -59,6 +59,9 @@ import type { LoginInfo } from '@stores/modules/auth'
     },
 })
 export default class DepositHistory extends Vue {
+    /** 매출 /입금  */
+    @Prop({ type: String, default: '매출', required: false })
+    readonly parentType!: string
     /** 내역 (카드, 현금영수증, 배달) */
     @Prop({
         type: Object,

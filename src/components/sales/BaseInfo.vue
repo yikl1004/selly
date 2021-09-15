@@ -41,7 +41,7 @@ type IconState = {
 @Component
 export default class BaseInfo extends Vue {
     /** 매출 /입금  */
-    @Prop({ type: String, default: '매출', required: true })
+    @Prop({ type: String, default: '매출', required: false })
     readonly parentType!: Status
     /** 유형 */
     @Prop({ type: String, default: 'daily', required: true })
