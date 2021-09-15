@@ -51,8 +51,8 @@ export interface AuthParameters {
         cellNo?: string
         // 카카오로 전달 받은 이메일
         email?: string
-        // 카카오 유저 정보 중 id
-        // kkoId: string
+        // 유입채널 (셀리:MWEB,비즈넵:BZNV,알밤:ALBM,로카m:LOCM)
+        chnlC?: 'MWEB' | 'BZNV' | 'ALBM' | 'LOCM'
         // 약관 동의 항목
         list?: {
             agTag: string
@@ -319,7 +319,7 @@ class AuthService {
     }
 
     // 유쇼대 로그인/카카오최초인입
-    async getDatusLoginInfo(data: AuthParameters['loginInfo']): DatusLoginInfoRes {
+    async getDatusLoginInfo(data: AuthParameters['datusLoginInfo']): DatusLoginInfoRes {
         return await axiosInstance.request({
             ...this.datusLogin,
             data,

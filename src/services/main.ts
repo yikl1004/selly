@@ -17,36 +17,43 @@ export interface MainResponse {
         data: {
             // 메인 카드 정보
             cardinf: {
-                // LOCA 2.0 신용카드 신청 URL
-                cardUrl: string
                 // 로카머니 비즈니스 카드 보유 여부
                 lmBizYn: YN
                 // 로카코인
                 locaCoin: number
-                // LOCA 2.0 로카코인 URL
-                locaCoinUrl: null | string
                 // 결제 예정 금액 URL
                 todBilAm: number
                 // LOCA 2.0 결제 예정 금액 URL
                 todBilAmUrl: null | string
+                // LOCA 2.0 로카코인 URL
+                locaCoinUrl: null | string
+                // LOCA 2.0 신용카드 신청 URL
+                cardUrl: string
+                // 카드 이미지
+                cardImg: string
+                // 카드 텍스트
+                cardText: string
+                // 카드 텍스트 부제
+                cardSubText: string
             }
-            // 매출/입금 정보 리스트
-            list2: {
-                // 금액
-                am: string
-                // 전일 대비 매출 증감
-                bfdCmrSlIcrDcr: IncreaseValue['increase']
-                // 기준날짜
-                date: string
-                // 매출/입금 구분
-                slDc: SalesOrDeposit
-            }[]
             // 매출/입금 스크래핑 구분 코드
             scrapDc: Scrapping
             // 대표자명
             dgNm: string
+            // 메인 금융 부분
+            fininf: {
+                // 대출 구분
+                findc:
+                    | '1' // 비즈론 가능
+                    | '2' // 장기카드론
+                    | '3' // 사업자 대출
+                    | '4' // 즉시대출
+                // LOCA 2.0 링크
+                url: string
+            }
             // 마케팅 정보 리스트
             list1:
+                | null
                 | {
                       // 할인율
                       dcR: string
@@ -79,7 +86,32 @@ export interface MainResponse {
                       // 이용건수
                       uct: string
                   }[]
+            // 매출/입금 정보 리스트
+            list2:
                 | null
+                | {
+                      // 금액
+                      am: string
+                      // 전일 대비 매출 증감
+                      bfdCmrSlIcrDcr: IncreaseValue['increase']
+                      // 기준날짜
+                      date: string
+                      // 매출/입금 구분
+                      slDc: SalesOrDeposit
+                  }[]
+            // 제휴사 배너 리스트
+            list3: {
+                // 배너명(제휴사 명)
+                bnnMenNm: string
+                // 배너 서브 텍스트
+                bnnSubText: string
+                // 배너 이미지 경로
+                filePhNm: string
+                // 배너 url(링크)
+                bnnUrl: string
+                // 순서
+                qeeOdrV: string
+            }[]
         }
     }
 }

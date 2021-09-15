@@ -41,7 +41,6 @@ export default class Auth extends VuexModule {
     public kakaoUserInfo: UserInfo | null = null
     public datusLoginInfo: DatusLoginInfo | null = null
     public memberWorkplaceInfo: MemberWorkplaceInfo | null = null
-    // public mainInfo: MainInfo | null = null
     public bizInfo: BizInfo | null = null
     public logoutInfo: LogoutInfo | null = null
     public inputRecommenderCodeResult: RecommenderCode | null = null
@@ -166,13 +165,6 @@ export default class Auth extends VuexModule {
 
         return {
             memberInfo: data,
-            // {
-            //     ...data,
-            //     data: {
-            //         ...data.data,
-            //         mrktYn: 'Y',
-            //     },
-            // },
         }
     }
 
@@ -379,14 +371,6 @@ export default class Auth extends VuexModule {
     get businessManInfoData() {
         return this.businessManInfo
     }
-
-    /**
-     * @description
-     * 메인화면 정보
-     */
-    // get mainInfoData() {
-    //     return this.mainInfo?.data
-    // }
 
     /**
      * @description

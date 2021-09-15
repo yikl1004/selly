@@ -2,16 +2,7 @@
     <Page>
         <PageBody>
             <div class="page-login-wrap">
-                <div
-                    style="
-                        height: 500px;
-                        background: #2b2b2b;
-                        text-align: center;
-                        line-height: 500px;
-                    "
-                >
-                    상단 비주얼 추가 작업 예정
-                </div>
+                <LoginVisual />
                 <!-- <button
                     type="button"
                     class="btn-kakao-login"
@@ -125,8 +116,9 @@
 import { Component, Mixins, Ref, Watch } from 'vue-property-decorator'
 import { CommonModule } from '@stores/modules/common'
 import PageView from '@utils/mixins/PageView'
+import LoginVisual from '@components/login/LoginVisual.vue'
 import { AuthModule } from '@stores/modules/auth'
-import { AuthResponse } from '@services/auth'
+import type { AuthResponse } from '@services/auth'
 
 /**
  * TODO: 유쇼데 로그인 버튼만들기
@@ -136,6 +128,9 @@ import { AuthResponse } from '@services/auth'
     beforeRouteEnter(to, from, next) {
         const alreadyLogin = CommonModule.loginExtendInfoData?.rc === '0000'
         next(alreadyLogin ? { name: 'Main' } : undefined)
+    },
+    components: {
+        LoginVisual,
     },
 })
 export default class LoginPage extends Mixins(PageView) {

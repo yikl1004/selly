@@ -8,7 +8,7 @@
                 <!-- e : 매출/입금 -->
 
                 <!-- s : 금융상품 영역 -->
-                <!-- <Financial /> -->
+                <Financial />
                 <!-- e : 금융상품-->
 
                 <!-- s : 마케팅 -->
@@ -30,7 +30,7 @@
                 <!--// e : 세무서비스 -->
 
                 <!-- s : 제휴사 - TODO: API 아직 없음, 추가되면 해야 됨 -->
-                <AffiliatedBanner />
+                <!-- <AffiliatedBanner /> -->
                 <!--// e : 제휴사 -->
             </div>
         </PageBody>
@@ -45,11 +45,12 @@ import SalesAndDeposit from '@components/main/SalesAndDeposit.vue'
 import Marketing from '@components/main/Marketing.vue'
 import CreditCard from '@components/main/CreditCard.vue'
 import AffiliatedBanner from '@components/main/AffiliatedBanner.vue'
+import Financial from '@components/main/Financial.vue'
 
 @Component({
     components: {
         SalesAndDeposit,
-        // Financial,
+        Financial,
         Marketing,
         CreditCard,
         AffiliatedBanner,
