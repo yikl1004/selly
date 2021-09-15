@@ -30,7 +30,7 @@
                 <!--// e : 세무서비스 -->
 
                 <!-- s : 제휴사 - TODO: API 아직 없음, 추가되면 해야 됨 -->
-                <!-- <AffiliatedBanner /> -->
+                <AffiliatedBanner />
                 <!--// e : 제휴사 -->
             </div>
         </PageBody>

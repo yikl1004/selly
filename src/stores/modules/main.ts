@@ -79,6 +79,13 @@ export default class Main extends VuexModule {
     get marketingData() {
         return this.mainInfo?.data.list1 || []
     }
+
+    /**
+     * @description 제휴사 배너 정보 리스트
+     */
+    get affiliateBannerList() {
+        return this.mainInfo?.data.list3 || []
+    }
 }
 
 export const MainModule = getModule(Main)

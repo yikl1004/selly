@@ -1,6 +1,10 @@
 <template>
     <!-- 연동안되어 있음 -->
-    <Anchor v-if="isNoLinkage" href="/" class="banner-box banner-user">
+    <Anchor
+        v-if="isNoLinkage"
+        :href="{ name: 'Sales' }"
+        class="banner-box banner-user"
+    >
         <div class="banner-title">
             <em>반가워요 {{ userName }}님</em>
             <strong> 우리매장 매출을<br />확인하세요. </strong>
