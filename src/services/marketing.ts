@@ -1,6 +1,15 @@
 import { axiosInstance } from '@services/http'
 import { AxiosResponse } from 'axios'
 
+export type MarketingStatus =
+    | '01' // 접수완료
+    | '02' // 준비중
+    | '03' // 진행예정
+    | '04' // 진행중
+    | '05' // 종료
+    | '08' // 재검토 필요
+    | '09' // 취소
+
 type MarketingResponseCode =
     | '0000' // 정상
     | '3101' // 유해업종

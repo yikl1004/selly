@@ -72,6 +72,13 @@ export default class Main extends VuexModule {
     get financialData() {
         return this.mainInfo?.data.fininf || null
     }
+
+    /**
+     * @description 마케팅(쿠폰 만들기) 영역
+     */
+    get marketingData() {
+        return this.mainInfo?.data.list1 || []
+    }
 }
 
 export const MainModule = getModule(Main)

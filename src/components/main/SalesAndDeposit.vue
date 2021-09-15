@@ -63,7 +63,7 @@ export default class SalesAndDeposit extends Vue {
     }
 
     get salesList() {
-        return MainModule.salesList
+        return MainModule.salesList || []
     }
 
     get userName() {

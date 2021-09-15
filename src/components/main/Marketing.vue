@@ -1,17 +1,81 @@
 <template>
-    <div>
+    <div v-if="isMarketing">
         <!-- s : 마케팅 -->
         <Title title="마케팅" class="flex">
             <div class="box-right">
-                <Anchor href="/" class="btn-more">
+                <Anchor
+                    :href="{ name: 'Marketing Coupon Creation Guide' }"
+                    class="btn-more"
+                >
                     <span class="ir">더보기</span>
                 </Anchor>
             </div>
         </Title>
 
+        <!-- 마케팅 신청한 경우 -->
+        <BannerSwiper
+            v-if="!!marketingData.length"
+            :options="{
+                slidesPerView: 1.4,
+                spaceBetween: 20,
+                pagination: {
+                    el: '.swiper-pagination',
+                },
+            }"
+        >
+            <!-- 등록된 마케팅 배너 -->
+            <swiper-slide
+                v-for="(item, index) in marketingData"
+                :key="`main-marketing-${index}`"
+            >
+                <Anchor href="/" class="banner-box banner-marketing">
+                    <div class="box-event-info">
+                        <Flag color="blue" text="진행" />
+                        <em class="event-type">{{ item.ggDNm }}</em>
+                        <span class="event-info">{{ item.dcR }}%</span>
+                        <p class="franchise-name">
+                            {{ item.mcNm }}
+                        </p>
+                        <span class="event-date">
+                            {{ $dayjs(item.evSdt).format('YYYY. MM. DD') }} ~
+                            <br />
+                            {{ $dayjs(item.evEdt).format('YYYY. MM. DD') }}
+                        </span>
+                    </div>
+                    <div class="box-white">
+                        <span class="subject">이용 고객</span>
+                        <strong>
+                            {{ _.toNumber(item.ucstt).toLocaleString() }}
+                            명
+                        </strong>
+                    </div>
+                </Anchor>
+            </swiper-slide>
+            <!-- 기본 마케팅 배너 -->
+            <swiper-slide>
+                <Anchor
+                    :href="{ name: 'Marketing Coupon Creation Guide' }"
+                    class="banner-box banner-marketing default"
+                >
+                    <div class="banner-title">
+                        <em>Selly와</em>
+                        <strong> 가맹점이 함께 만드는 쿠폰 </strong>
+                    </div>
+                    <div class="box-white">
+                        <strong class="txt-application">
+                            <span>신청하기</span>
+                        </strong>
+                    </div>
+                </Anchor>
+            </swiper-slide>
+        </BannerSwiper>
+
         <!-- 마케팅 신청 하지 않은경우 -->
-        <div class="box-banner-marketing">
-            <Anchor href="/" class="banner-box banner-marketing default">
+        <div v-else class="box-banner-marketing">
+            <Anchor
+                :href="{ name: 'Marketing Coupon Creation Guide' }"
+                class="banner-box banner-marketing default"
+            >
                 <div class="banner-title">
                     <em>Selly와</em>
                     <strong>
@@ -27,55 +91,7 @@
             </Anchor>
         </div>
 
-        <!-- 마케팅 신청한 경우 -->
-        <BannerSwiper
-            :options="{
-                slidesPerView: 1.4,
-                spaceBetween: 20,
-                pagination: {
-                    el: '.swiper-pagination',
-                },
-            }"
-        >
-            <!-- 등록된 마케팅 배너 -->
-            <swiper-slide>
-                <Anchor href="/" class="banner-box banner-marketing">
-                    <div class="box-event-info">
-                        <Flag color="blue" text="진행" />
-                        <em class="event-type">첫고객</em>
-                        <span class="event-info">5%</span>
-                        <p class="franchise-name">
-                            연탄 불고기 가맹점연탄 불고기 가맹점연탄 불고기
-                            가맹점연탄 불고기 가맹점
-                        </p>
-                        <span class="event-date">
-                            2021. 07. 01 ~
-                            <br />
-                            2021. 07. 30
-                        </span>
-                    </div>
-                    <div class="box-white">
-                        <span class="subject">이용 고객</span>
-                        <strong>1,000명</strong>
-                    </div>
-                </Anchor>
-            </swiper-slide>
-            <!-- 기본 마케팅 배너 -->
-            <swiper-slide>
-                <Anchor href="/" class="banner-box banner-marketing default">
-                    <div class="banner-title">
-                        <em>Selly와</em>
-                        <strong> 가맹점이 함께 만드는 쿠폰 </strong>
-                    </div>
-                    <div class="box-white">
-                        <strong class="txt-application">
-                            <span>신청하기</span>
-                        </strong>
-                    </div>
-                </Anchor>
-            </swiper-slide>
-        </BannerSwiper>
-
+        <!-- TODO: 링크 생성 후 삽입 -->
         <Anchor href="/" class="banner-box banner-store">
             <em>우리 매장 주변</em>
             <p>분야별 다양한 정보보기!</p>
@@ -86,9 +102,28 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
+import { SwiperSlide } from 'vue-awesome-swiper'
+import { MainModule } from '@stores/modules/main'
+import { AuthResponse } from '@services/auth'
 
-@Component
-export default class Marketing extends Vue {}
+@Component({
+    components: { SwiperSlide },
+})
+export default class Marketing extends Vue {
+    /** 마케팅 신청 가능여부 */
+    get isMarketing() {
+        const authStorage:
+            | AuthResponse['loginInfo']['data']
+            | null = JSON.parse(localStorage.getItem('auth') || 'null')
+        const auth = authStorage || { mrktPsyn: 'N' }
+        return auth.mrktPsyn === 'Y'
+    }
+
+    /** main 스토어에 마케팅 데이터 존재 여부 (API 원본 데이터) */
+    get marketingData() {
+        return MainModule.marketingData
+    }
+}
 </script>
 
 <style scoped></style>
