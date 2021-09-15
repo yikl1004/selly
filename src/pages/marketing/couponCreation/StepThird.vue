@@ -147,8 +147,7 @@ export default class StepThirdPage extends Vue {
             },
             {
                 title: '홍보 방식',
-                desc:
-                    '케이스 확인 필요. 롯데카드 앱 푸시메시지, 롯데카드 앱에 쿠폰 노출 ',
+                desc: '롯데카드 앱 푸시메시지, 롯데카드 앱에 쿠폰 노출 ',
             },
             {
                 title: '추천인 코드',
@@ -284,10 +283,31 @@ export default class StepThirdPage extends Vue {
         console.log('프로모션 제휴약관 동의', value)
     }
 
+    handelPageValidate() {
+        if (!this.theLastFormData.mcno) {
+            const back = () => this.$router.back()
+
+            this.$modal.open({
+                message: '정보가 유실되었습니다.',
+                buttonText: {
+                    confirm: '확인',
+                },
+                confirm: back,
+                cancel: back,
+            })
+        }
+    }
+
     mounted() {
         this.infoResult.push({
             text: `행사 비용(할인혜택)은 <strong>${this.franchiseInfo?.mcNm}</strong> 가맹점 대금에서 차감되는 금액으로, 방문고객 수와 고객의 결제금액에 따라 변경될 수 있습니다.`,
         })
+
+        this.handelPageValidate()
+    }
+
+    updated() {
+        this.handelPageValidate()
     }
 }
 </script>

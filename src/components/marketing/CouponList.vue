@@ -14,9 +14,7 @@
                     {{ _.toNumber(item.target).toLocaleString() }}명
                 </strong>
                 <span class="date">
-                    {{ $dayjs(item.period.start).format('YYYY.MM.DD') }}
-                    ~
-                    {{ $dayjs(item.period.end).format('YYYY.MM.DD') }}
+                    {{ item.period }}
                 </span>
             </div>
             <span class="btn-preview">미리보기</span>
