@@ -13,8 +13,9 @@
                     type="text"
                     :value="displayValue"
                     :class="{ readonly }"
+                    readonly
                     @keydown="onKeydown"
-                    @focus="onFocus"
+                    @click="onFocus"
                 />
                 <i v-if="!isRange" class="icon-calendar" />
             </div>
@@ -135,9 +136,9 @@ export default class CalendarField extends Vue {
 
     /** 선택 가능한 최대 날짜 */
     get maxDate(): Date | undefined {
-        if (this.isRange) {
+        if (this.isRange && this.rangeSection) {
             return this.$dayjs((this.value as Period).start)
-                .add(29, 'day')
+                .add(this.rangeSection, 'day')
                 .toDate()
         }
         return undefined

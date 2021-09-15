@@ -51,7 +51,6 @@ export default class JoinPage extends Vue {
     }
 
     onComplete() {
-        // TODO: 비즈넵 토큰 전달 (셀리 가입 완료 상태, 오류가 나도 어쩔수 없음)
         const loginResult = this.loginInfo?.rspDc
         const defaultMethod = ({
             bznavSyncToken,

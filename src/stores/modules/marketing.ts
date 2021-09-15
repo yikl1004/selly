@@ -9,6 +9,7 @@ export type MarketingTargetRes = MarketingResponse['marketingTarget']
 export type LastYearSalesAverageRes = MarketingResponse['lastYearSalesAverage']
 export type CheckRecommenderRes = MarketingResponse['checkRecommenderCode']
 export type ApplyValidateCheckRes = MarketingResponse['applyValidateCheck']
+export type ApplyResultRes = MarketingResponse['applyResult']
 
 interface MarketingState {
     possibleApplyFranchiseList: PossibleApplyFranchiseListRes | null
@@ -72,6 +73,16 @@ export interface CustomerItem {
     evBefSlAv: string
 }
 
+const defaultForm: ApplyParameter = {
+    mcno: '',
+    refInYn: 'N',
+    refC: '',
+    list: [
+        // 첫 고객: 1
+        // 단골 고객: 2
+    ],
+}
+
 @Module({ name: 'marketing', namespaced: true, dynamic: true, store })
 export default class Marketing extends VuexModule {
     public possibleApplyFranchiseList: PossibleApplyFranchiseListRes | null = null
@@ -83,17 +94,10 @@ export default class Marketing extends VuexModule {
     }
     public franchiseInfo: Partial<FranchiseInfo> | null = null
     /** step 3 최종 신청 양식 */
-    public theLastForm: ApplyParameter = {
-        mcno: '',
-        refInYn: 'N',
-        refC: '',
-        list: [
-            // 첫 고객: 1
-            // 단골 고객: 2
-        ],
-    }
+    public theLastForm: ApplyParameter = defaultForm
     public checkRecommender: CheckRecommenderRes | null = null
     public applyValidateResult: ApplyValidateCheckRes | null = null
+    public applyResult: ApplyResultRes | null = null
 
     @Mutation
     setFranchiseInfo(value: Partial<FranchiseInfo>) {
@@ -113,6 +117,11 @@ export default class Marketing extends VuexModule {
             ...this.theLastForm,
             ...value,
         }
+    }
+
+    @Mutation
+    setInitTheLastData() {
+        this.theLastForm = defaultForm
     }
 
     get theLastFormData() {
@@ -277,8 +286,16 @@ export default class Marketing extends VuexModule {
     async apply() {
         const params = (this.state as MarketingState).theLastForm
 
-        await MarketingService.apply(params)
-        return {}
+        const { data } = await MarketingService.apply(params)
+
+        return {
+            applyResult: data,
+        }
+    }
+
+    /** 최종 신청 결과 */
+    get applyResultData() {
+        return this.applyResult
     }
 }
 

@@ -151,7 +151,13 @@ export interface MarketingResponse {
             | '3302' // 단골 행사기간 유효성 탈락
             | '3312' // 단골 유쇼데 행사기간 중복
             | '3322' // 단골 셀리 중복(이미 진행중인 행사기간과 중복)
+            | '0000'
         rspDcMsg: string
+    }>
+    /** 최종 신청 결과 */
+    applyResult: DefaultResponse<{
+        rspDc: '0000'
+        rspDcMsg: '정상처리 되었습니다.'
     }>
 }
 
@@ -161,6 +167,7 @@ type MarketingTargetRes = Promise<AxiosResponse<MarketingResponse['marketingTarg
 type LastYearSalesAverageRes = Promise<AxiosResponse<MarketingResponse['lastYearSalesAverage']>>
 type CheckRecommenderCodeRes = Promise<AxiosResponse<MarketingResponse['checkRecommenderCode']>>
 type ApplyValidateCheckRes = Promise<AxiosResponse<MarketingResponse['applyValidateCheck']>>
+type ApplyResultRes = Promise<AxiosResponse<MarketingResponse['applyResult']>>
 
 // request parameter
 type ValidatePossibleApplyFranchiseList = MarketingParameters['validatePossibleApplyFranchiseList']
@@ -258,7 +265,7 @@ class MarketingService {
     }
 
     /** 최종 신청 */
-    async apply(params: LastApplyParameter) {
+    async apply(params: LastApplyParameter): ApplyResultRes {
         return await axiosInstance.request({
             ...this.apiList.apply,
             data: params,

@@ -10,6 +10,7 @@
             :button-text="modalProps.buttonText"
             type="popup"
             @confirm="onConfirmModal"
+            @cancel="onCancelModal"
         >
             {{ modalProps.message }}
         </Modal>
@@ -44,6 +45,11 @@ export default class App extends Vue {
         console.log('모달 확인 버튼 누를때 실행되는 액션')
         typeof this.modalProps.confirm === 'function' &&
             this.modalProps.confirm()
+    }
+
+    onCancelModal() {
+        console.log('모달 취소 버튼 누를때 실행되는 액션')
+        typeof this.modalProps.cancel === 'function' && this.modalProps.cancel()
     }
 
     setModalContainer() {

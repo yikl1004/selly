@@ -145,6 +145,9 @@ export default class StepFirstPage extends Mixins(PageView) {
         this.nextDisabled = true
 
         if (this.franchiseInfo) {
+            MarketingModule.setTheLastData({
+                mcno: this.franchiseInfo.mcno,
+            })
             await MarketingModule.getValidatePossibleApplyFranchiseList({
                 mcno: this.franchiseInfo.mcno as string,
             })
@@ -202,6 +205,7 @@ export default class StepFirstPage extends Mixins(PageView) {
         if (list && list.length) {
             MarketingModule.setFranchiseInfo(list[0])
         }
+        MarketingModule.setInitTheLastData()
     }
 }
 </script>

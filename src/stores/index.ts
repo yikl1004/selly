@@ -8,8 +8,4 @@ const store = new Vuex.Store({
     plugins: [createLogger()],
 })
 
-if (process.env.NODE_ENV === 'development') {
-    window.store = store
-}
-
 export default store

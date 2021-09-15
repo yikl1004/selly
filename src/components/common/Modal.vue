@@ -106,6 +106,11 @@ export default class Modal extends Vue {
      */
 
     onCancel(/* a?: any */) {
+        /**
+         * 확인 버튼 클릭
+         * @event cancel
+         */
+        this.$emit('cancel')
         this.showState = false
     }
 

@@ -3,7 +3,12 @@
         <LabelTitle :hidden-label="hiddenLabel" :label="label" />
         <div class="check-box-area">
             <!-- 클래스에 checked 추가시 체크표시 -->
-            <button type="button" class="btn-checkbox" :disabled="disabled">
+            <button
+                type="button"
+                class="btn-checkbox"
+                :disabled="disabled"
+                @click="toggle"
+            >
                 <i>{{ value }}</i>
             </button>
             <button
@@ -189,6 +194,10 @@ export default class CheckBoxGroup extends Vue {
 
     toggle() {
         this.open = !this.open
+        /**
+         * @event toggle
+         */
+        this.$emit('toggle', this.open)
     }
 
     getCheckBoxProps(index: number): CheckboxProps {

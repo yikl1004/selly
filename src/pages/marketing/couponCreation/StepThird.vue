@@ -29,6 +29,7 @@
                     value="TOUCH 프로모션 제휴 약관 동의"
                     label="프로모션 제휴 필수사항 확인"
                     hidden-label
+                    @toggle="onPromotionToggle"
                 />
 
                 <!--[P] 아코디언 내용으로 하단의 bullet-list가 들어가야함. 개발 수정 요청중.-->
@@ -53,6 +54,15 @@
             </template>
             <!--//[D] 쿠폰 미리보기 팝업 -->
 
+            <!-- <FullPopup
+                :show.sync="popCouponPreview"
+                title=""
+                type="popup"
+                @confirm="onCouponPreviewConfirm"
+            >
+                dkfjdkfjdkfj
+            </FullPopup> -->
+
             <portal to="floating">
                 <BasicButton size="large" @click="$router.back()">
                     이전
@@ -64,8 +74,8 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
-import { MarketingModule } from '@stores/modules/marketing'
+import { Component, Vue, Watch } from 'vue-property-decorator'
+import { ApplyResultRes, MarketingModule } from '@stores/modules/marketing'
 import ApplyResult from '@components/marketing/ApplyResult.vue'
 import CouponList from '@components/marketing/CouponList.vue'
 import type { CouponItem } from '@components/marketing/CouponList.vue'
@@ -210,6 +220,28 @@ export default class StepThirdPage extends Vue {
         return MarketingModule.lastYearSalesAverageData
     }
 
+    /** 최종 신청 결과 */
+    get applyResultData() {
+        return MarketingModule.applyResultData
+    }
+
+    @Watch('applyResultData')
+    changeApplyResultData(value: ApplyResultRes | null) {
+        if (value) {
+            this.$modal.open({
+                message: value.data.rspDcMsg,
+                buttonText: {
+                    confirm: '확인',
+                },
+                confirm: () => {
+                    if (value.data.rspDc === '0000') {
+                        this.$router.push({ name: 'Main' })
+                    }
+                },
+            })
+        }
+    }
+
     /** 미리보기 팝업 쿠폰 데이터 */
     getCouponPreviewProps(gubun: '1' | '2'): null | CouponPreviewProps {
         const origin = this.theLastFormData.list.find(
@@ -245,6 +277,11 @@ export default class StepThirdPage extends Vue {
     /** 신청 */
     async apply() {
         await MarketingModule.apply()
+    }
+
+    /** 프로모션 제휴약관 동의 */
+    onPromotionToggle(value: boolean) {
+        console.log('프로모션 제휴약관 동의', value)
     }
 
     mounted() {

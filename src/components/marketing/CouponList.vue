@@ -13,7 +13,11 @@
                     {{ item.discountRate }}% 결제일 할인
                     {{ _.toNumber(item.target).toLocaleString() }}명
                 </strong>
-                <span class="date">21.06.01~21.06.30</span>
+                <span class="date">
+                    {{ $dayjs(item.period.start).format('YYYY.MM.DD') }}
+                    ~
+                    {{ $dayjs(item.period.end).format('YYYY.MM.DD') }}
+                </span>
             </div>
             <span class="btn-preview">미리보기</span>
         </button>

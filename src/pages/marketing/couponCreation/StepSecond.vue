@@ -26,7 +26,11 @@
                                 <i>
                                     <strong>첫 고객 만들기</strong>
                                     <em>
-                                        {{ marketingTarget.firstCustomer }}
+                                        {{
+                                            _.toNumber(
+                                                marketingTarget.firstCustomer,
+                                            ).toLocaleString()
+                                        }}
                                         명
                                     </em>
                                 </i>
@@ -44,10 +48,10 @@
                                 isRange
                                 :readonly="false"
                                 :default-value="period"
-                                :min-date="startDate"
-                                :range-section="29"
                                 @change="onChangePeriod('first', $event)"
                             />
+                            <!-- :range-section="29" -->
+                            <!-- :min-date="startDate" -->
                             <BulletList :list="infoDate" />
                             <RadioGroup
                                 name="benefitRadio1"
@@ -78,7 +82,11 @@
                                 <i>
                                     <strong>단골 만들기</strong>
                                     <em>
-                                        {{ marketingTarget.regularCustomer }}
+                                        {{
+                                            _.toNumber(
+                                                marketingTarget.regularCustomer,
+                                            ).toLocaleString()
+                                        }}
                                         명
                                     </em>
                                 </i>
@@ -96,10 +104,10 @@
                                 isRange
                                 :readonly="false"
                                 :default-value="period"
-                                :min-date="startDate"
-                                :range-section="29"
                                 @change="onChangePeriod('regular', $event)"
                             />
+                            <!-- :min-date="startDate"
+                                :range-section="29" -->
                             <BulletList :list="infoDate" />
                             <RadioGroup
                                 name="benefitRadio"
@@ -124,13 +132,21 @@
                             <li>
                                 첫 고객 :
                                 <strong>
-                                    {{ marketingTarget.firstCustomer }}명
+                                    {{
+                                        _.toNumber(
+                                            marketingTarget.firstCustomer,
+                                        ).toLocaleString()
+                                    }}명
                                 </strong>
                             </li>
                             <li>
                                 단골 :
                                 <strong>
-                                    {{ marketingTarget.regularCustomer }}
+                                    {{
+                                        _.toNumber(
+                                            marketingTarget.regularCustomer,
+                                        ).toLocaleString()
+                                    }}
                                     명
                                 </strong>
                             </li>
@@ -148,14 +164,22 @@
                             <li>
                                 첫 고객 :
                                 <strong>
-                                    {{ marketingTarget.firstCustomerPush }}
+                                    {{
+                                        _.toNumber(
+                                            marketingTarget.firstCustomerPush,
+                                        ).toLocaleString()
+                                    }}
                                     명
                                 </strong>
                             </li>
                             <li>
                                 단골 :
                                 <strong>
-                                    {{ marketingTarget.regularCustomerPush }}
+                                    {{
+                                        _.toNumber(
+                                            marketingTarget.regularCustomerPush,
+                                        ).toLocaleString()
+                                    }}
                                     명
                                 </strong>
                             </li>
@@ -176,16 +200,25 @@
             </div>
 
             <portal to="floating">
-                <BasicButton size="large" @click="nextStep">다음</BasicButton>
+                <BasicButton
+                    size="large"
+                    :disabled="theLastFormData.list.length === 0"
+                    @click="nextStep"
+                >
+                    다음
+                </BasicButton>
             </portal>
         </PageBody>
     </Page>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Vue, Watch } from 'vue-property-decorator'
 import ApplyResult from '@components/marketing/ApplyResult.vue'
-import { MarketingModule } from '@stores/modules/marketing'
+import {
+    ApplyValidateCheckRes,
+    MarketingModule,
+} from '@stores/modules/marketing'
 import type { CustomerItem } from '@stores/modules/marketing'
 import type { RadioProps } from '@components/form/Radio.vue'
 import type { Period } from '@components/form/CalendarField.vue'
@@ -320,6 +353,29 @@ export default class StepSecondPage extends Vue {
         return MarketingModule.checkRecommenderResult
     }
 
+    /** 마케팅 신청 유효성 검사 반환 */
+    get applyValidateResultData() {
+        return MarketingModule.applyValidateResultData
+    }
+
+    @Watch('applyValidateResultData')
+    changeApplyValidateResultData(value: ApplyValidateCheckRes | null) {
+        console.log('@@@@@@@', value)
+        if (value?.data.rspDc === '0000') {
+            this.$router.push({ name: 'Marketing Coupon Creation Step 3' })
+        } else {
+            this.$modal.open({
+                message: value?.data.rspDcMsg || '',
+                buttonText: {
+                    confirm: '확인',
+                },
+                confirm: () => {
+                    // nothing
+                },
+            })
+        }
+    }
+
     /** 날짜 서식 */
     makeFormattedDate(value: Date): string {
         return this.$dayjs(value).format('YYYYMMDD')
@@ -327,10 +383,7 @@ export default class StepSecondPage extends Vue {
 
     /** 다음 스텝 */
     async nextStep() {
-        // TODO: 현재 API 에러 남 (수정 요청 필요)
         await MarketingModule.applyValidateCheck()
-        // 일단 강제로 다음스텝 진행
-        this.$router.push({ name: 'Marketing Coupon Creation Step 3' })
     }
 
     /** 할인율 변경(radio) */
@@ -424,11 +477,29 @@ export default class StepSecondPage extends Vue {
 
     /** 캘린더 기간이 변경 될 경우 */
     async onChangePeriod(type: Customer, { value }: { value: Period }) {
-        this.setCustomerData(type, {
-            evSdt: this.makeFormattedDate(value.start),
-            evEdt: this.makeFormattedDate(value.end),
-        })
-        await this.inquirySalesAverage(type, value)
+        const period = this.$dayjs(value.end).diff(
+            this.$dayjs(value.start).toDate(),
+            'day',
+        )
+
+        if (period >= 7 && period <= 30) {
+            this.setCustomerData(type, {
+                evSdt: this.makeFormattedDate(value.start),
+                evEdt: this.makeFormattedDate(value.end),
+            })
+            await this.inquirySalesAverage(type, value)
+        } else {
+            this.$modal.open({
+                message:
+                    '쿠폰 행사는 최소 7일 부터 최대 30일까지 신청 가능합니다. 행사 기간을 다시 설정해 주세요.',
+                buttonText: {
+                    confirm: '확인',
+                },
+                confirm: () => {
+                    // nothing
+                },
+            })
+        }
     }
 
     /**
@@ -465,6 +536,21 @@ export default class StepSecondPage extends Vue {
         })
     }
 
+    handelPageValidate() {
+        if (!this.theLastFormData.mcno) {
+            const back = () => this.$router.back()
+
+            this.$modal.open({
+                message: '정보가 유실되었습니다.',
+                buttonText: {
+                    confirm: '확인',
+                },
+                confirm: back,
+                cancel: back,
+            })
+        }
+    }
+
     /** @Lifecycle */
 
     async created() {
@@ -477,6 +563,11 @@ export default class StepSecondPage extends Vue {
         this.infoResult.push({
             text: `행사 비용(할인혜택)은 <strong>${franchiseInfo?.mcNm}</strong> 가맹점 대금에서 차감되는 금액으로, 방문고객 수와 고객의 결제금액에 따라 변경될 수 있습니다.`,
         })
+        this.handelPageValidate()
+    }
+
+    updated() {
+        this.handelPageValidate()
     }
 }
 
