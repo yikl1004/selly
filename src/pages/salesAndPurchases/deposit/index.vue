@@ -59,7 +59,10 @@
                         />
                     </AccoItemSingle>
 
-                    <DepositHistory :list="depositList" />
+                    <DepositHistory
+                        :list="depositList"
+                        :parentType="parentType"
+                    />
                 </div>
             </div>
         </Tab>
@@ -259,11 +262,12 @@ export default class SalesHistory extends Vue {
                 },
             },
             tooltips: {
-                callbacks: {
-                    label(toolTipItem) {
-                        return Number(toolTipItem.value).toLocaleString()
-                    },
-                },
+                enabled: false,
+                // callbacks: {
+                //     label(toolTipItem) {
+                //         return Number(toolTipItem.value).toLocaleString()
+                //     },
+                // },
             },
         }
         this.datacollection = {

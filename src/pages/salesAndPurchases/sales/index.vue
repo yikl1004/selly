@@ -121,8 +121,6 @@ export default class SalesHistory extends Vue {
 
     /** 매출 리스트 */
     get salesListOfPerido() {
-        console.log('SalesModule.salesListOfPerido=======')
-        console.log(SalesModule.salesListOfPerido)
         return SalesModule.salesListOfPerido
     }
 
@@ -265,11 +263,12 @@ export default class SalesHistory extends Vue {
                 },
             },
             tooltips: {
-                callbacks: {
-                    label(toolTipItem) {
-                        return Number(toolTipItem.value).toLocaleString()
-                    },
-                },
+                enabled: false,
+                // callbacks: {
+                //     label(toolTipItem) {
+                //         return Number(toolTipItem.value).toLocaleString()
+                //     },
+                // },
             },
         }
         this.datacollection = {
@@ -320,7 +319,6 @@ export default class SalesHistory extends Vue {
     seperatePrice() {
         return
     }
-    // const seperatePrice = (value?: string | null) => toNumber(value ?? '').toLocaleString()
 }
 </script>
 
