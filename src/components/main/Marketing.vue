@@ -30,8 +30,13 @@
             >
                 <Anchor href="/" class="banner-box banner-marketing">
                     <div class="box-event-info">
-                        <Flag color="blue" text="진행" />
-                        <em class="event-type">{{ item.ggDNm }}</em>
+                        <Flag
+                            color="blue"
+                            :text="getMarketingStstusText(item.mrktStc)"
+                        />
+                        <em class="event-type">
+                            {{ item.ggDNm }}
+                        </em>
                         <span class="event-info">{{ item.dcR }}%</span>
                         <p class="franchise-name">
                             {{ item.mcNm }}
@@ -104,7 +109,8 @@
 import { Component, Vue } from 'vue-property-decorator'
 import { SwiperSlide } from 'vue-awesome-swiper'
 import { MainModule } from '@stores/modules/main'
-import { AuthResponse } from '@services/auth'
+import type { AuthResponse } from '@services/auth'
+import type { MarketingStatus } from '@services/marketing'
 
 @Component({
     components: { SwiperSlide },
@@ -122,6 +128,21 @@ export default class Marketing extends Vue {
     /** main 스토어에 마케팅 데이터 존재 여부 (API 원본 데이터) */
     get marketingData() {
         return MainModule.marketingData
+    }
+
+    getMarketingStstusText(value: MarketingStatus) {
+        const cases = {
+            '01': '접수완료',
+            '02': '준비중',
+            '03': '진행예정',
+            '04': '진행중',
+            '05': '종료',
+            '08': '재검토 필요',
+            '09': '취소',
+            default: '',
+        }
+
+        return cases[value]
     }
 }
 </script>
