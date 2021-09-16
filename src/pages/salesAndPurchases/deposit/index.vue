@@ -199,6 +199,7 @@ export default class SalesHistory extends Vue {
         const dispatch = this.dispatch(tabStatus)
         await dispatch({ bzno: this.businessNumber })
         SalesModule.changeStatus(tabStatus)
+        value === 2 ? this.changeDayOfWeek(this.depositBaseDatePerDay) : null
         this.fillData()
     }
 

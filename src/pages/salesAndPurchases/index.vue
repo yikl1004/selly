@@ -2,7 +2,7 @@
     <Page floating>
         <Header type="sub" :title="headerTitle" />
         <PageBody v-if="!whetherToScrape" class="floating">
-            <div v-if="!whetherTolinkage" class="content">
+            <div v-if="whetherTolinkage" class="content">
                 <DropdownBox
                     id="workingPlace"
                     label="사업장 선택"
