@@ -222,6 +222,7 @@ import {
 import type { CustomerItem } from '@stores/modules/marketing'
 import type { RadioProps } from '@components/form/Radio.vue'
 import type { Period } from '@components/form/CalendarField.vue'
+import { Path } from '@router/routes'
 
 type Customer =
     | 'first' // 첫 고객
@@ -362,7 +363,7 @@ export default class StepSecondPage extends Vue {
     changeApplyValidateResultData(value: ApplyValidateCheckRes | null) {
         console.log('@@@@@@@', value)
         if (value?.data.rspDc === '0000') {
-            this.$router.push({ name: 'Marketing Coupon Creation Step 3' })
+            this.$router.push(Path.MarketingStepThird)
         } else {
             this.$modal.open({
                 message: value?.data.rspDcMsg || '',

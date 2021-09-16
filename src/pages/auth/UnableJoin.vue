@@ -12,6 +12,7 @@
 </template>
 
 <script lang="ts">
+import { Path } from '@router/routes'
 import { Component, Vue } from 'vue-property-decorator'
 
 @Component
@@ -19,7 +20,10 @@ export default class UnableJoinPage extends Vue {
     /** @category Methods */
 
     toFirstStep() {
-        this.$router.push({ name: 'Main', params: { step: '1' } })
+        this.$router.push({
+            ...Path.Main,
+            params: { step: '1' },
+        })
     }
 }
 </script>

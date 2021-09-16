@@ -22,6 +22,7 @@
 </template>
 
 <script lang="ts">
+import { Path } from '@router/routes'
 import { AuthModule } from '@stores/modules/auth'
 import { Component, Vue } from 'vue-property-decorator'
 
@@ -37,7 +38,7 @@ export default class WithdrawalPage extends Vue {
 
     async handelWithdrawal() {
         await AuthModule.setWithdrawal()
-        this.$router.push({ name: 'Main' })
+        this.$router.push(Path.Main)
     }
 
     onWithdrawal() {

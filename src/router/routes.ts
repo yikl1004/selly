@@ -1,4 +1,4 @@
-import type { RouteConfig } from 'vue-router'
+import type { Location, RouteConfig } from 'vue-router'
 
 /**
  * @description vue route 파일 (페이지 관리)
@@ -14,6 +14,54 @@ export type RouteMeta = {
 
 const loading = {
     template: `<Loading />`,
+}
+
+type PathNames =
+    | 'Navigation'
+    | 'Main'
+    | 'Login'
+    | 'AuthCallback'
+    | 'Join'
+    | 'TaxServiceGuide'
+    | 'MarketingGuide'
+    | 'MarketingStepFirst'
+    | 'MarketingStepSecond'
+    | 'MarketingStepThird'
+    | 'Config'
+    | 'Withdrawal'
+    | 'Business'
+    | 'Franchise'
+    | 'Notice'
+    | 'NoticeDetail'
+    | 'FAQ'
+    | 'Terms'
+    | 'TermsDetail'
+    | 'SalesLinkage'
+    | 'Sales'
+    | 'Deposit'
+export const Path: Record<PathNames, Location> = {
+    Navigation: { name: 'Navigation' },
+    Main: { name: 'Main' },
+    Login: { name: 'Login' },
+    AuthCallback: { name: 'Auth Callback' },
+    Join: { name: 'Join' },
+    TaxServiceGuide: { name: 'Tax Service Guide' },
+    MarketingGuide: { name: 'Marketing Coupon Creation Guide' },
+    MarketingStepFirst: { name: 'Marketing Coupon Creation Step 1' },
+    MarketingStepSecond: { name: 'Marketing Coupon Creation Step 2' },
+    MarketingStepThird: { name: 'Marketing Coupon Creation Step 3' },
+    Config: { name: 'Config' },
+    Withdrawal: { name: 'Withdrawal' },
+    Business: { name: 'Business' },
+    Franchise: { name: 'Franchise' },
+    Notice: { name: 'Notice' },
+    NoticeDetail: { name: 'Notice Detail' },
+    FAQ: { name: 'FAQ' },
+    Terms: { name: 'Terms' },
+    TermsDetail: { name: 'Terms Detail' },
+    SalesLinkage: { name: 'Sales Linkage' },
+    Sales: { name: 'Sales' },
+    Deposit: { name: 'Deposit' },
 }
 
 const createAsyncPage = (component: Promise<object>) => {
@@ -70,14 +118,14 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
             {
                 /** @complete */
                 path: '/navigation',
-                name: 'Navigation',
+                name: Path.Navigation.name,
                 component: createAsyncPage(import('@pages/navigation/index.vue')),
             },
 
             /* 메인 */
             {
                 path: '',
-                name: 'Main',
+                name: Path.Main.name,
                 component: createAsyncPage(import('@pages/index.vue')),
                 meta: {},
             },
@@ -86,7 +134,7 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
             {
                 /** @complete */
                 path: '/login',
-                name: 'Login',
+                name: Path.Login.name,
                 component: createAsyncPage(import('@pages/login/index.vue')),
             },
 
@@ -94,14 +142,14 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
             {
                 /** @complete */
                 path: '/authCallback',
-                name: 'Auth Callback',
+                name: Path.AuthCallback.name,
                 component: createAsyncPage(import('@pages/login/AuthCallback.vue')),
             },
 
             {
                 /** @complete */
                 path: '/join',
-                name: 'Join',
+                name: Path.Join.name,
                 component: createAsyncPage(import('@pages/join/index.vue')),
                 /**
                  * @pages/auth/SelectStore.vue - 가맹점 선택(단일 사업자인 경우 선택되어서 나옴)
@@ -277,6 +325,7 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
 
             // 세무서비스
             {
+                /** @complete */
                 path: '/taxServiceGuide',
                 name: 'Tax Service Guide',
                 component: createAsyncPage(import('@pages/taxServiceGuide/index.vue')),
@@ -285,9 +334,9 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
 
             // 쿠폰만들기 - 안내페이지
             {
-                /** @working */
+                /** @complete */
                 path: '/marketing/couponCreation',
-                name: 'Marketing Coupon Creation Guide',
+                name: Path.MarketingGuide.name,
                 component: createAsyncPage(import('@pages/marketing/couponCreation/index.vue')),
                 meta: {
                     title: '쿠폰 만들기',
@@ -295,9 +344,9 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
             },
             //쿠폰만들기_step1
             {
-                /** @working */
+                /** @complete */
                 path: '/marketing/couponCreation/stepFirst',
-                name: 'Marketing Coupon Creation Step 1',
+                name: Path.MarketingStepFirst.name,
                 component: createAsyncPage(import('@pages/marketing/couponCreation/StepFirst.vue')),
                 meta: {
                     floating: true,
@@ -306,8 +355,9 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
             },
             //쿠폰만들기_step2
             {
+                /** @complete */
                 path: '/marketing/couponCreation/stepSecond',
-                name: 'Marketing Coupon Creation Step 2',
+                name: Path.MarketingStepSecond.name,
                 component: createAsyncPage(import('@pages/marketing/couponCreation/StepSecond.vue')),
                 meta: {
                     floating: true,
@@ -316,8 +366,9 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
             },
             //쿠폰만들기_step3
             {
+                /** @complete */
                 path: '/marketing/couponCreation/stepThird',
-                name: 'Marketing Coupon Creation Step 3',
+                name: Path.MarketingStepThird.name,
                 component: createAsyncPage(import('@pages/marketing/couponCreation/StepThird.vue')),
                 meta: {
                     floating: true,
@@ -358,13 +409,13 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
             {
                 /** @complete */
                 path: '/config/member',
-                name: 'Config',
+                name: Path.Config.name,
                 component: createAsyncPage(import('@pages/config/member/index.vue')),
             },
             {
                 /** @complete */
                 path: '/config/withdrawal',
-                name: 'Withdrawal',
+                name: Path.Withdrawal.name,
                 component: createAsyncPage(import('@pages/config/withdrawal/index.vue')),
                 meta: {
                     floating: true,
@@ -379,7 +430,7 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
                  * @needFix 사업자 추가, 삭제 기능 제정의 필요
                  */
                 path: '/config/personalBusinessOwnerInfo',
-                name: 'Business',
+                name: Path.Business.name,
                 component: createAsyncPage(import('@pages/config/business/index.vue')),
                 meta: {
                     title: '사업자 정보',
@@ -389,7 +440,7 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
             {
                 /** @complete */
                 path: '/config/franchise/:mcno',
-                name: 'Franchise',
+                name: Path.Franchise.name,
                 component: createAsyncPage(import('@pages/config/franchise/index.vue')),
                 meta: {
                     title: '가맹점 정보',
@@ -405,21 +456,21 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
             {
                 /** @complete */
                 path: '/config/notice',
-                name: 'Notice',
+                name: Path.Notice.name,
                 component: createAsyncPage(import('@pages/config/notice/index.vue')),
             },
             // 공지사항 상세
             {
                 /** @complete */
                 path: '/config/notice/detail/:no',
-                name: 'Notice Detail',
+                name: Path.NoticeDetail.name,
                 component: createAsyncPage(import('@pages/config/notice/detail/index.vue')),
             },
             // 자주 묻는 질문(faq)
             {
                 /** @complete */
                 path: '/config/faq',
-                name: 'FAQ',
+                name: Path.FAQ.name,
                 component: createAsyncPage(import('@pages/config/faq/index.vue')),
             },
 
@@ -427,7 +478,7 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
             {
                 /** @complete */
                 path: '/config/terms',
-                name: 'Terms',
+                name: Path.Terms.name,
                 component: createAsyncPage(import('@pages/config/terms/index.vue')),
             },
 
@@ -435,27 +486,27 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
             {
                 /** @complete */
                 path: '/config/terms/detail/:no',
-                name: 'Terms Detail',
+                name: Path.TermsDetail.name,
                 component: createAsyncPage(import('@pages/config/terms/detail/index.vue')),
             },
             // 매출/입금 연동 페이지
             {
                 /** @complete */
                 path: '/salesAndPurchases',
-                name: 'Sales Linkage',
+                name: Path.SalesLinkage.name,
                 component: createAsyncPage(import('@pages/salesAndPurchases/index.vue')),
                 children: [
                     {
                         /** @complete */
                         path: '/salesAndPurchases/sales',
-                        name: 'Sales',
+                        name: Path.Sales.name,
                         component: createAsyncPage(import('@pages/salesAndPurchases/sales/index.vue')),
                     },
                     // 입금 내역
                     {
                         /** @complete */
                         path: '/salesAndPurchases/deposit',
-                        name: 'Deposit',
+                        name: Path.Deposit.name,
                         component: createAsyncPage(import('@pages/salesAndPurchases/deposit/index.vue')),
                     },
                 ],

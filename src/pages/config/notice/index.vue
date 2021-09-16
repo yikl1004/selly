@@ -31,6 +31,7 @@
 import { Component, Mixins } from 'vue-property-decorator'
 import PageView from '@utils/mixins/PageView'
 import { BoardModule } from '@stores/modules/board'
+import { Path } from '@router/routes'
 
 @Component
 export default class NoticePage extends Mixins(PageView) {
@@ -47,7 +48,10 @@ export default class NoticePage extends Mixins(PageView) {
      * @param {number} 상세 일련번호
      */
     toDetail(index: string) {
-        this.$router.push({ name: 'Notice Detail', params: { no: `${index}` } })
+        this.$router.push({
+            ...Path.NoticeDetail,
+            params: { no: `${index}` },
+        })
     }
 
     /** 더보기 */

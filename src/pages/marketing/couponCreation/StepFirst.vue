@@ -83,6 +83,7 @@
 import { Component, Mixins } from 'vue-property-decorator'
 import PageView from '@utils/mixins/PageView'
 import { MarketingModule } from '@stores/modules/marketing'
+import { Path } from '@router/routes'
 
 @Component
 export default class StepFirstPage extends Mixins(PageView) {
@@ -117,7 +118,7 @@ export default class StepFirstPage extends Mixins(PageView) {
 
     /** 사업자 정보 페이지로 이동 */
     toBusiness() {
-        this.$router.push({ name: 'Business' })
+        this.$router.push(Path.Business)
     }
 
     /* 더보기 버튼 액션 */
@@ -157,7 +158,7 @@ export default class StepFirstPage extends Mixins(PageView) {
 
             if (rspDc === '0000') {
                 // 성공
-                this.$router.push({ name: 'Marketing Coupon Creation Step 2' })
+                this.$router.push(Path.MarketingStepSecond)
             } else if (rspDc) {
                 this.openModal({ rspDc, rspDcMsg })
             }
@@ -185,7 +186,7 @@ export default class StepFirstPage extends Mixins(PageView) {
                         confirm: '변경하기',
                         cancel: '닫기',
                     },
-                    confirm: () => this.$router.push({ name: 'Business' }),
+                    confirm: () => this.$router.push(Path.Business),
                 },
                 '9999': {},
                 default: '',

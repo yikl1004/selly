@@ -22,6 +22,7 @@
 import { Component, Mixins } from 'vue-property-decorator'
 import PageView from '@utils/mixins/PageView'
 import { BoardModule } from '@stores/modules/board'
+import { Path } from '@router/routes'
 
 @Component
 export default class TermsPage extends Mixins(PageView) {
@@ -36,7 +37,10 @@ export default class TermsPage extends Mixins(PageView) {
     // 상세로 이동
     toDetail(index: number) {
         const seq = this.policyList[index].index
-        this.$router.push({ name: 'Terms Detail', params: { no: seq } })
+        this.$router.push({
+            ...Path.TermsDetail,
+            params: { no: seq },
+        })
     }
 
     // 더보기

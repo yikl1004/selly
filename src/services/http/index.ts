@@ -2,6 +2,7 @@ import axios, { AxiosAdapter, AxiosResponse } from 'axios'
 import { cacheAdapterEnhancer, throttleAdapterEnhancer } from 'axios-extensions'
 import store from '@stores/index'
 import router from '@router/index'
+import { Path } from '@router/routes'
 
 declare global {
     type HttpMethod = 'post' | 'get'
@@ -44,14 +45,14 @@ axiosInstance.interceptors.response.use(
                     confirm: '확인',
                 },
                 confirm: () => {
-                    // router.push({ name: 'Main' })
+                    // router.push(Path.Main)
                 },
             })
         }
 
         // 로그인 후 이용
         if (data.rc === '8888') {
-            router.push({ name: 'Login' })
+            router.push(Path.Login)
             // local-storage 삭제
             localStorage.removeItem('auth')
         }

@@ -22,6 +22,7 @@
 <script lang="ts">
 import { Component, Mixins } from 'vue-property-decorator'
 import PageView from '@utils/mixins/PageView'
+import { Path } from '@router/routes'
 
 /**
  * @description 페이지가 없습니다. 404
@@ -30,7 +31,7 @@ import PageView from '@utils/mixins/PageView'
 export default class NotFoundPage extends Mixins(PageView) {
     /** @Methods */
     toMain() {
-        this.$router.push({ name: 'Main' })
+        this.$router.push(Path.Main)
     }
 }
 </script>
