@@ -3,13 +3,9 @@
         <PageBody>
             <div class="page-login-wrap">
                 <LoginVisual />
-                <!-- <button
-                    type="button"
-                    class="btn-kakao-login"
-                    @click="() => login()"
-                >
+                <button type="button" class="btn-kakao-login" @click="login">
                     <span>카카오톡으로 시작</span>
-                </button> -->
+                </button>
                 <button
                     type="button"
                     class="btn-kakao-login"
