@@ -123,6 +123,11 @@ export default class SalesAndPurchasesPage extends Vue {
         this.$edkHost.openDataSync({
             orgSyncId: '',
             eventListener: event => {
+                if (event.action === 'close') {
+                    ;(document.getElementById(
+                        'em_embed',
+                    ) as HTMLDivElement).style.display = 'none'
+                }
                 console.log('EVENT', event)
             },
         })

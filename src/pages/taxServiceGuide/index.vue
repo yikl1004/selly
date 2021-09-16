@@ -43,6 +43,7 @@ export default class TaxServiceGuide extends Mixins(PageView) {
     }
 
     beforeDestroy() {
+        console.log('EDK beforeDestroybeforeDestroybeforeDestroybeforeDestroy')
         const target = document.querySelector('#em_embed') as HTMLDivElement
         if (target) {
             target.style.display = 'none'
