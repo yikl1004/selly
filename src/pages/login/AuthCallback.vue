@@ -7,6 +7,7 @@ import { Component, Vue, Watch } from 'vue-property-decorator'
 import axios from 'axios'
 import { AuthModule } from '@stores/modules/auth'
 import type { LoginInfo } from '@stores/modules/auth'
+import { Path } from '@router/routes'
 
 @Component
 export default class AuthCallbakPage extends Vue {
@@ -29,15 +30,15 @@ export default class AuthCallbakPage extends Vue {
         switch (value?.rspDc) {
             // 최초 회원가입, 사업자확인으로 이동(가입 절차)
             case '01':
-                this.$router.push({ name: 'Join', params: { step: '1' } })
+                this.$router.push({ ...Path.Join, params: { step: '1' } })
                 break
             // 기존가입자: 메인으로 이동
             case '02':
-                this.$router.push({ name: 'Main' })
+                this.$router.push(Path.Main)
                 break
             // 가입불가 대상
             case '03':
-                this.$router.push({ name: 'Join', params: { step: '-1' } })
+                this.$router.push({ ...Path.Join, params: { step: '-1' } })
                 break
             default:
                 alert('rspDc 가 null 입니다.')
@@ -83,7 +84,7 @@ export default class AuthCallbakPage extends Vue {
                 this.$modal.open({
                     message: '잘못 접근 했습니다.\n로그인으로 이동합니다.',
                     confirm: () => {
-                        this.$router.push({ name: 'Login' })
+                        this.$router.push(Path.Login)
                     },
                     buttonText: {
                         confirm: '확인',

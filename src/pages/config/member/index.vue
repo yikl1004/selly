@@ -59,6 +59,7 @@
 import { Component, Mixins } from 'vue-property-decorator'
 import PageView from '@utils/mixins/PageView'
 import { AuthModule } from '@stores/modules/auth'
+import { Path } from '@router/routes'
 
 @Component
 export default class MemberPage extends Mixins(PageView) {
@@ -108,12 +109,12 @@ export default class MemberPage extends Mixins(PageView) {
 
     async handleWithdrawal() {
         await AuthModule.setWithdrawal()
-        this.$router.push({ name: 'Login' })
+        this.$router.push(Path.Login)
     }
 
     toWithdrawal() {
         if (this.beforeCheck) {
-            this.$router.push({ name: 'Withdrawal' })
+            this.$router.push(Path.Withdrawal)
         } else {
             this.$modal.open({
                 message: 'Selly 회원을 탈퇴하시겠습니까?',

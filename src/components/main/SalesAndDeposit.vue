@@ -2,7 +2,7 @@
     <!-- 연동안되어 있음 -->
     <Anchor
         v-if="isNoLinkage"
-        :href="{ name: 'Sales' }"
+        :href="Path.Sales"
         class="banner-box banner-user"
     >
         <div class="banner-title">
@@ -55,6 +55,7 @@ import { Component, Vue } from 'vue-property-decorator'
 import { MainModule } from '@stores/modules/main'
 import { SwiperSlide } from 'vue-awesome-swiper'
 import { IncreaseValue } from '@stores/modules/sales'
+import { Path } from '@router/routes'
 
 @Component({
     components: {
@@ -62,6 +63,10 @@ import { IncreaseValue } from '@stores/modules/sales'
     },
 })
 export default class SalesAndDeposit extends Vue {
+    get Path() {
+        return Path
+    }
+
     get salesScrappingCode() {
         return MainModule.salesScrappingCode
     }
@@ -94,7 +99,7 @@ export default class SalesAndDeposit extends Vue {
     }
 
     getLink(value: '0' | '1') {
-        return { name: value === '0' ? 'Sales' : 'Deposit' }
+        return value === '0' ? Path.Sales : Path.Deposit
     }
 
     compareBeforeDay(

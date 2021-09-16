@@ -64,6 +64,7 @@ import { AuthModule, LogoutInfo } from '@stores/modules/auth'
 import PageView from '@utils/mixins/PageView'
 import type { GnbItem } from '@stores/modules/ui'
 import axios from 'axios'
+import { Path } from '@router/routes'
 
 @Component
 export default class NavigationPage extends Mixins(PageView) {
@@ -106,7 +107,7 @@ export default class NavigationPage extends Mixins(PageView) {
             this.$modal.open({
                 buttonText: { confirm: '확인' },
                 confirm: () => {
-                    this.$router.push({ name: 'Login' })
+                    this.$router.push(Path.Login)
                 },
                 message: this.modalMessage,
             })

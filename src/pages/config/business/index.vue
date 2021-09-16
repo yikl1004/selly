@@ -67,6 +67,7 @@ import type { DropdownBoxList } from '@components/form/DropdownBox.vue'
 import { AuthModule } from '@stores/modules/auth'
 import type { Schema } from '@components/form/FormProvider.vue'
 import type { BusinessManInfoListItem, FranchiseItem } from '@services/auth'
+import { Path } from '@router/routes'
 
 @Component({
     components: { SelectStore },
@@ -124,7 +125,7 @@ export default class BusinessPage extends Mixins(PageView) {
     toFranchise(index: number) {
         const mcno = this.franchiseList[index].mcno
         this.$router.push({
-            name: 'Franchise',
+            ...Path.Franchise,
             params: { mcno },
         })
     }

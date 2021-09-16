@@ -47,6 +47,7 @@
 </template>
 
 <script lang="ts">
+import { Path } from '@router/routes'
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 
 type HeaderType = 'main' | 'sub' | 'proccess' | 'title'
@@ -102,7 +103,7 @@ export default class Header extends Vue {
     }
 
     onOpenGNB() {
-        this.$router.push({ name: 'Navigation' })
+        this.$router.push(Path.Navigation)
     }
 
     backPressed() {
@@ -126,7 +127,7 @@ export default class Header extends Vue {
                 cancel: '취소',
             },
             confirm: () => {
-                this.$router.push({ name: 'Main' })
+                this.$router.push(Path.Main)
             },
         })
     }

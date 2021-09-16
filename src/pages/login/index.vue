@@ -115,6 +115,7 @@ import PageView from '@utils/mixins/PageView'
 import LoginVisual from '@components/login/LoginVisual.vue'
 import { AuthModule } from '@stores/modules/auth'
 import type { AuthResponse } from '@services/auth'
+import { Path } from '@router/routes'
 
 /**
  * TODO: 유쇼데 로그인 버튼만들기
@@ -123,7 +124,7 @@ import type { AuthResponse } from '@services/auth'
 @Component({
     beforeRouteEnter(to, from, next) {
         const alreadyLogin = CommonModule.loginExtendInfoData?.rc === '0000'
-        next(alreadyLogin ? { name: 'Main' } : undefined)
+        next(alreadyLogin ? Path.Main : undefined)
     },
     components: {
         LoginVisual,

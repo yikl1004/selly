@@ -18,6 +18,7 @@ import { AuthModule } from '@stores/modules/auth'
 import SelectStore from '@pages/auth/SelectStore.vue'
 import UnableJoin from '@pages/auth/UnableJoin.vue'
 import type { BizInfoItem } from '@services/auth'
+import { Path } from '@router/routes'
 
 @Component({
     components: {
@@ -73,7 +74,11 @@ export default class JoinPage extends Vue {
         }
 
         methods[loginResult || 'default']({ bznavSyncToken: this.biznavToken })
-        this.$router.push({ name: 'Main' })
+        this.toMain()
+    }
+
+    toMain() {
+        this.$router.push(Path.Main)
     }
 
     /** @Lifecycle */
@@ -89,7 +94,7 @@ export default class JoinPage extends Vue {
 
     mounted() {
         if (Number.isNaN(this.step)) {
-            this.$router.push({ name: 'Main' })
+            this.toMain()
         }
 
         this.$toast.error('추천인 코드 확정 안됨')

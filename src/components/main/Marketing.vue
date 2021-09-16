@@ -3,10 +3,7 @@
         <!-- s : 마케팅 -->
         <Title title="마케팅" class="flex">
             <div class="box-right">
-                <Anchor
-                    :href="{ name: 'Marketing Coupon Creation Guide' }"
-                    class="btn-more"
-                >
+                <Anchor :href="Path.MarketingGuide" class="btn-more">
                     <span class="ir">더보기</span>
                 </Anchor>
             </div>
@@ -59,7 +56,7 @@
             <!-- 기본 마케팅 배너 -->
             <swiper-slide>
                 <Anchor
-                    :href="{ name: 'Marketing Coupon Creation Guide' }"
+                    :href="Path.MarketingGuide"
                     class="banner-box banner-marketing default"
                 >
                     <div class="banner-title">
@@ -78,7 +75,7 @@
         <!-- 마케팅 신청 하지 않은경우 -->
         <div v-else class="box-banner-marketing">
             <Anchor
-                :href="{ name: 'Marketing Coupon Creation Guide' }"
+                :href="Path.MarketingGuide"
                 class="banner-box banner-marketing default"
             >
                 <div class="banner-title">
@@ -111,6 +108,7 @@ import { SwiperSlide } from 'vue-awesome-swiper'
 import { MainModule } from '@stores/modules/main'
 import type { AuthResponse } from '@services/auth'
 import type { MarketingStatus } from '@services/marketing'
+import { Path } from '@router/routes'
 
 @Component({
     components: { SwiperSlide },
@@ -128,6 +126,10 @@ export default class Marketing extends Vue {
     /** main 스토어에 마케팅 데이터 존재 여부 (API 원본 데이터) */
     get marketingData() {
         return MainModule.marketingData
+    }
+
+    get Path() {
+        return Path
     }
 
     getMarketingStstusText(value: MarketingStatus) {

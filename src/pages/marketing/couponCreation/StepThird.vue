@@ -81,6 +81,7 @@ import CouponList from '@components/marketing/CouponList.vue'
 import type { CouponItem } from '@components/marketing/CouponList.vue'
 import type { AccordionListItem } from '@components/common/AccoItem.vue'
 import type { CouponPreviewProps } from '@components/marketing/PopupCouponPreview.vue'
+import { Path } from '@router/routes'
 
 @Component({
     components: {
@@ -234,7 +235,7 @@ export default class StepThirdPage extends Vue {
                 },
                 confirm: () => {
                     if (value.data.rspDc === '0000') {
-                        this.$router.push({ name: 'Main' })
+                        this.$router.push(Path.Main)
                     }
                 },
             })

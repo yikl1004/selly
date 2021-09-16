@@ -167,6 +167,7 @@
 import { Component, Mixins } from 'vue-property-decorator'
 import PageView from '@utils/mixins/PageView'
 import { MarketingModule } from '@stores/modules/marketing'
+import { Path } from '@router/routes'
 
 /**
  * @description
@@ -175,7 +176,7 @@ import { MarketingModule } from '@stores/modules/marketing'
 @Component
 export default class MarketingPage extends Mixins(PageView) {
     toApply() {
-        this.$router.push({ name: 'Marketing Coupon Creation Step 1' })
+        this.$router.push(Path.MarketingStepFirst)
     }
 
     /** @Lifecycle */
