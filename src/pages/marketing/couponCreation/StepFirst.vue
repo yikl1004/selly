@@ -38,11 +38,12 @@
                 <div v-if="franchiseInfo" class="box-franchisee-info">
                     <ul>
                         <li>
-                            <strong>매장 번호</strong>
+                            <strong>가맹점번호</strong>
                             <p>
                                 <span>
-                                    {{ franchiseInfo.mcNm }}
                                     {{ franchiseInfo.mcno }}
+                                    -
+                                    {{ franchiseInfo.mcNm }}
                                 </span>
                             </p>
                         </li>
@@ -51,7 +52,7 @@
                             <p>
                                 <span>{{ franchiseInfo.mcPsno }}</span>
                                 <span>
-                                    {{ franchiseInfo.pnadd }}<br />
+                                    {{ franchiseInfo.pnadd }}
                                     {{ franchiseInfo.bpsnoAdd }}
                                 </span>
                             </p>

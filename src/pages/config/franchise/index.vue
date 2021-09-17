@@ -4,7 +4,7 @@
         <PageBody class="floating">
             <div v-if="!!franchiseDetail" class="content franchisee-info-wrap">
                 <div class="franchisee-info">
-                    <p>가맹점 번호 {{ $route.params.mcno }}</p>
+                    <p>가맹점번호 {{ $route.params.mcno }}</p>
                     <strong>{{ franchiseDetail.mcNm }}</strong>
                 </div>
                 <div class="franchisee-modify-box">
@@ -35,7 +35,7 @@
             </div>
             <portal to="floating">
                 <BasicButton size="large" @click="updateDetail">
-                    확인
+                    변경하기
                 </BasicButton>
             </portal>
         </PageBody>
@@ -82,7 +82,7 @@ export default class FranchisePage extends Vue {
         { text: '롯데카드에 등록된 가맹점 정보가 변경됩니다.' },
         {
             text:
-                '가맹점 정보를 변경 시 마케팅 대상 고객 수집에 시간이 소요되며, 변경 후 당일에는 마케팅 신청이 안됩니다.',
+                '정보를 변경 시 쿠폰만들기 대상 고객 수집에 시간이 소요되며, 변경 후 3일 후부터 쿠폰만들기 신청이 가능합니다.',
         },
     ]
 

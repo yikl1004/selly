@@ -121,6 +121,8 @@
                     </div>
                 </div>
 
+                <BulletList :list="infoCoupon" />
+
                 <div class="promotion-sys-wrap">
                     <Title title="홍보 방식" type="h3" />
                     <div class="promotion-box">
@@ -244,6 +246,12 @@ export default class StepSecondPage extends Vue {
         {
             text:
                 '롯데 신용카드 결제에 한하여, 행사 기간 중 1인당 1회만 적용됩니다.',
+        },
+    ]
+
+    private infoCoupon = [
+        {
+            text: '행사 비용은 가맹점 대금에서 차감됩니다.',
         },
     ]
     private infoResult = [

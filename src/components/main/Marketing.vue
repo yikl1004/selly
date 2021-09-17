@@ -1,7 +1,7 @@
 <template>
     <div v-if="isMarketing">
         <!-- s : 마케팅 -->
-        <Title title="마케팅" class="flex">
+        <Title title="쿠폰 만들기" class="flex">
             <div class="box-right">
                 <Anchor :href="Path.MarketingGuide" class="btn-more">
                     <span class="ir">더보기</span>
