@@ -233,6 +233,10 @@ export default class SalesHistory extends Vue {
         await SalesModule.getSalesDaily()
         this.fillData()
     }
+
+    beforeDestroy() {
+        SalesModule.changeStatus('daily')
+    }
     /** @Methods */
 
     fillData() {

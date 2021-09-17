@@ -84,13 +84,13 @@
                     >
                         <span>즉시대출 - 카드: N, 준회원</span>
                     </button>
-                    <!-- <button
-                    type="button"
-                    class="btn-kakao-login"
-                    @click="clientLogin"
-                >
-                    <span> 담당자 로그인용 </span>
-                </button> -->
+                    <button
+                        type="button"
+                        class="btn-kakao-login"
+                        @click="clientLogin"
+                    >
+                        <span> 담당자 로그인용 </span>
+                    </button>
                     <button
                         type="button"
                         class="btn-kakao-login"
@@ -201,13 +201,12 @@ export default class LoginPage extends Mixins(PageView) {
         ]
         this.login(ciList[seq])
     }
-    // 현업담당자 CI
-    // clientLogin() {
-    //     console.log('담당자 CI')
-    //     this.login(
-    //         // 'DT9gAb26j9GdVAGYi8hucNE3U8+hudoZYPTGXkGDW5ZHe8g6GwlliLwE1i5AwbJ54DVC73c7YZp2Wxp0aAhYwg==',
-    //     )
-    // }
+    // 담당자 CI
+    clientLogin() {
+        this.login(
+            'DT9gAb26j9GdVAGYi8hucNE3U8+hudoZYPTGXkGDW5ZHe8g6GwIIiLwE1i5AwbJ54DVC73c7YZp2Wxp0aAhYwg==',
+        )
+    }
     // 마케팅 스템 통과 가능 CI
     marketingLogin() {
         this.login(

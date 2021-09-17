@@ -16,7 +16,7 @@
                     원
                 </em>
             </li>
-            <li v-if="list.cashReceipt">
+            <li v-if="list.cashReceipt !== '0'">
                 <span>현금영수증</span>
                 <em class="price">
                     <strong>{{ list.cashReceipt }}</strong>
