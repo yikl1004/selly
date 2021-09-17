@@ -233,12 +233,12 @@ export default class SalesHistory extends Vue {
         await SalesModule.getSalesDaily()
         this.fillData()
     }
-
+    // SalesModule 데일리 초기화
     beforeDestroy() {
         SalesModule.changeStatus('daily')
     }
     /** @Methods */
-
+    //차트 데이터
     fillData() {
         this.chartOption = {
             scales: {

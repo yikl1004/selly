@@ -96,8 +96,13 @@ export default class DepositHistory extends Vue {
 
         this.$edkHost.openDataSync({
             orgSyncId: auth?.bzNavToken || '',
-            eventListener(event) {
-                console.log(event)
+            eventListener: event => {
+                if (event.action === 'close') {
+                    ;(document.getElementById(
+                        'em_embed',
+                    ) as HTMLDivElement).style.display = 'none'
+                }
+                console.log('EVENT', event)
             },
         })
     }
