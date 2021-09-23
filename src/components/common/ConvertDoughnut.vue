@@ -25,76 +25,75 @@ export default class ConvertChart extends Vue {
     readonly labels!: Array<string>
     @Prop({ default: [] })
     readonly datas!: Array<number>
+    @Prop({ default: false })
+    readonly chartMax!: boolean
 
-    private datacollection = {}
+    private datacollection: Chart.ChartData = {}
     private chartOption: Chart.ChartOptions = {}
+    private palette = [
+        '#6c625a',
+        '#de2f13',
+        '#ba5903',
+        '#8e7035',
+        '#198571',
+        '#413a2f',
+        '#00648c',
+    ]
+    //접근성 패턴
+    //'plus' | 'cross' | 'dash' | 'cross-dash' | 'dot' | 'dot-dash' | 'disc' | 'ring' | 'line' | 'line-vertical' | 'weave' | 'zigzag' | 'zigzag-vertical' | 'diagonal' | 'diagonal-right-left' | 'square' | 'box' | 'triangle' | 'triangle-inverted' | 'diamond' | 'diamond-box',
+    private backgroundPalette = [
+        '#6c625a',
+        patternnomaly.draw('diagonal-right-left', '#de2f13', 'white', 5),
+        patternnomaly.draw('dot', '#ba5903', 'black', 10),
+        patternnomaly.draw('square', '#8e7035', '#6c625a', 10),
+        patternnomaly.draw('zigzag', '#198571', 'black', 10),
+        patternnomaly.draw('dot', '#413a2f', 'white'),
+        patternnomaly.draw('diamond-box', '#00648c', 'white'),
+    ]
     mounted() {
         Chart.plugins.register(datalabels)
-
         this.fillData()
     }
+    borderColor() {
+        // this.chartMax
+        // this.datas.indexOf(Math.max(...this.datas))
+        this.palette.map(obj => {
+            console.log(obj)
+            return '#ffffff'
+        })
+    }
     fillData() {
+        // console.log(this.datas.indexOf(Math.max(...this.datas)))
+        this.borderColor()
+        console.log(this.chartMax)
         this.chartOption = {
-            // scales: {
-            //     yAxes: [
-            //         {
-            //             ticks: {
-            //                 callback(value, index, values) {
-            //                     switch (index) {
-            //                         case values.length - 1:
-            //                             return '만원'
-            //                         default:
-            //                             return value
-            //                     }
-            //                 },
-            //             },
-            //         },
-            //     ],
-            // },
-            responsive: true,
-            animation: {
-                onComplete(animation) {
-                    console.log('animation onComplete')
-                    console.log(this)
-                    console.log(animation.chart.ctx)
+            layout: {
+                padding: {
+                    top: 15,
                 },
             },
+            responsive: true,
             maintainAspectRatio: true,
             legend: {
                 position: 'bottom',
                 align: 'center',
+                labels: {
+                    padding: 20,
+                },
             },
             tooltips: {
-                enabled: true,
-                position: 'average',
+                enabled: false,
             },
             plugins: {
-                legend: {
-                    position: 'bottom',
-                    align: 'end',
-                },
-                title: {
-                    display: true,
-                },
                 datalabels: {
-                    // color: 'red',
-                    color: [
-                        '#6c625a',
-                        '#de2f13',
-                        '#6c625a',
-                        '#6c625a',
-                        '#6c625a',
-                    ],
+                    color: this.palette,
                     font: {
                         weight: 'bold',
                     },
                     anchor: 'end',
-                    // clamp: true,
                     align: 'end',
                     formatter(val /* cont */) {
                         return val + '%'
-                        // console.log(val)
-                        // console.log(cont)
                     },
                 },
             },
@@ -103,25 +102,17 @@ export default class ConvertChart extends Vue {
             datasets: [
                 {
                     data: this.datas,
-                    //'plus' | 'cross' | 'dash' | 'cross-dash' | 'dot' | 'dot-dash' | 'disc' | 'ring' | 'line' | 'line-vertical' | 'weave' | 'zigzag' | 'zigzag-vertical' | 'diagonal' | 'diagonal-right-left' | 'square' | 'box' | 'triangle' | 'triangle-inverted' | 'diamond' | 'diamond-box',
-                    backgroundColor: [
-                        '#6c625a',
-                        patternnomaly.draw(
-                            'diagonal-right-left',
-                            '#de2f13',
-                            'white',
-                            5,
-                        ),
+                    backgroundColor: this.backgroundPalette,
+                    borderColor: [
+                        '#ffffff',
+                        '#ffffff',
                         patternnomaly.draw('dot', '#ba5903', 'black', 10),
-                        patternnomaly.draw('square', '#8e7035', '#6c625a', 10),
-                        patternnomaly.draw('zigzag', '#198571', 'black', 10),
-                        patternnomaly.draw('dot', '#413a2f', 'white'),
-                        patternnomaly.draw('diamond-box', '#00648c', 'white'),
+                        '#ffffff',
+                        '#ffffff',
+                        '#ffffff',
+                        '#ffffff',
                     ],
-                    // ChartDataLabels: {},
-                    // borderColor: ['#00648c'],
-                    // borderWidth: 10,
-                    // borderColor: 'black'
+                    borderWidth: [2, 2, 10, 2, 2, 2],
                 },
             ],
             labels: this.labels,
