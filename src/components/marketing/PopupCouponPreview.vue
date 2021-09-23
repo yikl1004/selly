@@ -36,8 +36,8 @@
                             </strong>
                         </p>
                         <p>
-                            김로카님 주변1km에 있는 {{ franchiseName }}에서
-                            결제일 할인을 받아보세요.
+                            김로카님 주변 {{ franchiseName }}에서 결제일 할인을
+                            받아보세요.
                         </p>
                     </div>
                     <div class="img">

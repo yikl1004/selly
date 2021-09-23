@@ -2,53 +2,33 @@
     <Page floating>
         <Header type="sub" title="신청내역" />
         <PageBody class="floating">
-            <div class="content">
+            <div v-if="!!beforeApplyData" class="content">
                 <!--[D] 접수완료 ~  진행예정 케이스 -->
                 <div>
-                    <Title title="가맹점 이름 노출" class="franchisee-name">
-                        <p>서울시 종로구 새문안로 12길 2층<br />02-1234-5678</p>
+                    <Title
+                        :title="beforeApplyData.mcNm"
+                        class="franchisee-name"
+                    >
+                        <p>
+                            {{ beforeApplyData.pnadd }}
+                            {{ beforeApplyData.bpsnoAdd }}
+                            <br />
+                            {{ beforeApplyData.mcTlno }}
+                        </p>
                     </Title>
 
-                    <div class="apply-step-wrap">
-                        <ul>
-                            <li class="type01 active">
-                                <i class="ico">
-                                    <span>1</span>
-                                </i>
-                                <span>접수완료</span>
-                            </li>
-                            <li class="type02">
-                                <i class="ico">
-                                    <span>2</span>
-                                </i>
-                                <span>준비중</span>
-                            </li>
-                            <li class="type03">
-                                <i class="ico">
-                                    <span>3</span>
-                                </i>
-                                <span>진행예정</span>
-                                <span class="day">(D-3)</span
-                                ><!--[D] 진행예정 케이스에만 노출-->
-                            </li>
-                            <li class="type04">
-                                <i class="ico">
-                                    <span>4</span>
-                                </i>
-                                <span>진행</span>
-                            </li>
-                        </ul>
-                    </div>
+                    <ApplyDetailStep :active="activeStep" />
 
-                    <!--[D] 반려-->
-                    <div class="box-reject">
+                    <!--[D] 재검토: 반려-->
+                    <!-- <div class="box-reject">
                         <strong>재검토 필요</strong>
                         <p>사유 : 반려사유는 다음과 같습니다.</p>
-                    </div>
+                    </div> -->
 
                     <InfoList :list="applyDetail" />
 
                     <Title title="예상 결과" type="h3" />
+                    <!-- TODO: API data 없음 -->
                     <ApplyResult type="complete" />
 
                     <BulletList :list="infoResult" />
@@ -108,16 +88,6 @@
                     <Title title="주간별 이용 고객" type="h4" />
                     <div class="chart-box active">
                         <!--[D] active 클래스 추가시 테이블 노출-->
-                        <!-- <div
-                            style="
-                                height: 200px;
-                                background-color: #eee;
-                                text-align: center;
-                                line-height: 200px;
-                            "
-                        >
-                            차트영역
-                        </div> -->
                         <ConvertBar :datas="weekUser" :labels="weekPeriod" />
                         <div class="tbl-chart">
                             <div class="table-box">
@@ -153,16 +123,6 @@
 
                     <Title title="주간별 이용 매출" type="h4" />
                     <div class="chart-box">
-                        <!-- <div
-                            style="
-                                height: 200px;
-                                background-color: #eee;
-                                text-align: center;
-                                line-height: 200px;
-                            "
-                        >
-                            차트영역
-                        </div> -->
                         <ConvertBar
                             :datas="weekUseSale"
                             :labels="weekUsePeriod"
@@ -212,17 +172,6 @@
                                 </i>
                             </strong>
                         </div>
-
-                        <!-- <div
-                            style="
-                                height: 200px;
-                                background-color: #eee;
-                                text-align: center;
-                                line-height: 200px;
-                            "
-                        >
-                            차트영역
-                        </div> -->
                         <ConvertBar :datas="eventSale" :labels="eventLabel" />
                         <div class="tbl-chart">
                             <div class="table-box">
@@ -265,16 +214,6 @@
 
                     <Title title="성별 이용 비율" type="h4" />
                     <div class="chart-box">
-                        <!-- <div
-                            style="
-                                height: 200px;
-                                background-color: #eee;
-                                text-align: center;
-                                line-height: 200px;
-                            "
-                        >
-                            차트영역
-                        </div> -->
                         <ConvertPie :datas="genderUser" :labels="gender" />
                         <div class="tbl-chart">
                             <div class="table-box">
@@ -387,24 +326,85 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import ApplyResult from '@components/marketing/ApplyResult.vue'
+import ApplyDetailStep from '@components/marketing/ApplyDetailStep.vue'
 import BoxGray from '@components/marketing/BoxGray.vue'
-import { AccordionListItem } from '@components/common/AccoItem.vue'
 import ConvertBar from '@components/common/ConvertBar.vue'
 import ConvertPie from '@components/common/ConvertPie.vue'
+import { MktStatementModule } from '@stores/modules/mktStatement'
+import { Path } from '@router/routes'
+import type { AccordionListItem } from '@components/common/AccoItem.vue'
+import type { MarketingStatus } from '@services/marketing'
+
 @Component({
-    components: { ApplyResult, BoxGray, ConvertBar, ConvertPie },
+    beforeRouteEnter(to, from, next) {
+        next(vm => {
+            const mrktCtsSeq = to.query.mrktCtsSeq
+            const mrktStc = to.query.mrktStc
+            if (!mrktCtsSeq || !mrktStc) {
+                vm.$modal.open({
+                    message: '잘못된 접근입니다.',
+                    buttonText: {
+                        confirm: '확인',
+                    },
+                    confirm: () => {
+                        vm.$router.replace(Path.CouponHistory)
+                    },
+                })
+            }
+        })
+    },
+    components: {
+        ApplyResult,
+        BoxGray,
+        ConvertBar,
+        ConvertPie,
+        ApplyDetailStep,
+    },
 })
 export default class MarketingDetail extends Vue {
+    /** 마케팅 신청내역 상세 - 케이스 별 분기 */
+    get dataByCase() {
+        if (this.caseCheck(['01', '02', '03', '08'])) {
+            return MktStatementModule.beforeApplyData
+        } else if (this.caseCheck(['04'])) {
+            return MktStatementModule.applyingData
+        } else if (this.caseCheck(['05'])) {
+            return MktStatementModule.endApplyData
+        }
+        return null
+    }
+
+    /** 마케팅 신청내역 상세 - 마케팅 진행 전(01, 02, 03, 08) */
+    get beforeApplyData() {
+        return MktStatementModule.beforeApplyData
+    }
+
+    /** 현재 활성화 될 스텝 */
+    get activeStep() {
+        const marketingStatusCode = this.beforeApplyData?.mrktStc
+        const cases: Record<MarketingStatus, number> = {
+            '01': 1,
+            '02': 2,
+            '03': 3,
+            '04': 4,
+            '05': 0,
+            '08': 0,
+            '09': 0,
+        }
+        return marketingStatusCode ? cases[marketingStatusCode] : 0
+    }
+
+    /** 행사 내용 리스트 */
+    private applyDetail: { title: string; desc: string }[] = []
+
+    /** 예상결과 안내 리스트 */
     private infoResult = [
         {
             text:
                 '롯데카드 결제 기준의 예상 산출이므로 실제 매출액, 고객수와 다를 수 있습니다.',
         },
-        {
-            text:
-                '행사 비용(할인혜택)은 <strong>이층집 강남점</strong> 가맹점 대금에서 차감되는 금액으로, 방문고객 수와 고객의 결제금액에 따라 변경될 수 있습니다.',
-        },
     ]
+
     private infoAnalysis = [
         {
             text: '방문고객 수, 고객의 결제금액에 따라 반영되는 금액입니다.',
@@ -414,26 +414,6 @@ export default class MarketingDetail extends Vue {
         {
             text:
                 '행사 대상자 중 푸시메시지 수신 동의를 한 고객에게 추가 홍보를 무료로 진행했습니다.',
-        },
-    ]
-
-    private applyDetail = [
-        {
-            title: '행사 내용',
-            desc: '[첫 고객 만들기] 5%할인 <br /> 2,000명',
-        },
-        {
-            title: '행사 기간',
-            desc: '21. 07. 01 ~ 21. 07. 30',
-        },
-        {
-            title: '홍보 방식',
-            desc:
-                '케이스 확인 필요. 롯데카드 앱 푸시메시지, 롯데카드 앱에 쿠폰 노출 ',
-        },
-        {
-            title: '추천인코드',
-            desc: 'AbcdE12345 ',
         },
     ]
 
@@ -483,6 +463,66 @@ export default class MarketingDetail extends Vue {
     private genderUser = [40, 60]
     private ageGroups = ['10대이하', '20대', '30대', '40대', '50대', '60대이상']
     private ageGroupsUser = [140, 150, 160, 100, 30, 30]
+
+    async dispatch() {
+        const mrktCtsSeq = this.$route.query.mrktCtsSeq as string
+        const mrktStc = this.$route.query.mrktStc as string
+        const params = { mrktCtsSeq, mrktStc }
+
+        if (this.caseCheck(['01', '02', '03', '08'])) {
+            await MktStatementModule.getBeforeApply(params)
+        } else if (this.caseCheck(['04'])) {
+            await MktStatementModule.getApplying(params)
+        } else if (this.caseCheck(['05'])) {
+            await MktStatementModule.getEndApply(params)
+        }
+    }
+
+    caseCheck(arg: string[]) {
+        const mrktStc = this.$route.query.mrktStc as string
+        return arg.some(item => item === mrktStc)
+    }
+
+    /** 초기값 세팅 */
+    initialize() {
+        const originData = this.beforeApplyData
+        this.applyDetail = [
+            {
+                title: '행사 내용',
+                desc: `[${originData?.ggDNm}] ${
+                    originData?.mrktBnfCn
+                } <br /> ${this._.toNumber(
+                    originData?.trgOjCstt,
+                ).toLocaleString()}명`,
+            },
+            {
+                title: '행사 기간',
+                desc: `${this.$dayjs(originData?.evSdt).format(
+                    'YY. MM. DD',
+                )} ~ ${this.$dayjs(originData?.evEdt).format('YY. MM. DD')}`,
+            },
+            {
+                title: '홍보 방식',
+                desc: '롯데카드 앱 푸시메시지,<br />롯데카드 앱에 쿠폰 노출',
+            },
+        ]
+
+        if (originData?.refC) {
+            this.applyDetail.push({
+                title: '추천인코드',
+                desc: `${originData.refC}`,
+            })
+        }
+
+        this.infoResult.push({
+            text: `행사 비용(할인혜택)은 <strong>${originData?.mcNm}</strong> 가맹점 대금에서 차감되는 금액으로, 방문고객 수와 고객의 결제금액에 따라 변경될 수 있습니다.`,
+        })
+    }
+
+    async mounted() {
+        await this.dispatch()
+        this.initialize()
+    }
 }
 </script>
 

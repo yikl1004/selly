@@ -181,6 +181,7 @@ export default class SalesHistory extends Vue {
         }
         return cases[this.status]
     }
+
     /**
      * 사업자 번호 변경 시
      * @param {string} businessNumber 사업자 번호
@@ -198,6 +199,7 @@ export default class SalesHistory extends Vue {
         const dispatch = this.dispatch(tabStatus)
         await dispatch({ bzno: this.businessNumber })
         SalesModule.changeStatus(tabStatus)
+        value === 2 ? this.changeDayOfWeek(this.salesBaseDatePerDay) : null
         this.fillData()
     }
 
@@ -231,8 +233,12 @@ export default class SalesHistory extends Vue {
         await SalesModule.getSalesDaily()
         this.fillData()
     }
+    // SalesModule 데일리 초기화
+    beforeDestroy() {
+        SalesModule.changeStatus('daily')
+    }
     /** @Methods */
-
+    //차트 데이터
     fillData() {
         this.chartOption = {
             scales: {

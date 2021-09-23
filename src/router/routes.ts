@@ -1,16 +1,19 @@
 import type { Location, RouteConfig } from 'vue-router'
 
+export type RouteMeta = {
+    floating?: boolean
+}
+
 /**
  * @description vue route 파일 (페이지 관리)
  * @notice 범례 - 중첩으로 표기 될 수 있습니다.
  *      - @complete 완료
  *      - @working 작업중
  *      - @needFix 수정필요(기획 변경, 디자인 변경 등)
+ * @etc 금융 관련 메뉴 전부가 개발범위에서 탈락하여 router에서 제거 하고 따로 파일을 만들어 뒀습니다.
+ * @path 금융 라우터 src/router/financeRoutes.ts
+ *
  */
-
-export type RouteMeta = {
-    floating?: boolean
-}
 
 const loading = {
     template: `<Loading />`,
@@ -39,6 +42,7 @@ type PathNames =
     | 'SalesLinkage'
     | 'Sales'
     | 'Deposit'
+    | 'CouponHistory'
 export const Path: Record<PathNames, Location> = {
     Navigation: { name: 'Navigation' },
     Main: { name: 'Main' },
@@ -50,6 +54,7 @@ export const Path: Record<PathNames, Location> = {
     MarketingStepFirst: { name: 'Marketing Coupon Creation Step 1' },
     MarketingStepSecond: { name: 'Marketing Coupon Creation Step 2' },
     MarketingStepThird: { name: 'Marketing Coupon Creation Step 3' },
+    CouponHistory: { name: 'CouponHistory' },
     Config: { name: 'Config' },
     Withdrawal: { name: 'Withdrawal' },
     Business: { name: 'Business' },
@@ -114,7 +119,7 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
         path: '/',
         component: createAsyncPage(import('@layout/Layout.vue')),
         children: [
-            /** Global Navigation */
+            /** GNB: Global Navigation Bar */
             {
                 /** @complete */
                 path: '/navigation',
@@ -138,7 +143,7 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
                 component: createAsyncPage(import('@pages/login/index.vue')),
             },
 
-            // 로그인 콜백
+            // 로그인 콜백(카카오 로그인)
             {
                 /** @complete */
                 path: '/authCallback',
@@ -161,177 +166,16 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
                 },
             },
 
-            /**
-             * "로그인이 필요합니다" 페이지
-             * NOTICE: 2021-06-28 기획과 협의 후 이 페이지는 사용하지 않는 것으로 정리
-             * 404페이지로 401,403,404 등 400번대 에러를 하나로 처리
-             */
-            // {
-            //     path: '/needLogin',
-            //     name: 'NeedLogin',
-            //     component: createAsyncPage(import(@pages/needLogin/index.vue)),
-            //     meta: {
-            //         layout: 'none',
-            //     },
-            // },
-
-            // 금융페이지
-            // 금융메인 / 금융 안내페이지
-            {
-                path: '/finance',
-                name: 'Finance',
-                component: createAsyncPage(import('@pages/finance/index.vue')),
-                children: [],
-            },
-            //금융인트로_비즈론
-            {
-                path: '/finance/introbiz',
-                name: 'biz loan intro',
-                component: createAsyncPage(import('@pages/finance/intro/BizLoan.vue')),
-            },
-            //금융인트로_카드론
-            {
-                path: '/finance/introcard',
-                name: 'card loan intro',
-                component: createAsyncPage(import('@pages/finance/intro/CardLoan.vue')),
-            },
-            //금융인트로_사업자
-            {
-                path: '/finance/introbusiness',
-                name: 'business loan intro',
-                component: createAsyncPage(import('@pages/finance/intro/BusinessLoan.vue')),
-            },
-            //금융인트로_신용
-            {
-                path: '/finance/introcredit',
-                name: 'credit loan intro',
-                component: createAsyncPage(import('@pages/finance/intro/CreditLoan.vue')),
-            },
-            //신용카드 인증
-            {
-                path: '/finance/creditcardauth',
-                name: 'creditcardauth',
-                component: createAsyncPage(import('@pages/finance/apply/CreditCardAuth.vue')),
-            },
-            //본인 인증
-            {
-                path: '/finance/selfauth',
-                name: 'self auth',
-                component: createAsyncPage(import('@pages/finance/apply/SelfAuth.vue')),
-            },
-            //대출약관동의
-            {
-                path: '/finance/agreeterms',
-                name: 'self auth',
-                component: createAsyncPage(import('@pages/finance/apply/AgreeLoanTerms.vue')),
-            },
-            //금소법 적합성 확인
-            {
-                path: '/finance/loancompatibility',
-                name: 'loan compatibility',
-                component: createAsyncPage(import('@pages/finance/apply/LoanCompatibility.vue')),
-            },
-            //신청 스텝_가맹점 선택
-            {
-                path: '/finance/applystep1',
-                name: 'step1',
-                component: createAsyncPage(import('@pages/finance/apply/ApplyStep1.vue')),
-            },
-            //신청 스텝_신청서
-            {
-                path: '/finance/applystep2',
-                name: 'step2',
-                component: createAsyncPage(import('@pages/finance/apply/ApplyStep2.vue')),
-            },
-            //신청 스텝_신청정보
-            {
-                path: '/finance/applystep3',
-                name: 'step3',
-                component: createAsyncPage(import('@pages/finance/apply/ApplyStep3.vue')),
-            },
-            //신청 스텝_본인인증
-            {
-                path: '/finance/applystep4',
-                name: 'step4',
-                component: createAsyncPage(import('@pages/finance/apply/ApplyStep4.vue')),
-            },
-            //신청 스텝_부가정보
-            {
-                path: '/finance/applystep5',
-                name: 'step5',
-                component: createAsyncPage(import('@pages/finance/apply/ApplyStep5.vue')),
-            },
-            //신청완료
-            {
-                path: '/finance/applycomplete',
-                name: 'Apply Complete',
-                component: createAsyncPage(import('@pages/finance/apply/ApplyComplite.vue')),
-            },
-
-            //대출신청불가
-            {
-                path: '/finance/applyfail1',
-                name: 'fail',
-                component: createAsyncPage(import('@pages/finance/apply/ApplyFail.vue')),
-            },
-            //본인인증 실패
-            {
-                path: '/finance/applyfail2',
-                name: 'fail',
-                component: createAsyncPage(import('@pages/finance/apply/ApplyFail2.vue')),
-            },
-            //현재 신청중인 대출있음
-            {
-                path: '/finance/applyfail3',
-                name: 'fail',
-                component: createAsyncPage(import('@pages/finance/apply/ApplyFail3.vue')),
-            },
-            //현재 가능한도 없음
-            {
-                path: '/finance/applyfail4',
-                name: 'fail',
-                component: createAsyncPage(import('@pages/finance/apply/ApplyFail4.vue')),
-            },
-            //ars인증
-            {
-                path: '/finance/authars',
-                name: 'ars',
-                component: createAsyncPage(import('@pages/finance/apply/AuthArs.vue')),
-            },
-            //이용거절
-            {
-                path: '/finance/refusal',
-                name: 'ars',
-                component: createAsyncPage(import('@pages/finance/UseRefusal.vue')),
-            },
-            //대출내역페이지
-            {
-                path: '/finance/loanhistory',
-                name: 'Loan History',
-                component: createAsyncPage(import('@pages/finance/LoanHistory.vue')),
-                meta: {
-                    layout: 'default',
-                },
-            },
-            //대출내역 상세페이지
-            {
-                path: '/finance/loandetail',
-                name: 'Loan History Detail',
-                component: createAsyncPage(import('@pages/finance/LoanHistoryDetail.vue')),
-                meta: {
-                    layout: 'default',
-                },
-            },
-
             // 세무서비스
             {
                 /** @complete */
                 path: '/taxServiceGuide',
-                name: 'Tax Service Guide',
+                name: Path.TaxServiceGuide.name,
                 component: createAsyncPage(import('@pages/taxServiceGuide/index.vue')),
                 meta: {},
             },
 
+            // s: 마케팅
             // 쿠폰만들기 - 안내페이지
             {
                 /** @complete */
@@ -376,16 +220,16 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
                 },
             },
 
-            //신청내역
+            // 신청내역
             {
-                path: '/marketing/application',
-                name: 'CouponHistory',
+                path: '/marketing/applicationDetail',
+                name: Path.CouponHistory.name,
                 component: createAsyncPage(import('@pages/marketing/history/index.vue')),
                 meta: {
                     floating: true,
                 },
             },
-            //신청내역_상세
+            // 신청내역_상세
             {
                 path: '/marketing/detail',
                 name: 'CouponDetail',
@@ -394,7 +238,7 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
                     floating: true,
                 },
             },
-            //내 주변 매출
+            // 내 주변 매출
             {
                 path: '/marketing/around',
                 name: 'AroundSales',
@@ -405,7 +249,7 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
             },
             // e : 마케팅
 
-            // 설정
+            // s: 설정
             {
                 /** @complete */
                 path: '/config/member',
@@ -489,14 +333,18 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
                 name: Path.TermsDetail.name,
                 component: createAsyncPage(import('@pages/config/terms/detail/index.vue')),
             },
-            // 매출/입금 연동 페이지
+            // e: 설정
+
+            // s: 매출/입금
             {
+                // 매출/입금 연동 페이지
                 /** @complete */
                 path: '/salesAndPurchases',
                 name: Path.SalesLinkage.name,
                 component: createAsyncPage(import('@pages/salesAndPurchases/index.vue')),
                 children: [
                     {
+                        // 매출 내역
                         /** @complete */
                         path: '/salesAndPurchases/sales',
                         name: Path.Sales.name,
@@ -511,6 +359,7 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
                     },
                 ],
             },
+            // e: 매출/입금
         ],
     },
 ]

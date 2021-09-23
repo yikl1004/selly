@@ -123,6 +123,7 @@ export default class Board extends VuexModule {
         const nextPage = `${toNumber(policyPageNo) + (params?.more ? 1 : 0)}`
         const { data } = await BoardService.getPolicyList({
             pageNo: nextPage,
+            comGrpC: 'AGR_COM',
         })
 
         return {

@@ -124,9 +124,18 @@ export default class NavigationPage extends Mixins(PageView) {
         this.activeIndex = index
     }
 
-    async logout() {
-        await this.$kakaoSdk.logout()
-        await AuthModule.getLogoutInfo()
+    logout() {
+        this.$modal.open({
+            message: '정상 로그아웃 하시겠습니까?',
+            buttonText: {
+                confirm: '확인',
+                cancel: '취소',
+            },
+            confirm: async () => {
+                await this.$kakaoSdk.logout()
+                await AuthModule.getLogoutInfo()
+            },
+        })
     }
 
     /** @Lifecycle */

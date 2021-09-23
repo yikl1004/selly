@@ -15,7 +15,7 @@
                     <span>{{ item.title }}</span>
                 </div>
                 <div class="info-desc">
-                    <span>{{ item.desc }}</span>
+                    <span v-html="item.desc"></span>
                 </div>
             </div>
             <!--[D] case -->

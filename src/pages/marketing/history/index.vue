@@ -5,121 +5,66 @@
         <PageBody class="floating">
             <div class="content">
                 <!--[D] 신청내역 없을 시 no-result-wrap 추가 -->
-                <FormProvider
-                    :schema="data"
-                    @change="formChange"
-                    @submit="onSubmit"
-                >
-                    <template slot-scope="{ schema }">
-                        <DropdownBox
-                            id="dropdown-box01"
-                            label="매장 선택"
-                            :hidden-label="true"
-                            :list="dropdownBoxList"
-                            :default-value="schema.dropdownBox"
-                            :disabled="false"
-                        />
-                    </template>
-                </FormProvider>
+                <DropdownBox
+                    id="dropdown-box01"
+                    label="매장 선택"
+                    :hidden-label="true"
+                    :list="franchiseSelectList"
+                    :default-value="''"
+                    :disabled="false"
+                    @select="onSelectFranchise"
+                />
 
                 <!-- s: 신청내역 없음-->
-                <CautionBox description="신청내역이 없습니다." />
-                <MarketingBanner />
-                <!-- e: 신청내역 없음-->
+                <template v-if="!statementListData.length">
+                    <CautionBox description="신청내역이 없습니다." />
+                    <MarketingBanner />
+                </template>
 
-                <div class="coupon-list">
-                    <!--
-                            type01 : 접수완료
-                            type02 : 준비중
-                            type03 : 진행예정
-                            type04 : 진행중
-                            type05 : 종료
-                            type06 : 재검토 필요
-                        -->
-                    <Anchor class="coupon-box type01">
+                <div v-else class="coupon-list">
+                    <Anchor
+                        v-for="(item, index) in statementListData"
+                        :key="`coupon-box-${index}`"
+                        class="coupon-box"
+                        :class="getTypeStyleClass(item.mrktStc)"
+                        :href="{
+                            name: 'CouponDetail',
+                            query: {
+                                mrktCtsSeq: item.mrktCtsSeq,
+                                mrktStc: item.mrktStc,
+                            },
+                        }"
+                    >
                         <div class="coupon-inner">
                             <strong class="franchisee-name">
-                                이층집 강남점 한줄말줄임처리이층집 강남점
-                                한줄말줄임처리이층집 강남점 한줄말줄임처리
+                                {{ item.mcNm }}
                             </strong>
                             <p class="coupon-name">
-                                [첫 고객 만들기] 5% 결제일 할인
+                                [{{ item.ggDNm }}] {{ item.mrktBnfCn }}
                             </p>
-                            <span class="date">2021.06.01 ~2021.06.30</span>
-                            <i class="flag">접수완료</i>
-                        </div>
-                    </Anchor>
-                    <Anchor class="coupon-box type02">
-                        <div class="coupon-inner">
-                            <strong class="franchisee-name">
-                                이층집 강남점
-                            </strong>
-                            <p class="coupon-name">
-                                [첫 고객 만들기] 5% 결제일 할인
-                            </p>
-                            <span class="date">2021.06.01 ~2021.06.30</span>
-                            <i class="flag">준비중</i>
-                        </div>
-                    </Anchor>
-
-                    <Anchor class="coupon-box type03">
-                        <div class="coupon-inner">
-                            <strong class="franchisee-name">
-                                이층집 강남점
-                            </strong>
-                            <p class="coupon-name">
-                                [첫 고객 만들기] 5% 결제일 할인
-                            </p>
-                            <span class="date">2021.06.01 ~2021.06.30</span>
-                            <i class="flag">진행예정 (D-3)</i>
-                        </div>
-                    </Anchor>
-
-                    <Anchor class="coupon-box type04">
-                        <div class="coupon-inner">
-                            <strong class="franchisee-name">
-                                이층집 강남점
-                            </strong>
-                            <p class="coupon-name">
-                                [첫 고객 만들기] 5% 결제일 할인
-                            </p>
-                            <span class="date">2021.06.01 ~2021.06.30</span>
-                            <i class="flag">진행중</i>
-                        </div>
-                    </Anchor>
-
-                    <Anchor class="coupon-box type05">
-                        <div class="coupon-inner">
-                            <strong class="franchisee-name">
-                                이층집 강남점
-                            </strong>
-                            <p class="coupon-name">
-                                [첫 고객 만들기] 5% 결제일 할인
-                            </p>
-                            <span class="date">2021.06.01 ~2021.06.30</span>
-                            <i class="flag">종료</i>
-                        </div>
-                    </Anchor>
-
-                    <Anchor class="coupon-box type06">
-                        <div class="coupon-inner">
-                            <strong class="franchisee-name">
-                                이층집 강남점
-                            </strong>
-                            <p class="coupon-name">
-                                [첫 고객 만들기] 5% 결제일 할인
-                            </p>
-                            <span class="date">2021.06.01 ~2021.06.30</span>
-                            <i class="flag">재검토 필요</i>
+                            <span class="date">
+                                {{ $dayjs(item.evSdt).format('YYYY.MM.DD') }}
+                                ~
+                                {{ $dayjs(item.evEdt).format('YYYY.MM.DD') }}
+                            </span>
+                            <i class="flag">{{ item.mrktStcNm }}</i>
                         </div>
                     </Anchor>
                 </div>
 
-                <BasicButton type="more"> 더보기 </BasicButton>
+                <BasicButton
+                    v-if="statementListMoreYn"
+                    type="more"
+                    @click="onMore"
+                >
+                    더보기
+                </BasicButton>
             </div>
 
             <portal to="floating">
-                <BasicButton size="large">쿠폰 만들기 신청</BasicButton>
+                <BasicButton size="large" @click="toCouponCreate">
+                    쿠폰 만들기 신청
+                </BasicButton>
             </portal>
         </PageBody>
     </Page>
@@ -127,43 +72,113 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import type { Schema } from '@components/form/FormProvider.vue'
-import type { DropdownBoxList } from '@components/form/DropdownBox.vue'
 import MarketingBanner from '@components/marketing/MarketingBanner.vue'
+import { MktStatementModule } from '@stores/modules/mktStatement'
+import type { MarketingStatus } from '@services/marketing'
+import type { DropdownBoxList } from '@components/form/DropdownBox.vue'
+import type { BottomSheetOptionItem } from '@components/common/BottomSheet.vue'
+import { Path } from '@router/routes'
 
 @Component({
     components: { MarketingBanner },
 })
 export default class MarketingHistory extends Vue {
-    //드롭다운리스트 샘플
-    private dropdownBoxList: DropdownBoxList = [
-        {
-            displayName: 'LOCA MONEY:BIZ 7*3*',
-            value: 'LOCA MONEY:BIZ 7*3*',
-            selected: true,
-        },
-        {
-            displayName: '가장최근에 받은 카드가 디폴트로 노출',
-            value: '가장최근에 받은 카드가 디폴트로 노출',
-        },
-    ]
-    private data: { [key: string]: object | number | string | boolean } = {
-        dropdownBox: 'kt',
-        buttonField: '확인',
-        calendarField: new Date('2021.06.04'),
-        checkSingle: true,
-        secretNumber: '1234561',
-        singleSelection: 'third',
-        switchButton: true,
-        textfieldPrimary: '테스트',
+    // 가맹점 선택 리스트
+    private franchiseSelectList: DropdownBoxList = []
+
+    // get Path() {
+    //     return Path.
+    // }
+
+    get appliedFranchiseListData() {
+        return MktStatementModule.appliedFranchiseListData
     }
 
-    formChange(data: Schema) {
-        this.data = data
+    get statementListData() {
+        return MktStatementModule.statementListData
     }
 
-    onSubmit(data: Schema) {
-        console.log(data)
+    get statementListPageNo() {
+        return MktStatementModule.statementListPageNo
+    }
+
+    get statementListMoreYn() {
+        return MktStatementModule.statementListMoreYn
+    }
+
+    /** 진행상태 별 스타일 */
+    getTypeStyleClass(value: MarketingStatus): string {
+        const cases = {
+            // 접수완료
+            '01': 'type01',
+            // 준비중
+            '02': 'type02',
+            // 진행예정
+            '03': 'type03',
+            // 진행중
+            '04': 'type04',
+            // 종료
+            '05': 'type05',
+            // 재검토 필요
+            '08': 'type06',
+            // 취소
+            '09': '',
+            default: '',
+        }
+
+        return cases[value]
+    }
+
+    /** 더보기 */
+    onMore() {
+        const selectedItem = this.franchiseSelectList.find(
+            item => item.selected,
+        ) as BottomSheetOptionItem
+
+        MktStatementModule.getStatementList({
+            mcno: selectedItem.value,
+            pageNo: this.statementListPageNo,
+        })
+    }
+
+    /** 매장 선택 */
+    onSelectFranchise(value: string) {
+        const selectedItem = this.franchiseSelectList.find(
+            item => item.value === value,
+        ) as BottomSheetOptionItem
+        console.log(selectedItem)
+
+        MktStatementModule.getStatementList({
+            mcno: selectedItem.value,
+            // pageNo: '',
+        })
+    }
+
+    /** 쿠폰 만들기로 이동 */
+    toCouponCreate() {
+        this.$router.push(Path.MarketingGuide)
+    }
+
+    async mounted() {
+        await Promise.all([
+            MktStatementModule.getAppliedFranchiseList(),
+            MktStatementModule.getStatementList(),
+        ])
+
+        this.franchiseSelectList = ([
+            {
+                displayName: '전체',
+                value: '',
+                selected: true,
+            },
+        ] as DropdownBoxList).concat(
+            this.appliedFranchiseListData.map(item => {
+                return {
+                    displayName: item.mcNm,
+                    value: item.mcno,
+                }
+            }),
+        )
     }
 }
 </script>

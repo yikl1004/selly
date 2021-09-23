@@ -29,6 +29,8 @@ export interface BoardParameters {
     policyList: {
         // 페이지 번호
         pageNo: string
+        // 그룹코드
+        comGrpC: string
     }
 
     /** @description 이용약관 상세 */

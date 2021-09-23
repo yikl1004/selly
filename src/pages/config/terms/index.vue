@@ -24,6 +24,11 @@ import PageView from '@utils/mixins/PageView'
 import { BoardModule } from '@stores/modules/board'
 import { Path } from '@router/routes'
 
+/**
+ * @description
+ * 약관 리스팅 페이지
+ * TODO: Terms.vue 컴포넌트와 연계해서 작업 해야함.
+ */
 @Component
 export default class TermsPage extends Mixins(PageView) {
     get policyList() {

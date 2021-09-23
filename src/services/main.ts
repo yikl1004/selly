@@ -25,6 +25,8 @@ export interface MainCardInfo {
     cardText: string
     // 카드 텍스트 부제
     cardSubText: string
+    // 서버 현재 시간
+    curDate: null
 }
 
 /**

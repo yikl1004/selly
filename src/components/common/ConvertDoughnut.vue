@@ -15,6 +15,7 @@ import { Component, Vue, Prop } from 'vue-property-decorator'
 import DoughnutChart from '@components/common/DoughnutChart.vue'
 import Chart from 'chart.js'
 import patternnomaly from 'patternomaly'
+import datalabels from 'chartjs-plugin-datalabels'
 
 @Component({
     components: { DoughnutChart },
@@ -28,6 +29,8 @@ export default class ConvertChart extends Vue {
     private datacollection = {}
     private chartOption: Chart.ChartOptions = {}
     mounted() {
+        Chart.plugins.register(datalabels)
+
         this.fillData()
     }
     fillData() {
@@ -73,6 +76,27 @@ export default class ConvertChart extends Vue {
                 title: {
                     display: true,
                 },
+                datalabels: {
+                    // color: 'red',
+                    color: [
+                        '#6c625a',
+                        '#de2f13',
+                        '#6c625a',
+                        '#6c625a',
+                        '#6c625a',
+                    ],
+                    font: {
+                        weight: 'bold',
+                    },
+                    anchor: 'end',
+                    // clamp: true,
+                    align: 'end',
+                    formatter(val, cont) {
+                        return val + '%'
+                        // console.log(val)
+                        // console.log(cont)
+                    },
+                },
             },
         }
         this.datacollection = {
@@ -94,7 +118,7 @@ export default class ConvertChart extends Vue {
                         patternnomaly.draw('dot', '#413a2f', 'white'),
                         patternnomaly.draw('diamond-box', '#00648c', 'white'),
                     ],
-
+                    // ChartDataLabels: {},
                     // borderColor: ['#00648c'],
                     // borderWidth: 10,
                     // borderColor: 'black'

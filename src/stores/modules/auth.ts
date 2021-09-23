@@ -123,15 +123,6 @@ export default class Auth extends VuexModule {
         }
     }
 
-    // @MutationAction
-    // async getMainInfo() {
-    //     const { data } = await AuthService.getMainInfo()
-
-    //     return {
-    //         mainInfo: data,
-    //     }
-    // }
-
     @MutationAction
     async getBizInfoInput(params: AuthParameters['bizInfo']) {
         const { data } = await AuthService.getBizInfoInput(params)

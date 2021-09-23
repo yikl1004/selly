@@ -20,7 +20,7 @@ export interface ModalOptions {
     cancel?: Function
 }
 
-const ModalBus = new Vue()
+export const ModalBus = new Vue()
 const install: PluginFunction<{}> = _Vue => {
     Object.defineProperties(_Vue.prototype, {
         $modal: {

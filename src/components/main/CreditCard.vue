@@ -34,16 +34,16 @@
 
         <!-- 신용카드 미보유 : 어드민등록 -->
         <Anchor
-            v-else
-            :href="cardApplyURL"
+            v-else-if="cardInfo"
+            :href="cardInfo.cardUrl"
             class="banner-box banner-credit"
-            style="background-image: url('/assets/main/img_credit.png')"
+            :style="`background-image: url('${cardInfo.cardImg}')`"
         >
             <div class="banner-title">
                 <em>
-                    개인사업자를 위한 세무지원, <br />국내외 가맹점 적립혜택까지
+                    {{ cardInfo.cardSubText }}
                 </em>
-                <strong> LOCA MONEY<br />Biz 카드 </strong>
+                <strong>{{ cardInfo.cardText }}</strong>
             </div>
         </Anchor>
     </div>

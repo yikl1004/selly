@@ -9,7 +9,6 @@
 import { Component, Mixins } from 'vue-property-decorator'
 import PageView from '@utils/mixins/PageView'
 import type { LoginInfo } from '@stores/modules/auth'
-import { Path } from '@router/routes'
 
 @Component
 export default class TaxServiceGuide extends Mixins(PageView) {
@@ -28,7 +27,7 @@ export default class TaxServiceGuide extends Mixins(PageView) {
                 orgSyncId: auth.bzNavToken || '',
                 eventListener: value => {
                     if (value.action === 'close') {
-                        this.$router.push(Path.Main)
+                        this.$router.push({ name: 'Main' })
                     }
                 },
             })

@@ -21,14 +21,12 @@
 </template>
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-// import ClickOutside from 'vue-click-outside'
 import type { BottomSheetOptionItem } from '@components/common/BottomSheet.vue'
 import type { DropdownBoxList } from '@components/form/DropdownBox.vue'
 import ConvertDoughnut from '@components/common/ConvertDoughnut.vue'
 import ConvertBar from '@components/common/ConvertBar.vue'
 import ConvertPie from '@components/common/ConvertPie.vue'
 import Chart from 'chart.js'
-import ChartDataLabels from 'chartjs-plugin-datalabels'
 import patternnomaly from 'patternomaly'
 // import { FinanceModule } from '@stores/modules/finance'
 @Component({
@@ -73,7 +71,7 @@ export default class ExamplePage extends Vue {
     private datas = [30, 20, 20, 30, 40, 40, 50]
     private labels = ['일', '월', '화', '수', '목', '금', '토']
     mounted() {
-        Chart.plugins.register(ChartDataLabels)
+        // Chart.plugins.register(ChartDataLabels)
         console.log('MOUNTED =======')
         this.fillData()
     }

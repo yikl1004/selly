@@ -1,3 +1,4 @@
+import { VuexModule } from 'vuex-module-decorators'
 declare global {
     // Selly API default format
     interface DefaultResponse<T> {
@@ -38,6 +39,9 @@ declare global {
         | 'card2' // 카드번호 앞 2자리
 
     type FormInputType = 'number' | 'seperateNumber' | 'text' | 'select' | 'digit' | SecretType
+
+    // MutationAction 데코레이터에서 this를 사용할때 alias
+    type VuexThisType = VuexModule & { dispatch: Function }
 }
 
 export {}
