@@ -329,7 +329,7 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
             // 이용약관 상세
             {
                 /** @complete */
-                path: '/config/terms/detail/:no',
+                path: '/config/terms/detail',
                 name: Path.TermsDetail.name,
                 component: createAsyncPage(import('@pages/config/terms/detail/index.vue')),
             },

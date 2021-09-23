@@ -91,7 +91,7 @@ export default class ConvertChart extends Vue {
                     anchor: 'end',
                     // clamp: true,
                     align: 'end',
-                    formatter(val, cont) {
+                    formatter(val /* cont */) {
                         return val + '%'
                         // console.log(val)
                         // console.log(cont)

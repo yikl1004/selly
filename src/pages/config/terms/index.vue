@@ -44,7 +44,7 @@ export default class TermsPage extends Mixins(PageView) {
         const seq = this.policyList[index].index
         this.$router.push({
             ...Path.TermsDetail,
-            params: { no: seq },
+            query: { no: seq },
         })
     }
 

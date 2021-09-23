@@ -23,6 +23,7 @@ type FaqListRes = BoardResponse['faqList']
 type FaqCategoryRes = BoardResponse['faqCategory']
 type PolicyListRes = BoardResponse['policyList']
 type PolicyDetailRes = BoardResponse['policyDetail']
+type PolicyDetailDirectRes = BoardResponse['policyDetailDirect']
 
 @Module({ name: 'board', namespaced: true, dynamic: true, store })
 export default class Board extends VuexModule {
@@ -36,6 +37,7 @@ export default class Board extends VuexModule {
     public policyPageNo = '1'
     public policyList: PolicyListRes | null = null
     public policyDetail: PolicyDetailRes | null = null
+    public policyDetailDirect: PolicyDetailDirectRes | null = null
 
     @Mutation
     changeFaqCategory(categoryCode: string) {
@@ -148,6 +150,15 @@ export default class Board extends VuexModule {
         }
     }
 
+    // 직접 호출 케이스 3번
+    @MutationAction
+    async getPolicyDetailDirect(params: BoardParameters['policyDetailDirect']) {
+        const { data } = await BoardService.getPolicyDetailDirect(params)
+        return {
+            policyDetailDirect: data,
+        }
+    }
+
     // 공지사항 리스트 반환
     get noticeListData() {
         return this.noticeList
@@ -219,6 +230,14 @@ export default class Board extends VuexModule {
         return {
             title: this.policyDetail?.data.prvTitNm,
             content: this.policyDetail?.data.prvCn,
+        }
+    }
+
+    /** 이용약관 상세 - 직접 호출 */
+    get policyDetailDirectData() {
+        return {
+            title: this.policyDetailDirect?.data.prvTitNm,
+            content: this.policyDetailDirect?.data.prvCn,
         }
     }
 }

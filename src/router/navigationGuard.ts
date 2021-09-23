@@ -58,7 +58,7 @@ const navigationGuard: SellyNavigationGuard = {
         // })
         store.commit('ui/setPageDirection', pageTransitionDirection)
 
-        const exceptioPageList = [Path.Login, Path.AuthCallback, Path.TermsDetail].map(value => value.name)
+        const exceptioPageList = [Path.Login, Path.AuthCallback, Path.TermsDetail, Path.TermsDetail].map(value => value.name)
 
         if (process.env.NODE_ENV === 'development') {
             exceptioPageList.push('Example')

@@ -37,6 +37,12 @@ export interface BoardParameters {
     policyDetail: {
         prvSeq: string
     }
+
+    /** @description 이용약관 상세 - 직접 호출*/
+    policyDetailDirect: {
+        comGrpC: string
+        comC: string
+    }
 }
 
 export interface BoardResponse {
@@ -102,6 +108,20 @@ export interface BoardResponse {
         prvCn: string
         prvTitNm: string
     }>
+    policyDetailDirect: DefaultResponse<{
+        // 약관 일련번호
+        prvSeq: string
+        // 그룹코드
+        comGrpC: string
+        // 공통코드
+        comC: string
+        // 제목명
+        prvTitNm: string
+        // 이용약관 내용
+        prvCn: string
+        // 이용약관 번전 번호
+        prvVerNo: string
+    }>
 }
 
 type NoticeListRes = Promise<AxiosResponse<BoardResponse['noticeList']>>
@@ -110,6 +130,7 @@ type FaqListRes = Promise<AxiosResponse<BoardResponse['faqList']>>
 type FaqCategoryRes = Promise<AxiosResponse<BoardResponse['faqCategory']>>
 type PolicyListRes = Promise<AxiosResponse<BoardResponse['policyList']>>
 type PolicyDetailRes = Promise<AxiosResponse<BoardResponse['policyDetail']>>
+type PolicyDetailDirectRes = Promise<AxiosResponse<BoardResponse['policyDetailDirect']>>
 
 class BoardService {
     // 공지사항 목록
@@ -148,6 +169,12 @@ class BoardService {
         method: 'post',
     }
 
+    // 이용약관 상세 - 직접 호출
+    private policyDetailDirect: API = {
+        url: '/API/ETC/SEETCCA003',
+        method: 'post',
+    }
+
     // 공지사항 목록
     async getNoticeList(params: BoardParameters['noticeList']): NoticeListRes {
         return await axiosInstance.request({ ...this.noticeList, params })
@@ -176,6 +203,11 @@ class BoardService {
     // 이용약관 상세
     async getPolicyDetail(params: BoardParameters['policyDetail']): PolicyDetailRes {
         return await axiosInstance.request({ ...this.policyDetail, params })
+    }
+
+    // 이용약관 상세 - 직접 호출
+    async getPolicyDetailDirect(params: BoardParameters['policyDetailDirect']): PolicyDetailDirectRes {
+        return await axiosInstance.request({ ...this.policyDetailDirect, params })
     }
 }
 
