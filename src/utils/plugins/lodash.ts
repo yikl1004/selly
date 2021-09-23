@@ -14,9 +14,11 @@ import toArray from 'lodash/toArray'
 import forIn from 'lodash/forIn'
 import union from 'lodash/union'
 import omit from 'lodash/omit'
+import isNumber from 'lodash/isNumber'
 
 export const options = {
     lodash: {
+        isNumber,
         toNumber,
         cloneDeep,
         merge,

@@ -240,7 +240,7 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
             },
             // 내 주변 매출
             {
-                path: '/marketing/around',
+                path: '/aroundSales',
                 name: 'AroundSales',
                 component: createAsyncPage(import('@pages/marketing/around/index.vue')),
                 meta: {

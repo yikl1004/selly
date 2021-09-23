@@ -55,6 +55,16 @@
             ]
         },
         {
+            "name": "내 주변 매출",
+            "path": "*",
+            "children": [
+                {
+                    "name": "내 주변 매출",
+                    "path": "/aroundSales"
+                }
+            ]
+        },
+        {
             "name": "세무서비스",
             "path": "*",
             "children": [

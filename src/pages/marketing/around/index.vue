@@ -192,7 +192,20 @@
                                 >
                                     차트영역
                                 </div>
-                                <div class="tbl-chart">
+                                <GenTable
+                                    name="test"
+                                    :cols="[33, 33, 'auto']"
+                                    :heads="['구분', '이용고객수', '비율']"
+                                    :contents="[
+                                        ['남', '100', '30%'],
+                                        ['남', '100', '30%'],
+                                        ['남', '100', '30%'],
+                                        ['남', '100', '30%'],
+                                        ['남', '100', '30%'],
+                                        ['남', '100', '30%'],
+                                    ]"
+                                />
+                                <!-- <div class="tbl-chart">
                                     <div class="table-box">
                                         <div class="table-scroll">
                                             <table>
@@ -235,7 +248,7 @@
                                             </table>
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
                                 <BasicButton type="more"> 더보기 </BasicButton>
                             </div>
 
@@ -462,8 +475,10 @@ import type { Schema } from '@components/form/FormProvider.vue'
 import type { DropdownBoxList } from '@components/form/DropdownBox.vue'
 import MarketingBanner from '@components/marketing/MarketingBanner.vue'
 import PopupMapArea from '@components/marketing/PopupMapArea.vue'
+import GenTable from '@components/common/GenTable.vue'
+
 @Component({
-    components: { MarketingBanner, PopupMapArea },
+    components: { MarketingBanner, PopupMapArea, GenTable },
 })
 export default class MarketingApply extends Vue {
     // s: popup 지역선택

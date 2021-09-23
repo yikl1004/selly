@@ -330,6 +330,7 @@ import ApplyDetailStep from '@components/marketing/ApplyDetailStep.vue'
 import BoxGray from '@components/marketing/BoxGray.vue'
 import ConvertBar from '@components/common/ConvertBar.vue'
 import ConvertPie from '@components/common/ConvertPie.vue'
+import GenTable from '@components/common/GenTable.vue'
 import { MktStatementModule } from '@stores/modules/mktStatement'
 import { Path } from '@router/routes'
 import type { AccordionListItem } from '@components/common/AccoItem.vue'
@@ -359,6 +360,7 @@ import type { MarketingStatus } from '@services/marketing'
         ConvertBar,
         ConvertPie,
         ApplyDetailStep,
+        GenTable,
     },
 })
 export default class MarketingDetail extends Vue {

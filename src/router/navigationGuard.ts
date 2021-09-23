@@ -11,8 +11,8 @@ export const sessionTimer = {
     interval: {
         // nine: 5000,
         // ten: 6000,
-        nine: 90000,
-        ten: 100000,
+        nine: 1000 * 60 * 9,
+        ten: 1000 * 60 * 10,
     },
     timer: {
         nine: 0,
