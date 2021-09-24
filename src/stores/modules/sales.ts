@@ -92,6 +92,7 @@ export default class Sales extends VuexModule {
 
     /** 매출 - 요일별 평균 데이터 (recent4WeekDayOfWeekAverageSalesAmount - re4wDwAvslAm) */
     public salesDayOfWeekAverageData: DayOfWeekAverageData[] = []
+
     /** 입금 - 요일별 평균 데이터 (recent4WeekDayOfWeekAveragePayAmount - re4wDwAvPayAm) */
     public depositDayOfWeekAverageData: DayOfWeekAverageData[] = []
 
@@ -562,6 +563,11 @@ export default class Sales extends VuexModule {
     // 현재 탭 상태
     get currentStatus() {
         return this.status
+    }
+
+    // 일간 매출 - 배너 정보
+    get dailyBannerList() {
+        return this.status === 'daily' ? this.salesDaily?.data.list2 || [] : []
     }
 }
 

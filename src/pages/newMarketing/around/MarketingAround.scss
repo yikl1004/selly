@@ -1,0 +1,152 @@
+.box-around-store {
+    padding: 24px;
+    background-color: #f8f8f8;
+    .title {
+        h2 {
+            font-size: 20px;
+            line-height: 1.4;
+            color: #222;
+            font-weight: 700;
+        }
+        p {
+            margin-top: 8px;
+        }
+    }
+    .dropdown-box {
+        margin-top: 24px;
+    }
+    .box-store-info {
+        margin-top: 12px;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 10px;
+        border: 1px solid #ebebeb;
+        color: #222;
+        strong {
+            display: block;
+            font-size: 16px;
+            font-weight: 700;
+        }
+        .bullet-list {
+            margin-top: 12px;
+        }
+    }
+}
+.store-info-wrap {
+    padding: 0 24px ;
+}
+.franchisee-info-wrap {
+    margin-top: 24px;
+    .box-franchisee-info {
+        margin-top: 8px;
+        &:first-of-type {
+            margin-top: 0;
+        }
+    }
+}
+.box-franchisee-info {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 20px 17px 30px;
+    background-color: #f8f8f8;
+    border-radius: 10px;
+    .total {
+        span {
+            display: block;
+            font-weight: 500;
+        }
+        strong {
+            color: #222;
+            font-weight: 700;
+            font-size: 20px;
+        }
+    }
+    ul {
+        li {
+            position: relative;
+            margin-top: 10px;
+            padding-left: 6px;
+            color: #222;
+            strong {
+                @include number-contrast;
+            }
+            &:before {
+                content: '';
+                display: block;
+                position: absolute;
+                left: 0;
+                top:9px;
+                width: 2px;
+                height: 2px;
+                border-radius: 50%;
+                background-color: #666;
+            }
+            &:first-of-type {
+                margin-top: 0;
+            }
+        }
+    }
+    .price {
+        display: block;
+        font-size: 20px;
+        font-weight: 700;
+        color: #222;
+    }
+    &.avg-month {
+        display: block;
+        background-color: #f3efee;
+        .total {
+            text-align: center;
+            .price {
+                margin-top: 4px;
+            }
+        }
+        ul {
+            overflow: hidden;
+            margin-top: 13px;
+        }
+        li {
+            float: left;
+            width: 50%;
+            margin: 0;
+        }
+        .my-store-sales {
+            margin-top: 25px;
+            padding: 14px 20px;
+            background-color:#fff;
+            border-radius: 10px;
+            text-align: center;
+            p {
+                color: #222;
+            }
+            strong {
+                @include number-contrast(8px 0 0 0,20, 700, 24, -3)
+            }
+        }
+    }
+}
+.chart-box .tbl-chart {
+    display: none;
+    margin-top: 32px;
+}
+
+.box-title {
+    margin-top: 48px;
+}
+.txt-total {
+    margin: 24px 0 19px;
+    text-align: center;
+    strong {
+        font-size: 20px;
+        line-height: 1.4;
+        color: #222;
+        font-weight: 700;
+    }
+    span {
+        font-weight: 400;
+        color: #666;
+    }
+}
+.marketing-banner {
+    margin-top: 60px;
+}

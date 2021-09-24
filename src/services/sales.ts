@@ -101,6 +101,19 @@ export interface SalesResponse {
             // 매출 총액
             slTam: string
         }[]
+        // 제휴사 배너 목록
+        list2: {
+            /** 배너 Alt 값 */
+            bnnAlt: string
+            /** 배너명 */
+            bnnMenNm: string
+            /** 배너 아이콘 경로 url */
+            bnnPath: string
+            /** 배너 서브문구 */
+            bnnSuImgNm: string
+            /** 배너 링크 url */
+            bnnUrl: string
+        }[]
         // 최근 7일 평균 대비 매출 금액
         re7dAvCmrSlAm: string
         // 최근 7일 평균 대비 매출 증감

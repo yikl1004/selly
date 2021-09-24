@@ -18,7 +18,9 @@ export interface FranchiseItem {
 }
 
 export interface BusinessManInfoListItem {
+    /** 사업자번호 */
     bzno: string
+    /**  */
     bzmanNm: string
     mbrNm: null | string
     locaMcYn: YN
@@ -190,26 +192,40 @@ export interface AuthResponse {
         list: { rsgDesc: string }[]
     }>
     businessMainInfo: DefaultResponse<{
+        /** 사업자 리스트 */
         list: BusinessManInfoListItem[]
     }>
-    // FIXME: 주석달자!!!!!
     franchiseDetail: DefaultResponse<{
+        /** 가맹점 번호 */
         mcno: string
+        /** 가맹점 이름 */
         mcNm: string
+        /** 우편번호 */
         psno: string
+        /** 우편번호 주소 */
         pnadd: string
+        /** 우편번호 외 주소 */
         bpsnoAdd: string
+        /** 전화 지역 번호 */
         ddd: string
+        /** 전화 국번 */
         exno: string
+        /** 전화 개별 번호 */
         tlno: string
     }>
     changeBusinessManName: DefaultResponse<{
+        /** 사업자 리스트 */
         list: {
+            /** 사업자 번호 */
             bzno: string
+            /** 사업자 이름 */
             bzmanNm: string
+            /** 사업자등록여부 */
             ltRgyn: YN
+            /** 로카 가맹점 여부 */
             locaMcYn: YN
         }[]
+        /** 이건 뭘까?? */
         mbrNm: string
     }>
 }

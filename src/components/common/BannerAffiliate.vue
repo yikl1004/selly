@@ -1,39 +1,19 @@
 <template>
-    <BannerSwiper class="box-banner-affiliate">
-        <swiper-slide>
-            <Anchor href="/" class="banner-affiliate">
+    <BannerSwiper v-if="!!list.length" class="box-banner-affiliate">
+        <swiper-slide
+            v-for="(item, index) in list"
+            :key="`banner-affiliate-${index}`"
+        >
+            <Anchor :href="item.bnnUrl" class="banner-affiliate">
                 <i class="img">
-                    <img
-                        src="/assets/main/img_ affiliate.png"
-                        alt="제휴사 이미지"
-                    />
+                    <img :src="item.bnnPath" :alt="item.bnnAlt" />
                 </i>
                 <div class="affiliate-info">
                     <strong>
-                        알밤알밤알밤알밤알밤알밤알밤알밤알밤알밤알밤알밤
+                        {{ item.bnnMenNm }}
                     </strong>
                     <p>
-                        출/퇴근 관리를 무료로 이용해 보세요.출/퇴근 관리를
-                        무료로 이용해 보세요.
-                    </p>
-                </div>
-            </Anchor>
-        </swiper-slide>
-        <swiper-slide>
-            <Anchor href="/" class="banner-affiliate">
-                <i class="img">
-                    <img
-                        src="/assets/main/img_ affiliate.png"
-                        alt="제휴사 이미지"
-                    />
-                </i>
-                <div class="affiliate-info">
-                    <strong>
-                        알밤알밤알밤알밤알밤알밤알밤알밤알밤알밤알밤알밤
-                    </strong>
-                    <p>
-                        출/퇴근 관리를 무료로 이용해 보세요.출/퇴근 관리를
-                        무료로 이용해 보세요.
+                        {{ item.bnnSuImgNm }}
                     </p>
                 </div>
             </Anchor>
@@ -42,15 +22,21 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Prop, Vue } from 'vue-property-decorator'
 import { SwiperSlide } from 'vue-awesome-swiper'
+import type { SalesResponse } from '@services/sales'
+
+export type BannerItem = SalesResponse['salesDaily']['data']['list2']
 
 @Component({
     components: {
         SwiperSlide,
     },
 })
-export default class BannerAffiliate extends Vue {}
+export default class BannerAffiliate extends Vue {
+    @Prop({ type: Array, default: () => [] })
+    readonly list!: BannerItem
+}
 </script>
 
 <style scoped lang="scss" src="./BannerAffiliate.scss" />
