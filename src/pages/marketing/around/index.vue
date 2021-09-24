@@ -182,16 +182,11 @@
                                         "일요일<span>이 가장 많아요</span>"
                                     </strong>
                                 </div>
-                                <div
-                                    style="
-                                        height: 200px;
-                                        background-color: #eee;
-                                        text-align: center;
-                                        line-height: 200px;
-                                    "
-                                >
-                                    차트영역
-                                </div>
+                                <ConvertPie
+                                    :datas="weekUser"
+                                    :labels="weekPeriod"
+                                    :chartMax="true"
+                                />
                                 <GenTable
                                     name="test"
                                     :cols="[33, 33, 'auto']"
@@ -261,16 +256,11 @@
                                         >"
                                     </strong>
                                 </div>
-                                <div
-                                    style="
-                                        height: 200px;
-                                        background-color: #eee;
-                                        text-align: center;
-                                        line-height: 200px;
-                                    "
-                                >
-                                    차트영역
-                                </div>
+                                <ConvertPie
+                                    :datas="weekUseSale"
+                                    :labels="weekUsePeriod"
+                                    :chartMax="true"
+                                />
                                 <div class="tbl-chart">
                                     <div class="table-box">
                                         <div class="table-scroll">
@@ -322,21 +312,14 @@
                             <div class="chart-box">
                                 <div class="txt-total">
                                     <strong>
-                                        "12사~15시<span>
-                                            사이에 가장 많아요</span
-                                        >"
+                                        "남성<span> 고객이 많아요</span>"
                                     </strong>
                                 </div>
-                                <div
-                                    style="
-                                        height: 200px;
-                                        background-color: #eee;
-                                        text-align: center;
-                                        line-height: 200px;
-                                    "
-                                >
-                                    차트영역
-                                </div>
+                                <ConvertDoughnut
+                                    :datas="genderUser"
+                                    :labels="gender"
+                                    chartMax
+                                />
                                 <div class="tbl-chart">
                                     <div class="table-box">
                                         <div class="table-scroll">
@@ -392,16 +375,11 @@
                                         >"
                                     </strong>
                                 </div>
-                                <div
-                                    style="
-                                        height: 200px;
-                                        background-color: #eee;
-                                        text-align: center;
-                                        line-height: 200px;
-                                    "
-                                >
-                                    차트영역
-                                </div>
+                                <ConvertDoughnut
+                                    :datas="ageGroupsUser"
+                                    :labels="ageGroups"
+                                    chartMax
+                                />
                                 <div class="tbl-chart">
                                     <div class="table-box">
                                         <div class="table-scroll">
@@ -476,9 +454,17 @@ import type { DropdownBoxList } from '@components/form/DropdownBox.vue'
 import MarketingBanner from '@components/marketing/MarketingBanner.vue'
 import PopupMapArea from '@components/marketing/PopupMapArea.vue'
 import GenTable from '@components/common/GenTable.vue'
+import ConvertPie from '@components/common/ConvertPie.vue'
+import ConvertDoughnut from '@components/common/ConvertDoughnut.vue'
 
 @Component({
-    components: { MarketingBanner, PopupMapArea, GenTable },
+    components: {
+        MarketingBanner,
+        PopupMapArea,
+        GenTable,
+        ConvertPie,
+        ConvertDoughnut,
+    },
 })
 export default class MarketingApply extends Vue {
     // s: popup 지역선택
@@ -550,6 +536,25 @@ export default class MarketingApply extends Vue {
             value: '9999999',
         },
     ]
+    //차트 목업
+    private weekPeriod = ['월', '화', '수', '목', '금', '토', '일']
+    private weekUser = [10, 20, 10, 10, 20, 10, 30]
+    private weekUsePeriod = [
+        '10시 ~ 11시',
+        '12시 ~ 15시',
+        '16시 ~ 18시',
+        '19시 ~ 21시',
+        '21시 ~ 00시',
+        '01시 ~ 09시',
+    ]
+    private weekUseSale = [10, 20, 20, 30, 10, 10]
+    private eventLabel = ['행사전', '행사후']
+    private eventSale = [4000, 8000]
+    private gender = ['여성', '남성']
+    private genderUser = [40, 60]
+    private ageGroups = ['10대이하', '20대', '30대', '40대', '50대', '60대이상']
+    private ageGroupsUser = [140, 150, 160, 100, 30, 30]
+
     formChange(data: Schema) {
         this.data = data
     }
