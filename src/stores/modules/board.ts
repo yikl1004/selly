@@ -54,6 +54,12 @@ export default class Board extends VuexModule {
         }
     }
 
+    @Mutation
+    initializePolicy() {
+        this.policyDetail = null
+        this.policyDetailDirect = null
+    }
+
     @MutationAction
     async getNoticeList() {
         const state = this.state as BoardState

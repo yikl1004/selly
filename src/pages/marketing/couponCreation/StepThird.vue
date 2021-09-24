@@ -24,13 +24,25 @@
 
                 <Title title="프로모션 제휴 필수사항 확인" type="h3" />
                 <CheckBoxGroup
-                    id="sdkljflsdkfj"
+                    id="promotionCheckBox"
+                    ref="promotionCheckBox"
                     name="group1"
                     value="TOUCH 프로모션 제휴 약관 동의"
                     label="프로모션 제휴 필수사항 확인"
                     hidden-label
                     @toggle="onPromotionToggle"
                 />
+                <FullPopup
+                    :show.sync="promotionTermsVisible"
+                    title="TOUCH 프로모션 제휴 약관 동의"
+                    type="popup"
+                    :button-text="{ confirm: '확인' }"
+                    @confirm="onPromotionTermsConfirm"
+                >
+                    <PopupTerms
+                        :params="{ comGrpC: 'AGR_CPN', comC: 'PRV_1' }"
+                    />
+                </FullPopup>
 
                 <!--[P] 아코디언 내용으로 하단의 bullet-list가 들어가야함. 개발 수정 요청중.-->
                 <AccoItem :list="accordionList" />
@@ -54,15 +66,6 @@
             </template>
             <!--//[D] 쿠폰 미리보기 팝업 -->
 
-            <!-- <FullPopup
-                :show.sync="popCouponPreview"
-                title=""
-                type="popup"
-                @confirm="onCouponPreviewConfirm"
-            >
-                dkfjdkfjdkfj
-            </FullPopup> -->
-
             <portal to="floating">
                 <BasicButton size="large" @click="$router.back()">
                     이전
@@ -74,7 +77,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Watch } from 'vue-property-decorator'
+import { Component, Ref, Vue, Watch } from 'vue-property-decorator'
 import { ApplyResultRes, MarketingModule } from '@stores/modules/marketing'
 import ApplyResult from '@components/marketing/ApplyResult.vue'
 import CouponList from '@components/marketing/CouponList.vue'
@@ -82,6 +85,7 @@ import type { CouponItem } from '@components/marketing/CouponList.vue'
 import type { AccordionListItem } from '@components/common/AccoItem.vue'
 import type { CouponPreviewProps } from '@components/marketing/PopupCouponPreview.vue'
 import { Path } from '@router/routes'
+import type CheckBoxGroup from '@components/form/CheckBoxGroup.vue'
 
 @Component({
     components: {
@@ -93,6 +97,8 @@ import { Path } from '@router/routes'
     },
 })
 export default class StepThirdPage extends Vue {
+    @Ref('promotionCheckBox') promotionCheckBox!: CheckBoxGroup
+
     /** 쿠폰 미리보기 팝업 */
     private popCouponPreview = false
 
@@ -118,6 +124,9 @@ export default class StepThirdPage extends Vue {
 
     /** 쿠폰 미리보기 정보 */
     private couponPreviewProp: null | CouponPreviewProps = null
+
+    /** 프로모션 제휴 약관 팝업 */
+    private promotionTermsVisible = false
 
     /** store에 저장된 form data */
     get theLastFormData() {
@@ -242,6 +251,11 @@ export default class StepThirdPage extends Vue {
         }
     }
 
+    /** 프로모션 제휴 약관 팝업에서 확인 버튼 눌렀을 때 */
+    onPromotionTermsConfirm() {
+        this.promotionCheckBox.allCheck = true
+    }
+
     /** 미리보기 팝업 쿠폰 데이터 */
     getCouponPreviewProps(gubun: '1' | '2'): null | CouponPreviewProps {
         const origin = this.theLastFormData.list.find(
@@ -280,8 +294,8 @@ export default class StepThirdPage extends Vue {
     }
 
     /** 프로모션 제휴약관 동의 */
-    onPromotionToggle(value: boolean) {
-        console.log('프로모션 제휴약관 동의', value)
+    onPromotionToggle(/* value: boolean */) {
+        this.promotionTermsVisible = true
     }
 
     handelPageValidate() {

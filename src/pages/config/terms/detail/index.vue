@@ -37,9 +37,9 @@ export default class TermsDetailPage extends Vue {
     /** 상세 데이터 */
     get detail() {
         if (this.isDirect) {
-            return this.policyDetailData
-        } else {
             return this.policyDetailDirectData
+        } else {
+            return this.policyDetailData
         }
     }
 
@@ -84,6 +84,11 @@ export default class TermsDetailPage extends Vue {
         //         message: '잘못된 접근입니다. '
         //     })
         // }
+    }
+
+    beforeDestroy() {
+        // store 약관 내용 삭제(초기화)
+        BoardModule.initializePolicy()
     }
 }
 </script>

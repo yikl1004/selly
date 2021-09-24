@@ -103,6 +103,7 @@ export default class FullPopup extends Vue {
          * @event confirm
          */
         this.$emit('confirm')
+        this.onCancel()
     }
 }
 </script>

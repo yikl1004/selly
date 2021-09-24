@@ -2,10 +2,12 @@
     <footer class="footer">
         <ul class="terms-list">
             <li>
-                <button type="button" @click="openTermsUse">이용약관</button>
+                <button type="button" @click="toTerms('policy')">
+                    이용약관
+                </button>
             </li>
             <li>
-                <button type="button" @click="openTermsPrivacy">
+                <button type="button" @click="toTerms('privacy')">
                     개인정보처리방침
                 </button>
             </li>
@@ -30,16 +32,6 @@ import { Component, Vue } from 'vue-property-decorator'
  */
 @Component
 export default class Footer extends Vue {
-    /** 이용약관 으로 이동 */
-    openTermsUse() {
-        this.toTerms('policy')
-    }
-
-    /** 개인정보처리방침으로 이동 */
-    openTermsPrivacy() {
-        this.toTerms('privacy')
-    }
-
     /** 약관 이동 */
     toTerms(flag: 'privacy' | 'policy') {
         this.$router.push({

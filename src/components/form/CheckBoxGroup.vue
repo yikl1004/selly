@@ -6,6 +6,7 @@
             <button
                 type="button"
                 class="btn-checkbox"
+                :class="{ checked: allCheck }"
                 :disabled="disabled"
                 @click="toggle"
             >
@@ -36,9 +37,6 @@
                         :key="`check-box-group-${name}-${index}`"
                         class="check-list-item"
                     >
-                        <!-- 
-                            기존 체크박스 케이스 > 버튼으로 변경하기로 협의함
-                            <CheckBox v-bind="getCheckBoxProps(index)" @change="onChangeCheckBox" /> -->
                         <button
                             type="button"
                             class="check-box"
@@ -164,8 +162,8 @@ export default class CheckBoxGroup extends Vue {
     /** 토글 상태 */
     private open = true
 
-    /** 전체 체크 여부 */
-    private allCheck = false
+    /** 전체 체크 여부 - 상위 컴포넌트에서 핸들링 가능 */
+    public allCheck = false
 
     /**
      * @category Computed
@@ -243,7 +241,9 @@ export default class CheckBoxGroup extends Vue {
 
     mounted() {
         console.log('<CheckBoxGroup />', this.list)
-        this.allCheck = this.list.every(item => item.checked)
+        this.allCheck = this.list.length
+            ? this.list.every(item => item.checked)
+            : false
     }
 }
 </script>

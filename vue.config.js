@@ -39,7 +39,6 @@ module.exports = {
             extensions: ['.vue', 'tsx'],
         },
         devServer: {
-            // https: true,
             host: process.env.VUE_APP_SITE_DOMAIN.replace(/https?/gi, '')
                 .replace('://', '')
                 .replace('/')
