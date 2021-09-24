@@ -39,16 +39,14 @@ module.exports = {
             extensions: ['.vue', 'tsx'],
         },
         devServer: {
+            https: true,
             host: 'selly.lottecard.com',
             proxy: {
                 // 프록시 요청을 보낼 api의 시작 부분
                 '/API': {
                     // 프록시 요청을 보낼 서버의 주소
-                    target: 'https://selly.lottecard.co.kr/',
+                    target: process.env.VUE_APP_API_DOMAIN,
                 },
-                // '/oauth': {
-                //     target: 'https://kauth.kakao.com/',
-                // },
             },
             disableHostCheck: true,
         },

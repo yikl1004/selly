@@ -17,57 +17,39 @@
 
             <p class="copyright">Supported by LOTTECARD All rights reserved</p>
         </address>
-
-        <!--[D] 이용약관 팝업 -->
-        <FullPopup
-            :show.sync="popTermsUse"
-            title="이용약관"
-            type="popup"
-            :button-text="{ confirm: '확인' }"
-            @confirm="onTermsUseConfirm"
-        >
-            <PopupTermsUse />
-        </FullPopup>
-        <!--//[D] 이용약관 팝업 -->
-
-        <!--[D] 개인정보처리방침 팝업 -->
-        <FullPopup
-            :show.sync="popTermsPrivacy"
-            title="개인정보처리방침"
-            type="popup"
-            :button-text="{ confirm: '확인' }"
-            @confirm="onTermsPrivacyConfirm"
-        >
-            <PopupTermsPrivacy />
-        </FullPopup>
-        <!--//[D] 개인정보처리방침 팝업 -->
     </footer>
 </template>
 
 <script lang="ts">
+import { Path } from '@router/routes'
 import { Component, Vue } from 'vue-property-decorator'
 
+/**
+ * @description
+ * 하단 footer를 노출
+ */
 @Component
 export default class Footer extends Vue {
-    // s: popup 이용약관
-    private popTermsUse = false
+    /** 이용약관 으로 이동 */
     openTermsUse() {
-        this.popTermsUse = true
+        this.toTerms('policy')
     }
-    onTermsUseConfirm() {
-        this.popTermsUse = false
-    }
-    // e: popup 이용약관
 
-    // s: popup 개인정보처리방침
-    private popTermsPrivacy = false
+    /** 개인정보처리방침으로 이동 */
     openTermsPrivacy() {
-        this.popTermsPrivacy = true
+        this.toTerms('privacy')
     }
-    onTermsPrivacyConfirm() {
-        this.popTermsPrivacy = false
+
+    /** 약관 이동 */
+    toTerms(flag: 'privacy' | 'policy') {
+        this.$router.push({
+            ...Path.TermsDetail,
+            query: {
+                comGrpC: `${flag === 'privacy' ? 'AGR_MBR' : 'AGR_COM'}`,
+                comC: 'PRV_1',
+            },
+        })
     }
-    // e: popup 개인정보처리방침
 }
 </script>
 

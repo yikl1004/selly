@@ -29,27 +29,26 @@ export default class TermsDetailPage extends Vue {
         return BoardModule.policyDetailData
     }
 
-    // 직접 호출 상세 데이터
+    /** 직접 호출 상세 데이터 */
     get policyDetailDirectData() {
         return BoardModule.policyDetailDirectData
     }
 
-    // 상세 데이터
+    /** 상세 데이터 */
     get detail() {
-        const prvSeq = this.$route.query.no
-        if (prvSeq) {
+        if (this.isDirect) {
             return this.policyDetailData
         } else {
             return this.policyDetailDirectData
         }
     }
 
-    // 직접 호출 케이스 인지 판단
+    /** 직접 호출 케이스 인지 판단 */
     get isDirect() {
-        return !this.$route.query.prvSeq
+        return this.$route.query.direct === 'true'
     }
 
-    // 헤더 타입 props
+    /** 헤더 타입 props */
     get headerType() {
         if (this.isDirect) {
             return 'title'
@@ -58,6 +57,7 @@ export default class TermsDetailPage extends Vue {
         }
     }
 
+    /** 목록 또는 확인 버튼 클릭 시 */
     onClickBackOrConfirm() {
         if (this.isDirect) {
             window.close()
