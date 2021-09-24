@@ -39,8 +39,11 @@ module.exports = {
             extensions: ['.vue', 'tsx'],
         },
         devServer: {
-            https: true,
-            host: 'selly.lottecard.com',
+            // https: true,
+            host: process.env.VUE_APP_SITE_DOMAIN.replace(/https?/gi, '')
+                .replace('://', '')
+                .replace('/')
+                .replace(':8080', ''),
             proxy: {
                 // 프록시 요청을 보낼 api의 시작 부분
                 '/API': {

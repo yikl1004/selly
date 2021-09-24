@@ -1,6 +1,8 @@
 /** node 환경 변수 */
 namespace NodeJS {
     interface ProcessEnv {
+        // site URL 정보
+        VUE_APP_SITE_DOMAIN: string
         // API URL 정보
         VUE_APP_API_DOMAIN: string
         // 카카오 SDK API key

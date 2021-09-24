@@ -20,8 +20,8 @@ import { BoardModule } from '@stores/modules/board'
  * @description
  * 약관 공통 페이지
  * 직접 접근 허용
- * 회원가입 - AGR_MBR, PRV_1 : /config/terms/detail?comGrpC=AGR_MBR&comC=PRV_1
- * 이용약관 - AGR_COM, PRV_1 : /config/terms/detail?comGrpC=AGR_COM&comC=PRV_1
+ * 회원가입 - AGR_MBR, PRV_1 : /config/terms/detail?direct=true&comGrpC=AGR_MBR&comC=PRV_1
+ * 이용약관 - AGR_COM, PRV_1 : /config/terms/detail?direct=true&comGrpC=AGR_COM&comC=PRV_1
  */
 @Component
 export default class TermsDetailPage extends Vue {

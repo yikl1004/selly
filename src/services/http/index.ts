@@ -17,7 +17,7 @@ const isDev = process.env.NODE_ENV !== 'production'
 
 // selly API response
 export const axiosInstance = axios.create({
-    baseURL: isDev ? process.env.VUE_APP_API_DOMAIN : '/',
+    baseURL: isDev ? process.env.VUE_APP_SITE_DOMAIN : '/',
     adapter: throttleAdapterEnhancer(cacheAdapterEnhancer(axios.defaults.adapter as AxiosAdapter)),
     withCredentials: true,
 })

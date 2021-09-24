@@ -104,7 +104,7 @@ class KakaoSDK {
      */
     async authorize(testCiNo?: string): Promise<void> {
         return await this.kakaoApi.Auth.authorize({
-            redirectUri: `${process.env.VUE_APP_API_DOMAIN}/authCallback`,
+            redirectUri: `${process.env.VUE_APP_SITE_DOMAIN}/authCallback`,
             throughTalk: true,
             state: testCiNo,
         })
