@@ -131,32 +131,31 @@ export interface AuthParameters {
 
 export interface AuthResponse {
     loginInfo: DefaultResponse<{
-        // 01: 로그인 완료(메인으로 이동), 02: 회원가입 후 등록한 사업자번호 없음(회원가입 절차 진행)
+        /** 01: 로그인 완료(메인으로 이동), 02: 회원가입 후 등록한 사업자번호 없음(회원가입 절차 진행) */
         rspDc: '01' | '02' | '03' | ''
-        // S: 정회원, J: 준회원
+        /** S: 정회원, J: 준회원 */
         mbrDc: 'S' | 'J' | ''
-        // 셀리에서 생성하는 비즈넵 JWT토큰
+        /** 셀리에서 생성하는 비즈넵 JWT토큰 */
         bzNavToken: string
-        // ?? 날짜인데
+        /** ?? 날짜인데 */
         date: string
-        // 대표자이름
+        /** 대표자이름 */
         dgNm: string
-        // 대출매뉴 노출 여부
+        /** 대출매뉴 노출 여부 */
         finMenYn: YN
-        // 마케팅 가능여부
+        /** 마케팅 가능여부 */
         mrktPsyn: YN
-        // redirect url
+        /** redirect url */
         redirectUrl: string
     } | null>
     datusLoginInfo: DefaultResponse<{
-        rspDc:
-            | '01' // 유쇼데 페이지 open post
-            | '02' // 회원가입 불가
-        // form parameter 1
+        /** 01: 유쇼데 페이지 open post, 02: 회원가입 불가 */
+        rspDc: '01' | '02'
+        /** form parameter 1 */
         token: string
-        // form parameter 2
+        /** form parameter 2 */
         encdata: string
-        // form action url
+        /** form action url */
         url: string
     }>
     memberWorkplaceInfo: DefaultResponse<{
@@ -169,9 +168,9 @@ export interface AuthResponse {
         mbrNm: string
     }>
     bizInfo: DefaultResponse<{
-        // 회원 이름
+        /** 회원 이름 */
         mbrNm: string
-        // 사업자 리스트
+        /** 사업자 리스트 */
         list: BusinessPlaceListItem[]
     }>
     logoutInfo: DefaultResponse<null>

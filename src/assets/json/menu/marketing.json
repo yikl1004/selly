@@ -1,0 +1,14 @@
+{
+    "name": "쿠폰만들기",
+    "path": "/marketing",
+    "children": [
+        {
+            "name": "쿠폰만들기",
+            "path": "/couponCreation"
+        },
+        {
+            "name": "신청내역",
+            "path": "/applicationDetail"
+        }
+    ]
+}

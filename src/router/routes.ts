@@ -30,6 +30,8 @@ type PathNames =
     | 'MarketingStepFirst'
     | 'MarketingStepSecond'
     | 'MarketingStepThird'
+    | 'CouponList'
+    | 'CouponDetail'
     | 'Config'
     | 'Withdrawal'
     | 'Business'
@@ -42,7 +44,13 @@ type PathNames =
     | 'SalesLinkage'
     | 'Sales'
     | 'Deposit'
-    | 'CouponHistory'
+    /***** */
+    | 'NewMarketingGuide'
+    | 'NewMarketingStepFirst'
+    | 'NewMarketingStepSecond'
+    | 'NewMarketingStepThird'
+    | 'NewCouponList'
+    | 'NewCouponDetail'
 export const Path: Record<PathNames, Location> = {
     Navigation: { name: 'Navigation' },
     Main: { name: 'Main' },
@@ -54,7 +62,16 @@ export const Path: Record<PathNames, Location> = {
     MarketingStepFirst: { name: 'Marketing Coupon Creation Step 1' },
     MarketingStepSecond: { name: 'Marketing Coupon Creation Step 2' },
     MarketingStepThird: { name: 'Marketing Coupon Creation Step 3' },
-    CouponHistory: { name: 'CouponHistory' },
+    CouponList: { name: 'CouponList' },
+    CouponDetail: { name: 'CouponDetail' },
+    /****** */
+    NewMarketingGuide: { name: 'New Marketing Coupon Creation Guide' },
+    NewMarketingStepFirst: { name: 'New Marketing Coupon Creation Step 1' },
+    NewMarketingStepSecond: { name: 'New Marketing Coupon Creation Step 2' },
+    NewMarketingStepThird: { name: 'New Marketing Coupon Creation Step 3' },
+    NewCouponList: { name: 'New CouponList' },
+    NewCouponDetail: { name: 'New CouponDetail' },
+    /***** */
     Config: { name: 'Config' },
     Withdrawal: { name: 'Withdrawal' },
     Business: { name: 'Business' },
@@ -223,7 +240,7 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
             // 신청내역
             {
                 path: '/marketing/applicationDetail',
-                name: Path.CouponHistory.name,
+                name: Path.CouponList.name,
                 component: createAsyncPage(import('@pages/marketing/history/index.vue')),
                 meta: {
                     floating: true,
@@ -232,7 +249,7 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
             // 신청내역_상세
             {
                 path: '/marketing/detail',
-                name: 'CouponDetail',
+                name: Path.CouponDetail.name,
                 component: createAsyncPage(import('@pages/marketing/detail/index.vue')),
                 meta: {
                     floating: true,
@@ -248,6 +265,73 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
                 },
             },
             // e : 마케팅
+
+            // s: NEW 마케팅
+            // 쿠폰만들기 - 안내페이지
+            {
+                /** @working */
+                path: '/newMarketing/couponCreation',
+                name: Path.NewMarketingGuide.name,
+                component: createAsyncPage(import('@pages/newMarketing/couponCreation/index.vue')),
+                meta: {
+                    title: '쿠폰 만들기',
+                },
+            },
+            //쿠폰만들기_step1
+            {
+                /** @working */
+                path: '/newMarketing/couponCreation/stepFirst',
+                name: Path.NewMarketingStepFirst.name,
+                component: createAsyncPage(import('@pages/newMarketing/couponCreation/StepFirst.vue')),
+                meta: {
+                    floating: true,
+                    title: '쿠폰 만들기',
+                },
+            },
+            //쿠폰만들기_step2
+            {
+                /** @working */
+                path: '/newMarketing/couponCreation/stepSecond',
+                name: Path.NewMarketingStepSecond.name,
+                component: createAsyncPage(import('@pages/newMarketing/couponCreation/StepSecond.vue')),
+                meta: {
+                    floating: true,
+                    title: '쿠폰 만들기',
+                },
+            },
+            //쿠폰만들기_step3
+            {
+                /** @working */
+                path: '/newMarketing/couponCreation/stepThird',
+                name: Path.NewMarketingStepThird.name,
+                component: createAsyncPage(import('@pages/newMarketing/couponCreation/StepThird.vue')),
+                meta: {
+                    floating: true,
+                    title: '쿠폰 만들기',
+                },
+            },
+
+            // 신청내역
+            {
+                /** @working */
+                path: '/newMarketing/applicationDetail',
+                name: Path.NewCouponList.name,
+                component: createAsyncPage(import('@pages/newMarketing/history/index.vue')),
+                meta: {
+                    floating: true,
+                },
+            },
+            // 신청내역_상세
+            {
+                /** @working */
+                path: '/newMarketing/detail',
+                name: Path.NewCouponDetail.name,
+                component: createAsyncPage(import('@pages/newMarketing/detail/index.vue')),
+                meta: {
+                    floating: true,
+                },
+            },
+            // e : NEW 마케팅
 
             // s: 설정
             {

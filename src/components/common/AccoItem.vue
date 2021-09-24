@@ -33,6 +33,10 @@ export interface AccordionListItem {
     desc: string
 }
 
+/**
+ * @description
+ * 아코디언 을 만들어 줍니다.
+ */
 @Component
 export default class AccoItem extends Vue {
     /** 아코디언 제목과 내용 배열로 받음 */

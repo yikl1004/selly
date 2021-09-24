@@ -348,7 +348,7 @@ import type { MarketingStatus } from '@services/marketing'
                         confirm: '확인',
                     },
                     confirm: () => {
-                        vm.$router.replace(Path.CouponHistory)
+                        vm.$router.replace(Path.NewCouponList)
                     },
                 })
             }

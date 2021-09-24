@@ -1,0 +1,26 @@
+{
+    "name": "금융상품",
+    "path": "*",
+    "children": [
+        {
+            "name": "Biz론",
+            "path": "/bizloan"
+        },
+        {
+            "name": "장기카드론",
+            "path": "/longTermCardLoan"
+        },
+        {
+            "name": "사업자대출",
+            "path": "/businessLoan"
+        },
+        {
+            "name": "즉시대출",
+            "path": "/instantLoan"
+        },
+        {
+            "name": "대출내역",
+            "path": "/loanHistory"
+        }
+    ]
+}

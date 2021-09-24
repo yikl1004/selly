@@ -62,9 +62,12 @@
 import { Component, Mixins, Watch } from 'vue-property-decorator'
 import { AuthModule, LogoutInfo } from '@stores/modules/auth'
 import PageView from '@utils/mixins/PageView'
-import type { GnbItem } from '@stores/modules/ui'
-import axios from 'axios'
 import { Path } from '@router/routes'
+import CommonMenu from '@asstes/json/menu/common.json'
+import MarketingMenu from '@asstes/json/menu/marketing.json'
+import NewMarketingMenu from '@asstes/json/menu/newMarketing.json'
+import type { GnbItem } from '@stores/modules/ui'
+import { AuthResponse } from '@services/auth'
 
 @Component
 export default class NavigationPage extends Mixins(PageView) {
@@ -138,10 +141,15 @@ export default class NavigationPage extends Mixins(PageView) {
         })
     }
 
-    /** @Lifecycle */
-    async created() {
-        const menuData = await axios.get('/assets/static/dummy/menu.json')
-        this.gnbList = menuData.data.gnbList
+    created() {
+        this.gnbList = CommonMenu.gnbList
+        const auth: null | AuthResponse['loginInfo']['data'] = JSON.parse(
+            localStorage.getItem('auth') || 'null',
+        )
+        if (auth && auth.mrktPsyn === 'Y') {
+            console.log(NewMarketingMenu)
+            this.gnbList.splice(1, 0, MarketingMenu)
+        }
     }
 }
 </script>
