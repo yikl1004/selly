@@ -62,8 +62,11 @@
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 import { OnSelectValue } from '@components/form/CheckBoxBlock.vue'
-import type { BizInfoItem, BusinessPlaceListItem } from '@services/auth'
 import { AuthModule } from '@stores/modules/auth'
+import type {
+    BizInfoItem,
+    BusinessPlaceListItem,
+} from '@services/auth.interface'
 
 @Component
 export default class SelectStorePage extends Vue {

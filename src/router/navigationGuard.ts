@@ -60,7 +60,7 @@ const navigationGuard: SellyNavigationGuard = {
 
         const exceptioPageList = [Path.Login, Path.AuthCallback, Path.TermsDetail, Path.TermsDetail].map(value => value.name)
 
-        if (process.env.NODE_ENV === 'development') {
+        if (process.env.NODE_ENV !== 'production') {
             exceptioPageList.push('Example')
         }
 

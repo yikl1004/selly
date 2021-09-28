@@ -12,16 +12,29 @@ declare global {
     }
 }
 
-// 환경변수가 production이 아닌 경우
+/** 환경변수가 production이 아닌 경우 */
 const isDev = process.env.NODE_ENV !== 'production'
 
-// selly API response
+/**
+ * @description
+ * createApi 로 생성한 리스트 타입
+ */
+export type APIList<T extends string | number | symbol> = Record<T, API>
+
+/** API 객체 생성 */
+export const createApi = (url: string, method?: 'get' | 'post'): API => ({
+    url,
+    method: method || 'post',
+})
+
+/** selly API response */
 export const axiosInstance = axios.create({
     baseURL: isDev ? process.env.VUE_APP_SITE_DOMAIN : '/',
     adapter: throttleAdapterEnhancer(cacheAdapterEnhancer(axios.defaults.adapter as AxiosAdapter)),
     withCredentials: true,
 })
 
+/** axios interceptor: REQUEST */
 axiosInstance.interceptors.request.use(
     requestConfig => {
         store.commit('ui/setLoading', true)
@@ -33,6 +46,7 @@ axiosInstance.interceptors.request.use(
     },
 )
 
+/** axios interceptor: RESPONSE */
 axiosInstance.interceptors.response.use(
     (response): AxiosResponse => {
         const data = response.data

@@ -164,9 +164,12 @@
 </template>
 
 <script lang="ts">
-import { Component, Mixins } from 'vue-property-decorator'
+import { Component, Mixins, Watch } from 'vue-property-decorator'
 import PageView from '@utils/mixins/PageView'
-import { MarketingModule } from '@stores/modules/marketing'
+import {
+    NewMarketingModule,
+    NewMarketingState,
+} from '@stores/modules/newMarketing'
 import { Path } from '@router/routes'
 
 /**
@@ -175,14 +178,31 @@ import { Path } from '@router/routes'
  */
 @Component
 export default class MarketingPage extends Mixins(PageView) {
-    toApply() {
-        this.$router.push(Path.MarketingStepFirst)
+    get possibleApplyResult() {
+        return NewMarketingModule.possibleApplyData
     }
 
-    /** @Lifecycle */
-    async created() {
+    @Watch('possibleApplyResult')
+    changePossibleApplyResult(value: NewMarketingState['possibleApply']) {
+        if (!value) {
+            return
+        }
+
+        if (value.rc === '0000') {
+            this.$router.push(Path.NewMarketingStepFirst)
+        } else {
+            this.$modal.open({
+                message: value.rsMsg,
+                buttonText: {
+                    confirm: '확인',
+                },
+            })
+        }
+    }
+
+    async toApply() {
         // 마케팅 신청 가능 회원여부 조회
-        await MarketingModule.getPossibleApplyUser()
+        await NewMarketingModule.getPossibleApply()
     }
 }
 </script>

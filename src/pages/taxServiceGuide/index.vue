@@ -8,14 +8,14 @@
 <script lang="ts">
 import { Component, Mixins } from 'vue-property-decorator'
 import PageView from '@utils/mixins/PageView'
-import type { LoginInfo } from '@stores/modules/auth'
+import { AuthState } from '@stores/modules/auth'
 
 @Component
 export default class TaxServiceGuide extends Mixins(PageView) {
     mounted() {
         const auth = JSON.parse(
             localStorage.getItem('auth') || 'null',
-        ) as LoginInfo
+        ) as AuthState['loginInfo']
 
         const target = document.querySelector('#em_embed') as HTMLDivElement
         if (target) {

@@ -106,9 +106,9 @@
 import { Component, Vue } from 'vue-property-decorator'
 import { SwiperSlide } from 'vue-awesome-swiper'
 import { MainModule } from '@stores/modules/main'
-import type { AuthResponse } from '@services/auth'
-import type { MarketingStatus } from '@services/marketing'
 import { Path } from '@router/routes'
+import type { AuthState } from '@stores/modules/auth'
+import type { MarketingStatus } from '@services/marketing'
 
 @Component({
     components: { SwiperSlide },
@@ -116,9 +116,9 @@ import { Path } from '@router/routes'
 export default class Marketing extends Vue {
     /** 마케팅 신청 가능여부 */
     get isMarketing() {
-        const authStorage:
-            | AuthResponse['loginInfo']['data']
-            | null = JSON.parse(localStorage.getItem('auth') || 'null')
+        const authStorage: AuthState['loginInfo'] | null = JSON.parse(
+            localStorage.getItem('auth') || 'null',
+        )
         const auth = authStorage || { mrktPsyn: 'N' }
         return auth.mrktPsyn === 'Y'
     }

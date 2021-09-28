@@ -74,7 +74,6 @@
 <script lang="ts">
 import { Component, Prop, Watch, Mixins, Ref } from 'vue-property-decorator'
 import Validates from '@utils/mixins/Validates'
-import type { BottomSheetOptionItem } from '@components/common/BottomSheet.vue'
 import type { DropdownBoxList } from './DropdownBox.vue'
 
 export interface OnChangeParameters {

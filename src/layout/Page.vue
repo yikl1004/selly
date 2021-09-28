@@ -1,5 +1,5 @@
 <template>
-    <div class="layout-default">
+    <div class="layout-default" :class="{ noFooter: !footer }">
         <slot />
         <FixedBtnBox v-if="floating"></FixedBtnBox>
         <Footer v-if="footer" />

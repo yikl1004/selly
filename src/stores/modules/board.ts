@@ -1,43 +1,37 @@
 import { Module, VuexModule, MutationAction, getModule, Mutation } from 'vuex-module-decorators'
-import BoardService, { BoardResponse, BoardParameters } from '@services/board'
+import BoardService from '@services/board'
 import store from '@stores/index'
 import { $dayjs } from '@utils/plugins/dayjs'
 import toNumber from 'lodash/toNumber'
+import { Responses, NoticeDetail, PolicyDetail, PolicyDetailDirect } from '@services/board.interface'
 
 export interface BoardState {
     noticePageNo: string
-    noticeList: NoticeListRes | null
-    noticeDetail: NoticeDetailRes | null
+    noticeList: Responses['noticeList'] | null
+    noticeDetail: Responses['noticeDetail'] | null
     faqCategoryCode: string
     faqPageNo: string
-    faqList: FaqListRes | null
-    faqCategory: FaqCategoryRes | null
+    faqList: Responses['faqList'] | null
+    faqCategory: Responses['faqCategory'] | null
     policyPageNo: string
-    policyList: PolicyListRes | null
-    policyDetail: PolicyDetailRes | null
+    policyList: Responses['policyList'] | null
+    policyDetail: Responses['policyDetail'] | null
+    policyDetailDirect: Responses['policyDetailDirect'] | null
 }
-
-type NoticeListRes = BoardResponse['noticeList']
-type NoticeDetailRes = BoardResponse['noticeDetail']
-type FaqListRes = BoardResponse['faqList']
-type FaqCategoryRes = BoardResponse['faqCategory']
-type PolicyListRes = BoardResponse['policyList']
-type PolicyDetailRes = BoardResponse['policyDetail']
-type PolicyDetailDirectRes = BoardResponse['policyDetailDirect']
 
 @Module({ name: 'board', namespaced: true, dynamic: true, store })
 export default class Board extends VuexModule {
     public noticePageNo = '1'
-    public noticeList: NoticeListRes | null = null
-    public noticeDetail: NoticeDetailRes | null = null
+    public noticeList: BoardState['noticeList'] = null
+    public noticeDetail: BoardState['noticeDetail'] = null
     public faqCategoryCode = ''
     public faqPageNo = '1'
-    public faqList: FaqListRes | null = null
-    public faqCategory: FaqCategoryRes | null = null
+    public faqList: BoardState['faqList'] = null
+    public faqCategory: BoardState['faqCategory'] = null
     public policyPageNo = '1'
-    public policyList: PolicyListRes | null = null
-    public policyDetail: PolicyDetailRes | null = null
-    public policyDetailDirect: PolicyDetailDirectRes | null = null
+    public policyList: BoardState['policyList'] = null
+    public policyDetail: BoardState['policyDetail'] = null
+    public policyDetailDirect: BoardState['policyDetailDirect'] = null
 
     @Mutation
     changeFaqCategory(categoryCode: string) {
@@ -68,22 +62,24 @@ export default class Board extends VuexModule {
         const isFirstPage = pageNo === '1'
         const { data } = await BoardService.getNoticeList({ pageNo })
 
-        return {
-            noticeList: isFirstPage
-                ? data
-                : {
-                      ...data,
-                      data: {
-                          ...data.data,
-                          list: state.noticeList?.data.list.concat(data.data.list),
+        if (data) {
+            return {
+                noticeList: isFirstPage
+                    ? data
+                    : {
+                          ...data,
+                          data: {
+                              ...data.data,
+                              list: state.noticeList ? state.noticeList.data.list.concat(data.data.list) : data.data.list,
+                          },
                       },
-                  },
-            noticePageNo: data.data.moreYn === 'Y' ? nextPageNo : pageNo,
+                noticePageNo: data.data.moreYn === 'Y' ? nextPageNo : pageNo,
+            }
         }
     }
 
     @MutationAction
-    async getNoticeDetail(params: BoardParameters['noticeDetail']) {
+    async getNoticeDetail(params: NoticeDetail['Req']) {
         const { data } = await BoardService.getNoticeDetail(params)
         return {
             noticeDetail: data,
@@ -99,29 +95,34 @@ export default class Board extends VuexModule {
             faqCtgDc,
         })
 
-        return {
-            faqList:
-                faqPageNo === '1'
-                    ? data
-                    : {
-                          ...data,
-                          data: {
-                              ...data.data,
-                              list: faqList?.data.list.concat(data.data.list),
+        if (data) {
+            return {
+                faqList:
+                    faqPageNo === '1'
+                        ? data
+                        : {
+                              ...data,
+                              data: {
+                                  ...data.data,
+                                  list: faqList?.data.list.concat(data.data.list),
+                              },
                           },
-                      },
+            }
         }
     }
 
     @MutationAction
     async getFaqCategory() {
         const { data } = await BoardService.getFaqCategory()
-        data.data.list.unshift({
-            faqCtgDc: '',
-            faqCtgNm: '전체',
-        })
-        return {
-            faqCategory: data,
+
+        if (data) {
+            data.data.list.unshift({
+                faqCtgDc: '',
+                faqCtgNm: '전체',
+            })
+            return {
+                faqCategory: data,
+            }
         }
     }
 
@@ -134,22 +135,24 @@ export default class Board extends VuexModule {
             comGrpC: 'AGR_COM',
         })
 
-        return {
-            policyList: params?.more
-                ? {
-                      ...data,
-                      data: {
-                          ...data.data,
-                          list: policyList?.data.list.concat(data.data.list),
-                      },
-                  }
-                : data,
-            policyPageNo: nextPage,
+        if (data) {
+            return {
+                policyList: params?.more
+                    ? {
+                          ...data,
+                          data: {
+                              ...data.data,
+                              list: policyList?.data.list.concat(data.data.list),
+                          },
+                      }
+                    : data,
+                policyPageNo: nextPage,
+            }
         }
     }
 
     @MutationAction
-    async getPolicyDetail(params: BoardParameters['policyDetail']) {
+    async getPolicyDetail(params: PolicyDetail['Req']) {
         const { data } = await BoardService.getPolicyDetail(params)
         return {
             policyDetail: data,
@@ -158,7 +161,7 @@ export default class Board extends VuexModule {
 
     // 직접 호출 케이스 3번
     @MutationAction
-    async getPolicyDetailDirect(params: BoardParameters['policyDetailDirect']) {
+    async getPolicyDetailDirect(params: PolicyDetailDirect['Req']) {
         const { data } = await BoardService.getPolicyDetailDirect(params)
         return {
             policyDetailDirect: data,

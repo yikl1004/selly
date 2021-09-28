@@ -76,9 +76,8 @@ import PriceList from '@components/sales/PriceList.vue'
 import LineChart from '@components/common/LineChart.vue'
 import DepositHistory from '@components/sales/DepositHistory.vue'
 import BaseInfo from '@components/sales/BaseInfo.vue'
-import type { Status } from '@stores/modules/sales'
-import type { BottomSheetOptionItem } from '@components/common/BottomSheet.vue'
 import Chart from 'chart.js'
+import type { Status } from '@stores/modules/sales'
 @Component({
     components: {
         LineChart,

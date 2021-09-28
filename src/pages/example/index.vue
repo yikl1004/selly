@@ -21,14 +21,14 @@
 </template>
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import type { BottomSheetOptionItem } from '@components/common/BottomSheet.vue'
-import type { DropdownBoxList } from '@components/form/DropdownBox.vue'
 import ConvertDoughnut from '@components/common/ConvertDoughnut.vue'
 import ConvertBar from '@components/common/ConvertBar.vue'
 import ConvertPie from '@components/common/ConvertPie.vue'
 import Chart from 'chart.js'
 import patternnomaly from 'patternomaly'
+import type { DropdownBoxList } from '@components/form/DropdownBox.vue'
 // import { FinanceModule } from '@stores/modules/finance'
+
 @Component({
     // directives: { ClickOutside },
     // components: { DoughnutChart },

@@ -10,7 +10,7 @@
                     <div class="franchisee-list">
                         <ul>
                             <li
-                                v-for="(item, index) in franchiseList"
+                                v-for="(item, index) in franchiseInfoListData"
                                 :key="`franchise-list-${index}`"
                             >
                                 <Radio
@@ -18,7 +18,6 @@
                                     name="franchise-list"
                                     :label="item.mcNm"
                                     :value="item.mcno"
-                                    :disabled="item.mrktXBtYn === 'Y'"
                                     :checked="index === 0"
                                     @change="onChangeFranchiseSelect($event)"
                                 />
@@ -27,7 +26,7 @@
                     </div>
                     <!--[D] 더보기 클릭시 더보기버튼 비노출-->
                     <BasicButton
-                        v-if="franchiseList.length > 5"
+                        v-if="franchiseInfoListData.length > 5"
                         type="more"
                         @click="onMore"
                     >
@@ -35,36 +34,38 @@
                     </BasicButton>
                 </div>
 
-                <div v-if="franchiseInfo" class="box-franchisee-info">
+                <div v-if="franchiseInfoItemData" class="box-franchisee-info">
                     <ul>
                         <li>
                             <strong>가맹점번호</strong>
                             <p>
                                 <span>
-                                    {{ franchiseInfo.mcno }}
+                                    {{ franchiseInfoItemData.mcno }}
                                     -
-                                    {{ franchiseInfo.mcNm }}
+                                    {{ franchiseInfoItemData.mcNm }}
                                 </span>
                             </p>
                         </li>
                         <li>
                             <strong>주소</strong>
                             <p>
-                                <span>{{ franchiseInfo.mcPsno }}</span>
+                                <span>{{ franchiseInfoItemData.psno }}</span>
                                 <span>
-                                    {{ franchiseInfo.pnadd }}
-                                    {{ franchiseInfo.bpsnoAdd }}
+                                    {{ franchiseInfoItemData.mcAdd }}
                                 </span>
                             </p>
                         </li>
                         <li>
                             <strong>전화번호</strong>
                             <p>
-                                <span>{{ franchiseInfo.mcTlno }}</span>
+                                <span>{{ franchiseInfoItemData.tlno }}</span>
                             </p>
                         </li>
                     </ul>
-                    <div class="btn-area">
+                    <div
+                        v-if="franchiseInfoItemData.aplPsYn === 'Y'"
+                        class="btn-area"
+                    >
                         <BasicButton type="textBlue" @click="toBusiness">
                             매장 정보 변경하기
                         </BasicButton>
@@ -81,14 +82,17 @@
 </template>
 
 <script lang="ts">
-import { Component, Mixins } from 'vue-property-decorator'
+import { Component, Mixins, Watch } from 'vue-property-decorator'
 import PageView from '@utils/mixins/PageView'
-import { MarketingModule } from '@stores/modules/marketing'
+import {
+    NewMarketingModule,
+    NewMarketingState,
+} from '@stores/modules/newMarketing'
 import { Path } from '@router/routes'
 
 @Component
 export default class StepFirstPage extends Mixins(PageView) {
-    /* 더보기버튼 */
+    /** 더보기 */
     private isActive = false
 
     /** 주의사항 */
@@ -99,27 +103,53 @@ export default class StepFirstPage extends Mixins(PageView) {
         },
     ]
 
-    /** 다음 버튼 비활성화 여부 */
-    private nextDisabled = true
-
-    /** 가맹점 리스트 */
-    get franchiseList() {
-        return MarketingModule.franchiseList
+    /** 가맹점 정보 리스트 */
+    get franchiseInfoListData() {
+        return NewMarketingModule.franchiseInfoListData
     }
 
-    /** 선택된 가맹점에 대한 유효성 검사 결과 */
-    get step1ValidateResult() {
-        return MarketingModule.step1ValidateResult
+    /** 선택된 가맹점 정보 */
+    get franchiseInfoItemData() {
+        return NewMarketingModule.franchiseInfoItemData
     }
 
-    /** 선택된 가맹점 정보(store) */
-    get franchiseInfo() {
-        return MarketingModule.franchiseInfoData
+    /** 가맹점 정보 저장 결과 */
+    get franchiseInfoSaveResult() {
+        return NewMarketingModule.franchiseInfoSaveResult
+    }
+
+    @Watch('franchiseInfoSaveResult')
+    changeFranchiseInfoSaveResult(
+        value: NewMarketingState['franchiseInfoSave'],
+    ) {
+        if (value && value.rc === '0000') {
+            this.$router.push(Path.NewMarketingStepSecond)
+        } else {
+            // TODO: 메세징 처리
+        }
+    }
+
+    /**
+     * 가맹점 라디오버튼 선택시
+     * @param {string} value
+     */
+    onChangeFranchiseSelect(value: string) {
+        const selectedIndex = this.getSelectedFranchiseList(value)
+
+        if (selectedIndex > -1) {
+            NewMarketingModule.setFranchiseInfo(selectedIndex)
+        }
     }
 
     /** 사업자 정보 페이지로 이동 */
     toBusiness() {
         this.$router.push(Path.Business)
+    }
+
+    /** 다음 버튼 */
+    async nextStep() {
+        // nothing
+        await NewMarketingModule.setFranchiseInfoSave()
     }
 
     /* 더보기 버튼 액션 */
@@ -129,85 +159,14 @@ export default class StepFirstPage extends Mixins(PageView) {
 
     /** 선택된 가맹점 */
     getSelectedFranchiseList(mcno: string) {
-        return this.franchiseList.find(item => item.mcno === mcno)
+        return this.franchiseInfoListData.findIndex(item => item.mcno === mcno)
     }
 
-    onChangeFranchiseSelect(value: string) {
-        const selected = this.getSelectedFranchiseList(value)
-
-        if (selected) {
-            MarketingModule.setFranchiseInfo(selected)
-            MarketingModule.setTheLastData({
-                mcno: selected.mcno,
-            })
-        }
-    }
-
-    async nextStep() {
-        this.nextDisabled = true
-
-        if (this.franchiseInfo) {
-            MarketingModule.setTheLastData({
-                mcno: this.franchiseInfo.mcno,
-            })
-            await MarketingModule.getValidatePossibleApplyFranchiseList({
-                mcno: this.franchiseInfo.mcno as string,
-            })
-
-            const rspDc = this.step1ValidateResult?.rspDc
-            const rspDcMsg = this.step1ValidateResult?.rspDcMsg
-
-            if (rspDc === '0000') {
-                // 성공
-                this.$router.push(Path.MarketingStepSecond)
-            } else if (rspDc) {
-                this.openModal({ rspDc, rspDcMsg })
-            }
-        }
-        this.nextDisabled = true
-    }
-
-    /**
-     * @param {string} value 업무구분 코드
-     * 3101: 유해업종
-     * 3102: 가맹점 정보 변경된 3일 이전인 경우(접속당일 가맹점 정보 변경)
-     * 3103: 위도/경도 정보 없음
-     * @param {string} message 구분코드에 따른 메세지
-     */
-    openModal(params: {
-        rspDc: '3101' | '3102' | '3103' | '9999'
-        rspDcMsg?: string
-    }) {
-        if (params.rspDc && params.rspDcMsg) {
-            const cases = {
-                '3101': {},
-                '3102': {},
-                '3103': {
-                    buttonText: {
-                        confirm: '변경하기',
-                        cancel: '닫기',
-                    },
-                    confirm: () => this.$router.push(Path.Business),
-                },
-                '9999': {},
-                default: '',
-            }
-
-            this.$modal.open({
-                message: params.rspDcMsg,
-                ...cases[params.rspDc || 'default'],
-            })
-        }
-    }
-
-    /** @Lifecycle */
-    async created() {
-        await MarketingModule.getPossibleApplyFranchiseList()
-        const list = this.franchiseList
-        if (list && list.length) {
-            MarketingModule.setFranchiseInfo(list[0])
-        }
-        MarketingModule.setInitTheLastData()
+    async mounted() {
+        /** 가맹점 정보 호출 */
+        await NewMarketingModule.getFranchiseInfo()
+        /** 초기값 세팅 */
+        NewMarketingModule.setFranchiseInfo(0)
     }
 }
 </script>

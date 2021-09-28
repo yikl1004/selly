@@ -195,8 +195,9 @@ module.exports = {
         },
         {
             files: ['src/**/*.vue'],
-            // globals: {
-            // },
+            globals: {
+                BottomSheetOptionItem: 'readonly',
+            },
             rules: {
                 'prettier/prettier': [
                     'error',
@@ -226,7 +227,7 @@ module.exports = {
             },
         },
 
-        // TODO: 예외 처리, 금융 store 작업 전이어서 any처리, 개발 할때 수정 필요
+        // FIXME: 예외 처리, 금융 store 작업 전이어서 any처리, 개발 할때 수정 필요
         {
             files: ['src/stores/modules/finance.ts'],
             rules: {

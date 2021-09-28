@@ -74,10 +74,9 @@
 import { Component, Vue } from 'vue-property-decorator'
 import MarketingBanner from '@components/marketing/MarketingBanner.vue'
 import { MktStatementModule } from '@stores/modules/mktStatement'
+import { Path } from '@router/routes'
 import type { MarketingStatus } from '@services/marketing'
 import type { DropdownBoxList } from '@components/form/DropdownBox.vue'
-import type { BottomSheetOptionItem } from '@components/common/BottomSheet.vue'
-import { Path } from '@router/routes'
 
 @Component({
     components: { MarketingBanner },

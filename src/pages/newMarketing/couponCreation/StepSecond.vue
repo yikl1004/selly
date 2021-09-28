@@ -189,11 +189,12 @@
                     </div>
                 </div>
                 <Title title="예상 결과" type="h3" />
-                <ApplyResult
-                    :target="estimateResult.target"
-                    :selectRatio="estimateResult.selectRatio"
-                    :salesAverage="estimateResult.salesAverage"
-                />
+                <!-- <ApplyResult
+                        v-if="estimateResult"
+                        :target="estimateResult.target"
+                        :selectRatio="estimateResult.selectRatio"
+                        :salesAverage="estimateResult.salesAverage"
+                    /> -->
                 <BulletList :list="infoResult" />
                 <RecommenderBox
                     @check="onCheckRecommender"
@@ -202,11 +203,7 @@
             </div>
 
             <portal to="floating">
-                <BasicButton
-                    size="large"
-                    :disabled="theLastFormData.list.length === 0"
-                    @click="nextStep"
-                >
+                <BasicButton size="large" :disabled="false" @click="nextStep">
                     다음
                 </BasicButton>
             </portal>
@@ -217,14 +214,11 @@
 <script lang="ts">
 import { Component, Vue, Watch } from 'vue-property-decorator'
 import ApplyResult from '@components/marketing/ApplyResult.vue'
-import {
-    ApplyValidateCheckRes,
-    MarketingModule,
-} from '@stores/modules/marketing'
+import { NewMarketingModule } from '@stores/modules/newMarketing'
+import { Path } from '@router/routes'
 import type { CustomerItem } from '@stores/modules/marketing'
 import type { RadioProps } from '@components/form/Radio.vue'
 import type { Period } from '@components/form/CalendarField.vue'
-import { Path } from '@router/routes'
 
 type Customer =
     | 'first' // 첫 고객
@@ -297,92 +291,51 @@ export default class StepSecondPage extends Vue {
     get marketingTarget() {
         return {
             /** 첫 고객 수 */
-            firstCustomer: MarketingModule.marketingTargetData?.newEvOjpT,
+            firstCustomer: '0',
             /** 첫 고객 수 PUSH */
-            firstCustomerPush: MarketingModule.marketingTargetData?.newPushOjpT,
+            firstCustomerPush: '0',
             /** 단골 고객 수 */
-            regularCustomer: MarketingModule.marketingTargetData?.odEvOjpT,
+            regularCustomer: '0',
             /** 단골 고객 수 PUSH */
-            regularCustomerPush:
-                MarketingModule.marketingTargetData?.odPushOjpT,
+            regularCustomerPush: '0',
         }
     }
 
     /** 사업자 번호, 가맹점 번호 */
     get requiredData(): RequiredData {
-        const franchiseInfo = MarketingModule.franchiseInfo
         return {
-            mcno: franchiseInfo?.mcno as string,
-            bzno: franchiseInfo?.bzno as string,
+            mcno: '0000',
+            bzno: '0000',
         }
-    }
-
-    /** store에 저장된 form data */
-    get theLastFormData() {
-        return MarketingModule.theLastFormData
-    }
-
-    /** 전년 동기간 매출 평균 */
-    get lastYearSalesAverage() {
-        return MarketingModule.lastYearSalesAverageData
     }
 
     /** 예상 결과 */
     get estimateResult() {
-        return {
-            // 행사 대상자 수
-            target: {
-                first: this.marketingTarget.firstCustomer || '0',
-                regular: this.marketingTarget.regularCustomer || '0',
-            },
-            // 선택된 할인율
-            selectRatio: this.theLastFormData.list.reduce(
-                (acc, cv) => {
-                    const key: 'first' | 'regular' =
-                        cv.ggDc === '1' ? 'first' : 'regular'
-                    acc[key] = cv.bnfDcR
-
-                    return acc
-                },
-                { first: '0', regular: '0' } as {
-                    first?: string
-                    regular?: string
-                },
-            ),
-            // 평균 매출
-            salesAverage: {
-                first: this.lastYearSalesAverage.first?.slAv || '0',
-                regular: this.lastYearSalesAverage.regular?.slAv || '0',
-            },
-        }
+        // TODO: 예상 수익 결과: 별도 API 존재
+        return null
     }
 
-    /** 추천인 코드 확인 결과 반환 */
-    get checkRecommenderResult() {
-        return MarketingModule.checkRecommenderResult
-    }
-
-    /** 마케팅 신청 유효성 검사 반환 */
-    get applyValidateResultData() {
-        return MarketingModule.applyValidateResultData
-    }
-
+    /**
+     * TODO: 신청 API 호출 후 결과값에 따른 처리
+     * 0000: step3 로 이동
+     * 그 외: 메세징 처리
+     */
     @Watch('applyValidateResultData')
-    changeApplyValidateResultData(value: ApplyValidateCheckRes | null) {
-        console.log('@@@@@@@', value)
-        if (value?.data.rspDc === '0000') {
-            this.$router.push(Path.MarketingStepThird)
-        } else {
-            this.$modal.open({
-                message: value?.data.rspDcMsg || '',
-                buttonText: {
-                    confirm: '확인',
-                },
-                confirm: () => {
-                    // nothing
-                },
-            })
-        }
+    changeApplyValidateResultData(value: object) {
+        console.log({ value })
+        // if (value?.data.rspDc === '0000') {
+        //     this.$router.push(Path.MarketingStepThird)
+        // } else {
+        //     this.$modal.open({
+        //         message: value?.data.rspDcMsg || '',
+        //         buttonText: {
+        //             confirm: '확인',
+        //         },
+        //         confirm: () => {
+        //             // nothing
+        //         },
+        //     })
+        // }
     }
 
     /** 날짜 서식 */
@@ -391,46 +344,25 @@ export default class StepSecondPage extends Vue {
     }
 
     /** 다음 스텝 */
-    async nextStep() {
-        await MarketingModule.applyValidateCheck()
+    nextStep() {
+        // TODO: 신청 API 호출
     }
 
     /** 할인율 변경(radio) */
     onChangDiscountRate(type: Customer, value: string) {
-        console.log(type, value)
-        this.setCustomerData(type, {
-            bnfDcR: value,
-        })
+        console.log({ type, value })
     }
 
     /** 추천인 코드 선택 했을 경우 - 체크박스 */
     onCheckRecommender(recommenderCode: boolean) {
+        // TODO: API 형식에 따라 data로 저장 할지 store로 저장 할지 결정 해야함
         this.recommenderCode = recommenderCode
-
-        MarketingModule.setTheLastData({
-            refInYn: recommenderCode ? 'Y' : 'N',
-        })
     }
 
     /** 추천인 코드 확인 버튼 */
-    async onSearchRecommender(value: string) {
-        await MarketingModule.getCheckRecommenderCode({ rfeC: value })
-
-        if (this.checkRecommenderResult) {
-            const code = this.checkRecommenderResult.rspDc
-            const message = this.checkRecommenderResult.rspDcMsg
-            if (['3201', '3202'].some(item => item === code)) {
-                this.$modal.open({
-                    message,
-                    buttonText: {
-                        confirm: '확인',
-                    },
-                    confirm: () => {
-                        // nothing
-                    },
-                })
-            }
-        }
+    onSearchRecommender(value: string) {
+        // TODO: 추천인 코드 확인 API 호출
+        console.log({ value })
     }
 
     /** 활성화 상태 css class 반환 (toggle) */
@@ -440,20 +372,7 @@ export default class StepSecondPage extends Vue {
 
     /** 고객(첫, 단골) 별 데이터 세팅 */
     setCustomerData(type: Customer, value: Partial<CustomerItem>) {
-        const keyMap: { [key: string]: '1' | '2' } = {
-            first: '1',
-            regular: '2',
-        }
-        const currentKey = keyMap[type]
-        const originData = this.theLastFormData.list.find(
-            item => item.ggDc === currentKey,
-        )
-
-        MarketingModule.setCustomerList({
-            ...(originData || {}),
-            ggDc: currentKey,
-            ...value,
-        } as CustomerItem)
+        console.log({ type, value })
     }
 
     /* 체크박스 체크시 내용 토글됨 */
@@ -475,17 +394,17 @@ export default class StepSecondPage extends Vue {
                         ? this.marketingTarget.firstCustomer
                         : this.marketingTarget.regularCustomer,
             })
-            this.inquirySalesAverage(value, this.period)
+            // this.inquirySalesAverage(value, this.period)
         } else {
             this.isActive = this.isActive.filter(item => item !== value)
-            MarketingModule.removeCustomerListItem(
-                value === 'first' ? '1' : '2',
-            )
+            // MarketingModule.removeCustomerListItem(
+            //     value === 'first' ? '1' : '2',
+            // )
         }
     }
 
     /** 캘린더 기간이 변경 될 경우 */
-    async onChangePeriod(type: Customer, { value }: { value: Period }) {
+    onChangePeriod(type: Customer, { value }: { value: Period }) {
         const period = this.$dayjs(value.end).diff(
             this.$dayjs(value.start).toDate(),
             'day',
@@ -496,7 +415,7 @@ export default class StepSecondPage extends Vue {
                 evSdt: this.makeFormattedDate(value.start),
                 evEdt: this.makeFormattedDate(value.end),
             })
-            await this.inquirySalesAverage(type, value)
+            // await this.inquirySalesAverage(type, value)
         } else {
             this.$modal.open({
                 message:
@@ -511,77 +430,15 @@ export default class StepSecondPage extends Vue {
         }
     }
 
-    /**
-     * 전년 동일기간 매출 평균 조회
-     * @description 첫고객, 단골고객 각각 행사기간 변경 시 조회
-     */
-    async inquirySalesAverage(type: Customer, period: Period) {
-        if (type !== 'first' && type !== 'regular') {
-            return
-        }
+    async mounted() {
+        // const franchiseInfo = MarketingModule.franchiseInfoData
+        // this.infoResult.push({
+        //     text: `행사 비용(할인혜택)은 <strong>${franchiseInfo?.mcNm}</strong> 가맹점 대금에서 차감되는 금액으로, 방문고객 수와 고객의 결제금액에 따라 변경될 수 있습니다.`,
+        // })
 
-        await MarketingModule.getLastYearSalesAverage({
-            type,
-            params: {
-                mcno: this.requiredData.mcno,
-                evSdt: this.makeFormattedDate(period.start),
-                evEdt: this.makeFormattedDate(period.end),
-            },
-        })
-
-        this.theLastFormData.list.forEach(item => {
-            let type: Customer
-            let evBefSlAv: string
-
-            if (item.ggDc === '1') {
-                type = 'first'
-                evBefSlAv = this.lastYearSalesAverage.first?.slAv || '0'
-            } else {
-                type = 'regular'
-                evBefSlAv = this.lastYearSalesAverage.regular?.slAv || '0'
-            }
-
-            this.setCustomerData(type, { evBefSlAv })
-        })
-    }
-
-    handelPageValidate() {
-        if (!this.theLastFormData.mcno) {
-            const back = () => this.$router.back()
-
-            this.$modal.open({
-                message: '정보가 유실되었습니다.',
-                buttonText: {
-                    confirm: '확인',
-                },
-                confirm: back,
-                cancel: back,
-            })
-        }
-    }
-
-    /** @Lifecycle */
-
-    async created() {
-        const { mcno, bzno } = this.requiredData
-        await MarketingModule.getMarketingTarget({ mcno, bzno })
-    }
-
-    mounted() {
-        const franchiseInfo = MarketingModule.franchiseInfoData
-        this.infoResult.push({
-            text: `행사 비용(할인혜택)은 <strong>${franchiseInfo?.mcNm}</strong> 가맹점 대금에서 차감되는 금액으로, 방문고객 수와 고객의 결제금액에 따라 변경될 수 있습니다.`,
-        })
-        this.handelPageValidate()
-    }
-
-    updated() {
-        this.handelPageValidate()
+        await NewMarketingModule.getCreateCouponDefaultInfo()
     }
 }
-
-// async applyValidateCheck(params: MarketingParameters['applyValidateCheck']) {
-// get applyValidateResultData() {
 </script>
 
 <style lang="scss" scoped src="./StepSecond.scss"></style>

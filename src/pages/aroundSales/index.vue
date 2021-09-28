@@ -462,7 +462,7 @@
                 :button-text="{ confirm: '선택 완료' }"
                 @confirm="onMapAreaConfirm"
             >
-                <PopupMapArea />
+                <PopupMapArea mcAdmdC="1126060000" />
             </FullPopup>
             <!--//[D] 쿠폰 미리보기 팝업 -->
         </PageBody>

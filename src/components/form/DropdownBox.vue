@@ -38,7 +38,6 @@
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 import { MessageType } from '@components/common/TextInputMessage.vue'
 // import { FormBus, FormUpdateEvent } from './FormProvider.vue'
-import type { BottomSheetOptionItem } from '@components/common/BottomSheet.vue'
 
 /**
  * @description "list" props의 타입(DropdownBox의 'list' Props)

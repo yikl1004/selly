@@ -15,10 +15,10 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import { AuthModule } from '@stores/modules/auth'
+import { Path } from '@router/routes'
 import SelectStore from '@pages/auth/SelectStore.vue'
 import UnableJoin from '@pages/auth/UnableJoin.vue'
-import type { BizInfoItem } from '@services/auth'
-import { Path } from '@router/routes'
+import type { BizInfoItem } from '@services/auth.interface'
 
 @Component({
     components: {

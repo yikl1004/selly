@@ -1,50 +1,43 @@
 import { Module, VuexModule, MutationAction, Mutation, getModule } from 'vuex-module-decorators'
 import store from '@stores/index'
-import AuthService, { AuthResponse, AuthParameters } from '@services/auth'
+import AuthService from '@services/auth'
 import { basicUtil } from '@utils/mixins'
 import { $dayjs } from '@utils/plugins/dayjs'
-
-interface BottomSheetOptionItem {
-    displayName: string
-    value: string
-    selected?: boolean
-}
+import type {
+    BizInfo,
+    ChangeBusinessManName,
+    ChangeFranchiseDetail,
+    DatusLoginInfo,
+    LoginInfo,
+    MarketingUpdate,
+    RecommenderCode,
+    Responses,
+} from '@services/auth.interface'
 
 export interface AuthState {
-    loginInfo: LoginInfo | null
-    kakaoUserInfo: UserInfo | null
-    memberWorkplaceInfo: MemberWorkplaceInfo | null
-    // mainInfo: MainInfo | null
-    bizInfo: BizInfo | null
-    logoutInfo: LogoutInfo | null
-    inputRecommenderCodeResult: RecommenderCode | null
-    memberInfo: MemberInfo
-    withdrawalResult: WithdrawalInfo
+    loginInfo: Responses['loginInfo']['data'] | null
+    kakaoUserInfo: LoginInfo['Req'] | null
+    datusLoginInfo: Responses['datusLoginInfo'] | null
+    memberWorkplaceInfo: Responses['memberWorkplaceInfo'] | null
+    bizInfo: Responses['memberWorkplaceInfo'] | null
+    logoutInfo: Responses['logoutInfo'] | null
+    inputRecommenderCodeResult: Responses['recommenderCode'] | null
+    memberInfo: Responses['memberInfo'] | null
+    withdrawalResult: Responses['withdrawal']['data'] | null
+    businessManInfo: Responses['businessMainInfo']['data'] | null
+    franchiseDetail: Responses['franchiseDetail']['data'] | null
 }
-
-export type UserInfo = AuthParameters['loginInfo']
-export type LoginInfo = AuthResponse['loginInfo']['data']
-export type DatusLoginInfo = AuthResponse['datusLoginInfo']
-export type MemberWorkplaceInfo = AuthResponse['memberWorkplaceInfo']
-// export type MainInfo = AuthResponse['mainInfo']
-export type BizInfo = AuthResponse['bizInfo']
-export type LogoutInfo = AuthResponse['logoutInfo']
-export type RecommenderCode = AuthResponse['recommenderCode']
-export type MemberInfo = AuthResponse['memberInfo']
-export type WithdrawalInfo = AuthResponse['withdrawal']['data']
-export type BusinessManInfo = AuthResponse['businessMainInfo']['data']
-export type FranchiseDetail = AuthResponse['franchiseDetail']['data']
 
 @Module({ name: 'auth', namespaced: true, dynamic: true, store })
 export default class Auth extends VuexModule {
-    public loginInfo: LoginInfo | null = null
-    public kakaoUserInfo: UserInfo | null = null
-    public datusLoginInfo: DatusLoginInfo | null = null
-    public memberWorkplaceInfo: MemberWorkplaceInfo | null = null
-    public bizInfo: BizInfo | null = null
-    public logoutInfo: LogoutInfo | null = null
-    public inputRecommenderCodeResult: RecommenderCode | null = null
-    public memberInfo: MemberInfo = {
+    public loginInfo: AuthState['loginInfo'] = null
+    public kakaoUserInfo: AuthState['kakaoUserInfo'] = null
+    public datusLoginInfo: AuthState['datusLoginInfo'] | null = null
+    public memberWorkplaceInfo: AuthState['memberWorkplaceInfo'] = null
+    public bizInfo: AuthState['bizInfo'] = null
+    public logoutInfo: AuthState['logoutInfo'] = null
+    public inputRecommenderCodeResult: AuthState['inputRecommenderCodeResult'] = null
+    public memberInfo: AuthState['memberInfo'] = {
         rc: '0000',
         rsMsg: '',
         data: {
@@ -57,10 +50,10 @@ export default class Auth extends VuexModule {
             datusYn: 'N',
         },
     }
-    public withdrawalResult: WithdrawalInfo | null = null
+    public withdrawalResult: AuthState['withdrawalResult'] = null
     public cancelGuideList: { text: string }[] = []
-    public businessManInfo: BusinessManInfo | null = null
-    public franchiseDetail: FranchiseDetail | null = null
+    public businessManInfo: AuthState['businessManInfo'] = null
+    public franchiseDetail: AuthState['franchiseDetail'] = null
 
     @Mutation
     selectBusinessMan(bzno: string) {
@@ -88,12 +81,12 @@ export default class Auth extends VuexModule {
     }
 
     @Mutation
-    setUserInfo(userInfo: UserInfo) {
+    setUserInfo(userInfo: AuthState['kakaoUserInfo']) {
         this.kakaoUserInfo = userInfo
     }
 
     @MutationAction
-    async getDatusLoginInfo(params: AuthParameters['datusLoginInfo']) {
+    async getDatusLoginInfo(params: DatusLoginInfo['Req']) {
         const { data } = await AuthService.getDatusLoginInfo(params)
         return {
             datusLoginInfo: data,
@@ -103,14 +96,14 @@ export default class Auth extends VuexModule {
     @MutationAction
     async getLoginInfo() {
         const state = this.state as AuthState
-        const { data } = await AuthService.getLoginInfo(state.kakaoUserInfo as UserInfo)
+        const { data } = await AuthService.getLoginInfo(state.kakaoUserInfo as NonNullable<AuthState['kakaoUserInfo']>)
 
-        if (data.rc === '0000') {
+        if (data && data.rc === '0000') {
             localStorage.setItem('auth', JSON.stringify(Object.assign({}, data.data, { date: $dayjs().format('YYYY-MM-DD HH:mm:ss') })))
         }
 
         return {
-            loginInfo: data.data,
+            loginInfo: data ? data.data : null,
         }
     }
 
@@ -124,7 +117,7 @@ export default class Auth extends VuexModule {
     }
 
     @MutationAction
-    async getBizInfoInput(params: AuthParameters['bizInfo']) {
+    async getBizInfoInput(params: BizInfo['Req']) {
         const { data } = await AuthService.getBizInfoInput(params)
 
         return {
@@ -142,7 +135,7 @@ export default class Auth extends VuexModule {
     }
 
     @MutationAction
-    async inputRecommenderCode(params: AuthParameters['recommenderCode']) {
+    async inputRecommenderCode(params: RecommenderCode['Req']) {
         const { data } = await AuthService.inputRecommenderCode(params)
 
         return {
@@ -160,7 +153,7 @@ export default class Auth extends VuexModule {
     }
 
     @MutationAction
-    async setMarketingUpdate(params: AuthParameters['marketingUpdate']) {
+    async setMarketingUpdate(params: MarketingUpdate['Req']) {
         await AuthService.setMarketingUpdate(params)
         return {}
     }
@@ -177,14 +170,21 @@ export default class Auth extends VuexModule {
     @MutationAction
     async beforeWithdrawal() {
         const typedState = this.state as AuthState
-        const { mrktYn, datusYn, loanYn, bizLoanYn } = typedState.memberInfo.data
-        const params = { mrktYn, datusYn, loanYn, bizLoanYn }
-        const { data } = await AuthService.checkBeforeWithdrawal(params)
 
-        return {
-            cancelGuideList: (data.data.list || []).map(item => ({
-                text: item.rsgDesc,
-            })),
+        if (typedState.memberInfo) {
+            const { mrktYn, datusYn, loanYn, bizLoanYn } = typedState.memberInfo?.data
+            const params = { mrktYn, datusYn, loanYn, bizLoanYn }
+            const { data } = await AuthService.checkBeforeWithdrawal(params)
+
+            return {
+                cancelGuideList: data
+                    ? (data.data.list || []).map(item => ({
+                          text: item.rsgDesc,
+                      }))
+                    : [],
+            }
+        } else {
+            return {}
         }
     }
 
@@ -192,18 +192,20 @@ export default class Auth extends VuexModule {
     async getBusinessManInfo() {
         const { data } = await AuthService.getBusinessManInfo()
 
-        return {
-            businessManInfo: {
-                ...data.data,
-                list: [
-                    ...data.data.list.map((item, index) => {
-                        if (index === 0) {
-                            item.selected = true
-                        }
-                        return item
-                    }),
-                ],
-            },
+        if (data) {
+            return {
+                businessManInfo: {
+                    ...data.data,
+                    list: [
+                        ...data.data.list.map((item, index) => {
+                            if (index === 0) {
+                                item.selected = true
+                            }
+                            return item
+                        }),
+                    ],
+                },
+            }
         }
     }
 
@@ -212,18 +214,18 @@ export default class Auth extends VuexModule {
         const { data } = await AuthService.getFranchiseDetail({ mcno })
 
         return {
-            franchiseDetail: data.data,
+            franchiseDetail: data ? data.data : null,
         }
     }
 
     @MutationAction
-    async updateFranchiseDetail(params: AuthParameters['changeFranchiseDetail']) {
+    async updateFranchiseDetail(params: ChangeFranchiseDetail['Req']) {
         await AuthService.updateFranchiseDetail(params)
         return {}
     }
 
     @MutationAction
-    async updateBusinessManName(params: AuthParameters['changeBusinessManName']) {
+    async updateBusinessManName(params: ChangeBusinessManName['Req']) {
         await AuthService.updateBusinessManName(params)
         return {}
     }
@@ -247,7 +249,7 @@ export default class Auth extends VuexModule {
      * @description
      * getMemberWorkplaceInfo 액션을 통해 store에 적재된 가입가능한 사업장 리스트를 반환
      */
-    get workplaceList(): BizInfo['data']['list'] {
+    get workplaceList(): Responses['bizInfo']['data']['list'] {
         const { memberWorkplaceInfo } = this
 
         if (memberWorkplaceInfo && memberWorkplaceInfo.data) {
@@ -275,7 +277,7 @@ export default class Auth extends VuexModule {
      * @description
      * 사업자 정보 입력 등록이 완료된 리스트를 반환
      */
-    get bizInfoList(): BizInfo['data']['list'] {
+    get bizInfoList(): Responses['bizInfo']['data']['list'] {
         const { bizInfo } = this
 
         if (bizInfo && bizInfo.data && bizInfo.data.list) {
@@ -317,24 +319,28 @@ export default class Auth extends VuexModule {
      * @description
      * 회원정보 데이터를 반환
      */
-    get memberViewInfo(): MemberInfo['data'] {
+    get memberViewInfo(): Responses['memberInfo']['data'] | null {
         const { memberInfo } = this
 
-        return memberInfo.data
+        return memberInfo ? memberInfo.data : null
     }
 
     /**
      * @description
      * 마케팅, 대출, 장기카드biz론, 유쇼데 유/무
      */
-    get cancelGuideParams(): Pick<MemberInfo['data'], 'datusYn' | 'loanYn' | 'bizLoanYn' | 'mrktYn'> {
-        const { data } = this.memberInfo
+    get cancelGuideParams(): Pick<Responses['memberInfo']['data'], 'datusYn' | 'loanYn' | 'bizLoanYn' | 'mrktYn'> | null {
+        if (this.memberInfo) {
+            const { data } = this.memberInfo
 
-        return {
-            mrktYn: data.mrktYn,
-            datusYn: data.datusYn,
-            bizLoanYn: data.bizLoanYn,
-            loanYn: data.loanYn,
+            return {
+                mrktYn: data.mrktYn,
+                datusYn: data.datusYn,
+                bizLoanYn: data.bizLoanYn,
+                loanYn: data.loanYn,
+            }
+        } else {
+            return null
         }
     }
 

@@ -1,6 +1,7 @@
 import Vue from 'vue'
 export { default as Validates } from '@utils/mixins/Validates'
 import toNumber from 'lodash/toNumber'
+import toString from 'lodash/toString'
 
 interface ConvertBizNoFormatterParams {
     bizNo: string
@@ -68,6 +69,14 @@ export const basicUtil = {
      */
     seperateNumber(value?: string): string {
         return toNumber(value || '0').toLocaleString()
+    },
+
+    /**
+     * 개행문자를 br태그로 치환
+     * @param {string} value
+     */
+    newLine(str: string) {
+        return toString(str).replace(/(?:\r\n|\r|\n)/g, '</br>')
     },
 }
 

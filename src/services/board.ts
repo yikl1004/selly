@@ -1,213 +1,66 @@
-import { axiosInstance } from '@services/http'
-import { AxiosResponse } from 'axios'
-
-export interface BoardParameters {
-    /** @description 공지사항 목록 */
-    noticeList: {
-        // 페이지 번호
-        pageNo: string
-    }
-
-    /** @description 공지사항 상세 */
-    noticeDetail: {
-        // 공지사항 일련번호
-        anSeq: string
-    }
-
-    /** @description FAQ 조회 */
-    faqList: {
-        // 페이지 번호
-        pageNo: string
-        // 카테고리 구분 코드
-        faqCtgDc?: string
-    }
-
-    /** @description FAQ카테고리 조회 */
-    faqCategory: {}
-
-    /** @description 이용약관 목록 */
-    policyList: {
-        // 페이지 번호
-        pageNo: string
-        // 그룹코드
-        comGrpC: string
-    }
-
-    /** @description 이용약관 상세 */
-    policyDetail: {
-        prvSeq: string
-    }
-
-    /** @description 이용약관 상세 - 직접 호출*/
-    policyDetailDirect: {
-        comGrpC: string
-        comC: string
-    }
-}
-
-export interface BoardResponse {
-    noticeList: DefaultResponse<{
-        list: {
-            // 게시물 일련번호
-            anSeq: string
-            // 제목
-            anTitNm: string
-            // 주요공지 여부
-            mnAnYn: string
-            // 최초생성 일시
-            fstCrtDtti: string
-        }[]
-        // 더보기 여부
-        moreYn: YN
-        // 총 게시물 갯수
-        totalCnt: number
-    }>
-    noticeDetail: DefaultResponse<{
-        anCn: string
-        anTitNm: string
-        fstCrtDtti: number | string
-    }>
-    faqList: DefaultResponse<{
-        // FAQ 목록
-        list: {
-            // 카테고리 구분 코드
-            faqCtgDc: string
-            // 카테고리 명
-            faqCtgNm: string
-            // 제목
-            faqTitNm: string
-            // 내용
-            faqCnV: string
-        }[]
-        moreYn: YN
-        totalCnt: number
-    }>
-    faqCategory: DefaultResponse<{
-        // FAQ 카테고리 목록
-        list: {
-            // 카테고리 구분 코드
-            faqCtgDc: string
-            // 카테고리명
-            faqCtgNm: string
-        }[]
-    }>
-    policyList: DefaultResponse<{
-        // 이용약관 목록
-        list: {
-            // 일련번호
-            prvSeq: string
-            // 제목
-            prvTitNm: string
-        }[]
-        // 더보기 여부
-        moreYn: YN
-        // 총 갯수
-        totalCnt: number
-    }>
-    policyDetail: DefaultResponse<{
-        prvCn: string
-        prvTitNm: string
-    }>
-    policyDetailDirect: DefaultResponse<{
-        // 약관 일련번호
-        prvSeq: string
-        // 그룹코드
-        comGrpC: string
-        // 공통코드
-        comC: string
-        // 제목명
-        prvTitNm: string
-        // 이용약관 내용
-        prvCn: string
-        // 이용약관 번전 번호
-        prvVerNo: string
-    }>
-}
-
-type NoticeListRes = Promise<AxiosResponse<BoardResponse['noticeList']>>
-type NoticeDetailRes = Promise<AxiosResponse<BoardResponse['noticeDetail']>>
-type FaqListRes = Promise<AxiosResponse<BoardResponse['faqList']>>
-type FaqCategoryRes = Promise<AxiosResponse<BoardResponse['faqCategory']>>
-type PolicyListRes = Promise<AxiosResponse<BoardResponse['policyList']>>
-type PolicyDetailRes = Promise<AxiosResponse<BoardResponse['policyDetail']>>
-type PolicyDetailDirectRes = Promise<AxiosResponse<BoardResponse['policyDetailDirect']>>
+import { APIList, axiosInstance, createApi } from '@services/http'
+import {
+    BoardAPIList,
+    FaqCategory,
+    FaqList,
+    NoticeDetail,
+    NoticeList,
+    PolicyDetail,
+    PolicyDetailDirect,
+    PolicyList,
+} from './board.interface'
 
 class BoardService {
-    // 공지사항 목록
-    private noticeList: API = {
-        url: '/API/ETC/SEETCAA001',
-        method: 'post',
-    }
-
-    // 공지사항 상세
-    private noticeDetail: API = {
-        url: '/API/ETC/SEETCAA002',
-        method: 'post',
-    }
-
-    // FAQ 조회
-    private faqList: API = {
-        url: '/API/ETC/SEETCBA001',
-        method: 'post',
-    }
-
-    // FAQ카테고리 조회
-    private faqCategory: API = {
-        url: '/API/ETC/SEETCBA002',
-        method: 'post',
-    }
-
-    // 이용약관 목록
-    private policyList: API = {
-        url: '/API/ETC/SEETCCA001',
-        method: 'post',
-    }
-
-    // 이용약관 상세
-    private policyDetail: API = {
-        url: '/API/ETC/SEETCCA002',
-        method: 'post',
-    }
-
-    // 이용약관 상세 - 직접 호출
-    private policyDetailDirect: API = {
-        url: '/API/ETC/SEETCCA003',
-        method: 'post',
+    private apiList: APIList<keyof BoardAPIList> = {
+        // 공지사항 목록
+        noticeList: createApi('/API/ETC/SEETCAA001'),
+        // 공지사항 상세
+        noticeDetail: createApi('/API/ETC/SEETCAA002'),
+        // FAQ 조회
+        faqList: createApi('/API/ETC/SEETCBA001'),
+        // FAQ카테고리 조회
+        faqCategory: createApi('/API/ETC/SEETCBA002'),
+        // 이용약관 목록
+        policyList: createApi('/API/ETC/SEETCCA001'),
+        // 이용약관 상세
+        policyDetail: createApi('/API/ETC/SEETCCA002'),
+        // 이용약관 상세 - 직접 호출
+        policyDetailDirect: createApi('/API/ETC/SEETCCA003'),
     }
 
     // 공지사항 목록
-    async getNoticeList(params: BoardParameters['noticeList']): NoticeListRes {
-        return await axiosInstance.request({ ...this.noticeList, params })
+    async getNoticeList(params: NoticeList['Req']): NoticeList['Res'] {
+        return await axiosInstance.request({ ...this.apiList.noticeList, params })
     }
 
     // 공지사항 상세
-    async getNoticeDetail(params: BoardParameters['noticeDetail']): NoticeDetailRes {
-        return await axiosInstance.request({ ...this.noticeDetail, params })
+    async getNoticeDetail(params: NoticeDetail['Req']): NoticeDetail['Res'] {
+        return await axiosInstance.request({ ...this.apiList.noticeDetail, params })
     }
 
     // FAQ 조회
-    async getfaqList(params: BoardParameters['faqList']): FaqListRes {
-        return await axiosInstance.request({ ...this.faqList, params })
+    async getfaqList(params: FaqList['Req']): FaqList['Res'] {
+        return await axiosInstance.request({ ...this.apiList.faqList, params })
     }
 
     // FAQ카테고리 조회
-    async getFaqCategory(params?: BoardParameters['faqCategory']): FaqCategoryRes {
-        return await axiosInstance.request({ ...this.faqCategory, params })
+    async getFaqCategory(params?: FaqCategory['Req']): FaqCategory['Res'] {
+        return await axiosInstance.request({ ...this.apiList.faqCategory, params })
     }
 
     // 이용약관 목록
-    async getPolicyList(params: BoardParameters['policyList']): PolicyListRes {
-        return await axiosInstance.request({ ...this.policyList, params })
+    async getPolicyList(params: PolicyList['Req']): PolicyList['Res'] {
+        return await axiosInstance.request({ ...this.apiList.policyList, params })
     }
 
     // 이용약관 상세
-    async getPolicyDetail(params: BoardParameters['policyDetail']): PolicyDetailRes {
-        return await axiosInstance.request({ ...this.policyDetail, params })
+    async getPolicyDetail(params: PolicyDetail['Req']): PolicyDetail['Res'] {
+        return await axiosInstance.request({ ...this.apiList.policyDetail, params })
     }
 
     // 이용약관 상세 - 직접 호출
-    async getPolicyDetailDirect(params: BoardParameters['policyDetailDirect']): PolicyDetailDirectRes {
-        return await axiosInstance.request({ ...this.policyDetailDirect, params })
+    async getPolicyDetailDirect(params: PolicyDetailDirect['Req']): PolicyDetailDirect['Res'] {
+        return await axiosInstance.request({ ...this.apiList.policyDetailDirect, params })
     }
 }
 

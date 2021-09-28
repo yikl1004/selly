@@ -19,6 +19,14 @@
     min-height: 100vh;
 }
 
+.layout-default {
+    &.noFooter {
+        .container {
+            min-height: 100vh;
+        }        
+    }
+}
+
 // page-body
 .container {
     overflow-y: auto;

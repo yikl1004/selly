@@ -1,5 +1,5 @@
+import { LoginInfo } from '@services/auth.interface'
 import { basicUtil } from '@utils/mixins'
-import type { UserInfo } from '@stores/modules/auth'
 import type { PluginObject } from 'vue'
 
 declare module 'vue/types/vue' {
@@ -56,7 +56,7 @@ class KakaoSDK {
      * 동의 한 약관 목록을 요청
      * @return {Promise<Pick<UserInfo, 'list'>>}
      */
-    async agreedList(): Promise<Pick<UserInfo, 'list'>> {
+    async agreedList(): Promise<Pick<LoginInfo['Req'], 'list'>> {
         return await new Promise((resolve, reject) => {
             this.kakaoApi.API.request({
                 url: this._url.terms,
@@ -81,7 +81,7 @@ class KakaoSDK {
      * 카카오 로그인 한 유저의 정보를 요청
      * @return {Promise<Omit<UserInfo, 'list'>>}
      */
-    async userInfo(ciNo?: string): Promise<Omit<UserInfo, 'list'>> {
+    async userInfo(ciNo?: string): Promise<Omit<LoginInfo['Req'], 'list'>> {
         return await new Promise((resolve, reject) => {
             this.kakaoApi.API.request({
                 url: this._url.userInfo,

@@ -87,7 +87,13 @@ export default class MemberPage extends Mixins(PageView) {
     // }
 
     get beforeCheck(): boolean {
-        return Object.values(this.cancelGuideParams).some(item => item === 'Y')
+        if (this.cancelGuideParams) {
+            return Object.values(this.cancelGuideParams).some(
+                item => item === 'Y',
+            )
+        } else {
+            return false
+        }
     }
 
     /** @Methods */
@@ -132,11 +138,13 @@ export default class MemberPage extends Mixins(PageView) {
     async mounted() {
         await AuthModule.getMemberInfo()
 
-        this.memberInfo = [
-            { name: '이름', value: this.memberViewInfo.mbrNm },
-            { name: '이메일', value: this.memberViewInfo.kkoId },
-            { name: '휴대폰관리', value: this.memberViewInfo.cellNo },
-        ]
+        if (this.memberViewInfo) {
+            this.memberInfo = [
+                { name: '이름', value: this.memberViewInfo.mbrNm },
+                { name: '이메일', value: this.memberViewInfo.kkoId },
+                { name: '휴대폰관리', value: this.memberViewInfo.cellNo },
+            ]
+        }
     }
 }
 </script>

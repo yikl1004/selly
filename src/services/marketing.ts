@@ -205,10 +205,6 @@ class MarketingService {
         apply: createApi('/API/MRT/SEMRKAA007'),
     }
 
-    wow(params: string) {
-        console.log(params)
-    }
-
     /** 마케팅 신청 가능 회원 여부 */
     async getPossibleApplyUser() {
         return await axiosInstance.request({

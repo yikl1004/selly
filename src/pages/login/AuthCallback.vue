@@ -6,8 +6,8 @@
 import { Component, Vue, Watch } from 'vue-property-decorator'
 import axios from 'axios'
 import { AuthModule } from '@stores/modules/auth'
-import type { LoginInfo } from '@stores/modules/auth'
 import { Path } from '@router/routes'
+import type { AuthState } from '@stores/modules/auth'
 
 @Component
 export default class AuthCallbakPage extends Vue {
@@ -26,7 +26,9 @@ export default class AuthCallbakPage extends Vue {
 
     // 로그인 정보에 따라 화면을 이동한다
     @Watch('loginInfo')
-    changeLoginInfo(value: LoginInfo /* oldValue: LoginInfo | null */) {
+    changeLoginInfo(
+        value: AuthState['loginInfo'] /* oldValue: LoginInfo | null */,
+    ) {
         switch (value?.rspDc) {
             // 최초 회원가입, 사업자확인으로 이동(가입 절차)
             case '01':

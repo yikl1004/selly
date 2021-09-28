@@ -1,5 +1,8 @@
+import { AxiosResponse } from 'axios'
 import { VuexModule } from 'vuex-module-decorators'
 declare global {
+    type SellyServiceResponse<T> = Promise<AxiosResponse<T | null>>
+
     // Selly API default format
     interface DefaultResponse<T> {
         rc: ResponseCode
@@ -42,6 +45,13 @@ declare global {
 
     // MutationAction 데코레이터에서 this를 사용할때 alias
     type VuexThisType = VuexModule & { dispatch: Function }
+
+    // bottom sheet 에서 사용되는 item 객체
+    interface BottomSheetOptionItem {
+        displayName: string
+        value: string
+        selected?: boolean
+    }
 }
 
 export {}

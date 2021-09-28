@@ -63,11 +63,14 @@
 import { Component, Mixins } from 'vue-property-decorator'
 import SelectStore from '@pages/auth/SelectStore.vue'
 import PageView from '@utils/mixins/PageView'
-import type { DropdownBoxList } from '@components/form/DropdownBox.vue'
 import { AuthModule } from '@stores/modules/auth'
-import type { Schema } from '@components/form/FormProvider.vue'
-import type { BusinessManInfoListItem, FranchiseItem } from '@services/auth'
 import { Path } from '@router/routes'
+import type { DropdownBoxList } from '@components/form/DropdownBox.vue'
+import type { Schema } from '@components/form/FormProvider.vue'
+import type {
+    BusinessManInfoListItem,
+    FranchiseItem,
+} from '@services/auth.interface'
 
 @Component({
     components: { SelectStore },

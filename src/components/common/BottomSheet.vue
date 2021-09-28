@@ -48,15 +48,6 @@
 import { Component, Prop, Vue } from 'vue-property-decorator'
 
 /**
- * @description "list" props의 타입
- */
-export interface BottomSheetOptionItem {
-    displayName: string
-    value: string
-    selected?: boolean
-}
-
-/**
  * @description BottomSheet 의 디자인 타입
  */
 export type BottomSheetDesignType = 'select' | 'banner' | 'description'

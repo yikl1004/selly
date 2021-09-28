@@ -60,14 +60,14 @@
 
 <script lang="ts">
 import { Component, Mixins, Watch } from 'vue-property-decorator'
-import { AuthModule, LogoutInfo } from '@stores/modules/auth'
+import { AuthModule } from '@stores/modules/auth'
 import PageView from '@utils/mixins/PageView'
 import { Path } from '@router/routes'
 import CommonMenu from '@asstes/json/menu/common.json'
 import MarketingMenu from '@asstes/json/menu/marketing.json'
 import NewMarketingMenu from '@asstes/json/menu/newMarketing.json'
 import type { GnbItem } from '@stores/modules/ui'
-import { AuthResponse } from '@services/auth'
+import type { AuthState } from '@stores/modules/auth'
 
 @Component
 export default class NavigationPage extends Mixins(PageView) {
@@ -105,7 +105,9 @@ export default class NavigationPage extends Mixins(PageView) {
 
     // 로그아웃 API의 결과 값 변경 감지
     @Watch('logoutInfo')
-    changeLogoutInfo(value: LogoutInfo /* oldValue: LogoutInfo */) {
+    changeLogoutInfo(
+        value: AuthState['logoutInfo'] /* oldValue: LogoutInfo */,
+    ) {
         if (value && value.rc) {
             this.$modal.open({
                 buttonText: { confirm: '확인' },
@@ -143,12 +145,13 @@ export default class NavigationPage extends Mixins(PageView) {
 
     created() {
         this.gnbList = CommonMenu.gnbList
-        const auth: null | AuthResponse['loginInfo']['data'] = JSON.parse(
+        const auth: null | AuthState['loginInfo'] = JSON.parse(
             localStorage.getItem('auth') || 'null',
         )
         if (auth && auth.mrktPsyn === 'Y') {
-            console.log(NewMarketingMenu)
-            this.gnbList.splice(1, 0, MarketingMenu)
+            const isNew = process.env.VUE_APP_MARKETING_NEW_ENABLE === 'true'
+            console.log(isNew)
+            this.gnbList.splice(1, 0, isNew ? NewMarketingMenu : MarketingMenu)
         }
     }
 }

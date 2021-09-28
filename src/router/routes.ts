@@ -259,7 +259,7 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
             {
                 path: '/aroundSales',
                 name: 'AroundSales',
-                component: createAsyncPage(import('@pages/marketing/around/index.vue')),
+                component: createAsyncPage(import('@pages/aroundSales/index.vue')),
                 meta: {
                     floating: true,
                 },
