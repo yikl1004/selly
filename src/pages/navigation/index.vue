@@ -148,7 +148,11 @@ export default class NavigationPage extends Mixins(PageView) {
         const auth: null | AuthState['loginInfo'] = JSON.parse(
             localStorage.getItem('auth') || 'null',
         )
-        if (auth && auth.mrktPsyn === 'Y') {
+        if (
+            auth &&
+            auth.mrktPsyn === 'Y' &&
+            this.gnbList[1].name !== '쿠폰만들기'
+        ) {
             const isNew = process.env.VUE_APP_MARKETING_NEW_ENABLE === 'true'
             console.log(isNew)
             this.gnbList.splice(1, 0, isNew ? NewMarketingMenu : MarketingMenu)
