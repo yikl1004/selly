@@ -4,7 +4,7 @@
             :chartData="datacollection"
             :options="chartOption"
             :width="272"
-            :height="210"
+            :height="240"
         />
         <router-view />
     </div>
@@ -86,7 +86,7 @@ export default class ConvertChart extends Vue {
                 },
             },
             responsive: true,
-            maintainAspectRatio: true,
+            maintainAspectRatio: false,
             legend: {
                 position: 'bottom',
                 align: 'center',
