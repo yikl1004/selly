@@ -90,8 +90,16 @@ export default class PopupMapArea extends Vue {
         return AroundSalesModule.guList
     }
 
+    /** 주의: 전체 동이 있어서 filtering 해야함 */
     get dongList() {
         return AroundSalesModule.dongList
+    }
+
+    /** 선택한 동 리스트  */
+    getDongList(highLevel: string) {
+        return this.dongList.filter(item => {
+            return new RegExp(`${highLevel}`, 'gi').test(item.zonClsDc)
+        })
     }
 
     /**
