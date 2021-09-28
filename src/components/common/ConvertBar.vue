@@ -1,11 +1,10 @@
 <template>
     <div>
-        <h1>접근성 차트</h1>
         <BarChart
             :chartData="datacollection"
             :options="chartOption"
-            :width="220"
-            :height="140"
+            :width="272"
+            :height="210"
         />
         <router-view />
     </div>
@@ -15,7 +14,7 @@
 import { Component, Vue, Prop } from 'vue-property-decorator'
 import BarChart from '@components/common/BarChart.vue'
 import Chart from 'chart.js'
-
+import datalabels from 'chartjs-plugin-datalabels'
 @Component({
     components: { BarChart },
 })
@@ -30,6 +29,7 @@ export default class ConvertChart extends Vue {
     // private labels = ['일', '월', '화', '수', '목', '금', '토']
     private chartOption: Chart.ChartOptions = {}
     mounted() {
+        Chart.plugins.register(datalabels)
         this.fillData()
     }
     fillData() {
@@ -57,6 +57,11 @@ export default class ConvertChart extends Vue {
             },
             responsive: true,
             maintainAspectRatio: true,
+            plugins: {
+                datalabels: {
+                    display: false,
+                },
+            },
         }
         this.datacollection = {
             datasets: [

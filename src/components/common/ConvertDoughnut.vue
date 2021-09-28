@@ -3,8 +3,8 @@
         <DoughnutChart
             :chartData="datacollection"
             :options="chartOption"
-            :width="220"
-            :height="140"
+            :width="272"
+            :height="240"
         />
         <router-view />
     </div>
@@ -21,15 +21,18 @@ import datalabels from 'chartjs-plugin-datalabels'
     components: { DoughnutChart },
 })
 export default class ConvertChart extends Vue {
-    @Prop({ default: [] })
+    @Prop({ type: Array, default: [] })
     readonly labels!: Array<string>
-    @Prop({ default: [] })
+    @Prop({ type: Array, default: [] })
     readonly datas!: Array<number>
-    @Prop({ default: false })
+    @Prop({ type: Boolean, default: false })
     readonly chartMax!: boolean
 
     private datacollection: Chart.ChartData = {}
     private chartOption: Chart.ChartOptions = {}
+
+    //데이터 라벨  컬러셋
+    //https://v1_0_0--chartjs-plugin-datalabels.netlify.app/
     private palette = [
         '#6c625a',
         '#de2f13',
@@ -39,7 +42,7 @@ export default class ConvertChart extends Vue {
         '#413a2f',
         '#00648c',
     ]
-    //접근성 패턴
+    //차트 접근성 패턴
     //'plus' | 'cross' | 'dash' | 'cross-dash' | 'dot' | 'dot-dash' | 'disc' | 'ring' | 'line' | 'line-vertical' | 'weave' | 'zigzag' | 'zigzag-vertical' | 'diagonal' | 'diagonal-right-left' | 'square' | 'box' | 'triangle' | 'triangle-inverted' | 'diamond' | 'diamond-box',
     private backgroundPalette = [
         '#6c625a',
@@ -50,22 +53,32 @@ export default class ConvertChart extends Vue {
         patternnomaly.draw('dot', '#413a2f', 'white'),
         patternnomaly.draw('diamond-box', '#00648c', 'white'),
     ]
+
     mounted() {
         Chart.plugins.register(datalabels)
         this.fillData()
     }
+    // 원형차트 보더간격을 색으로 채워서 하이라이트처럼...
     borderColor() {
-        // this.chartMax
-        // this.datas.indexOf(Math.max(...this.datas))
-        this.palette.map(obj => {
-            console.log(obj)
-            return '#ffffff'
+        const maxData = this.datas.indexOf(Math.max(...this.datas))
+        const checkPalette = this.palette.map((obj, index) => {
+            console.log(maxData)
+            return maxData === index ? this.backgroundPalette[index] : '#FFFFFF'
         })
+        return checkPalette
     }
+    // 원형차트 보더간격을 조정하여 하이라이트처럼...
+    borderWidth() {
+        const maxData = this.datas.indexOf(Math.max(...this.datas))
+        const checkWidth = this.palette.map((obj, index) => {
+            return maxData === index ? 10 : 2
+        })
+        return checkWidth
+    }
+    // 차트 데이터 옵션 : 도넛
+    //https://www.chartjs.org/docs/2.9.4/
     fillData() {
-        // console.log(this.datas.indexOf(Math.max(...this.datas)))
-        this.borderColor()
-        console.log(this.chartMax)
+        console.log('도넛차트 맥스 하이라이트 표시 ::' + this.chartMax)
         this.chartOption = {
             layout: {
                 padding: {
@@ -73,7 +86,7 @@ export default class ConvertChart extends Vue {
                 },
             },
             responsive: true,
-            maintainAspectRatio: true,
+            maintainAspectRatio: false,
             legend: {
                 position: 'bottom',
                 align: 'center',
@@ -103,16 +116,8 @@ export default class ConvertChart extends Vue {
                 {
                     data: this.datas,
                     backgroundColor: this.backgroundPalette,
-                    borderColor: [
-                        '#ffffff',
-                        '#ffffff',
-                        patternnomaly.draw('dot', '#ba5903', 'black', 10),
-                        '#ffffff',
-                        '#ffffff',
-                        '#ffffff',
-                        '#ffffff',
-                    ],
-                    borderWidth: [2, 2, 10, 2, 2, 2],
+                    borderColor: this.chartMax ? this.borderColor() : '#FFFFFF',
+                    borderWidth: this.chartMax ? this.borderWidth() : 2,
                 },
             ],
             labels: this.labels,

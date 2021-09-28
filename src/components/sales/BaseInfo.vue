@@ -76,7 +76,7 @@ export default class BaseInfo extends Vue {
         const prifixDictionary = {
             daily: '전일',
             weekly: '전주',
-            dayOfWeek: '전주',
+            dayOfWeek: '요일 전주',
         }
 
         return prifixDictionary[this.type]
@@ -87,7 +87,7 @@ export default class BaseInfo extends Vue {
         const prefixDictionary = {
             daily: '최근 7일',
             weekly: '최근 4주',
-            dayOfWeek: '전주',
+            dayOfWeek: '최근 4주 요일',
         }
         return prefixDictionary[this.type]
     }

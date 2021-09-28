@@ -59,7 +59,7 @@
                         />
                     </AccoItemSingle>
 
-                    <BannerAffiliate :list="dailyBannerList" />
+                    <BannerAffiliate />
 
                     <DepositHistory :list="salesList" />
                 </div>
@@ -136,11 +136,6 @@ export default class SalesHistory extends Vue {
     /** 요일별 기준 날짜 */
     get salesBaseDatePerDay() {
         return SalesModule.salesBaseDatePerDay
-    }
-
-    /** 일간 매출 - 배너 정보 */
-    get dailyBannerList() {
-        return SalesModule.dailyBannerList
     }
 
     /** @Data */

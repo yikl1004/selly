@@ -13,7 +13,7 @@
             Popup item
         </div> -->
         <ConvertDoughnut :datas="datas" :labels="labels" />
-        <ConvertPie :datas="datas" :labels="labels" />
+        <ConvertPie :datas="datas" :labels="labels" chartMax />
         <ConvertBar :datas="datas" :labels="labels" />
 
         <router-view />
