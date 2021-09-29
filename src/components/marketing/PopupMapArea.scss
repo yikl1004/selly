@@ -1,5 +1,8 @@
 @import "../common/AccoItem.scss";
 
+.box-acco-list {
+    margin-top: 10px;
+}
 .list-area {
     display: flex;
     flex-wrap: wrap;
@@ -28,9 +31,17 @@
     border: 1px solid #bbb;
     border-radius: 10px;
     text-align: center;
+    color: #666;
     &.active {
         border:2px solid $primary-color;
         color: $primary-color;
         font-weight: 700;
     }
+}
+.no-result {
+    margin-top: 120px;
+    padding: 0 24px;
+    text-align: center;
+    color: #222;
+    font-weight: 500;
 }
