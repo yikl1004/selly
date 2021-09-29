@@ -7,101 +7,105 @@
                     <button
                         type="button"
                         class="btn-kakao-login"
-                        @click="login"
+                        @click="login('')"
                     >
                         <span>카카오톡으로 시작</span>
                     </button>
-                    <!-- <button
-                        type="button"
-                        class="btn-kakao-login"
-                        @click="testLogin(0)"
-                    >
-                        <span>사업자 1</span>
-                    </button>
-                    <button
-                        type="button"
-                        class="btn-kakao-login"
-                        @click="testLogin(1)"
-                    >
-                        <span>사업자 2 로카머니비즈니스카드 보유</span>
-                    </button>
-                    <button
-                        type="button"
-                        class="btn-kakao-login"
-                        @click="testLogin(2)"
-                    >
-                        <span>사업자 3</span>
-                    </button>
-                    <button
-                        type="button"
-                        class="btn-kakao-login"
-                        @click="testLogin(3)"
-                    >
-                        <span>사업자 4</span>
-                    </button>
-                    <button
-                        type="button"
-                        class="btn-kakao-login"
-                        @click="testLogin(4)"
-                    >
-                        <span>사업자 5 로카머니비즈니스카드 보유</span>
-                    </button>
-                    <button
-                        type="button"
-                        class="btn-kakao-login"
-                        @click="marketingLogin"
-                    >
-                        <span>마케팅 신청용 로그인</span>
-                    </button>
-                    <button
-                        type="button"
-                        class="btn-kakao-login"
-                        @click="datusLogin"
-                    >
-                        <span>유쇼데 로그인 - 비즈론 - 카드: Y, 정회원</span>
-                    </button>
-                    <button
-                        type="button"
-                        class="btn-kakao-login"
-                        @click="bizloanLogin"
-                    >
-                        <span>비즈론 - 카드: Y, 정회원</span>
-                    </button>
-                    <button
-                        type="button"
-                        class="btn-kakao-login"
-                        @click="normalCardLoanLogin"
-                    >
-                        <span>일반카드론 - 카드: Y, 준회원</span>
-                    </button>
-                    <button
-                        type="button"
-                        class="btn-kakao-login"
-                        @click="bisinessManLoanLogin"
-                    >
-                        <span>사업자 대출 - 카드: N, 정회원</span>
-                    </button>
-                    <button
-                        type="button"
-                        class="btn-kakao-login"
-                        @click="immediatelyLoanLogin"
-                    >
-                        <span>즉시대출 - 카드: N, 준회원</span>
-                    </button>
-                    <button
-                        type="button"
-                        class="btn-kakao-login"
-                        @click="clientLogin"
-                    >
-                        <span> 담당자 로그인용 </span>
-                    </button>
-                    <button
-                        type="button"
-                        class="btn-kakao-login"
-                        @click="withdraw"
-                    >
-                        <span>연결끊기(탈퇴) - 테스트용</span>
-                    </button> -->
+                    <template v-if="isDev">
+                        <button
+                            type="button"
+                            class="btn-kakao-login"
+                            @click="testLogin(0)"
+                        >
+                            <span>사업자 1</span>
+                        </button>
+                        <button
+                            type="button"
+                            class="btn-kakao-login"
+                            @click="testLogin(1)"
+                        >
+                            <span>사업자 2 로카머니비즈니스카드 보유</span>
+                        </button>
+                        <button
+                            type="button"
+                            class="btn-kakao-login"
+                            @click="testLogin(2)"
+                        >
+                            <span>사업자 3</span>
+                        </button>
+                        <button
+                            type="button"
+                            class="btn-kakao-login"
+                            @click="testLogin(3)"
+                        >
+                            <span>사업자 4</span>
+                        </button>
+                        <button
+                            type="button"
+                            class="btn-kakao-login"
+                            @click="testLogin(4)"
+                        >
+                            <span>사업자 5 로카머니비즈니스카드 보유</span>
+                        </button>
+                        <button
+                            type="button"
+                            class="btn-kakao-login"
+                            @click="marketingLogin"
+                        >
+                            <span>마케팅 신청용 로그인</span>
+                        </button>
+                        <button
+                            type="button"
+                            class="btn-kakao-login"
+                            @click="datusLogin"
+                        >
+                            <span>
+                                유쇼데 로그인 - 비즈론 - 카드: Y, 정회원
+                            </span>
+                        </button>
+                        <button
+                            type="button"
+                            class="btn-kakao-login"
+                            @click="bizloanLogin"
+                        >
+                            <span>비즈론 - 카드: Y, 정회원</span>
+                        </button>
+                        <button
+                            type="button"
+                            class="btn-kakao-login"
+                            @click="normalCardLoanLogin"
+                        >
+                            <span>일반카드론 - 카드: Y, 준회원</span>
+                        </button>
+                        <button
+                            type="button"
+                            class="btn-kakao-login"
+                            @click="bisinessManLoanLogin"
+                        >
+                            <span>사업자 대출 - 카드: N, 정회원</span>
+                        </button>
+                        <button
+                            type="button"
+                            class="btn-kakao-login"
+                            @click="immediatelyLoanLogin"
+                        >
+                            <span>즉시대출 - 카드: N, 준회원</span>
+                        </button>
+                        <button
+                            type="button"
+                            class="btn-kakao-login"
+                            @click="clientLogin"
+                        >
+                            <span> 담당자 로그인용 </span>
+                        </button>
+                        <button
+                            type="button"
+                            class="btn-kakao-login"
+                            @click="withdraw"
+                        >
+                            <span>연결끊기(탈퇴) - 테스트용</span>
+                        </button>
+                    </template>
                 </div>
             </div>
             <form
@@ -153,6 +157,10 @@ export default class LoginPage extends Mixins(PageView) {
 
     get datusLoginInfo() {
         return AuthModule.datusLoginInfoData
+    }
+
+    get isDev() {
+        return process.env.NODE_ENV === 'development'
     }
 
     @Watch('datusLoginInfo')

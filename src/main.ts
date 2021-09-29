@@ -7,6 +7,7 @@ import App from './App.vue'
 import 'animate.css/animate.css'
 import '@styles/variables.scss'
 import '@styles/index.scss'
+import { KAKAO_SDK } from '@utils/plugins/kakao-sdk'
 
 Vue.config.productionTip = false
 Component.registerHooks(['beforeRouteEnter'])
@@ -17,8 +18,10 @@ console.log(process.env)
  */
 initialize()
 
-new Vue({
-    router,
-    store,
-    render: h => h(App),
-}).$mount('#app')
+KAKAO_SDK.loadScript().then(() => {
+    new Vue({
+        router,
+        store,
+        render: h => h(App),
+    }).$mount('#app')
+})

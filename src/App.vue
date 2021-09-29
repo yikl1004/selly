@@ -47,7 +47,6 @@ export default class App extends Vue {
         confirm: () => console.log('confirm 함수를 넣어 주세요'),
     }
 
-    // this.$router.replace(Path.Login)
     /** 자동로그아웃 시간 초과 여부 */
     get overtimeData() {
         return CommonModule.overtimeData

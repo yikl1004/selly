@@ -51,6 +51,8 @@ axiosInstance.interceptors.response.use(
     response => {
         const data = response.data
 
+        console.log(response)
+
         // 시스템 에러
         if (data.rc === '9999') {
             router.app.$modal.open({
@@ -65,7 +67,7 @@ axiosInstance.interceptors.response.use(
         }
 
         // 로그인 후 이용
-        if (data.rc === '8888') {
+        if (response.config.url !== '/API/CMN/SECMNFA001' && data.rc === '8888') {
             router.push(Path.Login)
             // local-storage 삭제
             localStorage.removeItem('auth')

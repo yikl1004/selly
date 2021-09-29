@@ -29,6 +29,7 @@ export default class AuthCallbakPage extends Vue {
     changeLoginInfo(
         value: AuthState['loginInfo'] /* oldValue: LoginInfo | null */,
     ) {
+        console.log('AuthCallback', value)
         switch (value?.rspDc) {
             // 최초 회원가입, 사업자확인으로 이동(가입 절차)
             case '01':
@@ -53,7 +54,6 @@ export default class AuthCallbakPage extends Vue {
         if ('code' in this.$route.query) {
             const code = this.$route.query.code as string
             const state = (this.$route.query.state as string) || undefined
-            console.log('@@@@@@', state)
             const makeFormData = (params: { [key: string]: string }) => {
                 const searchParams = new URLSearchParams()
                 Object.keys(params).forEach(key => {

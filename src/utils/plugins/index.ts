@@ -48,9 +48,7 @@ const registerPlugins = (): void => {
     })
 
     // 카카오 sdk 연동
-    Vue.use(KakaoSdkPlugin, {
-        apiKey: process.env.VUE_APP_KAKAO_API_KEY,
-    })
+    Vue.use(KakaoSdkPlugin)
 
     // 스크롤 차단
     Vue.use(ScrollLock)

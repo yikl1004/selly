@@ -96,12 +96,6 @@ export default class JoinPage extends Vue {
         if (Number.isNaN(this.step)) {
             this.toMain()
         }
-
-        this.$toast.error('추천인 코드 확정 안됨')
-    }
-
-    beforeDestroy() {
-        this.$toast.clear()
     }
 }
 </script>

@@ -13,7 +13,7 @@ interface PluginOptions {
 }
 
 class KakaoSDK {
-    private kakaoApi!: KakaoCert
+    public kakaoApi!: KakaoCert
     private _url: { [key: string]: string } = {
         unlink: '/v1/user/unlink',
         userInfo: '/v2/user/me',
@@ -29,14 +29,12 @@ class KakaoSDK {
      * 카카오 SDK 스크립트 로드 후 사용 전 초기화
      */
     initialize() {
-        const KakaoSdk = window.Kakao
-
-        if (KakaoSdk) {
-            KakaoSdk.cleanup()
+        if (window.Kakao) {
+            window.Kakao.cleanup()
         }
 
-        if (!KakaoSdk.isInitialized()) {
-            KakaoSdk.init(this.apiKey)
+        if (window.Kakao && !window.Kakao.isInitialized()) {
+            window.Kakao.init(this.apiKey)
         }
 
         this.kakaoApi = window.Kakao
@@ -103,14 +101,26 @@ class KakaoSDK {
      * @returns {Promise<void>}
      */
     async authorize(testCiNo?: string): Promise<void> {
-        return await this.kakaoApi.Auth.authorize({
+        const params: {
+            redirectUri: string
+            throughTalk: boolean
+            state?: string
+        } = {
             redirectUri: `${process.env.VUE_APP_SITE_DOMAIN}/authCallback`,
             throughTalk: true,
-            state: testCiNo,
-        })
+        }
+
+        if (testCiNo) {
+            params.state = testCiNo
+        }
+
+        return await this.kakaoApi.Auth.authorize(params)
     }
 
     setAccessToken(token: string) {
+        if (!this.kakaoApi) {
+            this.reinitialize()
+        }
         this.kakaoApi.Auth.setAccessToken(token)
     }
 
@@ -189,11 +199,13 @@ class KakaoSDK {
                 const script = document.createElement('script')
                 script.id = 'kakao-login-sdk'
                 script.src = 'https://developers.kakao.com/sdk/js/kakao.min.js'
+                script.defer = true
 
                 document.head.appendChild(script)
 
                 script.onload = () => {
                     resolve()
+                    this.reinitialize()
                 }
                 script.onerror = reject
             }
@@ -201,23 +213,16 @@ class KakaoSDK {
     }
 }
 
+export const KAKAO_SDK = new KakaoSDK({
+    apiKey: process.env.VUE_APP_KAKAO_API_KEY,
+})
+
 const KakaoSdkPlugin: PluginObject<PluginOptions> = {
-    async install(_Vue, options) {
-        if (typeof options === 'undefined') {
-            throw new Error('[KakaoSdkPlugin]: options을 추가해 주세요.')
-        }
-        const { apiKey } = options
-        const sdk = new KakaoSDK({
-            apiKey,
-        })
-
-        await sdk.loadScript()
-        sdk.initialize()
-
+    install(_Vue) {
         Object.defineProperty(_Vue.prototype, '$kakaoSdk', {
             enumerable: true,
             configurable: true,
-            value: sdk,
+            value: KAKAO_SDK,
         })
     },
 }
