@@ -37,6 +37,7 @@ export default class WithdrawalPage extends Vue {
     }
 
     async handelWithdrawal() {
+        await this.$kakaoSdk.unlink()
         await AuthModule.setWithdrawal()
         this.$router.push(Path.Main)
     }

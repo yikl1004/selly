@@ -114,6 +114,7 @@ export default class MemberPage extends Mixins(PageView) {
     // }
 
     async handleWithdrawal() {
+        await this.$kakaoSdk.unlink()
         await AuthModule.setWithdrawal()
         this.$router.push(Path.Login)
     }

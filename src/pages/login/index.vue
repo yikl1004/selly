@@ -4,10 +4,14 @@
             <div class="page-login-wrap">
                 <LoginVisual />
                 <div class="btn-box">
-                    <!-- <button type="button" class="btn-kakao-login" @click="login">
-                    <span>카카오톡으로 시작</span>
-                </button> -->
                     <button
+                        type="button"
+                        class="btn-kakao-login"
+                        @click="login"
+                    >
+                        <span>카카오톡으로 시작</span>
+                    </button>
+                    <!-- <button
                         type="button"
                         class="btn-kakao-login"
                         @click="testLogin(0)"
@@ -97,7 +101,7 @@
                         @click="withdraw"
                     >
                         <span>연결끊기(탈퇴) - 테스트용</span>
-                    </button>
+                    </button> -->
                 </div>
             </div>
             <form

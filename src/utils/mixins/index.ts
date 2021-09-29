@@ -17,6 +17,8 @@ declare module 'vue/types/vue' {
         cellPhoneFormatter(cellphoneNumber: string): string
         getByteLength(text: string): number
         seperateNumber(value?: string): string
+        newLine(str: string): string
+        delay(time: number): Promise<void>
     }
 }
 
@@ -74,14 +76,28 @@ export const basicUtil = {
     /**
      * 개행문자를 br태그로 치환
      * @param {string} value
+     * @returns {string}
      */
     newLine(str: string) {
         return toString(str).replace(/(?:\r\n|\r|\n)/g, '</br>')
     },
+
+    /**
+     * 지연 동작
+     * @param {number} time 지연시간: millisecond
+     * @returns {Promise<void>}
+     */
+    async delay(time: number): Promise<void> {
+        return await new Promise(resolve => {
+            window.setTimeout(() => {
+                resolve()
+            }, time)
+        })
+    },
 }
 
 const registerMixins = () => {
-    const { convertBizNoFormatter, cellPhoneFormatter, getByteLength, seperateNumber } = basicUtil
+    const { convertBizNoFormatter, cellPhoneFormatter, getByteLength, seperateNumber, newLine, delay } = basicUtil
 
     Vue.mixin({
         data() {
@@ -95,6 +111,8 @@ const registerMixins = () => {
             cellPhoneFormatter,
             getByteLength,
             seperateNumber,
+            newLine,
+            delay,
         },
     })
 }

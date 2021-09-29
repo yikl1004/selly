@@ -48,7 +48,7 @@ axiosInstance.interceptors.request.use(
 
 /** axios interceptor: RESPONSE */
 axiosInstance.interceptors.response.use(
-    (response): AxiosResponse => {
+    response => {
         const data = response.data
 
         // 시스템 에러
