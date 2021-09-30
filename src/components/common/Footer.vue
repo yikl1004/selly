@@ -16,7 +16,6 @@
             <p>롯데카드(주) 대표이사 조좌진</p>
             <p>사업자등록번호 120-81-54231</p>
             <p>서울특별시 종로구 새문안로 76</p>
-
             <p class="copyright">Supported by LOTTECARD All rights reserved</p>
         </address>
     </footer>
@@ -39,6 +38,8 @@ export default class Footer extends Vue {
             query: {
                 comGrpC: `${flag === 'privacy' ? 'AGR_MBR' : 'AGR_COM'}`,
                 comC: 'PRV_1',
+                direct: 'true',
+                access: 'internal',
             },
         })
     }

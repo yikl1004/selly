@@ -42,7 +42,60 @@ export interface Responses {
         list: FranchiseInfoItem[]
     }>
     franchiseInfoSave: DefaultResponse<{}>
-    createCouponDefaultInfo: DefaultResponse<{}>
+    createCouponDefaultInfo: DefaultResponse<{
+        /** 할인율 */
+        bnfRt: string
+        /** 일자 */
+        dt: string
+        /** 마케팅대상 목록 */
+        list: {
+            /** 코드 */
+            c: string
+            /** 코드명 */
+            cnm: string
+            /** 푸시알림대상 고객수 */
+            etPushFwCstt: string
+            /** 이용고객수 */
+            etUCstt: string
+            /** 홍보비용 */
+            mrktXp: string
+        }[]
+        /** 마케팅 홍보수단 목록 */
+        list1: {
+            /** 코드 */
+            c: string
+            /** 코드 명 */
+            cnm: string
+            /** 푸시알림대상 고객수 */
+            etPushFwCstt: string
+            /** 이용고객수 */
+            etUCstt: string
+            /** 홍보비용 */
+            mrktXp: string
+        }[]
+        /** 할인율 목록 */
+        list2: {
+            /** 코드 */
+            c: string
+            /** 코드 명 */
+            cnm: string
+        }[]
+        /** 저장된 목록 */
+        list3: {
+            /** 마케팅 대상 구분 코드 */
+            ggDc: string
+            /** 행사시작일자 */
+            evSdt: string
+            /** 행사종료일자 */
+            evEdt: string
+            /** 혜택율 */
+            bnfRt: string
+        }[]
+        /** 업무 응답 코드 */
+        rspDc: ResponseCode
+        /** 업무 응답 메세지 */
+        rspDcMsg: null | string
+    }>
 }
 
 /** Response data / Request parameter type Shortcuts */

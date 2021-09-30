@@ -1,5 +1,5 @@
 <template>
-    <Page :footer="!isDirect">
+    <Page :footer="!isExternal">
         <Header :type="headerType" title="이용약관" />
         <PageBody>
             <div class="content">
@@ -20,8 +20,8 @@ import { BoardModule } from '@stores/modules/board'
  * @description
  * 약관 공통 페이지
  * 직접 접근 허용
- * 회원가입 - AGR_MBR, PRV_1 : /config/terms/detail?direct=true&comGrpC=AGR_MBR&comC=PRV_1
- * 이용약관 - AGR_COM, PRV_1 : /config/terms/detail?direct=true&comGrpC=AGR_COM&comC=PRV_1
+ * 회원가입 - AGR_MBR, PRV_1 : /config/terms/detail?direct=true$access=external&comGrpC=AGR_MBR&comC=PRV_1
+ * 이용약관 - AGR_COM, PRV_1 : /config/terms/detail?direct=true&access=external&comGrpC=AGR_COM&comC=PRV_1
  */
 @Component
 export default class TermsDetailPage extends Vue {
@@ -36,7 +36,7 @@ export default class TermsDetailPage extends Vue {
 
     /** 상세 데이터 */
     get detail() {
-        if (this.isDirect) {
+        if (this.isDirect || this.isExternal) {
             return this.policyDetailDirectData
         } else {
             return this.policyDetailData
@@ -48,9 +48,14 @@ export default class TermsDetailPage extends Vue {
         return this.$route.query.direct === 'true'
     }
 
+    /** 외부에서 접근 했는지 판단 */
+    get isExternal() {
+        return this.$route.query.access === 'external'
+    }
+
     /** 헤더 타입 props */
     get headerType() {
-        if (this.isDirect) {
+        if (this.isExternal) {
             return 'title'
         } else {
             return 'sub'
@@ -59,7 +64,7 @@ export default class TermsDetailPage extends Vue {
 
     /** 목록 또는 확인 버튼 클릭 시 */
     onClickBackOrConfirm() {
-        if (this.isDirect) {
+        if (this.isExternal) {
             window.close()
         } else {
             this.$router.back()

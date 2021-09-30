@@ -7,7 +7,7 @@
             </div>
         </div>
         <div class="board-text-area">
-            <div class="text-inner">{{ content }}</div>
+            <div class="text-inner" v-html="content" />
         </div>
     </section>
 </template>

@@ -125,7 +125,7 @@ export default class StepFirstPage extends Mixins(PageView) {
         if (value && value.rc === '0000') {
             this.$router.push(Path.NewMarketingStepSecond)
         } else {
-            // TODO: 메세징 처리
+            // TODO: 메세징 처리 해야함 rspDC 참고 해서 처리
         }
     }
 

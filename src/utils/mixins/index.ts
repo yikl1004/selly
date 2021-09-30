@@ -17,7 +17,7 @@ declare module 'vue/types/vue' {
         cellPhoneFormatter(cellphoneNumber: string): string
         getByteLength(text: string): number
         seperateNumber(value?: string): string
-        newLine(str: string): string
+        newLine(str?: string): string
         delay(time: number): Promise<void>
     }
 }
@@ -78,8 +78,8 @@ export const basicUtil = {
      * @param {string} value
      * @returns {string}
      */
-    newLine(str: string) {
-        return toString(str).replace(/(?:\r\n|\r|\n)/g, '</br>')
+    newLine(str?: string) {
+        return toString(str || '').replace(/(?:\r\n|\r|\n)/g, '</br>')
     },
 
     /**

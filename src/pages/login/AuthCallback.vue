@@ -98,7 +98,6 @@ export default class AuthCallbakPage extends Vue {
                     // const referrer = JSON.parse(
                     //     localStorage.getItem('referrer') || 'null',
                     // )
-                    // console.log(referrer)
                     // 1. 토큰 받아오기
                     this.$kakaoSdk.setAccessToken(res.data.access_token)
                     // 2. 카카오 로그인 사용자 정보 요청

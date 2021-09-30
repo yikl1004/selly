@@ -137,10 +137,6 @@ import LoginVisual from '@components/login/LoginVisual.vue'
 import { AuthModule } from '@stores/modules/auth'
 import type { AuthState } from '@stores/modules/auth'
 
-/**
- * TODO: 유쇼데 로그인 버튼만들기
- *
- */
 @Component({
     beforeRouteEnter(to, from, next) {
         const alreadyLogin = CommonModule.loginExtendInfoData?.rc === '0000'

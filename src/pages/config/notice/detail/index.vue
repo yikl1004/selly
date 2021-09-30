@@ -6,7 +6,7 @@
                 <BoardDetail
                     :title="detail.title"
                     :date="detail.date"
-                    :content="detail.content"
+                    :content="newLine(detail.content)"
                 />
                 <BasicButton type="medium" @click="$router.back()">
                     목록
