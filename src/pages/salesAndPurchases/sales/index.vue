@@ -173,7 +173,7 @@ export default class SalesHistory extends Vue {
         const cases = {
             daily: '최근 7일 평균',
             weekly: '최근 4주 평균',
-            dayOfWeek: '최근 요일별 평균',
+            dayOfWeek: '최근 4주 같은 요일 평균 대비',
         }
         return cases[this.status]
     }
