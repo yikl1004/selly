@@ -1,8 +1,15 @@
 
 .intro-box {
+    .logo {
+        display: block;
+        width: 100px;
+        height: 48px;
+        background: url('/assets/common/logo-selly-beta.png') no-repeat;
+        background-size: 100%;
+    }
     h2,
     h3 {
-        font-size: 26px;
+        font-size: 28px;
         font-weight: 700;
         color: #413a2f;
         line-height: 1.38;
@@ -15,30 +22,36 @@
         margin-top: 12px;
     }
     &.intro01 {
-        height: 636px;
-        padding: 56px 0 0 0;
+        height: 616px;
+        padding: 20px 0 0 0;
         text-align: center;
         background: #f3f0ee url('/assets/intro/img_intro01.png') center bottom
-            38px no-repeat;
-        background-size: auto 331px;
-        ul {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            margin-top: 24px;
+            40px no-repeat;
+        background-size: auto 330px;
+        h2 {
+            padding-top: 40px;
+            line-height: 1.29;
         }
-        li {
-            width: calc(50% - 4px);
-            height: 44px;
-            margin-top: 8px;
-            background: #fff;
-            border-radius: 8px;
-            line-height: 44px;
-            color: #6c625a;
-            font-weight: 500;
-            &:nth-child(-n + 2) {
-                margin-top: 0;
+        .tag {
+            margin-top: 10px;
+            div {
+                margin-top: 7px;
+                &:first-of-type {
+                    margin-top: 0;    
+                }
             }
+            span {
+                display: inline-block;
+                color: #6c625a;
+                font-size: 16px;
+                font-weight: 500;
+                &:nth-child(even) {
+                    padding-left: 16px;
+                }
+            }
+        }
+        .intro-inner {
+            padding: 0 20px;
         }
     }
 

@@ -2,13 +2,20 @@
     <div class="logi-visual-box">
         <div class="intro-box intro01">
             <div class="intro-inner">
+                <h1 class="logo">
+                    <span class="ir">Selly beta</span>
+                </h1>
                 <h2>바쁜 사장님을 위한<br />슬기로운 사업관리</h2>
-                <ul>
-                    <li>매출/입금 알림</li>
-                    <li>금융 상품</li>
-                    <li>매장홍보쿠폰</li>
-                    <li>내 주변 매출</li>
-                </ul>
+                <div class="tag">
+                    <div>
+                        <span>#매출/입금 알림</span>
+                        <span>#금융 상품</span>
+                    </div>
+                    <div>
+                        <span>#내 주변 매출</span>
+                        <span>#매장홍보쿠폰</span>
+                    </div>
+                </div>
             </div>
         </div>
 
