@@ -53,12 +53,8 @@ export interface Responses {
             c: string
             /** 코드명 */
             cnm: string
-            /** 푸시알림대상 고객수 */
-            etPushFwCstt: string
             /** 이용고객수 */
             etUCstt: string
-            /** 홍보비용 */
-            mrktXp: string
         }[]
         /** 마케팅 홍보수단 목록 */
         list1: {

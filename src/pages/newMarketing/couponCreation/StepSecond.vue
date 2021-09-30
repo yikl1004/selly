@@ -2,44 +2,42 @@
     <Page floating :footer="false">
         <Header type="proccess" title="쿠폰 만들기" />
         <PageBody class="floating">
-            <div v-if="marketingTarget" class="content">
+            <div class="content">
                 <Step :active="2" :count="3" />
                 <Title title="쿠폰 내용 설정" />
 
                 <div class="benefit-select-wrap">
                     <Title title="대상 및 혜택" type="h3" />
                     <div
+                        v-for="(item, index) in couponList"
+                        :key="`coupon-item${index}`"
                         :class="[
                             'benefit-select-box',
-                            { active: isActiveClass('first') },
+                            { active: isActiveClass(item.c.toString()) },
                         ]"
                     >
                         <div class="benefit-title">
                             <label>
                                 <input
-                                    value="first"
+                                    :value="item.c"
                                     type="checkbox"
                                     @change="
                                         onChangeCustomerCheck($event.target)
                                     "
                                 />
                                 <i>
-                                    <strong>첫 고객 만들기</strong>
+                                    <strong>{{ item.cnm }}</strong>
                                     <em>
-                                        {{
-                                            _.toNumber(
-                                                marketingTarget.firstCustomer,
-                                            ).toLocaleString()
-                                        }}
-                                        명
+                                        {{ seperateNumber(item.etUCstt) }} 명
                                     </em>
                                 </i>
                                 <span class="sub-text">
-                                    최근 1개월간 내 매장을 방문하지 않은 고객 중
-                                    반경 1km의 다른 매장을 이용한 고객
+                                    {{ getCustomerTextByCase(item.c) }}
                                 </span>
                             </label>
                         </div>
+                        <!-- :range-section="29" -->
+                        <!-- :min-date="startDate" -->
                         <div class="benefit-detail">
                             <CalendarField
                                 id="firstCustomerPeriod"
@@ -47,24 +45,24 @@
                                 name="date"
                                 isRange
                                 :readonly="false"
-                                :default-value="period"
-                                @change="onChangePeriod('first', $event)"
+                                default-value=""
+                                @change="onChangePeriod(item.c, $event)"
                             />
-                            <!-- :range-section="29" -->
-                            <!-- :min-date="startDate" -->
                             <BulletList :list="infoDate" />
                             <RadioGroup
                                 name="benefitRadio1"
                                 :disabled="false"
                                 :list="benefitRadio"
                                 label="할인 혜택(결제일 할인)"
-                                @change="onChangDiscountRate('first', $event)"
+                                @change="onChangDiscountRate(item.c, $event)"
                             />
                             <BulletList :list="infoBenefit" />
                         </div>
                     </div>
 
-                    <div
+                    <!-- :min-date="startDate"
+                        :range-section="29" -->
+                    <!-- <div
                         :class="[
                             'benefit-select-box',
                             { active: isActiveClass('regular') },
@@ -81,14 +79,7 @@
                                 />
                                 <i>
                                     <strong>단골 만들기</strong>
-                                    <em>
-                                        {{
-                                            _.toNumber(
-                                                marketingTarget.regularCustomer,
-                                            ).toLocaleString()
-                                        }}
-                                        명
-                                    </em>
+                                    <em> 00 명 </em>
                                 </i>
                                 <span class="sub-text">
                                     최근 3개월간 내 매장에서 1회 이상 결제한
@@ -106,8 +97,6 @@
                                 :default-value="period"
                                 @change="onChangePeriod('regular', $event)"
                             />
-                            <!-- :min-date="startDate"
-                                :range-section="29" -->
                             <BulletList :list="infoDate" />
                             <RadioGroup
                                 name="benefitRadio"
@@ -118,12 +107,12 @@
                             />
                             <BulletList :list="infoBenefit" />
                         </div>
-                    </div>
+                    </div> -->
                 </div>
 
-                <BulletList :list="infoCoupon" />
+                <!-- <BulletList :list="infoCoupon" /> -->
 
-                <div class="promotion-sys-wrap">
+                <!-- <div class="promotion-sys-wrap">
                     <Title title="홍보 방식" type="h3" />
                     <div class="promotion-box">
                         <strong class="promotion-title">
@@ -187,26 +176,26 @@
                             </li>
                         </ul>
                     </div>
-                </div>
-                <Title title="예상 결과" type="h3" />
+                </div> -->
+                <!-- <Title title="예상 결과" type="h3" /> -->
                 <!-- <ApplyResult
                         v-if="estimateResult"
                         :target="estimateResult.target"
                         :selectRatio="estimateResult.selectRatio"
                         :salesAverage="estimateResult.salesAverage"
                     /> -->
-                <BulletList :list="infoResult" />
+                <!-- <BulletList :list="infoResult" />
                 <RecommenderBox
                     @check="onCheckRecommender"
                     @search="onSearchRecommender"
-                />
+                /> -->
             </div>
 
-            <portal to="floating">
+            <!-- <portal to="floating">
                 <BasicButton size="large" :disabled="false" @click="nextStep">
                     다음
                 </BasicButton>
-            </portal>
+            </portal> -->
         </PageBody>
     </Page>
 </template>
@@ -219,11 +208,6 @@ import { Path } from '@router/routes'
 import type { CustomerItem } from '@stores/modules/marketing'
 import type { RadioProps } from '@components/form/Radio.vue'
 import type { Period } from '@components/form/CalendarField.vue'
-
-type Customer =
-    | 'first' // 첫 고객
-    | 'regular' // 단골 고객
-type RequiredData = { mcno: string; bzno: string }
 
 @Component({
     components: { ApplyResult },
@@ -266,113 +250,37 @@ export default class StepSecondPage extends Vue {
         { value: '15', label: '15%' },
     ]
     /** 고객 별 박스 활성화(toggle) */
-    private isActive: Customer[] = []
+    private isActive: string[] = []
 
     /** 추천인 코드 활성화 */
     private activeRecommender = false
     /** 추천인 코드 */
     private recommenderCode = false
 
-    /** 시작 일자 */
-    get startDate(): Date {
-        return this.$dayjs().add(6, 'day').toDate()
+    /** 쿠폰 리스트 */
+    get couponList() {
+        return NewMarketingModule.couponList
     }
 
-    /** 마케팅 기간 기본값 */
-    get period(): { start: Date; end: Date } {
-        const standardDate = this.$dayjs().add(7, 'day')
-        const start = standardDate.toDate()
-        const end = standardDate.add(29, 'day').toDate()
-
-        return { start, end }
+    /** 기간 선택 - 달력 */
+    onChangePeriod(customerType: string, value: string) {
+        console.log(customerType, value)
     }
 
-    /** 마케팅 행사 대상자 조회 결과 값 */
-    get marketingTarget() {
-        return {
-            /** 첫 고객 수 */
-            firstCustomer: '0',
-            /** 첫 고객 수 PUSH */
-            firstCustomerPush: '0',
-            /** 단골 고객 수 */
-            regularCustomer: '0',
-            /** 단골 고객 수 PUSH */
-            regularCustomerPush: '0',
+    /** 혜택율 선택 - 라디오 버튼 */
+    onChangDiscountRate(customerType: string, value: string) {
+        console.log(customerType, value)
+    }
+
+    /** 고객별 텍스트 */
+    getCustomerTextByCase(value: string) {
+        if (value === '1') {
+            return `최근 1개월간 내 매장을 방문하지 않은 고객 중 반경 1km의 다른 매장을 이용한 고객`
+        } else if (value === '2') {
+            return `최근 3개월간 내 매장에서 1회 이상 결제한 고객`
+        } else {
+            return ''
         }
-    }
-
-    /** 사업자 번호, 가맹점 번호 */
-    get requiredData(): RequiredData {
-        return {
-            mcno: '0000',
-            bzno: '0000',
-        }
-    }
-
-    /** 예상 결과 */
-    get estimateResult() {
-        // TODO: 예상 수익 결과: 별도 API 존재
-        return null
-    }
-
-    /**
-     * TODO: 신청 API 호출 후 결과값에 따른 처리
-     * 0000: step3 로 이동
-     * 그 외: 메세징 처리
-     */
-    @Watch('applyValidateResultData')
-    changeApplyValidateResultData(value: object) {
-        console.log({ value })
-        // if (value?.data.rspDc === '0000') {
-        //     this.$router.push(Path.MarketingStepThird)
-        // } else {
-        //     this.$modal.open({
-        //         message: value?.data.rspDcMsg || '',
-        //         buttonText: {
-        //             confirm: '확인',
-        //         },
-        //         confirm: () => {
-        //             // nothing
-        //         },
-        //     })
-        // }
-    }
-
-    /** 날짜 서식 */
-    makeFormattedDate(value: Date): string {
-        return this.$dayjs(value).format('YYYYMMDD')
-    }
-
-    /** 다음 스텝 */
-    nextStep() {
-        // TODO: 신청 API 호출
-    }
-
-    /** 할인율 변경(radio) */
-    onChangDiscountRate(type: Customer, value: string) {
-        console.log({ type, value })
-    }
-
-    /** 추천인 코드 선택 했을 경우 - 체크박스 */
-    onCheckRecommender(recommenderCode: boolean) {
-        // TODO: API 형식에 따라 data로 저장 할지 store로 저장 할지 결정 해야함
-        this.recommenderCode = recommenderCode
-    }
-
-    /** 추천인 코드 확인 버튼 */
-    onSearchRecommender(value: string) {
-        // TODO: 추천인 코드 확인 API 호출
-        console.log({ value })
-    }
-
-    /** 활성화 상태 css class 반환 (toggle) */
-    isActiveClass(value: Customer): boolean {
-        return this.isActive.some(item => item === value)
-    }
-
-    /** 고객(첫, 단골) 별 데이터 세팅 */
-    setCustomerData(type: Customer, value: Partial<CustomerItem>) {
-        console.log({ type, value })
     }
 
     /* 체크박스 체크시 내용 토글됨 */
@@ -380,62 +288,27 @@ export default class StepSecondPage extends Vue {
         value,
         checked,
     }: {
-        value: Customer
+        value: string
         checked: boolean
     }) {
+        const { cloneDeep, uniq } = this._
+        console.log({ value, checked })
+
+        const origin = cloneDeep(this.isActive)
         if (checked) {
-            this.isActive.push(value)
-            this.setCustomerData(value, {
-                evSdt: this.makeFormattedDate(this.period.start),
-                evEdt: this.makeFormattedDate(this.period.end),
-                bnfDcR: '5',
-                trgOjCstt:
-                    value === 'first'
-                        ? this.marketingTarget.firstCustomer
-                        : this.marketingTarget.regularCustomer,
-            })
-            // this.inquirySalesAverage(value, this.period)
+            origin.push(value)
+            this.isActive = uniq(origin)
         } else {
-            this.isActive = this.isActive.filter(item => item !== value)
-            // MarketingModule.removeCustomerListItem(
-            //     value === 'first' ? '1' : '2',
-            // )
+            this.isActive = origin.filter(item => item !== value)
         }
     }
 
-    /** 캘린더 기간이 변경 될 경우 */
-    onChangePeriod(type: Customer, { value }: { value: Period }) {
-        const period = this.$dayjs(value.end).diff(
-            this.$dayjs(value.start).toDate(),
-            'day',
-        )
-
-        if (period >= 7 && period <= 30) {
-            this.setCustomerData(type, {
-                evSdt: this.makeFormattedDate(value.start),
-                evEdt: this.makeFormattedDate(value.end),
-            })
-            // await this.inquirySalesAverage(type, value)
-        } else {
-            this.$modal.open({
-                message:
-                    '쿠폰 행사는 최소 7일 부터 최대 30일까지 신청 가능합니다. 행사 기간을 다시 설정해 주세요.',
-                buttonText: {
-                    confirm: '확인',
-                },
-                confirm: () => {
-                    // nothing
-                },
-            })
-        }
+    /** 활성화 상태 css class 반환 (toggle) */
+    isActiveClass(value: string): boolean {
+        return this.isActive.some(item => item === value)
     }
 
     async mounted() {
-        // const franchiseInfo = MarketingModule.franchiseInfoData
-        // this.infoResult.push({
-        //     text: `행사 비용(할인혜택)은 <strong>${franchiseInfo?.mcNm}</strong> 가맹점 대금에서 차감되는 금액으로, 방문고객 수와 고객의 결제금액에 따라 변경될 수 있습니다.`,
-        // })
-
         await NewMarketingModule.getCreateCouponDefaultInfo()
     }
 }

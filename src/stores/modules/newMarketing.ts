@@ -81,6 +81,11 @@ export default class NewMarketing extends VuexModule {
             createCouponDefaultInfo: data,
         }
     }
+
+    /** 쿠폰 리스트 */
+    get couponList() {
+        return this.createCouponDefaultInfo ? this.createCouponDefaultInfo.data.list : []
+    }
 }
 
 export const NewMarketingModule = getModule(NewMarketing)

@@ -36,8 +36,8 @@ export default class Footer extends Vue {
         this.$router.push({
             ...Path.TermsDetail,
             query: {
-                comGrpC: `${flag === 'privacy' ? 'AGR_MBR' : 'AGR_COM'}`,
-                comC: 'PRV_1',
+                comGrpC: 'AGR_COM',
+                comC: `${flag === 'privacy' ? 'PRV_2' : 'PRV_1'}`,
                 direct: 'true',
                 access: 'internal',
             },
