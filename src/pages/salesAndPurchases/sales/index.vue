@@ -50,6 +50,7 @@
                         :expanded.sync="salesListOfPeridoExpanded"
                     >
                         <PriceList
+                            :parentType="parentType"
                             :list="salesListOfPerido"
                             :status="status"
                             :title="salesLatestAverageTitle"
