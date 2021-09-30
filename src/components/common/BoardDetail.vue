@@ -7,7 +7,7 @@
             </div>
         </div>
         <div class="board-text-area">
-            <div class="text-inner" v-html="content" />
+            <div class="text-inner" v-html="newLine(content)" />
         </div>
     </section>
 </template>
