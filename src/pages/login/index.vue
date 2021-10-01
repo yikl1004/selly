@@ -1,16 +1,9 @@
 <template>
-    <Page>
+    <Page floating>
         <PageBody>
             <div class="page-login-wrap">
                 <LoginVisual />
                 <div class="btn-box">
-                    <button
-                        type="button"
-                        class="btn-kakao-login"
-                        @click="login('')"
-                    >
-                        <span>카카오톡으로 시작</span>
-                    </button>
                     <template v-if="isDev">
                         <button
                             type="button"
@@ -108,6 +101,15 @@
                     </template>
                 </div>
             </div>
+            <portal to="floating">
+                <button
+                    type="button"
+                    class="btn-kakao-login"
+                    @click="login('')"
+                >
+                    <span>카카오톡으로 시작</span>
+                </button>
+            </portal>
             <form
                 v-if="datusLoginInfo"
                 ref="datusForm"
@@ -264,31 +266,33 @@ export default class LoginPage extends Mixins(PageView) {
     .btn-box {
         padding: 0 20px 60px; //임시
     }
-    .btn-kakao-login {
-        display: block;
-        width: 100%;
-        height: 60px;
-        border-radius: 10px;
-        background-color: #ffe403;
-        font-size: 16px;
-        color: #3f1d1d;
-        text-align: center;
-        font-weight: 500;
-        span {
-            display: inline-block;
-            position: relative;
-            padding-left: 38px;
-            &:before {
-                content: '';
-                display: block;
-                position: absolute;
-                left: 0;
-                top: 50%;
-                width: 36px;
-                height: 36px;
-                margin-top: -18px;
-                background: url('/assets/icon/icon-kakao.svg') no-repeat;
-            }
+}
+</style>
+<style lang="scss">
+.btn-kakao-login {
+    display: block;
+    width: 100%;
+    height: 60px;
+    border-radius: 10px;
+    background-color: #ffe403;
+    font-size: 16px;
+    color: #3f1d1d;
+    text-align: center;
+    font-weight: 500;
+    span {
+        display: inline-block;
+        position: relative;
+        padding-left: 38px;
+        &:before {
+            content: '';
+            display: block;
+            position: absolute;
+            left: 0;
+            top: 50%;
+            width: 36px;
+            height: 36px;
+            margin-top: -18px;
+            background: url('/assets/icon/icon-kakao.svg') no-repeat;
         }
     }
 }

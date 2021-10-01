@@ -64,7 +64,7 @@ export default class AuthCallbakPage extends Vue {
             const data = makeFormData({
                 grant_type: 'authorization_code',
                 client_id: process.env.VUE_APP_KAKAO_REST_API_KEY,
-                redirect_uri: `${process.env.VUE_APP_SITE_DOMAIN}/authCallback`, //'http://selly.lottecard.com:8080/authCallback',
+                redirect_uri: `${process.env.VUE_APP_SITE_DOMAIN}/authCallback`, //http://selly.lottecard.com:8080/authCallback
                 code,
                 // client_secret: 'tWLSIRAEqbtjXxrKJj6IWSoIopYUq2kW',
             })
@@ -82,7 +82,7 @@ export default class AuthCallbakPage extends Vue {
                 .then(res => res)
                 .catch(error => error)
             console.dir(res)
-            if ('response' in res && res.response.status === 400) {
+            if ('response' in res && res.response.status !== 200) {
                 this.$modal.open({
                     message: '잘못 접근 했습니다.\n로그인으로 이동합니다.',
                     confirm: () => {
@@ -95,9 +95,6 @@ export default class AuthCallbakPage extends Vue {
             } else {
                 this.$nextTick().then(async () => {
                     // 0. redirect를 위한 referrer 체크
-                    // const referrer = JSON.parse(
-                    //     localStorage.getItem('referrer') || 'null',
-                    // )
                     // 1. 토큰 받아오기
                     this.$kakaoSdk.setAccessToken(res.data.access_token)
                     // 2. 카카오 로그인 사용자 정보 요청
@@ -115,6 +112,16 @@ export default class AuthCallbakPage extends Vue {
                     await AuthModule.getLoginInfo()
                 })
             }
+        } else {
+            this.$modal.open({
+                message: '잘못 접근 했습니다.\n로그인으로 이동합니다.',
+                confirm: () => {
+                    this.$router.push(Path.Login)
+                },
+                buttonText: {
+                    confirm: '확인',
+                },
+            })
         }
     }
 }

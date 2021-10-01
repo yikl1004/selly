@@ -86,6 +86,21 @@ export default class NewMarketing extends VuexModule {
     get couponList() {
         return this.createCouponDefaultInfo ? this.createCouponDefaultInfo.data.list : []
     }
+
+    /** 혜택율 선택 리스트 */
+    get benefitList() {
+        return this.createCouponDefaultInfo ? this.createCouponDefaultInfo.data.list2 : []
+    }
+
+    /** 미리 선택된 혜택률 */
+    get alreadyBenefit() {
+        return this.createCouponDefaultInfo ? this.createCouponDefaultInfo.data.bnfRt : ''
+    }
+
+    /** 홍보수단 리스트 */
+    get promotionList() {
+        return this.createCouponDefaultInfo ? this.createCouponDefaultInfo.data.list1 : []
+    }
 }
 
 export const NewMarketingModule = getModule(NewMarketing)

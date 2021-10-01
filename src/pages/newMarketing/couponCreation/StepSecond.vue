@@ -45,105 +45,60 @@
                                 name="date"
                                 isRange
                                 :readonly="false"
-                                default-value=""
+                                :default-value="{
+                                    start: $dayjs().add(7, 'day'),
+                                    end: $dayjs().add(13, 'day'),
+                                }"
                                 @change="onChangePeriod(item.c, $event)"
                             />
                             <BulletList :list="infoDate" />
                             <RadioGroup
-                                name="benefitRadio1"
+                                :name="`benefitRadio${item.c}`"
                                 :disabled="false"
-                                :list="benefitRadio"
+                                :list="
+                                    item.c === '1'
+                                        ? benefitRadioForFirst
+                                        : benefitRadioForRegular
+                                "
                                 label="할인 혜택(결제일 할인)"
                                 @change="onChangDiscountRate(item.c, $event)"
                             />
                             <BulletList :list="infoBenefit" />
                         </div>
                     </div>
-
-                    <!-- :min-date="startDate"
-                        :range-section="29" -->
-                    <!-- <div
-                        :class="[
-                            'benefit-select-box',
-                            { active: isActiveClass('regular') },
-                        ]"
-                    >
-                        <div class="benefit-title">
-                            <label>
-                                <input
-                                    value="regular"
-                                    type="checkbox"
-                                    @change="
-                                        onChangeCustomerCheck($event.target)
-                                    "
-                                />
-                                <i>
-                                    <strong>단골 만들기</strong>
-                                    <em> 00 명 </em>
-                                </i>
-                                <span class="sub-text">
-                                    최근 3개월간 내 매장에서 1회 이상 결제한
-                                    고객
-                                </span>
-                            </label>
-                        </div>
-                        <div class="benefit-detail">
-                            <CalendarField
-                                id="regularCustomerPeriod"
-                                label="행사 기간"
-                                name="date"
-                                isRange
-                                :readonly="false"
-                                :default-value="period"
-                                @change="onChangePeriod('regular', $event)"
-                            />
-                            <BulletList :list="infoDate" />
-                            <RadioGroup
-                                name="benefitRadio"
-                                :disabled="false"
-                                :list="benefitRadio"
-                                label="할인 혜택(결제일 할인)"
-                                @change="onChangDiscountRate('regular', $event)"
-                            />
-                            <BulletList :list="infoBenefit" />
-                        </div>
-                    </div> -->
                 </div>
 
-                <!-- <BulletList :list="infoCoupon" /> -->
+                <BulletList :list="infoCoupon" />
 
-                <!-- <div class="promotion-sys-wrap">
+                <div class="promotion-sys-wrap">
                     <Title title="홍보 방식" type="h3" />
-                    <div class="promotion-box">
+                    <div
+                        v-for="(item, index) in promotionList"
+                        :key="`promotion-${index}`"
+                        class="promotion-box"
+                        :class="item.c === '2' ? 'type01' : ''"
+                    >
                         <strong class="promotion-title">
-                            롯데카드 앱 내 터치쿠폰 노출
+                            {{ item.cnm }}
                         </strong>
                         <p>행사 대상자 전체</p>
                         <ul>
                             <li>
                                 첫 고객 :
                                 <strong>
-                                    {{
-                                        _.toNumber(
-                                            marketingTarget.firstCustomer,
-                                        ).toLocaleString()
-                                    }}명
+                                    {{ seperateNumber(item.etUCstt) }}명
                                 </strong>
                             </li>
                             <li>
                                 단골 :
                                 <strong>
-                                    {{
-                                        _.toNumber(
-                                            marketingTarget.regularCustomer,
-                                        ).toLocaleString()
-                                    }}
+                                    {{ seperateNumber('1111111') }}
                                     명
                                 </strong>
                             </li>
                         </ul>
                     </div>
-                    <div class="promotion-box type01">
+                    <!-- <div class="promotion-box type01">
                         <strong class="promotion-title">
                             앱 푸시메시지 무료 발송
                         </strong>
@@ -175,8 +130,8 @@
                                 </strong>
                             </li>
                         </ul>
-                    </div>
-                </div> -->
+                    </div> -->
+                </div>
                 <!-- <Title title="예상 결과" type="h3" /> -->
                 <!-- <ApplyResult
                         v-if="estimateResult"
@@ -243,23 +198,39 @@ export default class StepSecondPage extends Vue {
         },
     ]
 
-    /** 혜택 할인 율 */
-    private benefitRadio: RadioProps[] = [
-        { value: '5', label: '5%', checked: true },
-        { value: '10', label: '10%' },
-        { value: '15', label: '15%' },
-    ]
+    /** 혜택 할인 율 - 첫고객 */
+    private benefitRadioForFirst: RadioProps[] = []
+
+    /** 혜택 할인 율 - 단골고객 */
+    private benefitRadioForRegular: RadioProps[] = []
+
     /** 고객 별 박스 활성화(toggle) */
     private isActive: string[] = []
 
     /** 추천인 코드 활성화 */
     private activeRecommender = false
+
     /** 추천인 코드 */
     private recommenderCode = false
 
     /** 쿠폰 리스트 */
     get couponList() {
         return NewMarketingModule.couponList
+    }
+
+    /** 혜택율 선택 리스트 */
+    get benefitList() {
+        return NewMarketingModule.benefitList
+    }
+
+    /** 미리 선택된 혜택률 */
+    get alreadyBenefit() {
+        return NewMarketingModule.alreadyBenefit
+    }
+
+    /** 홍보수단 리스트 */
+    get promotionList() {
+        return NewMarketingModule.promotionList
     }
 
     /** 기간 선택 - 달력 */
@@ -310,6 +281,21 @@ export default class StepSecondPage extends Vue {
 
     async mounted() {
         await NewMarketingModule.getCreateCouponDefaultInfo()
+
+        this.benefitRadioForFirst = this.benefitList.map(item => {
+            return {
+                value: item.c,
+                checked: this.alreadyBenefit === item.c,
+                label: item.cnm,
+            }
+        })
+        this.benefitRadioForRegular = this.benefitList.map(item => {
+            return {
+                value: item.c,
+                checked: this.alreadyBenefit === item.c,
+                label: item.cnm,
+            }
+        })
     }
 }
 </script>
