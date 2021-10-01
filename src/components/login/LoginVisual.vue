@@ -78,23 +78,39 @@
                 >
                     <swiper-slide>
                         <div class="slide-intro-box">
-                            <span class="thumb"> </span>
+                            <span class="thumb">
+                                <img
+                                    src="/assets/intro/thumb_user01.png"
+                                    alt=""
+                                />
+                            </span>
                             <p>
-                                샐리를 사용하면서<br />주변 가맹점의 매출 추이와
-                                고객 속성을 <br />확인하고, 매장 홍보에
-                                활용하는데 <br />아주 많은 도움을 받았습니다.
-                                <strong>IMT 커피집, 광화문점</strong>
+                                제가 직접 대상고객을 설정해서 할인쿠폰을 만들고
+                                홍보할 수 있어서 신기했고 우리 가게 주변의 고객
+                                속성과 매출 분석도 할 수 있어 가게 운영에 많은
+                                도움이 됩니다.
+                                <strong>
+                                    양고기 전문점 “고구려”사장님 김기수
+                                </strong>
                             </p>
                         </div>
                     </swiper-slide>
                     <swiper-slide>
                         <div class="slide-intro-box">
-                            <span class="thumb"> </span>
+                            <span class="thumb">
+                                <img
+                                    src="/assets/intro/thumb_user02.png"
+                                    alt=""
+                                />
+                            </span>
                             <p>
-                                샐리를 사용하면서<br />주변 가맹점의 매출 추이와
-                                고객 속성을 <br />확인하고, 매장 홍보에
-                                활용하는데 <br />아주 많은 도움을 받았습니다.
-                                <strong>IMT 커피집, 광화문점</strong>
+                                도로시파스타연정은 배달 전문 프렌차이즈인데 배달
+                                매출이 얼마나 발생됐는지 매일매일 카카오톡으로
+                                알려줘 정말 편하고 신기해요. 우리 가맹점
+                                사장님들도 만족하고 사용하고 있어요.
+                                <strong>
+                                    (주)탑라이너에프에스 대표 조은상
+                                </strong>
                             </p>
                         </div>
                     </swiper-slide>
