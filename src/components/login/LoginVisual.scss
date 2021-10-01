@@ -94,6 +94,7 @@
             }
             .swiper-button-next,
             .swiper-button-prev {
+                top: 156px;
                 &:after {
                     content: '';
                     display: block;
@@ -102,6 +103,12 @@
                     font-family: 'Spoqa Han Sans Neo';
                     background-repeat: no-repeat;
                 }
+            }
+            .swiper-button-prev {
+                left: 0;
+            }
+            .swiper-button-next {
+                right: 0;
             }
 
             .swiper-button-next:after {
@@ -120,13 +127,13 @@
         height: 80px;
         margin: 0 auto;
         border-radius: 50%;
-        background: green;
         img {
             width: 100%;
         }
     }
     p {
         margin-top: 32px;
+        padding: 0 52px;
         text-align: center;
         strong {
             display: block;
