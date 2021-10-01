@@ -5,9 +5,7 @@ declare module 'vue/types/vue' {
         $edkHost: {
             init: Function
             syncBznav(params: { dom?: Element; bznavSyncToken: string }): void
-            // signInBznav(params: { dom?: Element; bznavSyncToken: string }): void
-            // signUpBznav(params: { dom?: Element; bznavSyncToken: string }): void
-            signOutBznav(params: { dom?: Element }): void
+            signOutBznav(params?: { dom?: Element }): void
             // 연동 페이지
             openDataSync(params?: { dom?: Element; orgSyncId: string; eventListener?: EdkEventListener }): void
             // 세무서비스 페이지

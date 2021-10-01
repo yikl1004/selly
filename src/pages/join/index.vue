@@ -51,7 +51,7 @@ export default class JoinPage extends Vue {
         this.onComplete()
     }
 
-    onComplete() {
+    async onComplete() {
         const loginResult = this.loginInfo?.rspDc
         const defaultMethod = ({
             bznavSyncToken,
@@ -73,7 +73,9 @@ export default class JoinPage extends Vue {
             default: defaultMethod,
         }
 
-        methods[loginResult || 'default']({ bznavSyncToken: this.biznavToken })
+        await methods[loginResult || 'default']({
+            bznavSyncToken: this.biznavToken,
+        })
         this.toMain()
     }
 

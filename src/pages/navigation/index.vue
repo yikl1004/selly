@@ -139,6 +139,7 @@ export default class NavigationPage extends Mixins(PageView) {
             confirm: async () => {
                 await this.$kakaoSdk.logout()
                 await AuthModule.getLogoutInfo()
+                this.$edkHost.signOutBznav()
             },
         })
     }

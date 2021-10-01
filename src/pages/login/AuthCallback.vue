@@ -30,6 +30,11 @@ export default class AuthCallbakPage extends Vue {
         value: AuthState['loginInfo'] /* oldValue: LoginInfo | null */,
     ) {
         console.log('AuthCallback', value)
+
+        this.$edkHost.syncBznav({
+            bznavSyncToken: value?.bzNavToken || '',
+        })
+
         switch (value?.rspDc) {
             // 최초 회원가입, 사업자확인으로 이동(가입 절차)
             case '01':
