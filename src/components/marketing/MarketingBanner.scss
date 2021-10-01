@@ -23,13 +23,3 @@
         margin-right:24px;
     }
 }
-
-.caution-box {
-    & + .marketing-banner {
-        position: absolute;
-        bottom: 60px;
-        left: 24px;
-        right: 24px;
-        width: calc(100% - 48px);
-    }
-}
