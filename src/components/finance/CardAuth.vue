@@ -44,7 +44,6 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
 import type { Schema } from '@components/form/FormProvider.vue'
-import type { DropdownBoxList } from '@components/form/DropdownBox.vue'
 
 @Component
 export default class CardAuth extends Vue {

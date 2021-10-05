@@ -26,7 +26,6 @@ import ConvertBar from '@components/common/ConvertBar.vue'
 import ConvertPie from '@components/common/ConvertPie.vue'
 import Chart from 'chart.js'
 import patternnomaly from 'patternomaly'
-import type { DropdownBoxList } from '@components/form/DropdownBox.vue'
 // import { FinanceModule } from '@stores/modules/finance'
 
 @Component({

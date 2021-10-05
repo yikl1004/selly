@@ -238,23 +238,23 @@ const routes: Array<RouteConfig & { meta?: RouteMeta }> = [
             },
 
             // 신청내역
-            {
-                path: '/marketing/applicationDetail',
-                name: Path.CouponList.name,
-                component: createAsyncPage(import('@pages/marketing/history/index.vue')),
-                meta: {
-                    floating: true,
-                },
-            },
-            // 신청내역_상세
-            {
-                path: '/marketing/detail',
-                name: Path.CouponDetail.name,
-                component: createAsyncPage(import('@pages/marketing/detail/index.vue')),
-                meta: {
-                    floating: true,
-                },
-            },
+            // {
+            //     path: '/marketing/applicationDetail',
+            //     name: Path.CouponList.name,
+            //     component: createAsyncPage(import('@pages/marketing/history/index.vue')),
+            //     meta: {
+            //         floating: true,
+            //     },
+            // },
+            // // 신청내역_상세
+            // {
+            //     path: '/marketing/detail',
+            //     name: Path.CouponDetail.name,
+            //     component: createAsyncPage(import('@pages/marketing/detail/index.vue')),
+            //     meta: {
+            //         floating: true,
+            //     },
+            // },
             // 내 주변 매출
             {
                 path: '/aroundSales',

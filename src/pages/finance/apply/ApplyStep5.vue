@@ -252,7 +252,6 @@ import { Component, Vue } from 'vue-property-decorator'
 import PopupPredictionLoan from '@components/finance/PopupPredictionLoan.vue'
 import type { CheckList } from '@components/form/CheckBoxGroup.vue'
 import type { Schema } from '@components/form/FormProvider.vue'
-import type { DropdownBoxList } from '@components/form/DropdownBox.vue'
 
 // interface Data {
 //     buttonField: string

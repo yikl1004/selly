@@ -111,8 +111,7 @@
 import { Component, Prop, Vue } from 'vue-property-decorator'
 import type { CheckList } from '@components/form/CheckBoxGroup.vue'
 import type { Schema } from '@components/form/FormProvider.vue'
-import type { DropdownBoxList } from '@components/form/DropdownBox.vue'
-import AgreePhone from '@components/finance/AgreePhone.vue'
+import type AgreePhone from '@components/finance/AgreePhone.vue'
 
 @Component({
     components: {

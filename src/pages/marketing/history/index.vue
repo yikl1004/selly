@@ -16,16 +16,13 @@
                 />
 
                 <!-- s: 신청내역 없음-->
-                <template v-if="!statementListData.length">
+                <template>
                     <CautionBox description="신청내역이 없습니다." />
                     <MarketingBanner />
                 </template>
 
-                <div v-else class="coupon-list">
-                    <Anchor
-                        v-for="(item, index) in statementListData"
-                        :key="`coupon-box-${index}`"
-                        class="coupon-box"
+                <div class="coupon-list">
+                    <!-- :key="`coupon-box-${index}`"
                         :class="getTypeStyleClass(item.mrktStc)"
                         :href="{
                             name: 'CouponDetail',
@@ -33,9 +30,9 @@
                                 mrktCtsSeq: item.mrktCtsSeq,
                                 mrktStc: item.mrktStc,
                             },
-                        }"
-                    >
-                        <div class="coupon-inner">
+                        }" -->
+                    <Anchor class="coupon-box" href="/">
+                        <!-- <div class="coupon-inner">
                             <strong class="franchisee-name">
                                 {{ item.mcNm }}
                             </strong>
@@ -48,7 +45,7 @@
                                 {{ $dayjs(item.evEdt).format('YYYY.MM.DD') }}
                             </span>
                             <i class="flag">{{ item.mrktStcNm }}</i>
-                        </div>
+                        </div> -->
                     </Anchor>
                 </div>
 
@@ -76,7 +73,6 @@ import MarketingBanner from '@components/marketing/MarketingBanner.vue'
 import { MktStatementModule } from '@stores/modules/mktStatement'
 import { Path } from '@router/routes'
 import type { MarketingStatus } from '@services/marketing'
-import type { DropdownBoxList } from '@components/form/DropdownBox.vue'
 
 @Component({
     components: { MarketingBanner },
@@ -90,19 +86,23 @@ export default class MarketingHistory extends Vue {
     // }
 
     get appliedFranchiseListData() {
-        return MktStatementModule.appliedFranchiseListData
+        // return MktStatementModule.appliedFranchiseListData
+        return null
     }
 
     get statementListData() {
-        return MktStatementModule.statementListData
+        // return MktStatementModule.statementListData
+        return null
     }
 
     get statementListPageNo() {
-        return MktStatementModule.statementListPageNo
+        // return MktStatementModule.statementListPageNo
+        return null
     }
 
     get statementListMoreYn() {
-        return MktStatementModule.statementListMoreYn
+        // return MktStatementModule.statementListMoreYn
+        return null
     }
 
     /** 진행상태 별 스타일 */
@@ -134,10 +134,10 @@ export default class MarketingHistory extends Vue {
             item => item.selected,
         ) as BottomSheetOptionItem
 
-        MktStatementModule.getStatementList({
-            mcno: selectedItem.value,
-            pageNo: this.statementListPageNo,
-        })
+        // MktStatementModule.getStatementList({
+        //     mcno: selectedItem.value,
+        //     pageNo: this.statementListPageNo,
+        // })
     }
 
     /** 매장 선택 */
@@ -147,10 +147,10 @@ export default class MarketingHistory extends Vue {
         ) as BottomSheetOptionItem
         console.log(selectedItem)
 
-        MktStatementModule.getStatementList({
-            mcno: selectedItem.value,
-            // pageNo: '',
-        })
+        // MktStatementModule.getStatementList({
+        //     mcno: selectedItem.value,
+        //     // pageNo: '',
+        // })
     }
 
     /** 쿠폰 만들기로 이동 */
@@ -158,27 +158,27 @@ export default class MarketingHistory extends Vue {
         this.$router.push(Path.MarketingGuide)
     }
 
-    async mounted() {
-        await Promise.all([
-            MktStatementModule.getAppliedFranchiseList(),
-            MktStatementModule.getStatementList(),
-        ])
+    // async mounted() {
+    //     await Promise.all([
+    //         MktStatementModule.getAppliedFranchiseList(),
+    //         MktStatementModule.getStatementList(),
+    //     ])
 
-        this.franchiseSelectList = ([
-            {
-                displayName: '전체',
-                value: '',
-                selected: true,
-            },
-        ] as DropdownBoxList).concat(
-            this.appliedFranchiseListData.map(item => {
-                return {
-                    displayName: item.mcNm,
-                    value: item.mcno,
-                }
-            }),
-        )
-    }
+    //     this.franchiseSelectList = ([
+    //         {
+    //             displayName: '전체',
+    //             value: '',
+    //             selected: true,
+    //         },
+    //     ] as DropdownBoxList).concat(
+    //         this.appliedFranchiseListData.map(item => {
+    //             return {
+    //                 displayName: item.mcNm,
+    //                 value: item.mcno,
+    //             }
+    //         }),
+    //     )
+    // }
 }
 </script>
 

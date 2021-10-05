@@ -16,22 +16,21 @@
                 />
 
                 <!-- s: 신청내역 없음-->
-                <template v-if="!statementListData.length">
+                <template v-if="!applyList.length">
                     <CautionBox description="신청내역이 없습니다." />
                     <MarketingBanner />
                 </template>
 
                 <div v-else class="coupon-list">
                     <Anchor
-                        v-for="(item, index) in statementListData"
+                        v-for="(item, index) in applyList"
                         :key="`coupon-box-${index}`"
                         class="coupon-box"
-                        :class="getTypeStyleClass(item.mrktStc)"
+                        :class="getTypeStyleClass(item.mrktStcNm)"
                         :href="{
                             name: 'CouponDetail',
                             query: {
                                 mrktCtsSeq: item.mrktCtsSeq,
-                                mrktStc: item.mrktStc,
                             },
                         }"
                     >
@@ -40,7 +39,7 @@
                                 {{ item.mcNm }}
                             </strong>
                             <p class="coupon-name">
-                                [{{ item.ggDNm }}] {{ item.mrktBnfCn }}
+                                {{ item.mrktBnfCn }}
                             </p>
                             <span class="date">
                                 {{ $dayjs(item.evSdt).format('YYYY.MM.DD') }}
@@ -52,13 +51,7 @@
                     </Anchor>
                 </div>
 
-                <BasicButton
-                    v-if="statementListMoreYn"
-                    type="more"
-                    @click="onMore"
-                >
-                    더보기
-                </BasicButton>
+                <BasicButton type="more" @click="onMore"> 더보기 </BasicButton>
             </div>
 
             <portal to="floating">
@@ -75,8 +68,8 @@ import { Component, Vue } from 'vue-property-decorator'
 import MarketingBanner from '@components/marketing/MarketingBanner.vue'
 import { MktStatementModule } from '@stores/modules/mktStatement'
 import { Path } from '@router/routes'
-import type { MarketingStatus } from '@services/marketing'
-import type { DropdownBoxList } from '@components/form/DropdownBox.vue'
+import type { MarketingStatusText } from '@services/mktStatement.interface'
+// import type { MarketingStatus } from '@services/marketing'
 
 @Component({
     components: { MarketingBanner },
@@ -85,47 +78,35 @@ export default class MarketingHistory extends Vue {
     // 가맹점 선택 리스트
     private franchiseSelectList: DropdownBoxList = []
 
-    // get Path() {
-    //     return Path.
-    // }
-
-    get appliedFranchiseListData() {
-        return MktStatementModule.appliedFranchiseListData
+    /** 가맹점 리스트 */
+    get franchiseList() {
+        return MktStatementModule.franchiseList
     }
 
-    get statementListData() {
-        return MktStatementModule.statementListData
+    /** 신청내역 리스트 */
+    get applyList() {
+        return MktStatementModule.applyList
     }
 
-    get statementListPageNo() {
-        return MktStatementModule.statementListPageNo
-    }
-
-    get statementListMoreYn() {
-        return MktStatementModule.statementListMoreYn
+    /** 신청내역 리스트 현재 페이지 번호 */
+    get pageNo() {
+        return MktStatementModule.currentHistoryPageNo
     }
 
     /** 진행상태 별 스타일 */
-    getTypeStyleClass(value: MarketingStatus): string {
+    getTypeStyleClass(value: MarketingStatusText): string {
         const cases = {
-            // 접수완료
-            '01': 'type01',
-            // 준비중
-            '02': 'type02',
-            // 진행예정
-            '03': 'type03',
-            // 진행중
-            '04': 'type04',
-            // 종료
-            '05': 'type05',
-            // 재검토 필요
-            '08': 'type06',
-            // 취소
-            '09': '',
+            접수완료: 'type01',
+            준비중: 'type02',
+            진행예정: 'type03',
+            진행중: 'type04',
+            종료: 'type05',
+            '재검토 필요': 'type06',
+            취소: '',
             default: '',
         }
 
-        return cases[value]
+        return cases[value || 'default']
     }
 
     /** 더보기 */
@@ -134,23 +115,15 @@ export default class MarketingHistory extends Vue {
             item => item.selected,
         ) as BottomSheetOptionItem
 
-        MktStatementModule.getStatementList({
-            mcno: selectedItem.value,
-            pageNo: this.statementListPageNo,
+        MktStatementModule.getApplyHistory({
+            mcno: selectedItem.value || '',
+            psPagNo: this.pageNo,
         })
     }
 
     /** 매장 선택 */
     onSelectFranchise(value: string) {
-        const selectedItem = this.franchiseSelectList.find(
-            item => item.value === value,
-        ) as BottomSheetOptionItem
-        console.log(selectedItem)
-
-        MktStatementModule.getStatementList({
-            mcno: selectedItem.value,
-            // pageNo: '',
-        })
+        MktStatementModule.selectFranchiseList(value)
     }
 
     /** 쿠폰 만들기로 이동 */
@@ -159,25 +132,9 @@ export default class MarketingHistory extends Vue {
     }
 
     async mounted() {
-        await Promise.all([
-            MktStatementModule.getAppliedFranchiseList(),
-            MktStatementModule.getStatementList(),
-        ])
+        await MktStatementModule.getInitialApplyHistory()
 
-        this.franchiseSelectList = ([
-            {
-                displayName: '전체',
-                value: '',
-                selected: true,
-            },
-        ] as DropdownBoxList).concat(
-            this.appliedFranchiseListData.map(item => {
-                return {
-                    displayName: item.mcNm,
-                    value: item.mcno,
-                }
-            }),
-        )
+        this.franchiseSelectList = this.franchiseList
     }
 }
 </script>

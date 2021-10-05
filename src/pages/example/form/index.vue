@@ -52,7 +52,6 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import type { DropdownBoxList } from '@components/form/DropdownBox.vue'
 import type { SingleSelectionListItem } from '@components/form/SingleSelection.vue'
 
 // interface Data {

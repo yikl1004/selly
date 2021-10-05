@@ -132,7 +132,6 @@
 import { Component, Vue } from 'vue-property-decorator'
 import type { RadioProps } from '@components/form/Radio.vue'
 import type { Schema } from '@components/form/FormProvider.vue'
-import type { DropdownBoxList } from '@components/form/DropdownBox.vue'
 
 @Component({
     components: {

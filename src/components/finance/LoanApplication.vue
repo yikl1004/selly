@@ -231,7 +231,6 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import type { DropdownBoxList } from '@components/form/DropdownBox.vue'
 import type { Schema } from '@components/form/FormProvider.vue'
 
 // interface Data {

@@ -49,7 +49,6 @@
 
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
-import type { DropdownBoxList } from '@components/form/DropdownBox.vue'
 import type { Status } from '@stores/modules/sales'
 
 @Component

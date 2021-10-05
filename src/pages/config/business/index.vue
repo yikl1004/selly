@@ -65,7 +65,6 @@ import SelectStore from '@pages/auth/SelectStore.vue'
 import PageView from '@utils/mixins/PageView'
 import { AuthModule } from '@stores/modules/auth'
 import { Path } from '@router/routes'
-import type { DropdownBoxList } from '@components/form/DropdownBox.vue'
 import type { Schema } from '@components/form/FormProvider.vue'
 import type {
     BusinessManInfoListItem,

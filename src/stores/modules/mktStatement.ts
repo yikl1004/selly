@@ -1,118 +1,96 @@
-import { Module, VuexModule, MutationAction, getModule } from 'vuex-module-decorators'
-import MktStatementService, { MktStatementResponse, MktStatementParameters } from '@services/mktStatement'
+import { Module, VuexModule, MutationAction, getModule, Mutation } from 'vuex-module-decorators'
+import MktStatementService from '@services/mktStatement'
 import store from '@stores/index'
 import toNumber from 'lodash/toNumber'
+import type { Parameters, Responses, FranchiseItem, ApplyHistoryItem, ApplyHistory } from '@services/mktStatement.interface'
 
-export interface MktStatementState {
-    appliedFranchiseList: AppliedFranchiseListRes | null
-    statementList: StatementListRes
+interface MktStatementState {
+    franchiseList: DropdownBoxList /* FranchiseItem[] */
+    applyHistory: ApplyHistoryItem[]
+    currentHistoryPage: string
+    moreYN: YN
 }
-
-type AppliedFranchiseListRes = MktStatementResponse['appliedFranchiseList']
-type StatementListRes = MktStatementResponse['statementList']
-type BeforeApplyRes = MktStatementResponse['beforeApply']
-type ApplyingRes = MktStatementResponse['applying']
-type EndApplyRes = MktStatementResponse['endApply']
-
 @Module({ name: 'mktStatement', namespaced: true, dynamic: true, store })
 export default class MktStatement extends VuexModule {
-    public appliedFranchiseList: AppliedFranchiseListRes | null = null
-    public statementList: StatementListRes = {
-        rc: '0000',
-        rsMsg: '',
-        data: {
-            list: [],
-            pageNo: '0',
-            moreYn: 'N',
-        },
-    }
-    public beforeApply: BeforeApplyRes | null = null
-    public applying: ApplyingRes | null = null
-    public endApply: EndApplyRes | null = null
+    // public applyInitialHistory: MktStatementState['applyInitialHistory'] = null
+    public franchiseList: MktStatementState['franchiseList'] = []
+    public applyHistory: MktStatementState['applyHistory'] = []
+    public currentHistoryPage = ''
+    public moreYN: YN = 'N'
 
+    /** 신청내역(초기내역) - 가맹점 정보와 함께 불러오는 API */
     @MutationAction
-    async getAppliedFranchiseList() {
-        const { data } = await MktStatementService.getAppliedFranchiseList()
-
-        return {
-            appliedFranchiseList: data,
-        }
-    }
-
-    get appliedFranchiseListData() {
-        return this.appliedFranchiseList?.data.list || []
-    }
-
-    @MutationAction
-    async getStatementList(params?: MktStatementParameters['statementList']) {
-        const state = this.state as MktStatementState
-        const { data } = await MktStatementService.getStatementList(params)
-
-        let statementList: MktStatementState['statementList']
-
-        if (params?.pageNo && toNumber(params.pageNo) >= 1) {
-            statementList = {
-                ...data,
-                data: {
-                    ...data.data,
-                    list: state.statementList.data.list.concat(data.data.list),
-                },
+    async getInitialApplyHistory() {
+        const { data } = await MktStatementService.getInitialApplyHistory()
+        const franchiseList: DropdownBoxList = [
+            {
+                displayName: '전체',
+                value: '',
+                selected: true,
+            },
+        ]
+        if (data) {
+            return {
+                franchiseList: franchiseList.concat(
+                    data.data.mcList.map(item => ({
+                        displayName: item.mcNm,
+                        value: item.mcno,
+                        selected: false,
+                    })),
+                ),
+                applyHistory: data.data.mrktAplList,
+                moreYN: data.data.moreYn,
+                currentHistoryPage: data.data.psPagNo,
             }
         } else {
-            statementList = data
+            return {
+                franchiseList,
+                applyHistory: [],
+                moreYN: 'N',
+                currentHistoryPage: '',
+            }
         }
-
-        return {
-            statementList,
-        }
     }
 
-    get statementListData() {
-        return this.statementList.data.list
+    /** 현재 페이지 번호 */
+    get currentHistoryPageNo() {
+        return this.currentHistoryPage
     }
 
-    get statementListPageNo() {
-        return this.statementList.data.pageNo
+    /** 가맹점 리스트 */
+    get franchiseListData() {
+        return this.franchiseList
     }
 
-    get statementListMoreYn(): boolean {
-        return this.statementList.data.moreYn === 'Y'
+    @Mutation
+    selectFranchiseList(mcno: string) {
+        this.franchiseList = this.franchiseList.map(item => {
+            return {
+                ...item,
+                selected: item.value === mcno,
+            }
+        })
     }
 
+    /** 신청내역 리스트 */
+    get applyList() {
+        return this.applyHistory
+    }
+
+    /** 신청내역 불러오기 */
     @MutationAction
-    async getBeforeApply(params: MktStatementParameters['beforeApply']) {
-        const { data } = await MktStatementService.getBeforeApply(params)
-        return {
-            beforeApply: data,
+    async getApplyHistory(params: ApplyHistory['Req']) {
+        const typedState = this.state as MktStatementState
+        const isNext = toNumber(params.psPagNo) > 0
+        const { data } = await MktStatementService.getApplyHistory(params)
+
+        if (data) {
+            return {
+                applyHistory: isNext ? typedState.applyHistory.concat(data.data.mrktAplList) : data.data.mrktAplList,
+                moreYN: data.data.moreYn,
+                currentHistoryPage: data.data.psPagNo,
+            }
         }
-    }
-
-    get beforeApplyData(): BeforeApplyRes['data'] | null {
-        return this.beforeApply?.data || null
-    }
-
-    @MutationAction
-    async getApplying(params: MktStatementParameters['applying']) {
-        const { data } = await MktStatementService.getApplying(params)
-        return {
-            applying: data,
-        }
-    }
-
-    get applyingData(): ApplyingRes['data'] | null {
-        return this.applying?.data || null
-    }
-
-    @MutationAction
-    async getEndApply(params: MktStatementParameters['endApply']) {
-        const { data } = await MktStatementService.getEndApply(params)
-        return {
-            endApply: data,
-        }
-    }
-
-    get endApplyData(): EndApplyRes['data'] | null {
-        return this.endApply?.data || null
     }
 }
 

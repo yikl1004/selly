@@ -5,7 +5,7 @@
             <div v-if="!!beforeApplyData" class="content">
                 <!--[D] 접수완료 ~  진행예정 케이스 -->
                 <div>
-                    <Title
+                    <!-- <Title
                         :title="beforeApplyData.mcNm"
                         class="franchisee-name"
                     >
@@ -15,7 +15,7 @@
                             <br />
                             {{ beforeApplyData.mcTlno }}
                         </p>
-                    </Title>
+                    </Title> -->
 
                     <ApplyDetailStep :active="activeStep" />
 
@@ -366,34 +366,36 @@ import type { MarketingStatus } from '@services/marketing'
 export default class MarketingDetail extends Vue {
     /** 마케팅 신청내역 상세 - 케이스 별 분기 */
     get dataByCase() {
-        if (this.caseCheck(['01', '02', '03', '08'])) {
-            return MktStatementModule.beforeApplyData
-        } else if (this.caseCheck(['04'])) {
-            return MktStatementModule.applyingData
-        } else if (this.caseCheck(['05'])) {
-            return MktStatementModule.endApplyData
-        }
+        // if (this.caseCheck(['01', '02', '03', '08'])) {
+        //     return MktStatementModule.beforeApplyData
+        // } else if (this.caseCheck(['04'])) {
+        //     return MktStatementModule.applyingData
+        // } else if (this.caseCheck(['05'])) {
+        //     return MktStatementModule.endApplyData
+        // }
         return null
     }
 
     /** 마케팅 신청내역 상세 - 마케팅 진행 전(01, 02, 03, 08) */
     get beforeApplyData() {
-        return MktStatementModule.beforeApplyData
+        // return MktStatementModule.beforeApplyData
+        return null
     }
 
     /** 현재 활성화 될 스텝 */
     get activeStep() {
-        const marketingStatusCode = this.beforeApplyData?.mrktStc
-        const cases: Record<MarketingStatus, number> = {
-            '01': 1,
-            '02': 2,
-            '03': 3,
-            '04': 4,
-            '05': 0,
-            '08': 0,
-            '09': 0,
-        }
-        return marketingStatusCode ? cases[marketingStatusCode] : 0
+        // const marketingStatusCode = this.beforeApplyData?.mrktStc
+        // const cases: Record<MarketingStatus, number> = {
+        //     '01': 1,
+        //     '02': 2,
+        //     '03': 3,
+        //     '04': 4,
+        //     '05': 0,
+        //     '08': 0,
+        //     '09': 0,
+        // }
+        // return marketingStatusCode ? cases[marketingStatusCode] : 0
+        return null
     }
 
     /** 행사 내용 리스트 */
@@ -466,18 +468,18 @@ export default class MarketingDetail extends Vue {
     private ageGroups = ['10대이하', '20대', '30대', '40대', '50대', '60대이상']
     private ageGroupsUser = [140, 150, 160, 100, 30, 30]
 
-    async dispatch() {
+    dispatch() {
         const mrktCtsSeq = this.$route.query.mrktCtsSeq as string
         const mrktStc = this.$route.query.mrktStc as string
         const params = { mrktCtsSeq, mrktStc }
 
-        if (this.caseCheck(['01', '02', '03', '08'])) {
-            await MktStatementModule.getBeforeApply(params)
-        } else if (this.caseCheck(['04'])) {
-            await MktStatementModule.getApplying(params)
-        } else if (this.caseCheck(['05'])) {
-            await MktStatementModule.getEndApply(params)
-        }
+        // if (this.caseCheck(['01', '02', '03', '08'])) {
+        //     await MktStatementModule.getBeforeApply(params)
+        // } else if (this.caseCheck(['04'])) {
+        //     await MktStatementModule.getApplying(params)
+        // } else if (this.caseCheck(['05'])) {
+        //     await MktStatementModule.getEndApply(params)
+        // }
     }
 
     caseCheck(arg: string[]) {
@@ -488,37 +490,37 @@ export default class MarketingDetail extends Vue {
     /** 초기값 세팅 */
     initialize() {
         const originData = this.beforeApplyData
-        this.applyDetail = [
-            {
-                title: '행사 내용',
-                desc: `[${originData?.ggDNm}] ${
-                    originData?.mrktBnfCn
-                } <br /> ${this._.toNumber(
-                    originData?.trgOjCstt,
-                ).toLocaleString()}명`,
-            },
-            {
-                title: '행사 기간',
-                desc: `${this.$dayjs(originData?.evSdt).format(
-                    'YY. MM. DD',
-                )} ~ ${this.$dayjs(originData?.evEdt).format('YY. MM. DD')}`,
-            },
-            {
-                title: '홍보 방식',
-                desc: '롯데카드 앱 푸시메시지,<br />롯데카드 앱에 쿠폰 노출',
-            },
-        ]
+        // this.applyDetail = [
+        //     {
+        //         title: '행사 내용',
+        //         desc: `[${originData?.ggDNm}] ${
+        //             originData?.mrktBnfCn
+        //         } <br /> ${this._.toNumber(
+        //             originData?.trgOjCstt,
+        //         ).toLocaleString()}명`,
+        //     },
+        //     {
+        //         title: '행사 기간',
+        //         desc: `${this.$dayjs(originData?.evSdt).format(
+        //             'YY. MM. DD',
+        //         )} ~ ${this.$dayjs(originData?.evEdt).format('YY. MM. DD')}`,
+        //     },
+        //     {
+        //         title: '홍보 방식',
+        //         desc: '롯데카드 앱 푸시메시지,<br />롯데카드 앱에 쿠폰 노출',
+        //     },
+        // ]
 
-        if (originData?.refC) {
-            this.applyDetail.push({
-                title: '추천인코드',
-                desc: `${originData.refC}`,
-            })
-        }
+        // if (originData?.refC) {
+        //     this.applyDetail.push({
+        //         title: '추천인코드',
+        //         desc: `${originData.refC}`,
+        //     })
+        // }
 
-        this.infoResult.push({
-            text: `행사 비용(할인혜택)은 <strong>${originData?.mcNm}</strong> 가맹점 대금에서 차감되는 금액으로, 방문고객 수와 고객의 결제금액에 따라 변경될 수 있습니다.`,
-        })
+        // this.infoResult.push({
+        //     text: `행사 비용(할인혜택)은 <strong>${originData?.mcNm}</strong> 가맹점 대금에서 차감되는 금액으로, 방문고객 수와 고객의 결제금액에 따라 변경될 수 있습니다.`,
+        // })
     }
 
     async mounted() {

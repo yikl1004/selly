@@ -73,7 +73,6 @@
 <script lang="ts">
 import { Component, Prop, Mixins, Watch, Ref } from 'vue-property-decorator'
 import Validates from '@utils/mixins/Validates'
-import type { DropdownBoxList } from './DropdownBox.vue'
 
 export interface OnChangeParameters {
     value: string

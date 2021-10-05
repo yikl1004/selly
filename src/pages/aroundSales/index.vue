@@ -449,13 +449,12 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import type { Schema } from '@components/form/FormProvider.vue'
-import type { DropdownBoxList } from '@components/form/DropdownBox.vue'
 import MarketingBanner from '@components/marketing/MarketingBanner.vue'
 import PopupMapArea from '@components/marketing/PopupMapArea.vue'
 import GenTable from '@components/common/GenTable.vue'
 import ConvertPie from '@components/common/ConvertPie.vue'
 import ConvertDoughnut from '@components/common/ConvertDoughnut.vue'
+import type { Schema } from '@components/form/FormProvider.vue'
 
 @Component({
     components: {

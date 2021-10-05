@@ -67,7 +67,6 @@
 import { Component, Vue } from 'vue-property-decorator'
 import PredictionPriceBox from '@components/finance/PredictionPriceBox.vue'
 import type { Schema } from '@components/form/FormProvider.vue'
-import type { DropdownBoxList } from '@components/form/DropdownBox.vue'
 
 // interface Data {
 //     buttonField: string

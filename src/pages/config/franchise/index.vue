@@ -46,8 +46,6 @@
 import { Component, Vue } from 'vue-property-decorator'
 import axios from 'axios'
 import { AuthModule } from '@stores/modules/auth'
-// import type { Schema } from '@components/form/FormProvider.vue'
-import type { DropdownBoxList } from '@components/form/DropdownBox.vue'
 import type { AddressItem } from '@components/form/AddressField.vue'
 
 /**

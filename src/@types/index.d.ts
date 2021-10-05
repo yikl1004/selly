@@ -52,6 +52,9 @@ declare global {
         value: string
         selected?: boolean
     }
+
+    /** "list" props의 타입(DropdownBox의 'list' Props) */
+    export type DropdownBoxList = BottomSheetOptionItem[]
 }
 
 export {}
